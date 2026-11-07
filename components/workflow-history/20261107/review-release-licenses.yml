@@ -1,0 +1,42 @@
+name: Read-only release license review
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Exact existing rootfs release tag; empty uses the Omarchy revision below
+        type: string
+        default: ''
+      revision:
+        description: Existing Omarchy 4.0.6 revision to inspect without modifying assets
+        type: choice
+        options: [r11, r10, r9]
+        default: r11
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install archive reader
+        run: sudo apt-get update && sudo apt-get install -y zstd python3-fonttools
+      - name: Download existing release only on runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          REVISION: ${{ inputs.revision }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          tag="${RELEASE_TAG:-wsx-omarchy-4.0.6-$REVISION}"
+          if [[ ! "$tag" =~ ^wsx-(omarchy|cachyos-plasma)-[0-9]+\.[0-9]+\.[0-9]+-r[0-9]+$ ]]; then
+            echo 'Unsupported rootfs release tag' >&2
+            exit 1
+          fi
+          gh release download "$tag" --repo "$REPOSITORY" --dir payload
+      - name: Verify actual archive license evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: /usr/bin/python3 scripts/review-release-licenses.py payload review.json

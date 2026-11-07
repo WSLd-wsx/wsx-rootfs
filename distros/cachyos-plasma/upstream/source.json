@@ -1,0 +1,21 @@
+{
+  "repository": "https://github.com/CachyOS/cachyos-calamares",
+  "commit": "e6c22095c3ed4e51725a7cbf9870d453462eb1fb",
+  "files": {
+    "pacstrap.conf": "0369ebe03d58676ddcc20de5f50559936704bd4ae6d051d73223f498c788bf43"
+  },
+  "iso_identity": {
+    "repository": "https://github.com/CachyOS/CachyOS-Live-ISO",
+    "commit": "3215497d2e8c5fea90e185affcf973dfa2cf790b",
+    "files": {
+      "iso-os-release": "cd0719fd5fcf9d6393251e17721697f0c9b603bab3b4ba0895e75c94f4ef081b",
+      "iso-cachyos-release": "aa7a8e6797de821202726c71eef5c23bc9b37ed1999919ebb1a40fcc1adcad6c"
+    },
+    "license": {
+      "expression": "GPL-3.0-only",
+      "basis": "Pinned upstream repository root LICENSE; neither file specifies a later-version option",
+      "path": "docs/licensing/licenses/upstream/cachyos-live-iso-LICENSE",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+--- a/src/gallium/drivers/zink/zink_resource.c
++++ b/src/gallium/drivers/zink/zink_resource.c
+@@ -1879,14 +1879,29 @@
+    struct zink_resource_object *old_obj = res->obj;
+    ASSERTED uint64_t mod = DRM_FORMAT_MOD_INVALID;
+    if (bind & ZINK_BIND_DMABUF && !res->modifiers_count && !res->obj->is_buffer && screen->info.have_EXT_image_drm_format_modifier) {
+-      res->modifiers_count = 1;
+-      res->modifiers = malloc(res->modifiers_count * sizeof(uint64_t));
+-      if (!res->modifiers) {
+-         mesa_loge("ZINK: failed to allocate res->modifiers!");
++      const struct zink_modifier_props *props = zink_get_modifier_props(screen, res->base.b.format);
++      const bool negotiate = debug_get_bool_option("WSX_ZINK_NEGOTIATE_EXPORT", false);
++      unsigned count = negotiate ? props->drmFormatModifierCount : 1;
++      if (!count) {
++         res->base.b.bind &= ~bind;
++         mesa_loge("WSX_EXPORT_CONTRACT: no native modifier candidates format=%u", res->base.b.format);
+          return false;
+       }
+-
+-      mod = res->modifiers[0] = DRM_FORMAT_MOD_LINEAR;
++      uint64_t *candidates = malloc(count * sizeof(*candidates));
++      if (!candidates) {
++         res->base.b.bind &= ~bind;
++         return false;
++      }
++      for (unsigned i = 0; i < count; i++)
++         candidates[i] = negotiate ? props->pDrmFormatModifierProperties[i].drmFormatModifier : DRM_FORMAT_MOD_LINEAR;
++      res->modifiers = candidates;
++      res->modifiers_count = count;
++      if (!negotiate)
++         mod = DRM_FORMAT_MOD_LINEAR;
++      /* Creation still checks the complete Vulkan format/usage combination.
++       * Exported metadata must pass the independent consumer admission checks.
++       * An opaque Win32 allocation is not a DRM modifier candidate.
++       */
+    }
+    struct zink_resource_object *new_obj = resource_object_create(screen, &res->base.b, NULL, &res->linear, res->modifiers, res->modifiers_count, NULL, NULL);
+    if (!new_obj) {

@@ -1,0 +1,47 @@
+name: Prepare shared graphics sources
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        type: choice
+        options: [omarchy, cachyos-plasma]
+        required: true
+      publish_draft:
+        description: Upload source-only assets to a verified Draft; never promote it
+        type: boolean
+        default: false
+permissions:
+  contents: write
+  packages: read
+  actions: read
+concurrency:
+  group: shared-graphics-sources-${{ inputs.profile }}
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install archive reader
+        run: sudo apt-get update && sudo apt-get install -y zstd
+      - name: Validate source policy and provenance
+        run: |
+          python3 scripts/audit-licenses.py --check
+          python3 scripts/audit-license-modules.py
+          python3 scripts/check-provenance.py
+      - name: Project existing package into shared source-only materials
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROFILE: ${{ inputs.profile }}
+          PUBLISH_DRAFT: ${{ inputs.publish_draft }}
+        run: |
+          args=()
+          if [[ "$PUBLISH_DRAFT" == true ]]; then args+=(--publish-draft); fi
+          python3 scripts/prepare-shared-sources.py --profile "$PROFILE" --work out "${args[@]}"
+      - name: Preserve small result in logs
+        if: always()
+        run: |
+          if [[ -f out/summary.json ]]; then cat out/summary.json; fi

@@ -1,0 +1,246 @@
+--- a/src/gallium/drivers/zink/zink_resource.c
++++ b/src/gallium/drivers/zink/zink_resource.c
+@@ -958,6 +958,8 @@
+    const void *user_mem;
+    VkExternalMemoryHandleTypeFlags external;
+    VkExternalMemoryHandleTypeFlags export_types;
++   bool wsx_opaque_import;
++   uint64_t wsx_allocation_size;
+ };
+ 
+ static inline bool
+@@ -1047,6 +1049,17 @@
+    };
+ 
+    if (alloc_info->whandle) {
++      if (alloc_info->wsx_opaque_import) {
++         VkMemoryFdPropertiesKHR props = {.sType = VK_STRUCTURE_TYPE_MEMORY_FD_PROPERTIES_KHR};
++         if (VKSCR(GetMemoryFdPropertiesKHR)(screen->dev, alloc_info->external,
++               alloc_info->whandle->handle, &props) != VK_SUCCESS ||
++             !(reqs->memoryTypeBits & props.memoryTypeBits) ||
++             reqs->size > alloc_info->wsx_allocation_size)
++            return roc_fail_and_cleanup_object;
++         reqs->memoryTypeBits &= props.memoryTypeBits;
++         reqs->size = alloc_info->wsx_allocation_size;
++         mai.allocationSize = reqs->size;
++      }
+       imfi.pNext = NULL;
+       imfi.handleType = alloc_info->external;
+       imfi.fd = os_dupfd_cloexec(alloc_info->whandle->handle);
+@@ -1137,6 +1150,10 @@
+           heap = ZINK_HEAP_DEVICE_LOCAL;
+    };
+ 
++#if defined(ZINK_USE_DMABUF) && !defined(_WIN32)
++   if (!obj->bo && alloc_info->wsx_opaque_import && imfi.fd >= 0)
++      close(imfi.fd); /* Failed Vulkan import leaves the duplicated fd owned here. */
++#endif
+    return obj->bo ? roc_success : roc_fail_and_cleanup_object;
+ }
+ 
+@@ -1387,7 +1404,7 @@
+       if (srgb == templ->format)
+          srgb = PIPE_FORMAT_NONE;
+    }
+-   VkFormat formats[4] = {VK_FORMAT_UNDEFINED};
++   VkFormat formats[16] = {VK_FORMAT_UNDEFINED};
+    VkImageFormatListCreateInfo format_list;
+    if (srgb) {
+       formats[0] = zink_get_format(screen, templ->format);
+@@ -1410,7 +1427,56 @@
+    init_ici(screen, &ici, templ, templ->bind, ici_modifier_count);
+ 
+    bool success = false;
+-   uint64_t mod = eval_ici(screen, &ici, templ, templ->bind, ici_modifier_count, ici_modifiers, &success);
++   uint64_t mod = DRM_FORMAT_MOD_INVALID;
++#if defined(HAVE_LIBDRM) && !defined(_WIN32)
++   /* Only the explicit paired descriptor path may import an image without
++    * a pitch. Never interpret a generic INVALID modifier as optimal storage. */
++   bool opaque_import = alloc_info->whandle && !alloc_info->whandle->stride &&
++      alloc_info->whandle->modifier == DRM_FORMAT_MOD_INVALID;
++   if (opaque_import) {
++      struct drm_wsx_opaque_query query = {0};
++      if (!debug_get_bool_option("WSX_ZINK_OPAQUE_SHARED", false) ||
++          alloc_info->whandle->type != WINSYS_HANDLE_TYPE_FD ||
++          alloc_info->whandle->offset || alloc_info->whandle->plane ||
++          templ->target != PIPE_TEXTURE_2D || templ->last_level || templ->next ||
++          templ->array_size != 1 || templ->depth0 != 1 || templ->nr_samples > 1 ||
++          wsx_gbm_lookup_opaque_fd(screen->drm_fd, alloc_info->whandle->handle,
++             templ->width0, templ->height0, zink_get_format(screen, templ->format), &query))
++         return roc_fail_and_free_object;
++      const struct wsx_image_contract *c = &query.contract;
++      ici = (VkImageCreateInfo) {
++         .sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
++         .imageType = VK_IMAGE_TYPE_2D, .format = c->format,
++         .extent = {c->width, c->height, c->depth},
++         .mipLevels = c->mip_levels, .arrayLayers = c->array_layers,
++         .samples = c->samples, .tiling = c->tiling, .usage = c->usage,
++         .flags = c->image_flags, .sharingMode = c->sharing_mode,
++         .initialLayout = VK_IMAGE_LAYOUT_UNDEFINED,
++      };
++      memcpy(formats, c->view_formats, sizeof(formats));
++      format_list = (VkImageFormatListCreateInfo) {
++         .sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO,
++         .viewFormatCount = c->view_count, .pViewFormats = formats,
++      };
++      if (c->view_count) ici.pNext = &format_list;
++      VkImageUsageFlags required = 0;
++      if (templ->bind & PIPE_BIND_SAMPLER_VIEW) required |= VK_IMAGE_USAGE_SAMPLED_BIT;
++      if (templ->bind & PIPE_BIND_RENDER_TARGET) required |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
++      if (templ->bind & PIPE_BIND_SHADER_IMAGE) required |= VK_IMAGE_USAGE_STORAGE_BIT;
++      if ((ici.usage & required) != required ||
++          !wsx_opaque_export_supported(screen, &ici, alloc_info->export_types))
++         return roc_fail_and_free_object;
++      alloc_info->wsx_opaque_import = true;
++      alloc_info->wsx_allocation_size = c->allocation_size;
++      alloc_info->shared = obj->wsx_opaque_shared = true;
++      srgb = PIPE_FORMAT_NONE;
++      success = true;
++      mesa_logi("WSX_OPAQUE_IMPORT: epoch=%llu generation=%llu format=%u extent=%ux%u usage=%x flags=%x",
++         (unsigned long long)c->context_epoch, (unsigned long long)c->image_generation,
++         c->format, c->width, c->height, c->usage, c->image_flags);
++   } else
++#endif
++      mod = eval_ici(screen, &ici, templ, templ->bind, ici_modifier_count, ici_modifiers, &success);
+    if (ici.format == VK_FORMAT_A8_UNORM_KHR && !success) {
+       ici.format = zink_get_format(screen, zink_format_get_emulated_alpha(templ->format));
+       mod = eval_ici(screen, &ici, templ, templ->bind, ici_modifier_count, ici_modifiers, &success);
+@@ -1538,7 +1604,7 @@
+ 
+    if (!(templ->bind & ZINK_BIND_VIDEO)) {
+       obj->vkfeats = get_format_feature_flags(ici, screen, templ);
+-      if (obj->vkfeats & VK_FORMAT_FEATURE_DISJOINT_BIT)
++      if (!alloc_info->wsx_opaque_import && (obj->vkfeats & VK_FORMAT_FEATURE_DISJOINT_BIT))
+          ici.flags |= VK_IMAGE_CREATE_DISJOINT_BIT;
+    }
+    if (util_format_is_yuv(templ->format)) {
+@@ -1846,6 +1912,10 @@
+       if (res->dmabuf)
+          res->queue = VK_QUEUE_FAMILY_FOREIGN_EXT;
+       res->layout = res->dmabuf ? VK_IMAGE_LAYOUT_PREINITIALIZED : VK_IMAGE_LAYOUT_UNDEFINED;
++      /* Venus presents opaque images in GENERAL with foreign ownership.
++       * Keep normal acquire/release barriers; never treat contents as new. */
++      if (res->dmabuf && res->obj->wsx_opaque_shared)
++         res->layout = VK_IMAGE_LAYOUT_GENERAL;
+       res->linear = linear;
+       res->aspect = aspect_from_format(templ->format);
+    }
+@@ -2329,7 +2399,11 @@
+ 
+    uint64_t modifier = DRM_FORMAT_MOD_LINEAR;
+    int modifier_count = 1;
+-   if (templ->target == PIPE_BUFFER) {
++   if (templ->target != PIPE_BUFFER && !whandle->stride &&
++       whandle->modifier == DRM_FORMAT_MOD_INVALID) {
++      /* create_image validates the real PRIME descriptor before allocation. */
++      modifier_count = 0;
++   } else if (templ->target == PIPE_BUFFER) {
+       modifier_count = 0;
+    } else {
+       if (whandle->modifier != DRM_FORMAT_MOD_INVALID)
+--- a/src/egl/main/egldisplay.h
++++ b/src/egl/main/egldisplay.h
+@@ -104,6 +104,7 @@
+    EGLBoolean EXT_buffer_age;
+    EGLBoolean EXT_config_select_group;
+    EGLBoolean EXT_create_context_robustness;
++   EGLBoolean WSX_opaque_image;
+    EGLBoolean EXT_image_dma_buf_import;
+    EGLBoolean EXT_image_dma_buf_import_modifiers;
+    EGLBoolean EXT_pixel_format_float;
+--- a/src/egl/main/eglapi.c
++++ b/src/egl/main/eglapi.c
+@@ -549,6 +549,7 @@
+    _EGL_CHECK_EXTENSION(EXT_buffer_age);
+    _EGL_CHECK_EXTENSION(EXT_config_select_group);
+    _EGL_CHECK_EXTENSION(EXT_create_context_robustness);
++   _EGL_CHECK_EXTENSION(WSX_opaque_image);
+    _EGL_CHECK_EXTENSION(EXT_image_dma_buf_import);
+    _EGL_CHECK_EXTENSION(EXT_image_dma_buf_import_modifiers);
+    _EGL_CHECK_EXTENSION(EXT_present_opaque);
+--- a/src/egl/main/eglimage.h
++++ b/src/egl/main/eglimage.h
+@@ -58,6 +58,7 @@
+     * EGL_EXT_image_dma_buf_import_modifiers */
+    EGLint Width;
+    EGLint Height;
++   EGLBoolean WSXOpaque;
+    struct _egl_image_attrib_int DMABufFourCC;
+    struct _egl_image_attrib_int DMABufPlaneFds[DMA_BUF_MAX_PLANES];
+    struct _egl_image_attrib_int DMABufPlaneOffsets[DMA_BUF_MAX_PLANES];
+--- a/src/egl/main/eglimage.c
++++ b/src/egl/main/eglimage.c
+@@ -99,6 +99,11 @@
+       return EGL_BAD_PARAMETER;
+ 
+    switch (attr) {
++   case 0x57535820: /* EGL_WSX_OPAQUE_DESCRIPTOR, private paired extension */
++      if (!disp->Extensions.WSX_opaque_image || val != EGL_TRUE)
++         return EGL_BAD_ATTRIBUTE;
++      attrs->WSXOpaque = EGL_TRUE;
++      break;
+    case EGL_WIDTH:
+       attrs->Width = val;
+       break;
+--- a/src/egl/meson.build
++++ b/src/egl/meson.build
+@@ -18,6 +18,7 @@
+ incs_for_egl = [inc_include, inc_src, inc_egl]
+ 
+ files_egl = files(
++  'wsx/gbm-descriptor.c',
+   'main/eglapi.c',
+   'main/eglarray.c',
+   'main/eglarray.h',
+--- a/src/egl/drivers/dri2/egl_dri2.c
++++ b/src/egl/drivers/dri2/egl_dri2.c
+@@ -1,3 +1,4 @@
++#include "wsx/gbm-descriptor.h"
+ /*
+  * Copyright © 2010 Intel Corporation
+  *
+@@ -701,6 +702,10 @@
+       disp->Extensions.MESA_image_dma_buf_export = true;
+ 
+    if (dri2_dpy->has_dmabuf_import) {
++      disp->Extensions.WSX_opaque_image =
++         debug_get_bool_option("WSX_ZINK_OPAQUE_SHARED", false) &&
++         dri2_dpy->driver_name && !strcmp(dri2_dpy->driver_name, "zink") &&
++         wsx_gbm_opaque_consumer_supported(dri2_dpy->fd_render_gpu) == 1;
+       disp->Extensions.EXT_image_dma_buf_import = EGL_TRUE;
+       disp->Extensions.EXT_image_dma_buf_import_modifiers = EGL_TRUE;
+    }
+@@ -2113,7 +2118,8 @@
+     */
+    for (unsigned i = 0; i < ARRAY_SIZE(attrs->DMABufPlanePitches); ++i) {
+       if (attrs->DMABufPlanePitches[i].IsPresent &&
+-          attrs->DMABufPlanePitches[i].Value <= 0)
++          (attrs->DMABufPlanePitches[i].Value < 0 ||
++           (attrs->DMABufPlanePitches[i].Value == 0 && !attrs->WSXOpaque)))
+          return _eglError(EGL_BAD_ACCESS, "invalid pitch");
+    }
+ 
+@@ -2467,6 +2473,23 @@
+       modifier = DRM_FORMAT_MOD_INVALID;
+    }
+ 
++   if (attrs.WSXOpaque) {
++      struct drm_wsx_opaque_query query = {0};
++      uint32_t format = 0;
++      switch (attrs.DMABufFourCC.Value) {
++      case DRM_FORMAT_ARGB8888: case DRM_FORMAT_XRGB8888: format = 44; break;
++      case DRM_FORMAT_ABGR8888: case DRM_FORMAT_XBGR8888: format = 37; break;
++      }
++      if (!disp->Extensions.WSX_opaque_image || num_fds != 1 || !format ||
++          pitches[0] || offsets[0] || modifier != DRM_FORMAT_MOD_INVALID ||
++          attrs.ProtectedContent ||
++          wsx_gbm_lookup_opaque_fd(dri2_dpy->fd_render_gpu, fds[0],
++             attrs.Width, attrs.Height, format, &query)) {
++         _eglError(EGL_BAD_MATCH, "WSX opaque descriptor mismatch");
++         return NULL;
++      }
++   }
++
+    uint32_t flags = 0;
+    if (attrs.ProtectedContent)
+       flags |= __DRI_IMAGE_PROTECTED_CONTENT_FLAG;

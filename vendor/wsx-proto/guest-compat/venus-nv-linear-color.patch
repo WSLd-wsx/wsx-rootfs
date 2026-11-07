@@ -1,0 +1,300 @@
+--- a/src/virtio/venus-protocol/vn_protocol_driver_device.h
++++ b/src/virtio/venus-protocol/vn_protocol_driver_device.h
+@@ -14830,6 +14830,137 @@
+     vn_encode_VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT_self_partial(enc, val);
+ }
+ 
++/* struct VkPhysicalDeviceLinearColorAttachmentFeaturesNV chain */
++
++static inline size_t
++vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_pnext(const void *val)
++{
++    /* no known/supported struct */
++    return vn_sizeof_simple_pointer(NULL);
++}
++
++static inline size_t
++vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self(const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *val)
++{
++    size_t size = 0;
++    /* skip val->{sType,pNext} */
++    size += vn_sizeof_VkBool32(&val->linearColorAttachment);
++    return size;
++}
++
++static inline size_t
++vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV(const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *val)
++{
++    size_t size = 0;
++
++    size += vn_sizeof_VkStructureType(&val->sType);
++    size += vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_pnext(val->pNext);
++    size += vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self(val);
++
++    return size;
++}
++
++static inline void
++vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_pnext(struct vn_cs_encoder *enc, const void *val)
++{
++    /* no known/supported struct */
++    vn_encode_simple_pointer(enc, NULL);
++}
++
++static inline void
++vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self(struct vn_cs_encoder *enc, const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *val)
++{
++    /* skip val->{sType,pNext} */
++    vn_encode_VkBool32(enc, &val->linearColorAttachment);
++}
++
++static inline void
++vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV(struct vn_cs_encoder *enc, const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *val)
++{
++    assert(val->sType == VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV);
++    vn_encode_VkStructureType(enc, &(VkStructureType){ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV });
++    vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_pnext(enc, val->pNext);
++    vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self(enc, val);
++}
++
++static inline void
++vn_decode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_pnext(struct vn_cs_decoder *dec, const void *val)
++{
++    /* no known/supported struct */
++    if (vn_decode_simple_pointer(dec))
++        assert(false);
++}
++
++static inline void
++vn_decode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self(struct vn_cs_decoder *dec, VkPhysicalDeviceLinearColorAttachmentFeaturesNV *val)
++{
++    /* skip val->{sType,pNext} */
++    vn_decode_VkBool32(dec, &val->linearColorAttachment);
++}
++
++static inline void
++vn_decode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV(struct vn_cs_decoder *dec, VkPhysicalDeviceLinearColorAttachmentFeaturesNV *val)
++{
++    VkStructureType stype;
++    vn_decode_VkStructureType(dec, &stype);
++    assert(stype == VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV);
++
++    assert(val->sType == stype);
++    vn_decode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_pnext(dec, val->pNext);
++    vn_decode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self(dec, val);
++}
++
++static inline size_t
++vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_pnext_partial(const void *val)
++{
++    /* no known/supported struct */
++    return vn_sizeof_simple_pointer(NULL);
++}
++
++static inline size_t
++vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self_partial(const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *val)
++{
++    size_t size = 0;
++    /* skip val->{sType,pNext} */
++    /* skip val->linearColorAttachment */
++    return size;
++}
++
++static inline size_t
++vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_partial(const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *val)
++{
++    size_t size = 0;
++
++    size += vn_sizeof_VkStructureType(&val->sType);
++    size += vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_pnext_partial(val->pNext);
++    size += vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self_partial(val);
++
++    return size;
++}
++
++static inline void
++vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_pnext_partial(struct vn_cs_encoder *enc, const void *val)
++{
++    /* no known/supported struct */
++    vn_encode_simple_pointer(enc, NULL);
++}
++
++static inline void
++vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self_partial(struct vn_cs_encoder *enc, const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *val)
++{
++    /* skip val->{sType,pNext} */
++    /* skip val->linearColorAttachment */
++}
++
++static inline void
++vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_partial(struct vn_cs_encoder *enc, const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *val)
++{
++    assert(val->sType == VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV);
++    vn_encode_VkStructureType(enc, &(VkStructureType){ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV });
++    vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_pnext_partial(enc, val->pNext);
++    vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self_partial(enc, val);
++}
++
+ /* struct VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT chain */
+ 
+ static inline size_t
+@@ -18617,6 +18748,14 @@
+             size += vn_sizeof_VkStructureType(&pnext->sType);
+             size += vn_sizeof_VkPhysicalDeviceFeatures2_pnext(((const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext)->pNext);
+             size += vn_sizeof_VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT_self((const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext);
++            return size;
++        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV:
++            if (!vn_cs_renderer_protocol_has_extension(431 /* VK_NV_linear_color_attachment */))
++                break;
++            size += vn_sizeof_simple_pointer(pnext);
++            size += vn_sizeof_VkStructureType(&pnext->sType);
++            size += vn_sizeof_VkPhysicalDeviceFeatures2_pnext(((const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext)->pNext);
++            size += vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self((const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext);
+             return size;
+         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT:
+             if (!vn_cs_renderer_protocol_has_extension(321 /* VK_EXT_graphics_pipeline_library */))
+@@ -19549,6 +19688,14 @@
+             vn_encode_VkStructureType(enc, &pnext->sType);
+             vn_encode_VkPhysicalDeviceFeatures2_pnext(enc, ((const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext)->pNext);
+             vn_encode_VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT_self(enc, (const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext);
++            return;
++        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV:
++            if (!vn_cs_renderer_protocol_has_extension(431 /* VK_NV_linear_color_attachment */))
++                break;
++            vn_encode_simple_pointer(enc, pnext);
++            vn_encode_VkStructureType(enc, &pnext->sType);
++            vn_encode_VkPhysicalDeviceFeatures2_pnext(enc, ((const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext)->pNext);
++            vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self(enc, (const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext);
+             return;
+         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT:
+             if (!vn_cs_renderer_protocol_has_extension(321 /* VK_EXT_graphics_pipeline_library */))
+@@ -20155,6 +20302,10 @@
+         vn_decode_VkPhysicalDeviceFeatures2_pnext(dec, ((VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext)->pNext);
+         vn_decode_VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT_self(dec, (VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext);
+         break;
++    case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV:
++        vn_decode_VkPhysicalDeviceFeatures2_pnext(dec, ((VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext)->pNext);
++        vn_decode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self(dec, (VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext);
++        break;
+     case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT:
+         vn_decode_VkPhysicalDeviceFeatures2_pnext(dec, ((VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT *)pnext)->pNext);
+         vn_decode_VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT_self(dec, (VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT *)pnext);
+@@ -20990,6 +21141,14 @@
+             size += vn_sizeof_VkPhysicalDeviceFeatures2_pnext_partial(((const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext)->pNext);
+             size += vn_sizeof_VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT_self_partial((const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext);
+             return size;
++        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV:
++            if (!vn_cs_renderer_protocol_has_extension(431 /* VK_NV_linear_color_attachment */))
++                break;
++            size += vn_sizeof_simple_pointer(pnext);
++            size += vn_sizeof_VkStructureType(&pnext->sType);
++            size += vn_sizeof_VkPhysicalDeviceFeatures2_pnext_partial(((const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext)->pNext);
++            size += vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self_partial((const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext);
++            return size;
+         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT:
+             if (!vn_cs_renderer_protocol_has_extension(321 /* VK_EXT_graphics_pipeline_library */))
+                 break;
+@@ -21921,6 +22080,14 @@
+             vn_encode_VkStructureType(enc, &pnext->sType);
+             vn_encode_VkPhysicalDeviceFeatures2_pnext_partial(enc, ((const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext)->pNext);
+             vn_encode_VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT_self_partial(enc, (const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext);
++            return;
++        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV:
++            if (!vn_cs_renderer_protocol_has_extension(431 /* VK_NV_linear_color_attachment */))
++                break;
++            vn_encode_simple_pointer(enc, pnext);
++            vn_encode_VkStructureType(enc, &pnext->sType);
++            vn_encode_VkPhysicalDeviceFeatures2_pnext_partial(enc, ((const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext)->pNext);
++            vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self_partial(enc, (const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext);
+             return;
+         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT:
+             if (!vn_cs_renderer_protocol_has_extension(321 /* VK_EXT_graphics_pipeline_library */))
+@@ -22938,6 +23105,14 @@
+             size += vn_sizeof_VkStructureType(&pnext->sType);
+             size += vn_sizeof_VkDeviceCreateInfo_pnext(((const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext)->pNext);
+             size += vn_sizeof_VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT_self((const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext);
++            return size;
++        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV:
++            if (!vn_cs_renderer_protocol_has_extension(431 /* VK_NV_linear_color_attachment */))
++                break;
++            size += vn_sizeof_simple_pointer(pnext);
++            size += vn_sizeof_VkStructureType(&pnext->sType);
++            size += vn_sizeof_VkDeviceCreateInfo_pnext(((const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext)->pNext);
++            size += vn_sizeof_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self((const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext);
+             return size;
+         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT:
+             if (!vn_cs_renderer_protocol_has_extension(321 /* VK_EXT_graphics_pipeline_library */))
+@@ -23923,6 +24098,14 @@
+             vn_encode_VkStructureType(enc, &pnext->sType);
+             vn_encode_VkDeviceCreateInfo_pnext(enc, ((const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext)->pNext);
+             vn_encode_VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT_self(enc, (const VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT *)pnext);
++            return;
++        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV:
++            if (!vn_cs_renderer_protocol_has_extension(431 /* VK_NV_linear_color_attachment */))
++                break;
++            vn_encode_simple_pointer(enc, pnext);
++            vn_encode_VkStructureType(enc, &pnext->sType);
++            vn_encode_VkDeviceCreateInfo_pnext(enc, ((const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext)->pNext);
++            vn_encode_VkPhysicalDeviceLinearColorAttachmentFeaturesNV_self(enc, (const VkPhysicalDeviceLinearColorAttachmentFeaturesNV *)pnext);
+             return;
+         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT:
+             if (!vn_cs_renderer_protocol_has_extension(321 /* VK_EXT_graphics_pipeline_library */))
+--- a/src/virtio/venus-protocol/vn_protocol_driver_info.h
++++ b/src/virtio/venus-protocol/vn_protocol_driver_info.h
+@@ -19,8 +19,8 @@
+ };
+ 
+ /* sorted by extension names for bsearch */
+-static const uint32_t _vn_info_extension_count = 187;
+-static const struct vn_info_extension _vn_info_extensions[187] = {
++static const uint32_t _vn_info_extension_count = 188;
++static const struct vn_info_extension _vn_info_extensions[188] = {
+    { "VK_ARM_rasterization_order_attachment_access", 343, 1 },
+    { "VK_EXT_4444_formats", 341, 1 },
+    { "VK_EXT_attachment_feedback_loop_dynamic_state", 525, 1 },
+@@ -207,6 +207,7 @@
+    { "VK_KHR_zero_initialize_workgroup_memory", 326, 1 },
+    { "VK_MESA_venus_protocol", 385, 4 },
+    { "VK_NV_compute_shader_derivatives", 202, 1 },
++   { "VK_NV_linear_color_attachment", 431, 1 },
+    { "VK_VALVE_mutable_descriptor_type", 352, 1 },
+ };
+ 
+--- a/src/virtio/vulkan/vn_physical_device.c
++++ b/src/virtio/vulkan/vn_physical_device.c
+@@ -221,6 +221,7 @@
+       VkPhysicalDeviceDepthClampControlFeaturesEXT depth_clamp_control;
+       VkPhysicalDeviceDepthClipControlFeaturesEXT depth_clip_control;
+       VkPhysicalDeviceDepthClipEnableFeaturesEXT depth_clip_enable;
++      VkPhysicalDeviceLinearColorAttachmentFeaturesNV linear_color_attachment;
+       VkPhysicalDeviceDescriptorHeapFeaturesEXT descriptor_heap;
+       VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT
+          dynamic_rendering_unused_attachments;
+@@ -387,6 +388,7 @@
+    VN_ADD_PNEXT_EXT(feats2, DEPTH_CLAMP_CONTROL_FEATURES_EXT, local_feats.depth_clamp_control, exts->EXT_depth_clamp_control);
+    VN_ADD_PNEXT_EXT(feats2, DEPTH_CLIP_CONTROL_FEATURES_EXT, local_feats.depth_clip_control, exts->EXT_depth_clip_control);
+    VN_ADD_PNEXT_EXT(feats2, DEPTH_CLIP_ENABLE_FEATURES_EXT, local_feats.depth_clip_enable, exts->EXT_depth_clip_enable);
++   VN_ADD_PNEXT_EXT(feats2, LINEAR_COLOR_ATTACHMENT_FEATURES_NV, local_feats.linear_color_attachment, exts->NV_linear_color_attachment);
+    VN_ADD_PNEXT_EXT(feats2, DESCRIPTOR_HEAP_FEATURES_EXT, local_feats.descriptor_heap, exts->EXT_descriptor_heap);
+    VN_ADD_PNEXT_EXT(feats2, DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT, local_feats.dynamic_rendering_unused_attachments, exts->EXT_dynamic_rendering_unused_attachments);
+    VN_ADD_PNEXT_EXT(feats2, EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT, local_feats.extended_dynamic_state_3, exts->EXT_extended_dynamic_state3);
+@@ -425,6 +427,11 @@
+ 
+    struct vk_features *feats = &physical_dev->base.vk.supported_features;
+    vk_set_physical_device_features(feats, &feats2);
++   if (exts->NV_linear_color_attachment)
++      vn_log(physical_dev->instance,
++             "WSX_NV_LINEAR_GUEST: extension=%u linearColorAttachment=%u",
++             supported_exts->NV_linear_color_attachment,
++             feats->linearColorAttachment);
+ 
+    /* Enable features for extensions natively implemented in Venus driver.
+     * See vn_physical_device_get_native_extensions.
+@@ -1380,6 +1387,7 @@
+       .GOOGLE_user_type = true,
+       .IMG_filter_cubic = true,
+       .NV_compute_shader_derivatives = true,
++      .NV_linear_color_attachment = true,
+       .VALVE_mutable_descriptor_type = true,
+    };
+ }

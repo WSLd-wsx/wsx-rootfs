@@ -1,0 +1,18 @@
+--- a/src/virtio/vulkan/vn_device_memory.c
++++ b/src/virtio/vulkan/vn_device_memory.c
+@@ -602,6 +602,15 @@
+           (VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT |
+            VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT));
+    assert(mem->base_bo);
++   /* Private descriptor queries run on the virtio control queue, outside the
++    * Venus ring. Publish prior image binding before handing the fd to GBM.
++    * This is command-dispatch ordering, not GPU completion or ownership release.
++    */
++   const char *opaque = getenv("WSX_VENUS_DIRECT_WSI");
++   if (opaque && !strcmp(opaque, "opaque-v1")) {
++      vn_ring_wait_all(dev->primary_ring);
++      vn_log(dev->instance, "WSX_OPAQUE_EXPORT_ORDER: binding dispatch drained before fd export");
++   }
+    *pFd = vn_renderer_bo_export_dma_buf(dev->renderer, mem->base_bo);
+    if (*pFd < 0)
+       return vn_error(dev->instance, VK_ERROR_TOO_MANY_OBJECTS);

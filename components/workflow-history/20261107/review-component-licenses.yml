@@ -1,0 +1,49 @@
+name: Review private component license materials
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        type: choice
+        options: [omarchy, cachyos-plasma]
+        required: true
+      run_id:
+        type: string
+        required: true
+      image:
+        description: Exact private GHCR digest from the successful build
+        type: string
+        required: true
+      manifest_sha256:
+        type: string
+        required: true
+permissions:
+  contents: read
+  packages: read
+  actions: read
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install archive reader
+        run: sudo apt-get update && sudo apt-get install -y zstd
+      - name: Check source policy
+        run: |
+          python3 scripts/audit-licenses.py --check
+          python3 scripts/audit-license-modules.py
+          python3 scripts/check-provenance.py
+      - name: Read back and inspect private component materials
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROFILE: ${{ inputs.profile }}
+          RUN_ID: ${{ inputs.run_id }}
+          IMAGE: ${{ inputs.image }}
+          MANIFEST_SHA256: ${{ inputs.manifest_sha256 }}
+        run: python3 scripts/review-component-licenses.py --profile "$PROFILE" --run-id "$RUN_ID" --image "$IMAGE" --manifest-sha256 "$MANIFEST_SHA256" --work out
+      - name: Return compact report through logs
+        if: always()
+        run: |
+          if [[ -f out/review.json ]]; then cat out/review.json; fi

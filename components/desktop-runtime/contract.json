@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "minimum_wsx_core_version": "0.2.1",
+  "runtime_receipt_sha256": "442f6032d8645c413b7398e2654c669169e79e9b46e79220134bb881b51d0561",
+  "guest_protocol_major": 1,
+  "guest_protocol_minor": 0,
+  "lifecycle_abi": 1,
+  "display_abi": 1,
+  "sharing_path": "opaque-v1",
+  "producer_abi": 1,
+  "consumer_abi": 2,
+  "retirement": "guest-stop-v1"
+}

@@ -1,0 +1,43 @@
+WSX rootfs — module licenses, effective 2026-11-03
+
+Licensor of the original WSX expression covered by the grants below:
+WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>, an individual using a public pseudonym.
+
+This repository is not licensed under a single license. LICENSE-MAP.md defines
+which original components the licensor makes available under each license.
+The grants are effective for this tree; they are not draft proposals.
+
+1. Original independent Guest code, tests and documentation identified in the map
+   are made available under the unmodified PolyForm Noncommercial License 1.0.0:
+   docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt
+
+Required Notice: Copyright (c) 2026 WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>
+
+   That Required Notice applies only to the original PolyForm-covered portions.
+   No enterprise-trial addendum or additional restriction is added.
+
+2. Original build tools, recipes, workflows, reconstruction metadata and the
+   explicitly listed imported original helpers are free software: you may
+   redistribute and/or modify them under the GNU General Public License as
+   published by the Free Software Foundation, either version 2 of the License,
+   or (at your option) any later version. They are distributed in the hope that
+   they will be useful, but WITHOUT ANY WARRANTY; without even the implied
+   warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
+   docs/licensing/licenses/GPL-2.0.txt for the license text.
+   Copyright (c) 2026 WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>.
+
+3. The specifically identified original MIT contributions are made available
+   under docs/licensing/licenses/WSX-MIT.txt. Original notices in existing MIT
+   files remain unchanged. This is not a license over third-party expression.
+
+Existing upstream notices, grants and third-party rights are retained. Unresolved
+imported material is expressly excluded from new WSX grants. License texts retain
+their own terms. A generated file does not automatically inherit its generator's
+license; see docs/licensing/OUTPUT-LICENSES.md for the explicit exceptions.
+
+PolyForm-covered code is source-available, not OSI open source. Commercial rights
+under MIT, GPL, BSD, Apache and other upstream terms are not restricted by this
+file. No noncommercial restriction applies to the whole rootfs. No trademark
+license, third-party ownership, public image clearance or commercial contract
+is implied. Separate commercial permissions for eligible original work may be
+requested from the licensor above.

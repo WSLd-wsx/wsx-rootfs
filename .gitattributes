@@ -1,0 +1,2 @@
+# Preserve exact upstream patch context and recorded source hashes.
+vendor/**/*.patch -whitespace

@@ -1,0 +1,62 @@
+--- a/src/virtio/vulkan/vn_wsi.c
++++ b/src/virtio/vulkan/vn_wsi.c
+@@ -217,6 +217,17 @@
+                     const VkAllocationCallbacks *alloc,
+                     struct vn_image **out_img)
+ {
++   const char *direct = getenv("WSX_VENUS_DIRECT_WSI");
++   const bool direct_wsi = direct && !strcmp(direct, "linear-v1") &&
++      dev->base.vk.enabled_features.linearColorAttachment;
++   if (direct_wsi) {
++      vn_log(dev->instance,
++             "WSX_DIRECT_WSI: format=%u extent=%ux%u tiling=%u usage=0x%x prime_blit=%u",
++             create_info->format, create_info->extent.width, create_info->extent.height,
++             create_info->tiling, create_info->usage, wsi_info->blit_src);
++      if (wsi_info->blit_src)
++         return VK_ERROR_FORMAT_NOT_SUPPORTED;
++   }
+    VkImageCreateInfo local_create_info;
+    if (dev->physical_device->renderer_driver_id ==
+           VK_DRIVER_ID_INTEL_OPEN_SOURCE_MESA &&
+@@ -248,6 +259,27 @@
+    VkResult result = vn_image_create(dev, create_info, alloc, &img);
+    if (result != VK_SUCCESS)
+       return result;
++
++   if (direct_wsi) {
++      VkImageDrmFormatModifierPropertiesEXT props = {
++         .sType = VK_STRUCTURE_TYPE_IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT,
++         .drmFormatModifier = UINT64_MAX,
++      };
++      bool linear = create_info->tiling == VK_IMAGE_TILING_LINEAR;
++      if (create_info->tiling == VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT) {
++         result = vn_GetImageDrmFormatModifierPropertiesEXT(
++            vn_device_to_handle(dev), vn_image_to_handle(img), &props);
++         linear = result == VK_SUCCESS && props.drmFormatModifier == DRM_FORMAT_MOD_LINEAR;
++      }
++      vn_log(dev->instance,
++             "WSX_WSI_LAYOUT: contract=linear-v1 extent=%ux%u tiling=%u modifier=%" PRIu64 " result=%d linear=%u",
++             create_info->extent.width, create_info->extent.height,
++             create_info->tiling, props.drmFormatModifier, result, linear);
++      if (!linear) {
++         vn_DestroyImage(vn_device_to_handle(dev), vn_image_to_handle(img), alloc);
++         return VK_ERROR_FORMAT_NOT_SUPPORTED;
++      }
++   }
+ 
+    img->wsi.is_prime_blit_src = wsi_info->blit_src;
+    if (VN_DEBUG(WSI)) {
+--- a/src/virtio/vulkan/vn_physical_device.c
++++ b/src/virtio/vulkan/vn_physical_device.c
+@@ -2797,6 +2797,11 @@
+       }
+    }
+ 
++   if (wsi_info && getenv("WSX_VENUS_DIRECT_WSI"))
++      vn_log(physical_dev->instance,
++             "WSX_WSI_QUERY: format=%u tiling=%u usage=0x%x flags=0x%x result=%d",
++             pImageFormatInfo->format, pImageFormatInfo->tiling, pImageFormatInfo->usage,
++             pImageFormatInfo->flags, result);
+    return vn_result(physical_dev->instance, result);
+ }
+ 

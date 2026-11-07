@@ -1,0 +1,13 @@
+{
+  "upstream": "v4.0.6",
+  "files": {
+    "shell/plugins/panels/network/Panel.qml": {
+      "before": "1e551a8d109535d2673ec9bb08faea01acdba27141c82aae6b7ae3be8da3c002",
+      "after": "a547dc0ca0dc543548d9e0067d94054efbd158b51c4807aa6a1855e852444a76"
+    },
+    "install/user/first-run/wifi.sh": {
+      "before": "4cc2621157be1efe6d449d1daa7b28d588e4a8e46127de493da03749af1ae5a7",
+      "after": "520eae0a1da923cbe9869c793a027523d34777d337f4bab4141d431645df3714"
+    }
+  }
+}

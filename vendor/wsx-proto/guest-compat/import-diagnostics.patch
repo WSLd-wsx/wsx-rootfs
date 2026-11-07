@@ -1,0 +1,83 @@
+--- a/src/gallium/frontends/dri/dri2.c
++++ b/src/gallium/frontends/dri/dri2.c
+@@ -830,8 +830,12 @@
+          tex_usage |= PIPE_BIND_SAMPLER_VIEW;
+    }
+ 
+-   if (!tex_usage)
++   if (!tex_usage) {
++      static unsigned wsx_reject_count;
++      if (wsx_reject_count++ < 8)
++         mesa_loge("WSX_IMPORT_DIAG stage=format format=%u modifier=%llx size=%dx%d bind=%x", map->pipe_format, (unsigned long long)modifier, width, height, bind);
+       return NULL;
++   }
+ 
+    img = CALLOC_STRUCT(dri_image);
+    if (!img)
+@@ -858,6 +862,9 @@
+ 
+       tex = pscreen->resource_from_handle(pscreen, &templ, &whandle[i], handle_usage);
+       if (!tex) {
++         static unsigned wsx_reject_count;
++         if (wsx_reject_count++ < 8)
++            mesa_loge("WSX_IMPORT_DIAG stage=resource format=%u modifier=%llx size=%dx%d bind=%x usage=%x plane=%d stride=%u offset=%u", templ.format, (unsigned long long)modifier, width, height, templ.bind, handle_usage, i, whandle[i].stride, whandle[i].offset);
+          pipe_resource_reference(&img->texture, NULL);
+          FREE(img);
+          return NULL;
+@@ -882,6 +889,9 @@
+                &templ, &whandle[use_lowered ? map->planes[i].buffer_index : i],
+                handle_usage);
+       if (!tex) {
++         static unsigned wsx_reject_count;
++         if (wsx_reject_count++ < 8)
++            mesa_loge("WSX_IMPORT_DIAG stage=resource format=%u modifier=%llx size=%dx%d bind=%x usage=%x plane=%d stride=%u offset=%u", templ.format, (unsigned long long)modifier, width, height, templ.bind, handle_usage, i, whandle[i].stride, whandle[i].offset);
+          pipe_resource_reference(&img->texture, NULL);
+          FREE(img);
+          return NULL;
+--- a/src/gallium/drivers/zink/zink_resource.c
++++ b/src/gallium/drivers/zink/zink_resource.c
+@@ -1312,8 +1312,12 @@
+       if (!format_list)
+          return roc_fail_and_free_object;
+    }
+-   if (!success)
++   if (!success) {
++      static unsigned wsx_count;
++      if (alloc_info->whandle && wsx_count++ < 8)
++         mesa_loge("WSX_IMPORT_DIAG stage=image_usage format=%u vkformat=%u tiling=%u usage=%x flags=%x bind=%x modifier=%llx", templ->format, ici.format, ici.tiling, ici.usage, ici.flags, templ->bind, (unsigned long long)alloc_info->whandle->modifier);
+       return roc_fail_and_free_object;
++   }
+ 
+    if (ici.tiling == VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT && srgb &&
+       util_format_get_nr_components(srgb) == 4 &&
+@@ -1527,6 +1531,9 @@
+    }
+ 
+    if (!get_export_flags(screen, templ, &alloc_info)) {
++      static unsigned wsx_count;
++      if (alloc_info.whandle && wsx_count++ < 8)
++         mesa_loge("WSX_IMPORT_DIAG stage=export_flags format=%u bind=%x dma_buf=%u", templ->format, templ->bind, screen->info.have_EXT_external_memory_dma_buf);
+       /* can't export anything, fail early */
+       return NULL;
+    }
+--- a/src/gallium/drivers/zink/zink_resource.c
++++ b/src/gallium/drivers/zink/zink_resource.c
+@@ -2118,6 +2118,9 @@
+                bind |= PIPE_BIND_SHARED;
+             zink_screen_lock_context(screen);
+             if (!add_resource_bind(screen->copy_context, res, bind)) {
++               static unsigned wsx_count;
++               if (wsx_count++ < 8)
++                  mesa_loge("WSX_EXPORT_DIAG stage=rebind format=%u size=%ux%u bind=%x modifiers=%u", res->base.b.format, res->base.b.width0, res->base.b.height0, res->base.b.bind, res->modifiers_count);
+                zink_screen_unlock_context(screen);
+                return false;
+             }
+@@ -2135,7 +2138,7 @@
+          fd_info.handleType = VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT;
+          VkResult result = VKSCR(GetMemoryFdKHR)(screen->dev, &fd_info, &fd);
+          if (result != VK_SUCCESS) {
+-            mesa_loge("ZINK: vkGetMemoryFdKHR failed");
++            mesa_loge("WSX_EXPORT_DIAG stage=get_fd result=%d format=%u bind=%x modifier=%llx", result, res->base.b.format, res->base.b.bind, (unsigned long long)obj->modifier);
+             return false;
+          }
+          if (whandle->type == WINSYS_HANDLE_TYPE_KMS) {

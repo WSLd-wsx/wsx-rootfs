@@ -1,0 +1,104 @@
+--- a/shell/plugins/panels/network/Panel.qml
++++ b/shell/plugins/panels/network/Panel.qml
+@@ -65,7 +65,10 @@
+     "Counting collisions",
+     "Bending light",
+   ]
+-  readonly property string connectionPhrase: connectionPhrases[connectionPhraseIndex % connectionPhrases.length]
++  readonly property string connectionPhrase: wslNetworking ? "Managed by Windows" : connectionPhrases[connectionPhraseIndex % connectionPhrases.length]
++  // WSL owns its links and DNS; observe the actual default route without NM.
++  readonly property bool wslNetworking: Quickshell.env("WSX_WSL_NETWORK") === "1"
++  property var wslStatus: ({kind: "disconnected", label: ""})
+   readonly property bool networkManagerAvailable: Networking.backend === NetworkBackendType.NetworkManager
+   readonly property var networkDevices: Networking.devices ? Networking.devices.values : []
+   readonly property var wifiDevice: findDevice(DeviceType.Wifi)
+@@ -438,6 +441,7 @@
+   // when both are up, matching the default-route device.
+   readonly property var wiredDevice: findDevice(DeviceType.Wired)
+   readonly property string kind: {
++    if (wslNetworking) return wslStatus.kind
+     if (wiredDevice && wiredDevice.connected) return "ethernet"
+     if (connectedWifiNetwork) return "wifi"
+     return "disconnected"
+@@ -472,11 +476,12 @@
+   function refresh(scanWifi) {
+     if (scanWifi === undefined) scanWifi = false
+     if (!detailsProc.running) detailsProc.running = true
+-    if (!dnsProc.running) {
++    if (wslNetworking && !wslStatusProc.running) wslStatusProc.running = true
++    if (!wslNetworking && !dnsProc.running) {
+       dnsProc.command = ["bash", "-c", root.dnsCommand("")]
+       dnsProc.running = true
+     }
+-    if (!bandProc.running) {
++    if (!wslNetworking && !bandProc.running) {
+       bandProc.command = ["omarchy-network-band"]
+       bandProc.running = true
+     }
+@@ -666,6 +671,7 @@
+   }
+ 
+   function setDns(provider) {
++    if (wslNetworking) return
+     if (!root.bar || !provider || actionProc.running) return
+ 
+     if (provider === "Custom") {
+@@ -807,6 +813,24 @@
+ 
+   Component.onCompleted: refresh()
+ 
++  Process {
++    id: wslStatusProc
++    command: ["omarchy-network-status"]
++    stdout: StdioCollector {
++      waitForEnd: true
++      onStreamFinished: root.wslStatus = Model.parseNetworkStatus(text)
++    }
++    onExited: function(code, status) {
++      if (code !== 0 || status !== 0) root.wslStatus = ({kind: "disconnected", label: ""})
++    }
++  }
++  Timer {
++    interval: 2000
++    repeat: true
++    running: root.wslNetworking
++    onTriggered: if (!wslStatusProc.running) wslStatusProc.running = true
++  }
++
+   // Pulls everything we want about the active route's interface in one shot.
+   Process {
+     id: detailsProc
+@@ -858,7 +882,7 @@
+     id: bandPoll
+     interval: 4000
+     repeat: true
+-    running: root.opened
++    running: root.opened && !root.wslNetworking
+     onTriggered: {
+       if (bandProc.running) return
+       bandProc.command = ["omarchy-network-band"]
+@@ -1096,7 +1120,7 @@
+           color: root.bar.foreground
+           font.family: root.bar.fontFamily
+           font.pixelSize: Style.font.display
+-          opacity: root.networkManagerAvailable ? 1.0 : 0.5
++          opacity: (root.networkManagerAvailable || root.wslNetworking) ? 1.0 : 0.5
+           anchors.left: parent.left
+           anchors.verticalCenter: parent.verticalCenter
+         }
+@@ -1399,12 +1423,14 @@
+ 
+       }
+ 
+-      // DNS provider selection.
++      // WSL DNS is supplied by Windows, not a Guest NetworkManager profile.
+       PanelSeparator {
++        visible: !root.wslNetworking
+         foreground: root.bar.foreground
+       }
+ 
+       Column {
++        visible: !root.wslNetworking
+         width: parent.width
+         spacing: Style.space(10)
+ 

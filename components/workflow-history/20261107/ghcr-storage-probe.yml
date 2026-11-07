@@ -1,0 +1,32 @@
+name: Private GHCR transport probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: ghcr-storage-probe
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check source and binary workflow access
+        id: access
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/check-workflow-access.py --repo "$REPOSITORY" --operation binary-build
+      - name: Publish and read back a private non-runtime probe
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          nproc
+          free -m
+          mkdir -p out/registry-probe
+          printf '{"probe_only":true}\n' > out/registry-probe/manifest.json
+          python3 scripts/component_registry.py out/registry-probe --profile omarchy --probe

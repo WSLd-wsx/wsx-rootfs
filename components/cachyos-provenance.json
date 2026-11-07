@@ -1,0 +1,56 @@
+{
+  "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
+  "scope": "Inspected working-tree patch inputs; historical binary is independently pinned by the component package manifest.",
+  "files": [
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/prepare-kwin.py",
+      "sha256": "8d6de4393d10bab48c2c44ca31638daf8edbc2e8a3364b573e11b0ffcaa31741",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/prepare-kwin.py"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kwin-opaque-consumer.patch",
+      "sha256": "85c132f9ff079ed4922e512428f5c80137516915d7f8a51c56c7e0a0d68e5f72",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-opaque-consumer.patch"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kwin-native-buffer.h",
+      "sha256": "6325bd6ecd0a6ee5d25bf0a88fc0c0bcae90ea595ba9efc88f98e9e3ddc6c3bb",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-native-buffer.h"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kwin-framebuffer.c",
+      "sha256": "9b1d540036cc7709b0e3bd70767522772414b8880d4ef256a6400830b6c70ce1",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-framebuffer.c"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kwin-framebuffer.h",
+      "sha256": "0b0fd3d598e9bd2a2546b0a62bdafea20db1497ff6094f4407bef3e0049afb46",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-framebuffer.h"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kwin-wayland.inc",
+      "sha256": "bdc65ff61f61d24236e3efbbb754da788819aca8df69fd8e6b8ab01248b73d58",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-wayland.inc"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/gbm-descriptor.c",
+      "sha256": "88eacf59680d17b47a7f3c6d1e7fe4b970a7ef381fd2f3a5c944af444bca82e3",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/gbm-descriptor.c"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/gbm-descriptor.h",
+      "sha256": "f07e7fae5abf1d419290612f23105f2789fd027375469f001177744fdb83727a",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/gbm-descriptor.h"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/wsx-opaque-uapi.h",
+      "sha256": "43745e497258880e938a303bf21b7b47431a62ab186449504088d926ccf29e6d",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/wayland/wsx-opaque-buffer-v1.xml",
+      "sha256": "76bd33d58bc275846e78092f1d6e7eaab37b1423d9d3e8535508520ff13ce4c8",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/wayland/wsx-opaque-buffer-v1.xml"
+    }
+  ]
+}

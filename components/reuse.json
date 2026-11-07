@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "omarchy": {
+      "transport": "ghcr",
+      "run_id": 41831647428,
+      "source_commit": "a48128c2904b8388d6b0789a52bf576a0d10e54e",
+      "image": "ghcr.io/wsld-wsx/wsx-rootfs-ops/graphics-components@sha256:25091ddb2254e82d6092fefb01a85cb570314b5645d153979001d4ddf187bb74",
+      "manifest_sha256": "c662e3f118915073945d3d12c5a40540bdbbd461c75aad5bf16f9fcc2a7c601f"
+    },
+    "cachyos-plasma": {
+      "transport": "ghcr",
+      "image": "ghcr.io/wsld-wsx/wsx-rootfs-ops/graphics-components@sha256:1aff27b3e6ff8bd92b41aa9e708ee324890bd7ea2004ef796e59a0da0e7df288",
+      "run_id": 41831653214,
+      "source_commit": "a48128c2904b8388d6b0789a52bf576a0d10e54e",
+      "manifest_sha256": "b223c6c516b49ec78b6993e80fbbaf759af10a89621555a33e30daa7b2afec90"
+    }
+  }
+}

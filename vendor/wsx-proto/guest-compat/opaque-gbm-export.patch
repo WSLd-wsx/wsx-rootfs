@@ -1,0 +1,261 @@
+--- a/src/gallium/drivers/zink/zink_resource.c
++++ b/src/gallium/drivers/zink/zink_resource.c
+@@ -1,3 +1,6 @@
++#if defined(HAVE_LIBDRM) && !defined(_WIN32)
++#include "wsx/gbm-descriptor.h"
++#endif
+ /*
+  * Copyright 2018 Collabora Ltd.
+  *
+@@ -1300,6 +1303,65 @@
+    return roc_success;
+ }
+ 
++/* WSX adapter: opt-in alone is insufficient. The paired kernel/Host must
++ * negotiate descriptor support and Vulkan must admit this exact image. */
++static bool
++wsx_opaque_export_supported(struct zink_screen *screen, const VkImageCreateInfo *ici,
++                            VkExternalMemoryHandleTypeFlags handles)
++{
++#if defined(HAVE_LIBDRM) && !defined(_WIN32)
++   if (wsx_gbm_opaque_supported(screen->drm_fd) != 1)
++      return false;
++   if (!screen->info.have_KHR_dedicated_allocation ||
++       !VKSCR(GetPhysicalDeviceImageFormatProperties2) ||
++       ici->imageType != VK_IMAGE_TYPE_2D || ici->extent.depth != 1 ||
++       ici->mipLevels != 1 || ici->arrayLayers != 1 || ici->samples != VK_SAMPLE_COUNT_1_BIT ||
++       (ici->format != VK_FORMAT_B8G8R8A8_UNORM && ici->format != VK_FORMAT_R8G8B8A8_UNORM) ||
++       ici->sharingMode != VK_SHARING_MODE_EXCLUSIVE ||
++       (ici->flags & (VK_IMAGE_CREATE_SPARSE_BINDING_BIT | VK_IMAGE_CREATE_DISJOINT_BIT)))
++      return false;
++   const VkExternalMemoryHandleTypeFlags allowed = VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT |
++      VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT;
++   if (!(handles & VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT) || (handles & ~allowed))
++      return false;
++   for (unsigned bit = 0; bit < 32; bit++) {
++      VkExternalMemoryHandleTypeFlagBits handle = 1u << bit;
++      if (!(handles & handle)) continue;
++      VkPhysicalDeviceExternalImageFormatInfo external = {
++         .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
++         .pNext = ici->pNext, .handleType = handle,
++      };
++      VkPhysicalDeviceImageFormatInfo2 info = {
++         .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2,
++         .pNext = &external, .format = ici->format, .type = ici->imageType,
++         .tiling = ici->tiling, .usage = ici->usage, .flags = ici->flags,
++      };
++      VkExternalImageFormatProperties external_props = {
++         .sType = VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES,
++      };
++      VkImageFormatProperties2 props = {
++         .sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2, .pNext = &external_props,
++      };
++      VkResult result = VKSCR(GetPhysicalDeviceImageFormatProperties2)(screen->pdev, &info, &props);
++      const VkExternalMemoryProperties *caps = &external_props.externalMemoryProperties;
++      const VkExternalMemoryFeatureFlags required = VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT |
++         VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT;
++      bool accepted = result == VK_SUCCESS && (caps->externalMemoryFeatures & required) == required &&
++         (caps->compatibleHandleTypes & handles) == handles &&
++         ici->extent.width <= props.imageFormatProperties.maxExtent.width &&
++         ici->extent.height <= props.imageFormatProperties.maxExtent.height &&
++         (props.imageFormatProperties.sampleCounts & ici->samples);
++      mesa_logi("WSX_OPAQUE_EXPORT_QUERY: format=%u extent=%ux%u tiling=%u usage=%x flags=%x handle=%x result=%d features=%x compatible=%x accepted=%u",
++         ici->format, ici->extent.width, ici->extent.height, ici->tiling, ici->usage, ici->flags,
++         handle, result, caps->externalMemoryFeatures, caps->compatibleHandleTypes, accepted);
++      if (!accepted) return false;
++   }
++   return true;
++#else
++   return false;
++#endif
++}
++
+ static inline enum resource_object_create_result
+ create_image(struct zink_screen *screen, struct zink_resource_object *obj,
+              const struct pipe_resource *templ, bool *linear,
+@@ -1387,7 +1449,19 @@
+ 
+    obj->render_target = (ici.usage & VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) != 0;
+ 
+-   if (ici.tiling == VK_IMAGE_TILING_OPTIMAL) {
++   bool opaque_requested = ici.tiling == VK_IMAGE_TILING_OPTIMAL &&
++      !alloc_info->whandle && !alloc_info->user_mem &&
++      (alloc_info->export_types & VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT) &&
++      debug_get_bool_option("WSX_ZINK_OPAQUE_SHARED", false);
++   if (opaque_requested) {
++      if (!wsx_opaque_export_supported(screen, &ici, alloc_info->export_types)) {
++         mesa_loge("WSX_OPAQUE_EXPORT_REJECT: exact capability or paired descriptor transport unavailable");
++         return roc_fail_and_free_object;
++      }
++      obj->wsx_opaque_shared = true;
++      alloc_info->shared = true;
++   }
++   if (ici.tiling == VK_IMAGE_TILING_OPTIMAL && !obj->wsx_opaque_shared) {
+       alloc_info->external &= ~VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT;
+       alloc_info->export_types &= ~VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT;
+    }
+@@ -1396,7 +1470,7 @@
+       emici.sType = VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO;
+       emici.pNext = ici.pNext;
+       emici.handleTypes = alloc_info->export_types;
+-      assert(!(emici.handleTypes & VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT) || ici.tiling != VK_IMAGE_TILING_OPTIMAL);
++      assert(!(emici.handleTypes & VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT) || ici.tiling != VK_IMAGE_TILING_OPTIMAL || obj->wsx_opaque_shared);
+       ici.pNext = &emici;
+ 
+       assert(ici.tiling != VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT || mod != DRM_FORMAT_MOD_INVALID);
+@@ -1426,7 +1500,7 @@
+          idfmlci.drmFormatModifierCount = modifiers_count;
+          idfmlci.pDrmFormatModifiers = modifiers;
+          ici.pNext = &idfmlci;
+-      } else if (ici.tiling == VK_IMAGE_TILING_OPTIMAL) {
++      } else if (ici.tiling == VK_IMAGE_TILING_OPTIMAL && !obj->wsx_opaque_shared) {
+          alloc_info->shared = false;
+       }
+    } else if (alloc_info->user_mem) {
+@@ -1507,6 +1581,8 @@
+       !(linear_features & VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT) &&
+       (linear_features & VK_FORMAT_FEATURE_2_LINEAR_COLOR_ATTACHMENT_BIT_NV);
+    alloc_info->need_dedicated = get_image_memory_requirement(screen, obj, num_planes, &reqs);
++   if (obj->wsx_opaque_shared)
++      alloc_info->need_dedicated = true;
+    if (obj->wsx_conditional_linear_color && (alloc_info->shared || alloc_info->external))
+       alloc_info->need_dedicated = true;
+    if (templ->usage == PIPE_USAGE_STAGING && ici.tiling == VK_IMAGE_TILING_LINEAR)
+@@ -1960,6 +2036,7 @@
+    struct zink_screen *screen = zink_screen(pscreen);
+    struct zink_resource *res = zink_resource(pres);
+    struct zink_resource_object *obj = res->obj;
++   if (obj->wsx_opaque_shared && (plane || layer || level)) return false;
+    struct winsys_handle whandle;
+    VkImageAspectFlags aspect;
+    if (obj->modifier_aspect) {
+@@ -1993,6 +2070,7 @@
+       break;
+ 
+    case PIPE_RESOURCE_PARAM_STRIDE: {
++      if (obj->wsx_opaque_shared) return false;
+ #ifdef HAVE_LIBDRM
+       if (res->ro_scanout) {
+          *value = res->ro_scanout->stride;
+@@ -2011,6 +2089,7 @@
+    }
+ 
+    case PIPE_RESOURCE_PARAM_OFFSET: {
++      if (obj->wsx_opaque_shared) { *value = 0; break; }
+ #ifdef HAVE_LIBDRM
+          if (res->ro_scanout) {
+             *value = 0;
+@@ -2034,6 +2113,7 @@
+    }
+ 
+    case PIPE_RESOURCE_PARAM_LAYER_STRIDE: {
++         if (obj->wsx_opaque_shared) return false;
+          VkImageSubresource isr = {
+             aspect,
+             level,
+@@ -2092,6 +2172,9 @@
+                          struct winsys_handle *whandle,
+                          unsigned usage)
+ {
++   if (zink_resource(tex)->obj->wsx_opaque_shared &&
++       whandle->type != WINSYS_HANDLE_TYPE_FD && whandle->type != WINSYS_HANDLE_TYPE_KMS)
++      return false;
+    if (tex->target == PIPE_BUFFER)
+       tc_buffer_disable_cpu_storage(tex);
+ #ifdef HAVE_LIBDRM
+@@ -2107,12 +2190,18 @@
+       struct zink_resource *res = zink_resource(tex);
+       struct zink_screen *screen = zink_screen(pscreen);
+       struct zink_resource_object *obj = res->obj;
++      if (obj->wsx_opaque_shared && whandle->plane) return false;
+ 
+ #if !defined(_WIN32)
+       if (whandle->type == WINSYS_HANDLE_TYPE_KMS && screen->drm_fd == -1) {
+          whandle->handle = -1;
+       } else {
+          if (!res->obj->exportable) {
++            if (!res->linear && obj->modifier == DRM_FORMAT_MOD_INVALID &&
++                debug_get_bool_option("WSX_ZINK_OPAQUE_SHARED", false)) {
++               mesa_loge("WSX_OPAQUE_EXPORT_REJECT: internal optimal storage requires a fresh shared allocation; copy rebind disabled");
++               return false;
++            }
+             assert(!zink_resource_usage_is_unflushed(res));
+             if (!screen->info.have_EXT_image_drm_format_modifier) {
+                static bool warned = false;
+@@ -2147,6 +2236,26 @@
+             mesa_loge("WSX_EXPORT_DIAG stage=get_fd result=%d format=%u bind=%x modifier=%llx", result, res->base.b.format, res->base.b.bind, (unsigned long long)obj->modifier);
+             return false;
+          }
++         if (obj->wsx_opaque_shared) {
++#if defined(HAVE_LIBDRM)
++            struct drm_wsx_opaque_query descriptor;
++            int status = wsx_gbm_register_opaque_fd(screen->drm_fd, fd,
++               res->base.b.width0, res->base.b.height0, res->format, &descriptor);
++            if (status || descriptor.contract.usage != obj->vkusage ||
++                descriptor.contract.image_flags != obj->vkflags) {
++               mesa_loge("WSX_OPAQUE_EXPORT_REJECT: fd=%d status=%d usage_expected=%llx flags_expected=%llx",
++                  fd, status, (unsigned long long)obj->vkusage, (unsigned long long)obj->vkflags);
++               close(fd);
++               return false;
++            }
++            mesa_logi("WSX_OPAQUE_GBM_FD: fd=%d resource=%u epoch=%llu generation=%llu extent=%ux%u tiling=0 descriptor_registered=1",
++               fd, descriptor.contract.resource_id, (unsigned long long)descriptor.contract.context_epoch,
++               (unsigned long long)descriptor.contract.image_generation, res->base.b.width0, res->base.b.height0);
++#else
++            close(fd);
++            return false;
++#endif
++         }
+          if (screen->wsx_linear_shared) {
+             static unsigned wsx_export_count;
+             if (wsx_export_count++ < 16)
+@@ -2177,6 +2286,14 @@
+          return false;
+       whandle->handle = handle;
+ #endif
++      if (obj->wsx_opaque_shared) {
++         /* INVALID means no DRM modifier; stride zero is unavailable, not a
++          * native pitch. Consumers need the tagged GEM descriptor contract. */
++         whandle->modifier = DRM_FORMAT_MOD_INVALID;
++         whandle->offset = 0;
++         whandle->stride = 0;
++         return true;
++      }
+       uint64_t value;
+       zink_resource_get_param(pscreen, context, tex, 0, 0, 0, PIPE_RESOURCE_PARAM_MODIFIER, 0, &value);
+       whandle->modifier = value;
+--- a/src/gallium/drivers/zink/zink_types.h
++++ b/src/gallium/drivers/zink/zink_types.h
+@@ -1230,6 +1230,7 @@
+    bool is_buffer;
+    bool exportable;
+    bool exportable_dmabuf;
++   bool wsx_opaque_shared; /* Explicit paired descriptor transport; never a DRM modifier. */
+    bool wsx_conditional_linear_color;
+ 
+    /* TODO: this should be a union */
+--- a/src/gallium/drivers/zink/meson.build
++++ b/src/gallium/drivers/zink/meson.build
+@@ -24,6 +24,10 @@
+   'zink_surface.c',
+   'zink_synchronization.cpp',
+ )
++
++if dep_libdrm.found() and host_machine.system() != 'windows'
++  files_libzink += files('wsx/gbm-descriptor.c')
++endif
+ 
+ zink_device_info = custom_target(
+   'zink_device_info.c',
+--- a/src/gallium/frontends/dri/dri2.c
++++ b/src/gallium/frontends/dri/dri2.c
+@@ -1141,6 +1141,9 @@
+ 
+    switch (attrib) {
+    case __DRI_IMAGE_ATTRIB_STRIDE:
++      /* Opaque exports have no public linear pitch. Do not manufacture one
++       * through the legacy resource-handle fallback. */
++      if (!whandle.stride) return false;
+       *value = whandle.stride;
+       return true;
+    case __DRI_IMAGE_ATTRIB_OFFSET:

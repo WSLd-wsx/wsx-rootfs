@@ -1,0 +1,22 @@
+#!/bin/bash
+# Contact the real user manager while preserving the active graphical session.
+set -euo pipefail
+: "${XDG_RUNTIME_DIR:?Missing graphical session runtime}"
+keys=(XDG_RUNTIME_DIR DBUS_SESSION_BUS_ADDRESS WAYLAND_DISPLAY DISPLAY XAUTHORITY
+      XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
+      HYPRLAND_INSTANCE_SIGNATURE PATH LANG LC_ALL
+      LD_LIBRARY_PATH LIBGL_DRIVERS_PATH GBM_BACKENDS_PATH GBM_BACKEND
+      __GLX_VENDOR_LIBRARY_NAME __EGL_VENDOR_LIBRARY_FILENAMES
+      MESA_LOADER_DRIVER_OVERRIDE GALLIUM_DRIVER VK_DRIVER_FILES
+      WSX_ZINK_LINEAR_FEEDBACK_COMPAT WSX_ZINK_NEGOTIATE_EXPORT WSX_VENUS_OPAQUE_IMPORT WSX_VENUS_DIRECT_WSI
+      WSX_ZINK_CACHED_HOST_MEMORY WSX_ZINK_PRESENTATION_FALLBACK WSX_WSL_NETWORK MANGOHUD)
+session_env=()
+unset_args=()
+for key in "${keys[@]}"; do
+  unset_args+=(-u "$key")
+  if [[ -v $key ]]; then session_env+=("$key=${!key}"); fi
+done
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+export DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus
+exec /usr/bin/uwsm-app -t scope -- /usr/bin/env \
+  "${unset_args[@]}" "${session_env[@]}" "$@"

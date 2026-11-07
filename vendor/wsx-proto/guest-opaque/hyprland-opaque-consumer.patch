@@ -1,0 +1,184 @@
+--- a/src/render/OpenGL.cpp
++++ b/src/render/OpenGL.cpp
+@@ -1,3 +1,4 @@
++#include "wsx/gbm-descriptor.h"
+ #include <GLES3/gl32.h>
+ #include <cstdint>
+ #include <hyprgraphics/color/Color.hpp>
+@@ -612,6 +613,12 @@
+     m_drmFormats = dmaFormats;
+ }
+ 
++bool CHyprOpenGLImpl::wsxOpaqueSupported() const {
++    const char* extensions = eglQueryString(m_eglDisplay, EGL_EXTENSIONS);
++    return extensions && std::string_view(extensions).contains("EGL_WSX_opaque_image") &&
++        wsx_gbm_opaque_consumer_supported(m_drmFD) == 1;
++}
++
+ EGLImageKHR CHyprOpenGLImpl::createEGLImage(const Aquamarine::SDMABUFAttrs& attrs) {
+     std::array<EGLint, 50> attribs;
+     size_t                 idx = 0;
+@@ -651,6 +658,16 @@
+         }
+     }
+ 
++    if (attrs.planes == 1 && attrs.strides[0] == 0 && attrs.modifier == DRM_FORMAT_MOD_INVALID) {
++        drm_wsx_opaque_query descriptor{};
++        uint32_t format = attrs.format == DRM_FORMAT_ARGB8888 || attrs.format == DRM_FORMAT_XRGB8888 ? 44 :
++            attrs.format == DRM_FORMAT_ABGR8888 || attrs.format == DRM_FORMAT_XBGR8888 ? 37 : 0;
++        if (!wsxOpaqueSupported() || !format || attrs.offsets[0] ||
++            wsx_gbm_lookup_opaque_fd(m_drmFD, attrs.fds[0], attrs.size.x, attrs.size.y, format, &descriptor))
++            return EGL_NO_IMAGE_KHR;
++        attribs[idx++] = EGL_WSX_OPAQUE_DESCRIPTOR;
++        attribs[idx++] = EGL_TRUE;
++    }
+     attribs[idx++] = EGL_IMAGE_PRESERVED_KHR;
+     attribs[idx++] = EGL_TRUE;
+     attribs[idx++] = EGL_NONE;
+--- a/src/render/OpenGL.hpp
++++ b/src/render/OpenGL.hpp
+@@ -236,6 +236,7 @@
+ 
+         std::vector<SDRMFormat>                   getDRMFormats();
+         std::vector<uint64_t>                     getDRMFormatModifiers(DRMFormat format);
++    bool wsxOpaqueSupported() const;
+         EGLImageKHR                               createEGLImage(const Aquamarine::SDMABUFAttrs& attrs);
+ 
+         bool                                      initShaders(const std::string& path = "");
+--- a/src/protocols/LinuxDMABUF.hpp
++++ b/src/protocols/LinuxDMABUF.hpp
+@@ -109,7 +109,10 @@
+ class CLinuxDMABufV1Protocol : public IWaylandProtocol {
+   public:
+     CLinuxDMABufV1Protocol(const wl_interface* iface, const int& ver, const std::string& name);
+-    ~CLinuxDMABufV1Protocol() = default;
++    ~CLinuxDMABufV1Protocol();
++    static void bindOpaque(wl_client* client, void* data, uint32_t ver, uint32_t id);
++    void createOpaque(wl_client* client, wl_resource* manager, uint32_t id, int fd,
++                      uint32_t width, uint32_t height, uint32_t format);
+ 
+     virtual void bindManager(wl_client* client, void* data, uint32_t ver, uint32_t id);
+     void         updateScanoutTranche(SP<CWLSurfaceResource> surface, PHLMONITOR pMonitor);
+@@ -129,6 +132,8 @@
+     std::vector<UP<CLinuxDMABUFParamsResource>>   m_params;
+     std::vector<UP<CLinuxDMABuffer>>              m_buffers;
+ 
++    wl_global* m_opaqueGlobal = nullptr;
++    std::vector<wl_resource*> m_opaqueManagers;
+     UP<CDMABUFFormatTable>                        m_formatTable;
+     dev_t                                         m_mainDevice;
+     Hyprutils::OS::CFileDescriptor                m_mainDeviceFD;
+--- a/src/protocols/LinuxDMABUF.cpp
++++ b/src/protocols/LinuxDMABUF.cpp
+@@ -1,3 +1,5 @@
++#include "wsx/gbm-descriptor.h"
++#include "wsx/wsx-opaque-buffer-v1-server.h"
+ #include "LinuxDMABUF.hpp"
+ #include <algorithm>
+ #include <set>
+@@ -452,6 +454,9 @@
+         }
+ 
+         m_mainDevice = *dev;
++        if (Render::GL::g_pHyprOpenGL->wsxOpaqueSupported())
++            m_opaqueGlobal = wl_global_create(g_pCompositor->m_wlDisplay,
++                &wsx_opaque_buffer_manager_v1_interface, 1, this, bindOpaque);
+ 
+         SDMABUFTranche eglTranche = {
+             .device  = m_mainDevice,
+@@ -652,3 +657,53 @@
+ dev_t CLinuxDMABufV1Protocol::getMainDevice() {
+     return m_mainDevice;
+ }
++
++// The private manager only constructs ordinary wl_buffers after kernel lookup.
++// Existing buffer references and synchronization own the fd until retirement.
++void CLinuxDMABufV1Protocol::bindOpaque(wl_client* client, void* data, uint32_t, uint32_t id) {
++    auto* self = static_cast<CLinuxDMABufV1Protocol*>(data);
++    auto* resource = wl_resource_create(client, &wsx_opaque_buffer_manager_v1_interface, 1, id);
++    if (!resource) { wl_client_post_no_memory(client); return; }
++    static const struct wsx_opaque_buffer_manager_v1_interface implementation = {
++        .destroy = [](wl_client*, wl_resource* r) { wl_resource_destroy(r); },
++        .create_buffer = [](wl_client* c, wl_resource* r, uint32_t id, int fd, uint32_t w, uint32_t h, uint32_t f) {
++            static_cast<CLinuxDMABufV1Protocol*>(wl_resource_get_user_data(r))->createOpaque(c, r, id, fd, w, h, f);
++        },
++    };
++    self->m_opaqueManagers.push_back(resource);
++    wl_resource_set_implementation(resource, &implementation, self, [](wl_resource* r) {
++        auto* self = static_cast<CLinuxDMABufV1Protocol*>(wl_resource_get_user_data(r));
++        std::erase(self->m_opaqueManagers, r);
++    });
++}
++
++void CLinuxDMABufV1Protocol::createOpaque(wl_client* client, wl_resource* manager, uint32_t id,
++                                         int fd, uint32_t width, uint32_t height, uint32_t format) {
++    CFileDescriptor owned{fd};
++    drm_wsx_opaque_query query{};
++    uint32_t vkFormat = format == DRM_FORMAT_ARGB8888 || format == DRM_FORMAT_XRGB8888 ? 44 :
++        format == DRM_FORMAT_ABGR8888 || format == DRM_FORMAT_XBGR8888 ? 37 : 0;
++    if (!Render::GL::g_pHyprOpenGL->wsxOpaqueSupported() || !vkFormat ||
++        wsx_gbm_lookup_opaque_fd(m_mainDeviceFD.get(), fd, width, height, vkFormat, &query)) {
++        wl_resource_post_error(manager, WSX_OPAQUE_BUFFER_MANAGER_V1_ERROR_INVALID_DESCRIPTOR,
++                               "WSX opaque PRIME descriptor rejected");
++        return;
++    }
++    Aquamarine::SDMABUFAttrs attrs{};
++    attrs.success = true; attrs.planes = 1; attrs.size = Vector2D{static_cast<double>(width), static_cast<double>(height)};
++    attrs.format = format; attrs.modifier = DRM_FORMAT_MOD_INVALID;
++    attrs.fds.fill(-1); attrs.fds[0] = owned.take();
++    attrs.strides.fill(0); attrs.offsets.fill(0);
++    auto buffer = makeUnique<CLinuxDMABuffer>(id, client, attrs);
++    if (!buffer->good()) {
++        wl_resource_post_error(manager, WSX_OPAQUE_BUFFER_MANAGER_V1_ERROR_INVALID_DESCRIPTOR,
++                               "WSX opaque EGL import rejected");
++        return;
++    }
++    m_buffers.push_back(std::move(buffer));
++}
++
++CLinuxDMABufV1Protocol::~CLinuxDMABufV1Protocol() {
++    if (m_opaqueGlobal) wl_global_destroy(m_opaqueGlobal);
++    while (!m_opaqueManagers.empty()) wl_resource_destroy(m_opaqueManagers.back());
++}
+--- a/src/protocols/types/DMABuffer.cpp
++++ b/src/protocols/types/DMABuffer.cpp
+@@ -11,7 +11,8 @@
+ 
+ CDMABuffer::CDMABuffer(uint32_t id, wl_client* client, Aquamarine::SDMABUFAttrs const& attrs_) : m_attrs(attrs_) {
+     m_listeners.resourceDestroy = events.destroy.listen([this] {
+-        closeFDs();
++        if (!(m_attrs.planes == 1 && m_attrs.strides[0] == 0 && m_attrs.modifier == DRM_FORMAT_MOD_INVALID))
++            closeFDs(); // Opaque PRIME ownership lasts until the final buffer reference retires.
+         m_listeners.resourceDestroy.reset();
+     });
+ 
+@@ -21,6 +22,8 @@
+     m_texture  = g_pHyprRenderer->createTexture(m_attrs, m_opaque); // texture takes ownership of the eglImage
+ 
+     if UNLIKELY (!m_texture) {
++        if (m_attrs.planes == 1 && m_attrs.strides[0] == 0 && m_attrs.modifier == DRM_FORMAT_MOD_INVALID)
++            return; // Opaque descriptors must never retry through implicit linear import.
+         Log::logger->log(Log::ERR, "CDMABuffer: failed to import EGLImage, retrying as implicit");
+         m_attrs.modifier = DRM_FORMAT_MOD_INVALID;
+         m_texture        = g_pHyprRenderer->createTexture(m_attrs, m_opaque);
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -113,7 +113,7 @@
+   -Wno-narrowing
+   -Wno-pointer-arith
+   -Wno-clobbered
+-  -frtti
++  "$<$<COMPILE_LANGUAGE:CXX>:-frtti>"
+   -fmacro-prefix-map=${CMAKE_SOURCE_DIR}/=)
+ 
+ # disable lto as it may break plugins
+@@ -302,7 +302,8 @@
+   message(STATUS "Tracy enabled, TRACY_CPP_FILES: " ${TRACY_CPP_FILES})
+ endif()
+ 
+-add_library(hyprland_lib STATIC ${SRCFILES})
++add_library(hyprland_lib STATIC ${SRCFILES} wsx/gbm-descriptor.c wsx/wsx-opaque-buffer-v1-protocol.c)
++target_include_directories(hyprland_lib PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+ add_executable(Hyprland src/main.cpp ${TRACY_CPP_FILES})
+ target_link_libraries(Hyprland hyprland_lib)
+ 

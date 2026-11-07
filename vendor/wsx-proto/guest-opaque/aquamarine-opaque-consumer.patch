@@ -1,0 +1,107 @@
+--- a/src/backend/drm/DRM.cpp
++++ b/src/backend/drm/DRM.cpp
+@@ -1,3 +1,5 @@
++#include "wsx/gbm-descriptor.h"
++#include <sys/ioctl.h>
+ #include "aquamarine/output/Output.hpp"
+ #include <algorithm>
+ #include <aquamarine/backend/DRM.hpp>
+@@ -3404,6 +3406,34 @@
+         return 0;
+ 
+     auto                    attrs = buffer->dmabuf();
++    if (attrs.planes == 1 && attrs.strides[0] == 0 && attrs.modifier == DRM_FORMAT_MOD_INVALID) {
++        drm_wsx_opaque_query descriptor{};
++        uint32_t vkFormat = attrs.format == DRM_FORMAT_ARGB8888 || attrs.format == DRM_FORMAT_XRGB8888 ? 44 :
++            attrs.format == DRM_FORMAT_ABGR8888 || attrs.format == DRM_FORMAT_XBGR8888 ? 37 : 0;
++        descriptor.version = 1; descriptor.handle = boHandles[0];
++        descriptor.width = attrs.size.x; descriptor.height = attrs.size.y; descriptor.format = vkFormat;
++        // PRIME import already gave this DRM file an owned GEM handle. Read it
++        // directly; reopening a seatd-owned primary node may lack user access.
++        if (attrs.offsets[0] || !vkFormat || wsx_gbm_opaque_consumer_supported(backend->gpu->fd) != 1 ||
++            ioctl(backend->gpu->fd, DRM_IOCTL_VIRTGPU_WSX_OPAQUE_LOOKUP, &descriptor)) {
++            backend->backend->log(AQ_LOG_ERROR, "WSX_OPAQUE_FB: descriptor lookup rejected");
++            return 0;
++        }
++        drm_wsx_opaque_fb request{};
++        request.version = WSX_OPAQUE_CONSUMER_ABI;
++        request.handle = boHandles[0];
++        request.format = attrs.format;
++        request.context_epoch = descriptor.contract.context_epoch;
++        request.image_generation = descriptor.contract.image_generation;
++        memcpy(request.instance, descriptor.instance, sizeof(request.instance));
++        if (ioctl(backend->gpu->fd, DRM_IOCTL_VIRTGPU_WSX_OPAQUE_FB, &request)) {
++            backend->backend->log(AQ_LOG_ERROR, std::format("WSX_OPAQUE_FB: errno={}", errno));
++            return 0;
++        }
++        backend->backend->log(AQ_LOG_DEBUG, std::format("WSX_OPAQUE_FB: id={} epoch={} generation={}",
++            request.fb_id, request.context_epoch, request.image_generation));
++        return request.fb_id;
++    }
+     std::array<uint64_t, 4> mods  = {0, 0, 0, 0};
+     for (int i = 0; i < attrs.planes; ++i) {
+         mods[i] = attrs.modifier;
+--- a/src/allocator/GBM.cpp
++++ b/src/allocator/GBM.cpp
+@@ -1,3 +1,6 @@
++#include "wsx/gbm-descriptor.h"
++#include <cstring>
++#include <fcntl.h>
+ #include <algorithm>
+ #include <aquamarine/allocator/GBM.hpp>
+ #include <aquamarine/backend/Backend.hpp>
+@@ -168,7 +171,17 @@
+ 
+     uint64_t modifier = DRM_FORMAT_MOD_INVALID;
+ 
+-    if (explicitModifiers.empty()) {
++    const char* opaqueOption = getenv("WSX_OPAQUE_COMPOSITOR");
++    const bool wsxOpaque = opaqueOption && !strcmp(opaqueOption, "1") && !CURSOR && !MULTIGPU;
++    if (wsxOpaque) {
++        if (wsx_gbm_opaque_consumer_supported(allocator->drmFD()) != 1) {
++            allocator->backend->log(AQ_LOG_ERROR, "WSX opaque consumer ABI unavailable");
++            return;
++        }
++        // Zink queries exact external-image support before creating/exporting
++        // this image. Failure is terminal here: no implicit or copy retry.
++        bo = gbm_bo_create(allocator->gbmDevice, attrs.size.x, attrs.size.y, attrs.format, flags);
++    } else if (explicitModifiers.empty()) {
+         allocator->backend->log(AQ_LOG_WARNING, "GBM: Using modifier-less allocation");
+         bo = gbm_bo_create(allocator->gbmDevice, attrs.size.x, attrs.size.y, attrs.format, flags);
+     } else {
+@@ -240,6 +253,23 @@
+         }
+     }
+ 
++    if (wsxOpaque) {
++        drm_wsx_opaque_query descriptor{};
++        uint32_t format = attrs.format == DRM_FORMAT_ARGB8888 || attrs.format == DRM_FORMAT_XRGB8888 ? 44 :
++            attrs.format == DRM_FORMAT_ABGR8888 || attrs.format == DRM_FORMAT_XBGR8888 ? 37 : 0;
++        char* renderName = drmGetRenderDeviceNameFromFd(allocator->drmFD());
++        int renderFD = renderName ? open(renderName, O_RDWR | O_CLOEXEC) : -1;
++        free(renderName);
++        int status = renderFD < 0 ? -ENODEV : wsx_gbm_lookup_opaque_fd(
++            renderFD, attrs.fds[0], attrs.size.x, attrs.size.y, format, &descriptor);
++        if (renderFD >= 0) close(renderFD);
++        if (attrs.planes != 1 || attrs.strides[0] || attrs.offsets[0] || !format || status) {
++            allocator->backend->log(AQ_LOG_ERROR, "WSX opaque allocation descriptor rejected");
++            for (int i = 0; i < attrs.planes; ++i) close(attrs.fds[i]);
++            attrs.fds.fill(-1); attrs.planes = 0;
++            return;
++        }
++    }
+     attrs.success = true;
+ 
+     allocator->backend->log(AQ_LOG_DEBUG,
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -61,7 +61,8 @@
+ file(GLOB_RECURSE SRCFILES CONFIGURE_DEPENDS "src/*.cpp" "include/*.hpp")
+ file(GLOB_RECURSE PUBLIC_HEADERS CONFIGURE_DEPENDS "include/*.hpp")
+ 
+-add_library(aquamarine SHARED ${SRCFILES})
++add_library(aquamarine SHARED ${SRCFILES} wsx/gbm-descriptor.c)
++target_include_directories(aquamarine PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+ if(deps_libinput_VERSION VERSION_GREATER_EQUAL "1.30")
+   target_compile_definitions(aquamarine PRIVATE AQUAMARINE_HAS_LIBINPUT_PLUGINS)
+ endif()

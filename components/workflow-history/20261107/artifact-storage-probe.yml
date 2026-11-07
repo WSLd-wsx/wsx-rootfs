@@ -1,0 +1,35 @@
+name: Private artifact storage probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: artifact-storage-probe
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Confirm approved private repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          test "$REPOSITORY" = WSLd-wsx/wsx-rootfs
+          test "$(gh api repos/"$REPOSITORY" --jq .private)" = true
+      - name: Create a 1 KiB nonsensitive text fixture
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          Path('probe.txt').write_bytes(b'WSX artifact storage probe\n'.ljust(1024, b' '))
+          print('Upload input: exactly 1024 bytes; no binary component or credentials')
+          PY
+      - name: Probe the existing pinned upload action
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: storage-probe-${{ github.run_id }}
+          path: probe.txt
+          compression-level: 0
+          retention-days: 1
+          if-no-files-found: error

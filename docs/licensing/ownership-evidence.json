@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "status": "owner-approved-grants-active",
+  "recorded_date": "2026-11-03",
+  "legal_rightsholder": null,
+  "license_grant": true,
+  "release_ready": false,
+  "statements": [
+    {
+      "id": "original-development",
+      "source": "user statement in this conversation",
+      "scope": "Original WSX portions only; excludes third-party material",
+      "statement": "Personally independently developed, primarily with AI assistance; no employer, client or other contributor rights reported.",
+      "verification": "user-attested-not-independently-verified"
+    },
+    {
+      "id": "prior-recipients",
+      "source": "user statement in this conversation",
+      "scope": "Twelve MIT-marked files and containing images/binaries",
+      "statement": "Used only in user-controlled environments; not given to others.",
+      "verification": "user-attested-remote-visibility-unverified"
+    },
+    {
+      "id": "retirement-intent",
+      "source": "user statement in this conversation",
+      "scope": "Historical rootfs images and verified-components",
+      "statement": "Consider deletion after concrete assets are listed.",
+      "verification": "planning-intent-only",
+      "deletion_authorized": false
+    },
+    {
+      "id": "remote-retirement-authorized",
+      "source": "User clarification during post-merge recheck",
+      "scope": "All wsx-rootfs Releases and their attachments, plus its dedicated verified-components GHCR package only",
+      "statement": "Deletion authorized after target inventory and recoverable backup; other repositories and Git history excluded.",
+      "verification": "user-authorized-execution-blocked-by-remote-access",
+      "deletion_authorized": true,
+      "executed": false
+    },
+    {
+      "id": "remote-retirement-backup-waiver",
+      "source": "User instruction during remote cleanup",
+      "scope": "Previously authorized wsx-rootfs Releases/attachments and dedicated verified-components package only",
+      "statement": "No more backup required; delete the authorized remote objects immediately.",
+      "verification": "executed-and-verified; see remote-retirement.json",
+      "deletion_authorized": true,
+      "executed": true,
+      "complete_release_asset_backup_required": false
+    },
+    {
+      "id": "component-producer-authorship",
+      "source": "User confirmation in workflow-test preparation",
+      "scope": "New KWin builder, component packaging/consumption scripts and CachyOS build recipes; existing vendor excluded",
+      "statement": "All are original work or adaptations of the user's own WSX code, with no newly added third-party code.",
+      "verification": "user-attested; source-era path/commit receipts not invented"
+    },
+    {
+      "id": "workflow-test-only",
+      "source": "User confirmation in workflow-test preparation",
+      "statement": "Keep the legal grantor blank and new terms inactive; upload a workflow-test version with distribution prohibited.",
+      "verification": "confirmed",
+      "license_grant": false
+    },
+    {
+      "id": "public-grantor-designation",
+      "source": "User instruction before history reconstruction",
+      "statement": "Designate the individual WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>; no legal-name disclosure or corporate identity inferred.",
+      "verification": "user-designated",
+      "license_grant": false
+    },
+    {
+      "id": "standard-polyform-selection",
+      "source": "Explicit owner decision after reviewing standard-text differences",
+      "statement": "Use unmodified PolyForm Noncommercial 1.0.0 for eligible independent modules; no additional permission or enterprise-evaluation addendum. Prepare only, no effective grant.",
+      "supersedes": [
+        "Prior custom 30-day enterprise evaluation proposal",
+        "Prior source-only redistribution restriction and custom same-restrictions rule",
+        "Prior unresolved standard-license selection"
+      ],
+      "license_grant": false
+    },
+    {
+      "id": "module-grant-activation",
+      "source": "Owner approval in this conversation",
+      "statement": "Approved ACTIVATION-PROPOSAL.md, including PolyForm/GPL/original-expression exceptions and private authenticated binary artifacts with sources. Public image distribution is not approved.",
+      "license_grant": true,
+      "date": "2026-11-03",
+      "supersedes_current_policy": [
+        "workflow-test-only",
+        "standard-polyform-selection preparation-only restriction"
+      ]
+    }
+  ],
+  "references": [
+    "OWNERSHIP.md",
+    "BINARY-RETIREMENT.md",
+    "PRIORITY-MIT.md",
+    "LICENSE-MAP.md"
+  ],
+  "public_rightsholder": {
+    "name": "WGY",
+    "capacity": "individual using a public pseudonym",
+    "github": "https://github.com/wgy-wsx",
+    "email": "wgy@wsxdesk.com",
+    "source": "Explicit user designation; not inferred from Git identity"
+  },
+  "private_artifacts_allowed": true
+}

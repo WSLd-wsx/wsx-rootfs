@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
+  "working_tree_note": "Network README and installer are modified; omarchy-4.0.6 profile is untracked. Hashes identify inspected bytes, not merely HEAD.",
+  "files": [
+    {
+      "source_path": "prototypes/venus-rutabaga/network/install.py",
+      "sha256": "40ed88fff12ce0b278eb25400970fb714dd5079349157d6a787b4608326c9392",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/network/README.md",
+      "sha256": "6de90c90ac35bbc7f9b05ea793707e6e4be534c92af2d8fcb1befc7bb218cbc3",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/network/manifest.json",
+      "sha256": "426ae06bc09f96853ceef2b84b005d465864a442b20d4deca3b6b89247d837e4",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/network/Panel.qml.patch",
+      "sha256": "bfca7b26bec371ccb5b18c15ad0067a4538abe544307510c52305d4a0cf5867c",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/network/wifi.sh.patch",
+      "sha256": "8e76cd1ddcc036256e065244bddd6b7a261dc6ca9780af1e8d3c84215f5d7e81",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/network/omarchy-4.0.6/manifest.json",
+      "sha256": "1d14fa0b6a6a542d0aebbad6875099c26b0aa1e7aad51bd074658671d4414305",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/network/omarchy-4.0.6/Panel.qml.patch",
+      "sha256": "0cb79d53615f52103900af4b70d71ee84b9c41dbc56e8c3b0394c6d28fbf7a87",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/network/omarchy-4.0.6/wifi.sh.patch",
+      "sha256": "8e76cd1ddcc036256e065244bddd6b7a261dc6ca9780af1e8d3c84215f5d7e81",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/session/README.md",
+      "sha256": "c7f3c975f3d48d5309e72253eb053fb882649a3b99b41664ceeb1beb6deddd9a",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/session/enter.py",
+      "sha256": "2ac6cd242863a2a31aca914f40ad985d5c7d964b03e81aa8e48778fb5fdfa465",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/session/install.py",
+      "sha256": "08dbf647abe00a67dee1b9c2149e37ef1f85be1a2d6fdd17e84af05d7bb0ecb0",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/session/wsx-launch-app",
+      "sha256": "16a0bdc8408dfc6789151fb34b24dadc2af5064f83bbc59f8c0b9ac1f2089fc8",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/sources.lock.json",
+      "sha256": "2cd6ebd8f80b03ab13117edbd758cabbe00c641587c8f9403c3a513bd8fc85ba",
+      "vendored": false
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kernel.lock.json",
+      "sha256": "caf79ed87dc440dc0bf33f4e6356a756ce578f57d92329c84a745ea888c54496",
+      "vendored": false
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/build-kernel.py",
+      "sha256": "96bbeeeedc4bbe86dda688c84367c6985b9585894444e877053d15cf7f5c06ef",
+      "vendored": false
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/KERNEL-PANIC.md",
+      "sha256": "9e6a8731a8a93c96c631ebadfd403c652336a33e9bb345dd33bb4e99e5a908e7",
+      "vendored": false
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/GBM-MODIFIER-CONTRACT.md",
+      "sha256": "4c72db68fc51cb74fbf0a8f633318b28af5350499422131f0539496a2a972f32",
+      "vendored": false
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/device-host/production/DIRECT-HOST.md",
+      "sha256": "bb6c248232057917949714ca0cf5ff96b1b275eec436895725bc28cd6af4f483",
+      "vendored": false
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/build.py",
+      "sha256": "7b79e80651c6a7498f2068d45b549f4871485edc2ee0406aee4aa9007063b28b",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/build-venus.py",
+      "sha256": "152c43017f2aec24e29298b8398e1c374ed531fdca1690062f6684c398081a38",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/import-diagnostics.patch",
+      "sha256": "fa101b2ea361bf2a052b8aa28581368201ea25e57b320ff6e0f45a9b21266e9f",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/negotiated-export.patch",
+      "sha256": "78e2a299549a3209fdfcd2c6147c1fb6ed9eac8ffaa6e833211f0b2fda253477",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/modifier-features2.patch",
+      "sha256": "3859d82993ae381342f9d1b6294779047f58ff59b22d49fc34f5f62414359c76",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/linear-feedback-compat.patch",
+      "sha256": "7a1383ba2a1201f7c1f748f8fb85dac0bafa5b033101e885b59b37e3400c2fd1",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/linear-shared-compat.patch",
+      "sha256": "bdb3d3ce8e8b69e8b2c9bd1313d3a0a30e659abf1118e8248d7fbb0bc741b435",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/linear-modifier-feedback.patch",
+      "sha256": "8e5b4bd514bee2a2a7324b5f827ecdaac91e7ab3de63584b31172118078dc2f0",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/linear-depth-segregation.patch",
+      "sha256": "5c1de8c2548461972d6315aa7bf7754a09a51f69e8e1d8f300058e688610d7c4",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/opaque-gbm-export.patch",
+      "sha256": "755cd00fbef9ae5818e329621f095b3101db3f831db49db7b5293fa683a67278",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/opaque-consumer.patch",
+      "sha256": "62120bf284673a6381ac054ce62a0fb824c8c2db8b052a58c70be11945f11eb7",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/venus-zink-drm-identity.patch",
+      "sha256": "1945e914e08b652086ddf2ea0aa89d1e8bb24e13a3e8286848139fc6ec618a33",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/venus-nv-linear-color.patch",
+      "sha256": "a2723c0b15316fbbeca57f02cfa8231fbe25ad795307b889a1c4236d96e9a8f5",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/venus-opaque-import.patch",
+      "sha256": "73182a48e3a676071ea0af83b96d609eebb0ded37f7e72758636a3f1bff7120f",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/venus-direct-wsi.patch",
+      "sha256": "1bd67ee9276b8d2fb8e78a16ce7180af07c24f04c371a12a318b457bb08ebd86",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/venus-opaque-wsi.patch",
+      "sha256": "10dd9744e234f17087a78284b7e4dadbc92c0a5c7f1ba2a5aa6b4fe6b6c017a2",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/venus-opaque-query.patch",
+      "sha256": "72be94923a88c5e59af48a5da96f1b3156b033f67aeb09c9cf484e4e20629463",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/venus-opaque-export-order.patch",
+      "sha256": "edefffc1e1dd6ddcb2956c6013072d446f7e06393551e2e411ec77c595ec31e5",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-compat/venus-opaque-bind-order.patch",
+      "sha256": "28770800c1634a5797576bb0b3fe0e237cfd84dc8cef7e018cd1199f18f61819",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/build-compositor.py",
+      "sha256": "9f8026c065e9643d1319b784e01bf6e8d8c78d21421ce53bf70a57f4466e0c6e",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/aquamarine-opaque-consumer.patch",
+      "sha256": "dfb78da51698da0b1c9549f1ff18dedb65cfc21e6b48ad8e4e749d13b3c712f4",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/hyprland-opaque-consumer.patch",
+      "sha256": "9ff333763ac3fa8aefa0666a4cd4e37c7c46a336d68089562381e132c3809659",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/gbm-descriptor.c",
+      "sha256": "88eacf59680d17b47a7f3c6d1e7fe4b970a7ef381fd2f3a5c944af444bca82e3",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/gbm-descriptor.h",
+      "sha256": "f07e7fae5abf1d419290612f23105f2789fd027375469f001177744fdb83727a",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/wsx-opaque-uapi.h",
+      "sha256": "43745e497258880e938a303bf21b7b47431a62ab186449504088d926ccf29e6d",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/wayland/wsx-opaque-buffer-v1.xml",
+      "sha256": "76bd33d58bc275846e78092f1d6e7eaab37b1423d9d3e8535508520ff13ce4c8",
+      "vendored": true
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/device-host/production/start-guest.py",
+      "sha256": "ad37b095f13d4da78d610bf635adc54c8a2e062cd9ec0d309bfbe74f509bef85",
+      "vendored": true,
+      "vendored_path": "vendor/wsx-proto/device-host/production/start-guest.py"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/input/guest.c",
+      "sha256": "1f26dd4b3593624bd5653ad55f04602350206cf5ae83e2cb1961d665e346bfeb",
+      "vendored": true,
+      "vendored_path": "vendor/wsx-proto/input/guest.c"
+    },
+    {
+      "source_path": "artifacts/venus-rutabaga/inputs-01/rvgpu/include/librvgpu/rvgpu-protocol.h",
+      "sha256": "5b0fab9188be07334406ebae498fe8c992c4e81490583e0a9f030df421285608",
+      "vendored": true,
+      "vendored_path": "vendor/rvgpu/include/librvgpu/rvgpu-protocol.h"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/device-host/production/start-cachyos-plasma.py",
+      "sha256": "1a1f17086f16220884c09396709742433204cf855ed671f4d94b9a5e10bc4cf1",
+      "vendored": true,
+      "vendored_path": "vendor/wsx-proto/device-host/production/start-cachyos-plasma.py",
+      "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/device-host/production/test-plasma-session.py",
+      "sha256": "8d79f8551758138ba48a067360da658eedcf88405d0ec119aeb0a9ad2dfc8663",
+      "vendored": true,
+      "vendored_path": "vendor/wsx-proto/device-host/production/test-plasma-session.py",
+      "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/prepare-kwin.py",
+      "sha256": "8d6de4393d10bab48c2c44ca31638daf8edbc2e8a3364b573e11b0ffcaa31741",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/prepare-kwin.py",
+      "vendored": true,
+      "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kwin-opaque-consumer.patch",
+      "sha256": "85c132f9ff079ed4922e512428f5c80137516915d7f8a51c56c7e0a0d68e5f72",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-opaque-consumer.patch",
+      "vendored": true,
+      "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kwin-native-buffer.h",
+      "sha256": "6325bd6ecd0a6ee5d25bf0a88fc0c0bcae90ea595ba9efc88f98e9e3ddc6c3bb",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-native-buffer.h",
+      "vendored": true,
+      "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kwin-framebuffer.c",
+      "sha256": "9b1d540036cc7709b0e3bd70767522772414b8880d4ef256a6400830b6c70ce1",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-framebuffer.c",
+      "vendored": true,
+      "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kwin-framebuffer.h",
+      "sha256": "0b0fd3d598e9bd2a2546b0a62bdafea20db1497ff6094f4407bef3e0049afb46",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-framebuffer.h",
+      "vendored": true,
+      "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/guest-opaque/kwin-wayland.inc",
+      "sha256": "bdc65ff61f61d24236e3efbbb754da788819aca8df69fd8e6b8ab01248b73d58",
+      "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-wayland.inc",
+      "vendored": true,
+      "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816"
+    }
+  ]
+}

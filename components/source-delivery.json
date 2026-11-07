@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "mode": "shared-v2",
+  "profiles": {
+    "omarchy": {
+      "tag": "graphics-sources-omarchy-eb617fa6c01168bf2c94",
+      "manifest_sha256": "5ee720a75fb78fa580879bdae6f48144b1920b0f65884479b772d4f21a1def72"
+    },
+    "cachyos-plasma": {
+      "tag": "graphics-sources-cachyos-plasma-1a84a36efb45c8dd6ddf",
+      "manifest_sha256": "e8d071e730ad5bd3fded22c51c122f1158592539fb59dd078b0477e99f5332b9"
+    }
+  },
+  "component_origins": {
+    "omarchy": {
+      "transport": "ghcr",
+      "run_id": 41831647428,
+      "source_commit": "a48128c2904b8388d6b0789a52bf576a0d10e54e",
+      "image": "ghcr.io/wsld-wsx/wsx-rootfs/graphics-components@sha256:25091ddb2254e82d6092fefb01a85cb570314b5645d153979001d4ddf187bb74",
+      "manifest_sha256": "c662e3f118915073945d3d12c5a40540bdbbd461c75aad5bf16f9fcc2a7c601f"
+    },
+    "cachyos-plasma": {
+      "transport": "ghcr",
+      "image": "ghcr.io/wsld-wsx/wsx-rootfs/graphics-components@sha256:1aff27b3e6ff8bd92b41aa9e708ee324890bd7ea2004ef796e59a0da0e7df288",
+      "run_id": 41831653214,
+      "source_commit": "a48128c2904b8388d6b0789a52bf576a0d10e54e",
+      "manifest_sha256": "b223c6c516b49ec78b6993e80fbbaf759af10a89621555a33e30daa7b2afec90"
+    }
+  },
+  "postbuild_collector_migration": {
+    "from_sha256": "39659240e00ab3e45c1ba29c57e98712b7256326e2f7a767510207349b793edc",
+    "to_sha256": "c907f1dcd98fd7e93c7c42e74daa66fa109dab9d9c81114f88fd6e9f9bfbd726",
+    "scope": "Only scripts/component_materials.py after runtime assembly. Original receipt/source bytes remain verified; no compiler, ABI, license policy, adapter or runtime exception."
+  }
+}

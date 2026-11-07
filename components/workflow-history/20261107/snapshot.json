@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "source_repository": "WSLd-wsx/wsx-rootfs",
+  "source_commit": "51ae17d07406da1a0ffd43979724aa72ad442fb1",
+  "purpose": "Immutable non-executable workflow history; active orchestration lives in wsx-rootfs-ops",
+  "files": {
+    "artifact-storage-probe.yml": "4bfc30129902c7f7837dcfba3644e701ef92d867f897f8908712022aff1ecfa6",
+    "build-rootfs.yml": "6476f1340c0f1e5666e619eccd6c667d914f89b79fb6c7e5664a38e10d4813ca",
+    "cachyos-plasma.yml": "cabcd2a543b38ba26e4144c3025eefc7d30a218faa6cdf59a23ca673ba575f0a",
+    "components.yml": "339cd7ac81aee93a4ce4b3b3568cdb9e0f81e3c988a945c894cac8e31c9b5597",
+    "contracts.yml": "e230b93fdab5e90f9e0ca88c0613fc5ec7dddb77475d8ac038db75112095a2dd",
+    "ghcr-storage-probe.yml": "933aef0b961e2a70dc5cd74bd249e863778e52db586affaa210d875b3024830d",
+    "import-components.yml": "26079c4f44990d1d0a9a913ac57cb60448e6bed7a273b1d2175d28a9c163a186",
+    "omarchy.yml": "695cf08a7564c318e5f8e94017563380a1531c28a5c99517a0856afdfee574e1",
+    "recover-public-candidate.yml": "fe09ab77b6a3da150dcd57bd86fff5cc7a326b938057a7cb3ac6fd40454a73ba",
+    "review-component-licenses.yml": "19749260f681d3d755815ce002beca6432cbcc1eff45e606fd3988fbdd3b9dc2",
+    "review-release-licenses.yml": "5b82bb1d0f67ac0942d825ed79f9930b743f0933d7863a6d57b048e583ccffb4",
+    "shared-graphics-sources.yml": "252f08167213ac8bd0556cc00e9625393654d444a747ad2380fd0740bb6237e5"
+  }
+}

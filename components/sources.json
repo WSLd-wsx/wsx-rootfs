@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "mesa": {
+    "version": "26.1.8",
+    "url": "https://archive.mesa3d.org/mesa-26.1.8.tar.xz",
+    "sha256": "b320f65874fd9653ac6c0bd1616605387344e1247411a50c797b5f3fb9dc0b55"
+  },
+  "venus": {
+    "version": "26.2.4",
+    "url": "https://archive.mesa3d.org/mesa-26.2.4.tar.xz",
+    "sha256": "bce5f7fbebb934373b86c999a064d52fb5065878dc57f287f95346648ec832e9"
+  },
+  "aquamarine": {
+    "commit": "f31c47a1b9d300847d8fc3108ad959448103dfc1",
+    "url": "https://codeload.github.com/hyprwm/aquamarine/tar.gz/f31c47a1b9d300847d8fc3108ad959448103dfc1",
+    "sha256": "975a3479b458722ec2e34e5fed9cdd46f77fa70485431f70093693532f685ff3"
+  },
+  "hyprland": {
+    "commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "url": "https://codeload.github.com/hyprwm/Hyprland/tar.gz/efb50993780079460b0cbed1363e2166a2de1d9f",
+    "sha256": "5b05ce7ba5296fa46e666852bf108ab5af121bf577f8043787e2d2c252d8f109"
+  },
+  "udis86": {
+    "commit": "5336633af70f3917760a6d441ff02d93477b0c86",
+    "url": "https://codeload.github.com/canihavesomecoffee/udis86/tar.gz/5336633af70f3917760a6d441ff02d93477b0c86",
+    "sha256": "2f459fafa19535ef1be417bf7614e4f92475e5787d7ba76df20287cc29d1b5a9"
+  },
+  "glaze": {
+    "commit": "b518eec7a22e56ffa238b072c07f47efa7cea97f",
+    "url": "https://codeload.github.com/stephenberry/glaze/tar.gz/b518eec7a22e56ffa238b072c07f47efa7cea97f",
+    "sha256": "0d108903feb443df316fb53eaec2fd6c1c6d96b368562ad830debc5c6c29c304"
+  },
+  "kwin": {
+    "version": "6.8.1",
+    "url": "https://download.kde.org/stable/plasma/6.8.1/kwin-6.8.1.tar.xz",
+    "sha256": "f3d725f81061c1ba97fdef8aeb2101a5c5e03c77f11e9a2abaa1dfed4489d3b6"
+  }
+}

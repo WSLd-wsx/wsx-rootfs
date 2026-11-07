@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "status": "active-grants-with-retained-upstream-evidence",
+  "rules": [
+    {
+      "id": "independent-candidates",
+      "priority": 0,
+      "paths": [
+        "scripts/*",
+        "tests/*",
+        "guest/*",
+        "distros/*",
+        ".github/*",
+        "docs/*",
+        "components/*",
+        "schema/*",
+        "README.md",
+        "AGENTS.md",
+        ".gitignore",
+        ".gitattributes",
+        "LICENSE",
+        "LICENSE-MAP.md"
+      ],
+      "group": "conditional-future-license",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression."
+    },
+    {
+      "id": "imported-helpers",
+      "priority": 10,
+      "paths": [
+        "vendor/wsx-proto/*"
+      ],
+      "group": "insufficient-evidence",
+      "basis": "Imported bytes mapped by local provenance.",
+      "limitation": "Hashes establish neither rights nor independent authorship.",
+      "next_step": "Owner: supply source-era license and contribution records; reviewer: examine derivation."
+    },
+    {
+      "id": "upstream-patches",
+      "priority": 20,
+      "paths": [
+        "vendor/wsx-proto/**/*.patch"
+      ],
+      "group": "retain-original",
+      "basis": "Upstream modifications and context, including named upstream copyright.",
+      "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
+      "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context."
+    },
+    {
+      "id": "existing-mit",
+      "priority": 30,
+      "paths": [
+        "vendor/wsx-proto/device-host/production/start-cachyos-plasma.py",
+        "vendor/wsx-proto/device-host/production/start-guest.py",
+        "vendor/wsx-proto/guest-compat/linear-depth-segregation.patch",
+        "vendor/wsx-proto/guest-opaque/gbm-descriptor.c",
+        "vendor/wsx-proto/guest-opaque/gbm-descriptor.h",
+        "vendor/wsx-proto/guest-opaque/kwin-framebuffer.c",
+        "vendor/wsx-proto/guest-opaque/kwin-framebuffer.h",
+        "vendor/wsx-proto/guest-opaque/kwin-native-buffer.h",
+        "vendor/wsx-proto/guest-opaque/kwin-wayland.inc",
+        "vendor/wsx-proto/guest-opaque/wayland/wsx-opaque-buffer-v1.xml",
+        "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h",
+        "vendor/wsx-proto/input/guest.c"
+      ],
+      "group": "retain-original",
+      "basis": "Existing MIT declaration; per-file history and source index recorded.",
+      "limitation": "Preservation does not prove public grant, ownership or relicensing power; KWin combination separately constrained.",
+      "next_step": "Owner: establish authority and prior recipients/terms; reviewer: retain declarations and assess combined distribution."
+    },
+    {
+      "id": "kwin-gpl-context",
+      "priority": 30,
+      "paths": [
+        "vendor/wsx-proto/guest-opaque/kwin-opaque-consumer.patch"
+      ],
+      "group": "retain-original",
+      "basis": "GPL-2.0-or-later and Vlad Zahorodnii copyright in context; target_sources adds WSX code to KWin.",
+      "limitation": "Do not impose exclusive noncommercial terms on GPL-covered combined distribution.",
+      "next_step": "Reviewer: recover complete KWin 6.8.1 corresponding source and historical build closure."
+    },
+    {
+      "id": "rvgpu-apache",
+      "priority": 30,
+      "paths": [
+        "vendor/rvgpu/*"
+      ],
+      "group": "retain-original",
+      "basis": "Apache-2.0 and Panasonic Automotive Systems copyright in header.",
+      "limitation": "Upstream NOTICE and modification history are not established by local import.",
+      "next_step": "Reviewer: obtain original NOTICE if supplied, document changes and retain license in output distribution."
+    },
+    {
+      "id": "imported-config",
+      "priority": 20,
+      "paths": [
+        "distros/cachyos-plasma/upstream/*"
+      ],
+      "group": "insufficient-evidence",
+      "basis": "Configuration/identity files mapped to upstream commits.",
+      "limitation": "Hashes do not establish permission; trademark review is separate.",
+      "next_step": "Reviewer: obtain source-era licenses for YAML and identity files."
+    },
+    {
+      "id": "pacstrap-cc0",
+      "priority": 30,
+      "paths": [
+        "distros/cachyos-plasma/upstream/pacstrap.conf"
+      ],
+      "group": "retain-original",
+      "basis": "CC0-1.0 and SPDX-FileCopyrightText: no.",
+      "limitation": "Do not replace dedication with WSX restrictions.",
+      "next_step": "Reviewer: retain dedication and supply authoritative CC0 text with distribution materials."
+    },
+    {
+      "id": "upstream-index",
+      "priority": 30,
+      "paths": [
+        "distros/cachyos-plasma/upstream/source.json"
+      ],
+      "group": "conditional-future-license",
+      "basis": "Local source index.",
+      "limitation": "Index grants no rights to indexed material.",
+      "next_step": "Owner: confirm rights only in original expressive material."
+    },
+    {
+      "id": "apache-text",
+      "priority": 40,
+      "paths": [
+        "docs/licensing/licenses/Apache-2.0.txt"
+      ],
+      "group": "retain-original",
+      "basis": "Official text from https://www.apache.org/licenses/LICENSE-2.0.txt.",
+      "limitation": "Copy supplements an existing declaration; grants no new rights over unrelated files.",
+      "next_step": "Keep exact text and source reference."
+    },
+    {
+      "id": "supplemental-license-texts",
+      "priority": 40,
+      "paths": [
+        "docs/licensing/licenses/GPL-2.0.txt",
+        "docs/licensing/licenses/CC0-1.0.txt"
+      ],
+      "group": "retain-original",
+      "basis": "Verbatim official license texts; source URLs and hashes in license-text-sources.json.",
+      "limitation": "Supplements existing declarations only; does not apply these terms to unrelated WSX files or establish compliance.",
+      "next_step": "Preserve the text; map and deliver applicable notices with actual source and binary payloads."
+    },
+    {
+      "id": "new-component-producer-origin-review",
+      "priority": 25,
+      "paths": [
+        "scripts/build-kwin.py",
+        "scripts/package-source-components.py",
+        "scripts/consume-source-components.py",
+        "distros/cachyos-plasma/build-components.sh",
+        "distros/cachyos-plasma/build-dependencies.txt"
+      ],
+      "group": "conditional-future-license",
+      "basis": "User explicitly attests original work or own WSX adaptations with no new third-party code; existing vendor excluded.",
+      "limitation": "Owner-original expression only; existing vendor material excluded.",
+      "next_step": "Apply approved GPL-2.0-or-later grant and preserve provenance."
+    },
+    {
+      "id": "additional-official-notice-copies",
+      "priority": 40,
+      "paths": [
+        "docs/licensing/licenses/MIT.txt",
+        "docs/licensing/licenses/upstream/*",
+        "docs/licensing/licenses/WSX-MIT.txt"
+      ],
+      "group": "retain-original",
+      "basis": "Official reference MIT text and pinned upstream LICENSE copies; exact sources/hashes recorded.",
+      "limitation": "Existing third-party notices only. Generic MIT copyright placeholders do not identify a WSX owner; dependencies can have additional terms.",
+      "next_step": "Preserve notice text and upstream attribution in binary/source materials; do not infer complete payload compliance."
+    },
+    {
+      "id": "polyform-reference-text",
+      "priority": 40,
+      "paths": [
+        "docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt"
+      ],
+      "group": "retain-original",
+      "basis": "Official unmodified PolyForm Noncommercial 1.0.0 reference; source/hash recorded.",
+      "limitation": "Exact standard text; only the active map determines covered original code.",
+      "next_step": "Keep exact standard bytes."
+    },
+    {
+      "id": "gpl-tools",
+      "priority": 5,
+      "paths": [
+        "scripts/*",
+        ".github/*",
+        "components/*",
+        "schema/*",
+        "distros/*"
+      ],
+      "group": "conditional-future-license",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions."
+    },
+    {
+      "id": "approved-imported-helpers",
+      "priority": 35,
+      "paths": [
+        "vendor/wsx-proto/device-host/production/test-plasma-session.py",
+        "vendor/wsx-proto/guest-compat/build-venus.py",
+        "vendor/wsx-proto/guest-compat/build.py",
+        "vendor/wsx-proto/guest-opaque/build-compositor.py",
+        "vendor/wsx-proto/guest-opaque/prepare-kwin.py",
+        "vendor/wsx-proto/network/README.md",
+        "vendor/wsx-proto/network/install.py",
+        "vendor/wsx-proto/network/manifest.json",
+        "vendor/wsx-proto/network/omarchy-4.0.6/manifest.json",
+        "vendor/wsx-proto/session/README.md",
+        "vendor/wsx-proto/session/enter.py",
+        "vendor/wsx-proto/session/install.py",
+        "vendor/wsx-proto/session/wsx-launch-app"
+      ],
+      "group": "conditional-future-license",
+      "basis": "Owner attested independent WSX authorship and explicitly approved GPL-2.0-or-later for these imported original helpers.",
+      "limitation": "Does not replace any third-party expression or existing notices.",
+      "next_step": "Retain provenance and approved GPL grant."
+    },
+    {
+      "id": "operative-map",
+      "priority": 35,
+      "paths": [
+        "LICENSE",
+        "LICENSE-MAP.md",
+        "docs/licensing/LICENSE-MAP.md",
+        "docs/licensing/OUTPUT-LICENSES.md",
+        "docs/licensing/PRIVATE-ARTIFACTS.md"
+      ],
+      "group": "conditional-future-license",
+      "basis": "Owner-approved reconstruction metadata under GPL-2.0-or-later.",
+      "limitation": "The license texts and third-party rights referenced here retain their own terms.",
+      "next_step": "Keep operative coverage consistent."
+    },
+    {
+      "id": "cachyos-identity-gpl",
+      "priority": 35,
+      "paths": [
+        "distros/cachyos-plasma/upstream/iso-os-release",
+        "distros/cachyos-plasma/upstream/iso-cachyos-release"
+      ],
+      "group": "retain-original",
+      "basis": "Exact unmodified files from CachyOS-Live-ISO 3215497d2e8c5fea90e185affcf973dfa2cf790b, whose root LICENSE is GPL version 3; copy and source mapping retained.",
+      "limitation": "No PolyForm restriction or trademark permission; no file-specific later-version option asserted.",
+      "next_step": "Retain upstream license and exact source mapping in source and image delivery."
+    }
+  ]
+}

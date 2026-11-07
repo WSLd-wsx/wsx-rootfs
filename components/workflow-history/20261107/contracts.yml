@@ -1,0 +1,38 @@
+name: Release contract checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: contracts-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check source and binary workflow access
+        id: access
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/check-workflow-access.py --repo "$REPOSITORY" --operation source-check
+      - name: Signed distribution test dependencies
+        run: sudo apt-get update && sudo apt-get install -y zstd acl libcap2-bin python3-jsonschema
+      - name: Unit tests and privileged metadata round trip
+        run: sudo /usr/bin/python3 -m unittest discover -s tests -v
+      - name: Verify vendored provenance
+        run: python3 scripts/check-provenance.py
+      - name: Verify licensing evidence coverage
+        run: |
+          python3 scripts/audit-licenses.py --check
+          python3 scripts/audit-license-modules.py
+      - name: Resolve current official stable release
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/releases.py

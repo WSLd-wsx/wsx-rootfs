@@ -1,0 +1,158 @@
+name: CachyOS Plasma rootfs candidate
+on:
+  workflow_dispatch:
+    inputs:
+      test_only:
+        description: Compile only; false publishes the approved test prerelease with shared sources
+        type: boolean
+        default: true
+      snapshot:
+        description: Explicit WSX snapshot date YYYY.M.D (not an upstream release)
+        required: true
+        type: string
+      revision:
+        description: WSX revision for this snapshot
+        required: true
+        type: number
+        default: 1
+permissions: {}
+concurrency:
+  group: cachyos-${{ inputs.snapshot }}-r${{ inputs.revision }}
+  cancel-in-progress: false
+jobs:
+  publication-preflight:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      completed: ${{ steps.identity.outputs.completed }}
+      build_json: ${{ steps.identity.outputs.build_json }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check source and binary workflow access
+        id: access
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/check-workflow-access.py --repo "$REPOSITORY" --operation cachyos-candidate
+      - name: Check mandatory Guest protocol runtime pairing
+        run: python3 scripts/desktop_contract.py --check-pin
+      - name: Require an explicit component package pin
+        env:
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/reuse-components.py --check-pin --profile cachyos-plasma --repo "$REPOSITORY" --work out
+      - name: Require publicly available shared graphics sources
+        run: python3 scripts/check-shared-sources.py --profile cachyos-plasma
+      - name: Identify inputs and inspect completed Drafts
+        id: identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SNAPSHOT: ${{ inputs.snapshot }}
+          REVISION: ${{ format('{0}', inputs.revision) }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 scripts/prepare-cachyos.py --snapshot "$SNAPSHOT" --revision "$REVISION" --repo "$REPOSITORY" --output out/build.json
+          python3 - <<'PYTHON'
+          import base64, json, os
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
+              data=json.load(open('out/build.json'))
+              stream.write('completed='+str(data['completed']).lower()+'\n')
+              encoded=base64.b64encode(json.dumps(data).encode()).decode()
+              if len(encoded)>400000: raise ValueError('Resolved input exceeds safe job-output size')
+              stream.write('build_json='+encoded+'\n')
+          PYTHON
+  build:
+    needs: publication-preflight
+    if: needs.publication-preflight.outputs.completed != 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: write
+      actions: read
+      packages: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check source and binary workflow access
+        id: access
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/check-workflow-access.py --repo "$REPOSITORY" --operation cachyos-candidate
+      - name: Restore resolved inputs without Artifact storage
+        env:
+          BUILD_JSON: ${{ needs.publication-preflight.outputs.build_json }}
+        run: |
+          python3 - <<'PYTHON'
+          import base64, json, os
+          from pathlib import Path
+          data=json.loads(base64.b64decode(os.environ['BUILD_JSON'],validate=True))
+          Path('out').mkdir(exist_ok=True)
+          Path('out/build.json').write_text(json.dumps(data,indent=2)+'\n')
+          PYTHON
+      - name: Admit pinned source-built components without compilation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zstd
+          python3 scripts/reuse-components.py --profile cachyos-plasma --repo "$REPOSITORY" --work out
+      - name: Reclaim hosted runner space
+        run: bash scripts/prepare-runner.sh
+      - name: Start isolated builder
+        run: |
+          image=$(python3 -c 'import json; print(json.load(open("components/builder.json"))["image"])')
+          docker run -d --name wsx-cachyos-builder --privileged -v "$PWD:/workspace:ro" -v "$PWD/out:/output" "$image" sleep infinity
+      - name: Bootstrap signed CachyOS Plasma packages
+        timeout-minutes: 20
+        run: docker exec wsx-cachyos-builder bash /workspace/distros/cachyos-plasma/bootstrap-rootfs.sh
+      - name: Configure and validate Plasma Guest
+        run: docker exec wsx-cachyos-builder bash /workspace/distros/cachyos-plasma/configure-rootfs.sh
+      - name: Stop isolated builder
+        if: always()
+        run: |
+          if docker container inspect wsx-cachyos-builder >/dev/null 2>&1; then
+            docker stop wsx-cachyos-builder
+            docker rm wsx-cachyos-builder
+          fi
+      - name: Verify archive and finalize candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zstd acl libcap2-bin python3-jsonschema
+          df -h .
+          python3 scripts/archive_policy.py --repo "$REPOSITORY" --work out
+          sudo /usr/bin/python3 scripts/finalize-cachyos.py out
+      - name: Preserve build evidence
+        if: ${{ always() && steps.access.outcome == 'success' && github.event.repository.private }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: cachyos-build-diagnostics
+          path: |
+            out/*.json
+            out/*.txt
+            out/*.conf
+            out/components/*.txt
+            out/components/*.conf
+            out/component-materials/**
+            out/component-reuse.json
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Require candidate artifact and shared source checks
+        if: ${{ !inputs.test_only }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/private-artifact-gate.py --repo "$REPOSITORY" --kind rootfs --public-prerelease --work out
+      - name: Publish verified CachyOS snapshot prerelease
+        if: ${{ !inputs.test_only }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/publish.py --repo "$REPOSITORY" --directory out/payload --public-prerelease

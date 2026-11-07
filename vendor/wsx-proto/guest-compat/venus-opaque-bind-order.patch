@@ -1,0 +1,19 @@
+--- a/src/virtio/vulkan/vn_image.c
++++ b/src/virtio/vulkan/vn_image.c
+@@ -728,6 +728,16 @@
+ 
+    vn_async_vkBindImageMemory2(dev->primary_ring, device, bindInfoCount,
+                                pBindInfos);
++   /* WSI can export memory before binding it. Its later descriptor query uses
++    * the control queue, so publishing only at GetMemoryFdKHR is insufficient.
++    * Drain decoding of the bind, not execution of any GPU work.
++    */
++   const char *opaque = getenv("WSX_VENUS_DIRECT_WSI");
++   if (opaque && !strcmp(opaque, "opaque-v1")) {
++      vn_ring_wait_all(dev->primary_ring);
++      vn_log(dev->instance, "WSX_OPAQUE_BIND_ORDER: binding dispatch completed");
++   }
++
+ 
+    for (uint32_t i = 0; i < bindInfoCount; i++) {
+       const VkBindMemoryStatus *bind_status =

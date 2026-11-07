@@ -1,0 +1,169 @@
+--- /dev/null
++++ b/src/gallium/drivers/zink/zink_wsx_layout.h
+@@ -0,0 +1,30 @@
++/* SPDX-License-Identifier: MIT */
++#ifndef ZINK_WSX_LAYOUT_H
++#define ZINK_WSX_LAYOUT_H
++
++#include <stdbool.h>
++#include <vulkan/vulkan.h>
++
++/* A WSX adapter policy for the negotiated conditional-linear profile, not a
++ * Vulkan-wide restriction. Unconditional linear attachment support is unchanged.
++ * The caller must use the actual acquired image and actual attachment views.
++ */
++static inline bool
++zink_wsx_requires_optimal_color(bool negotiated, bool linear,
++                               VkFormatFeatureFlags2 features,
++                               bool depth_view, bool stencil_view)
++{
++   return negotiated && linear && (depth_view || stencil_view) &&
++          !(features & VK_FORMAT_FEATURE_2_COLOR_ATTACHMENT_BIT) &&
++          (features & VK_FORMAT_FEATURE_2_LINEAR_COLOR_ATTACHMENT_BIT_NV);
++}
++
++static inline bool
++zink_wsx_reject_depth_linear(bool negotiated, bool linear,
++                            VkImageUsageFlags usage)
++{
++   return negotiated && linear &&
++          (usage & VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT);
++}
++
++#endif
+--- a/src/gallium/drivers/zink/zink_context.c
++++ b/src/gallium/drivers/zink/zink_context.c
+@@ -36,6 +36,7 @@
+ #include "zink_screen.h"
+ #include "zink_state.h"
+ #include "zink_surface.h"
++#include "zink_wsx_layout.h"
+ 
+ 
+ #include "nir/pipe_nir.h"
+@@ -295,12 +296,13 @@
+ 
+    enum pipe_reset_status status = PIPE_NO_RESET;
+ 
+-   if (ctx->is_device_lost) {
++   if (ctx->is_device_lost || ctx->wsx_layout_failed) {
+       // Since we don't know what really happened to the hardware, just
+       // assume that we are in the wrong
+       status = PIPE_GUILTY_CONTEXT_RESET;
+ 
+-      debug_printf("ZINK: device lost detected!\n");
++      debug_printf(ctx->wsx_layout_failed ? "ZINK: incompatible sharing layout; context reset\n" :
++                   "ZINK: device lost detected!\n");
+ 
+       if (ctx->reset.reset)
+          ctx->reset.reset(ctx->reset.data, status);
+@@ -3056,6 +3058,40 @@
+ 
+ static bool wsx_linear_framebuffer_valid(struct zink_context *ctx);
+ 
++/* An existing swapchain image cannot change tiling in place. Until the
++ * opaque-optimal WSI/KMS/Owner contract exists, report a local context failure
++ * rather than dropping depth, copying, or submitting a known unsafe combination.
++ */
++static bool
++wsx_linear_depth_valid(struct zink_context *ctx)
++{
++   struct zink_screen *screen = zink_screen(ctx->base.screen);
++   const VkRenderingInfo *info = &ctx->dynamic_fb.info;
++   bool depth = info->pDepthAttachment && info->pDepthAttachment->imageView;
++   bool stencil = info->pStencilAttachment && info->pStencilAttachment->imageView;
++   if (!screen->wsx_linear_shared || (!depth && !stencil))
++      return true;
++   for (unsigned i = 0; i < ctx->fb_state.nr_cbufs; i++) {
++      const struct pipe_surface *surf = &ctx->fb_state.cbufs[i];
++      if (!surf->texture || i >= info->colorAttachmentCount ||
++          !info->pColorAttachments[i].imageView)
++         continue;
++      struct zink_resource *res = zink_resource(surf->texture);
++      const struct zink_format_props *props = zink_get_format_props(screen, surf->format);
++      if (!zink_wsx_requires_optimal_color(screen->wsx_linear_shared,
++             res->linear || res->obj->modifier == 0, props->linearTilingFeatures,
++             depth, stencil))
++         continue;
++      mesa_loge("WSX_LAYOUT_REJECT: context=%p color=%u format=%u extent=%ux%u depth=%u stencil=%u required=optimal opaque_present=unavailable action=context-reset staging=0",
++                (void *)ctx, i, zink_get_format(screen, surf->format),
++                info->renderArea.extent.width, info->renderArea.extent.height,
++                depth, stencil);
++      ctx->wsx_layout_failed = true;
++      return false;
++   }
++   return true;
++}
++
+ /* Diagnose actual attachments after Kopper acquisition. This does not
+  * reinterpret a depth layout or change the negotiated sharing contract. */
+ static void
+@@ -3465,6 +3501,8 @@
+    if (!wsx_linear_framebuffer_valid(ctx))
+       return 0;
+    wsx_trace_linear_rendering(ctx);
++   if (!wsx_linear_depth_valid(ctx))
++      return 0;
+    VKCTX(CmdBeginRendering)(ctx->bs->cmdbuf, &ctx->dynamic_fb.info);
+    ctx->in_rp = true;
+    if (formats_changed) {
+@@ -3525,6 +3563,8 @@
+ static bool
+ wsx_linear_framebuffer_valid(struct zink_context *ctx)
+ {
++   if (ctx->wsx_layout_failed)
++      return false;
+    struct zink_screen *screen = zink_screen(ctx->base.screen);
+    if (!screen->wsx_linear_shared)
+       return true;
+--- a/src/gallium/drivers/zink/zink_types.h
++++ b/src/gallium/drivers/zink/zink_types.h
+@@ -1733,6 +1733,7 @@
+ struct zink_context {
+    struct pipe_context base;
+    unsigned wsx_render_trace_count[2];
++   bool wsx_layout_failed;
+    struct threaded_context *tc;
+    struct slab_child_pool transfer_pool;
+    struct slab_child_pool transfer_pool_unsync;
+--- a/src/gallium/drivers/zink/zink_resource.c
++++ b/src/gallium/drivers/zink/zink_resource.c
+@@ -22,6 +22,7 @@
+  */
+ 
+ #include "zink_resource.h"
++#include "zink_wsx_layout.h"
+ 
+ #include "zink_batch.h"
+ #include "zink_clear.h"
+@@ -341,6 +342,16 @@
+ static bool
+ check_ici(struct zink_screen *screen, VkImageCreateInfo *ici, uint64_t modifier)
+ {
++   /* Never change an explicit import/modifier contract to OPTIMAL in place.
++    * Internal depth allocations already try OPTIMAL first; stop the generic
++    * LINEAR retry for this negotiated profile if that attempt failed. */
++   bool linear = ici->tiling == VK_IMAGE_TILING_LINEAR ||
++      (ici->tiling == VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT && modifier == DRM_FORMAT_MOD_LINEAR);
++   if (zink_wsx_reject_depth_linear(screen->wsx_linear_shared, linear, ici->usage)) {
++      mesa_loge("WSX_LAYOUT_ALLOCATION: rejected linear depth/stencil format=%u usage=%x; optimal allocation required", ici->format, ici->usage);
++      return false;
++   }
++
+    VkImageFormatProperties image_props;
+    VkResult ret;
+    bool optimalDeviceAccess = true;
+--- a/src/gallium/drivers/zink/zink_kopper.c
++++ b/src/gallium/drivers/zink/zink_kopper.c
+@@ -645,7 +645,10 @@
+       bool linear = cdt->swapchain->images[res->obj->dt_idx].wsx_linear;
+       res->linear = linear;
+       res->obj->modifier = linear ? 0 : DRM_FORMAT_MOD_INVALID;
+-      res->obj->wsx_conditional_linear_color = linear;
++      const struct zink_format_props *props = zink_get_format_props(screen, res->base.b.format);
++      res->obj->wsx_conditional_linear_color = linear &&
++         !(props->linearTilingFeatures & VK_FORMAT_FEATURE_2_COLOR_ATTACHMENT_BIT) &&
++         (props->linearTilingFeatures & VK_FORMAT_FEATURE_2_LINEAR_COLOR_ATTACHMENT_BIT_NV);
+    }
+    if (!cdt->age_locked)
+       zink_kopper_update_last_written(res);

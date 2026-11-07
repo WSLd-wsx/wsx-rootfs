@@ -1,0 +1,158 @@
+--- a/src/gallium/drivers/zink/zink_screen.c
++++ b/src/gallium/drivers/zink/zink_screen.c
+@@ -2656,8 +2656,16 @@
+    *count = props->drmFormatModifierCount;
+    for (int i = 0; i < MIN2(max, *count); i++) {
+       modifiers[i] = props->pDrmFormatModifierProperties[i].drmFormatModifier;
+-      if (external_only)
+-         external_only[i] = !(props->pDrmFormatModifierProperties[i].drmFormatModifierTilingFeatures & VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT);
++      if (external_only) {
++         VkFormatFeatureFlags2 feats = props->pDrmFormatModifierProperties[i].drmFormatModifierTilingFeatures;
++         VkFormat vkformat = zink_get_format(screen, format);
++         /* The negotiated path enforces the NV attachment conditions at draw
++          * time. Expose renderability only for the queried shared formats. */
++         bool conditional = screen->wsx_linear_shared && modifiers[i] == 0 &&
++            (vkformat == VK_FORMAT_B8G8R8A8_UNORM || vkformat == VK_FORMAT_R8G8B8A8_UNORM) &&
++            (feats & VK_FORMAT_FEATURE_2_LINEAR_COLOR_ATTACHMENT_BIT_NV);
++         external_only[i] = !(feats & VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT) && !conditional;
++      }
+    }
+ }
+ 
+--- a/src/gallium/drivers/zink/zink_kopper.c
++++ b/src/gallium/drivers/zink/zink_kopper.c
+@@ -23,6 +23,7 @@
+  */
+ 
+ #include "util/detect_os.h"
++#include "drm-uapi/drm_fourcc.h"
+ 
+ #include "zink_context.h"
+ #include "zink_screen.h"
+@@ -291,9 +292,9 @@
+       cswap->scci.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT |
+                                VK_IMAGE_USAGE_SAMPLED_BIT |
+                                VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+-      if (cdt->caps.supportedUsageFlags & VK_IMAGE_USAGE_ATTACHMENT_FEEDBACK_LOOP_BIT_EXT)
++      if (!screen->wsx_linear_shared && (cdt->caps.supportedUsageFlags & VK_IMAGE_USAGE_ATTACHMENT_FEEDBACK_LOOP_BIT_EXT))
+          cswap->scci.imageUsage |= VK_IMAGE_USAGE_ATTACHMENT_FEEDBACK_LOOP_BIT_EXT;
+-      if (cdt->caps.supportedUsageFlags & VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT)
++      if (!screen->wsx_linear_shared && (cdt->caps.supportedUsageFlags & VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT))
+          cswap->scci.imageUsage |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
+       cswap->scci.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+       cswap->scci.queueFamilyIndexCount = 0;
+@@ -388,6 +389,17 @@
+    if (zink_screen_handle_vkresult(screen, error)) {
+       for (unsigned i = 0; i < cswap->num_images; i++) {
+          cswap->images[i].image = images[i];
++         /* WSI images have opaque Vulkan layout semantics. Do not issue a
++          * DRM-modifier query on an application-visible swapchain image.
++          * The paired Venus adapter validates every native WSI allocation
++          * before CreateSwapchainKHR can succeed in this explicit mode. */
++         const char *direct_wsi = getenv("WSX_VENUS_DIRECT_WSI");
++         cswap->images[i].wsx_linear = screen->wsx_linear_shared &&
++            screen->info.driver_props.driverID == VK_DRIVER_ID_MESA_VENUS &&
++            direct_wsi && !strcmp(direct_wsi, "linear-v1");
++         if (cswap->images[i].wsx_linear)
++            mesa_logi("WSX_KOPPER_LAYOUT: size=%ux%u image=%u contract=linear-v1",
++                      cswap->scci.imageExtent.width, cswap->scci.imageExtent.height, i);
+          _mesa_set_init(&cswap->images[i].surface_cache, NULL, NULL, equals_surface_key);
+       }
+    }
+@@ -629,6 +641,12 @@
+    if (cdt->swapchain->images[res->obj->dt_idx].readback)
+       zink_resource(cdt->swapchain->images[res->obj->dt_idx].readback)->valid = false;
+    res->obj->image = cdt->swapchain->images[res->obj->dt_idx].image;
++   if (screen->wsx_linear_shared) {
++      bool linear = cdt->swapchain->images[res->obj->dt_idx].wsx_linear;
++      res->linear = linear;
++      res->obj->modifier = linear ? 0 : DRM_FORMAT_MOD_INVALID;
++      res->obj->wsx_conditional_linear_color = linear;
++   }
+    if (!cdt->age_locked)
+       zink_kopper_update_last_written(res);
+    cdt->swapchain->images[res->obj->dt_idx].acquired = NULL;
+--- a/src/gallium/drivers/zink/zink_kopper.h
++++ b/src/gallium/drivers/zink/zink_kopper.h
+@@ -41,6 +41,7 @@
+ #define ZINK_READBACK_THRESHOLD 3
+ 
+ struct kopper_swapchain_image {
++   bool wsx_linear;
+    bool init;
+    bool readback_needs_update;
+    bool dt_has_data;
+--- a/src/gallium/drivers/zink/zink_context.c
++++ b/src/gallium/drivers/zink/zink_context.c
+@@ -3054,6 +3054,49 @@
+    return true;
+ }
+ 
++static bool wsx_linear_framebuffer_valid(struct zink_context *ctx);
++
++/* Diagnose actual attachments after Kopper acquisition. This does not
++ * reinterpret a depth layout or change the negotiated sharing contract. */
++static void
++wsx_trace_linear_rendering(struct zink_context *ctx)
++{
++   struct zink_screen *screen = zink_screen(ctx->base.screen);
++   if (!screen->wsx_linear_shared ||
++       !debug_get_bool_option("WSX_ZINK_NEGOTIATE_EXPORT", false))
++      return;
++   bool conditional = false;
++   for (unsigned i = 0; i < ctx->fb_state.nr_cbufs; i++) {
++      struct pipe_resource *tex = ctx->fb_state.cbufs[i].texture;
++      conditional |= tex && zink_resource(tex)->obj->wsx_conditional_linear_color;
++   }
++   if (!conditional)
++      return;
++   const VkRenderingInfo *info = &ctx->dynamic_fb.info;
++   unsigned has_zs = !!(info->pDepthAttachment || info->pStencilAttachment);
++   if (ctx->wsx_render_trace_count[has_zs] >= 16)
++      return;
++   unsigned sequence = ++ctx->wsx_render_trace_count[has_zs];
++   mesa_logi("WSX_LINEAR_RENDERING: context=%p sequence=%u extent=%ux%u colors=%u depth=%u stencil=%u zs_used=%u",
++             (void *)ctx, sequence, info->renderArea.extent.width,
++             info->renderArea.extent.height, info->colorAttachmentCount,
++             !!info->pDepthAttachment, !!info->pStencilAttachment, !ctx->zsbuf_unused);
++   for (unsigned i = 0; i <= PIPE_MAX_COLOR_BUFS; i++) {
++      const struct pipe_surface *surf = i == PIPE_MAX_COLOR_BUFS ?
++         &ctx->fb_state.zsbuf : &ctx->fb_state.cbufs[i];
++      if ((i < PIPE_MAX_COLOR_BUFS && i >= ctx->fb_state.nr_cbufs) || !surf->texture)
++         continue;
++      struct zink_resource *res = zink_resource(surf->texture);
++      mesa_logi("WSX_LINEAR_ATTACHMENT: context=%p role=%s index=%u image=%llx format=%u extent=%ux%u samples=%u linear=%u modifier=%llx usage=%llx layout=%u",
++                (void *)ctx, i == PIPE_MAX_COLOR_BUFS ? "depth-stencil" : "color", i,
++                (unsigned long long)(uintptr_t)res->obj->image,
++                zink_get_format(screen, surf->format), res->base.b.width0,
++                res->base.b.height0, surf->nr_samples, res->linear,
++                (unsigned long long)res->obj->modifier,
++                (unsigned long long)res->obj->vkusage, res->layout);
++   }
++}
++
+ static unsigned
+ begin_rendering(struct zink_context *ctx, bool check_attachment_shadow)
+ {
+@@ -3417,6 +3460,11 @@
+    };
+    ctx->dynamic_fb.info.pNext = ctx->transient_msrtss && has_msrtss ? &msrtss : NULL;
+ 
++   /* Attachment preparation may acquire a swapchain image after the early
++    * check. Validate its actual layout before recording native rendering. */
++   if (!wsx_linear_framebuffer_valid(ctx))
++      return 0;
++   wsx_trace_linear_rendering(ctx);
+    VKCTX(CmdBeginRendering)(ctx->bs->cmdbuf, &ctx->dynamic_fb.info);
+    ctx->in_rp = true;
+    if (formats_changed) {
+--- a/src/gallium/drivers/zink/zink_types.h
++++ b/src/gallium/drivers/zink/zink_types.h
+@@ -1732,6 +1732,7 @@
+ 
+ struct zink_context {
+    struct pipe_context base;
++   unsigned wsx_render_trace_count[2];
+    struct threaded_context *tc;
+    struct slab_child_pool transfer_pool;
+    struct slab_child_pool transfer_pool_unsync;

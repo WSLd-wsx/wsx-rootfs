@@ -1,0 +1,432 @@
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -18,6 +18,15 @@
+ endif()
+ 
+ add_library(kwin SHARED)
++find_program(WSX_WAYLAND_SCANNER wayland-scanner REQUIRED)
++add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/wsx-opaque-buffer-v1-server-protocol.h
++    COMMAND ${WSX_WAYLAND_SCANNER} server-header ${CMAKE_CURRENT_SOURCE_DIR}/wsx/wsx-opaque-buffer-v1.xml ${CMAKE_CURRENT_BINARY_DIR}/wsx-opaque-buffer-v1-server-protocol.h
++    DEPENDS wsx/wsx-opaque-buffer-v1.xml)
++add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/wsx-opaque-buffer-v1-protocol.c
++    COMMAND ${WSX_WAYLAND_SCANNER} private-code ${CMAKE_CURRENT_SOURCE_DIR}/wsx/wsx-opaque-buffer-v1.xml ${CMAKE_CURRENT_BINARY_DIR}/wsx-opaque-buffer-v1-protocol.c
++    DEPENDS wsx/wsx-opaque-buffer-v1.xml)
++target_sources(kwin PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/wsx-opaque-buffer-v1-server-protocol.h ${CMAKE_CURRENT_BINARY_DIR}/wsx-opaque-buffer-v1-protocol.c)
++target_sources(kwin PRIVATE wsx/kwin-framebuffer.c wsx/gbm-descriptor.c)
+ target_include_directories(kwin INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/kwin>")
+ set_target_properties(kwin PROPERTIES
+    VERSION ${PROJECT_VERSION}
+--- a/src/backends/drm/drm_egl_layer_surface.cpp
++++ b/src/backends/drm/drm_egl_layer_surface.cpp
+@@ -7,6 +7,7 @@
+     SPDX-License-Identifier: GPL-2.0-or-later
+ */
+ #include "drm_egl_layer_surface.h"
++#include "wsx/gbm-descriptor.h"
+ 
+ #include "config-kwin.h"
+ 
+@@ -373,6 +374,11 @@
+     }
+     switch (surface->importMode) {
+     case MultiGpuImportMode::None:
++        if (surface->wsxOpaque
++            && surface->gbmSwapchain->modifier() == DRM_FORMAT_MOD_INVALID
++            && wsx_gbm_opaque_consumer_supported(m_gpu->drmDevice()->fileDescriptor()) == 1) {
++            return formats.contains(surface->gbmSwapchain->format());
++        }
+         return formats.containsFormat(surface->gbmSwapchain->format(), surface->gbmSwapchain->modifier());
+     case MultiGpuImportMode::DumbBuffer:
+         return formats.contains(surface->importDumbSwapchain->format());
+@@ -439,6 +445,16 @@
+ 
+ std::unique_ptr<EglGbmLayerSurface::Surface> EglGbmLayerSurface::createSurface(const QSize &size, uint32_t format, const ModifierList &modifiers, MultiGpuImportMode importMode, BufferTarget bufferTarget, BackendOutput::ColorPowerTradeoff tradeoff, uint32_t requiredAlphaBits) const
+ {
++    const bool opaqueProfile = qEnvironmentVariable("WSX_OPAQUE_COMPOSITOR") == QLatin1String("1");
++    if (opaqueProfile && (importMode != MultiGpuImportMode::None || bufferTarget == BufferTarget::Dumb)) {
++        return nullptr; // Never introduce an implicit copy fallback in this profile.
++    }
++    const bool opaque = opaqueProfile && bufferTarget == BufferTarget::Normal
++        && m_gpu->renderDevice() == m_eglBackend->renderDevice()
++        && (format == DRM_FORMAT_ARGB8888 || format == DRM_FORMAT_XRGB8888
++            || format == DRM_FORMAT_ABGR8888 || format == DRM_FORMAT_XBGR8888)
++        && m_eglBackend->eglDisplayObject()->extensions().contains(QByteArrayLiteral("EGL_WSX_opaque_image"))
++        && wsx_gbm_opaque_consumer_supported(m_gpu->drmDevice()->fileDescriptor()) == 1;
+     const bool cpuCopy = importMode == MultiGpuImportMode::DumbBuffer || bufferTarget == BufferTarget::Dumb;
+     auto ret = std::make_unique<Surface>();
+     ModifierList renderModifiers = m_eglBackend->eglDisplayObject()->nonExternalOnlySupportedDrmFormats()[format];
+@@ -466,11 +482,15 @@
+     } else {
+         renderModifiers.intersect(modifiers);
+     }
++    if (opaque) {
++        renderModifiers = {DRM_FORMAT_MOD_INVALID};
++    }
+     if (renderModifiers.empty()) {
+         return nullptr;
+     }
+     ret->context = m_eglBackend->openglContextRef();
+     ret->bufferTarget = bufferTarget;
++    ret->wsxOpaque = opaque;
+     ret->importMode = importMode;
+     GraphicsBufferOptions options{
+         .size = size,
+@@ -479,7 +499,10 @@
+         .software = false,
+         .scanout = importMode == MultiGpuImportMode::None && bufferTarget == BufferTarget::Normal,
+     };
+-    if (importMode == MultiGpuImportMode::None && bufferTarget == BufferTarget::Normal) {
++    options.wsxOpaque = opaque;
++    if (opaque) {
++        ret->gbmSwapchain = EglSwapchain::create(m_eglBackend->renderDevice(), options);
++    } else if (importMode == MultiGpuImportMode::None && bufferTarget == BufferTarget::Normal) {
+         ret->gbmSwapchain = EglSwapchain::create(m_gpu->drmDevice()->allocator(), m_eglBackend->openglContextRef(), options);
+     } else {
+         ret->gbmSwapchain = EglSwapchain::create(m_eglBackend->renderDevice(), options);
+--- a/src/backends/drm/drm_egl_layer_surface.h
++++ b/src/backends/drm/drm_egl_layer_surface.h
+@@ -91,6 +91,7 @@
+         MultiGpuImportMode importMode;
+         std::shared_ptr<DrmFramebuffer> currentFramebuffer;
+         BufferTarget bufferTarget;
++        bool wsxOpaque = false;
+         double scale = 1;
+         uint32_t requiredAlphaBits = 0;
+ 
+--- a/src/backends/drm/drm_gpu.cpp
++++ b/src/backends/drm/drm_gpu.cpp
+@@ -1,3 +1,4 @@
++#include "wsx/kwin-framebuffer.h"
+ /*
+     KWin - the KDE window manager
+     This file is part of the KDE project.
+@@ -992,7 +993,22 @@
+ 
+     uint32_t framebufferId = 0;
+     int ret;
+-    if (addFB2ModifiersSupported() && attributes->modifier != DRM_FORMAT_MOD_INVALID) {
++    if (attributes->planeCount == 1 && attributes->pitch[0] == 0
++        && attributes->modifier == DRM_FORMAT_MOD_INVALID) {
++        // Zero pitch is accepted only with an authoritative paired descriptor.
++        // Keep the existing GEM, framebuffer cache and read-fence ownership.
++        if (qEnvironmentVariable("WSX_OPAQUE_COMPOSITOR") != QLatin1String("1")
++            || attributes->offset[0] != 0) {
++            return nullptr;
++        }
++        ret = wsx_kwin_create_opaque_fb(m_fd, handles[0], attributes->width,
++                                      attributes->height, attributes->format, &framebufferId);
++        if (ret) {
++            qCWarning(KWIN_DRM) << "WSX_OPAQUE_FB rejected" << ret;
++        } else {
++            qInfo() << "WSX_OPAQUE_FB created" << framebufferId << attributes->width << attributes->height;
++        }
++    } else if (addFB2ModifiersSupported() && attributes->modifier != DRM_FORMAT_MOD_INVALID) {
+         uint64_t modifier[4] = {0, 0, 0, 0};
+         for (int i = 0; i < attributes->planeCount; ++i) {
+             modifier[i] = attributes->modifier;
+--- a/src/core/gbmgraphicsbufferallocator.cpp
++++ b/src/core/gbmgraphicsbufferallocator.cpp
+@@ -1,3 +1,5 @@
++#include "wsx/gbm-descriptor.h"
++#include "wsx/kwin-native-buffer.h"
+ /*
+     SPDX-FileCopyrightText: 2023 Vlad Zahorodnii <vlad.zahorodnii@kde.org>
+ 
+@@ -62,12 +64,13 @@
+     return attributes;
+ }
+ 
+-class GbmGraphicsBuffer : public GraphicsBuffer
++class GbmGraphicsBuffer : public GraphicsBuffer, public WsxNativeBuffer
+ {
+     Q_OBJECT
+ 
+ public:
+-    explicit GbmGraphicsBuffer(DmaBufAttributes attributes);
++    explicit GbmGraphicsBuffer(DmaBufAttributes attributes, gbm_bo *nativeBo = nullptr);
++    gbm_bo *wsxNativeBo() const override { return m_nativeBo; }
+     ~GbmGraphicsBuffer() override;
+ 
+     QSize size() const override;
+@@ -78,6 +81,7 @@
+     uint32_t pitch() const override;
+ 
+ private:
++    gbm_bo *m_nativeBo = nullptr;
+     DmaBufAttributes m_dmabufAttributes;
+     QSize m_size;
+     bool m_hasAlphaChannel;
+@@ -167,6 +171,39 @@
+     if (options.scanout) {
+         flags |= GBM_BO_USE_SCANOUT;
+     }
++    // Only the explicit private output contract selects descriptor storage.
++    // Ordinary LINEAR requests, cursor and software allocations are unchanged.
++    // Native image capabilities are checked by Zink/Venus during allocation.
++    if (qEnvironmentVariable("WSX_OPAQUE_COMPOSITOR") == QLatin1String("1")
++        && options.render && options.scanout && options.wsxOpaque) {
++        const int fd = gbm_device_get_fd(device);
++        if (wsx_gbm_opaque_consumer_supported(fd) != 1) {
++            return nullptr;
++        }
++        gbm_bo *bo = gbm_bo_create(device, options.size.width(), options.size.height(), options.format, flags);
++        if (!bo) {
++            return nullptr;
++        }
++        auto attributes = dmaBufAttributesForBo(bo, deviceId);
++        if (!attributes) {
++            gbm_bo_destroy(bo);
++            return nullptr;
++        }
++        const uint32_t format = options.format == DRM_FORMAT_ARGB8888 || options.format == DRM_FORMAT_XRGB8888 ? 44
++            : options.format == DRM_FORMAT_ABGR8888 || options.format == DRM_FORMAT_XBGR8888 ? 37 : 0;
++        drm_wsx_opaque_query descriptor{};
++        if (!format || attributes->planeCount != 1 || attributes->pitch[0] || attributes->offset[0]
++            || attributes->modifier != DRM_FORMAT_MOD_INVALID
++            || wsx_gbm_lookup_opaque_fd(fd, attributes->fd[0].get(), attributes->width,
++                                       attributes->height, format, &descriptor)) {
++            gbm_bo_destroy(bo);
++            return nullptr;
++        }
++        qInfo() << "WSX_OPAQUE_GBM allocated" << attributes->width << attributes->height
++                << "epoch" << descriptor.contract.context_epoch;
++        return new GbmGraphicsBuffer(std::move(*attributes), bo);
++    }
++
+     if (!options.modifiers.empty() && !(options.modifiers.size() == 1 && options.modifiers.front() == DRM_FORMAT_MOD_INVALID)) {
+         gbm_bo *bo = gbm_bo_create_with_modifiers2(device,
+                                                    options.size.width(),
+@@ -233,8 +270,9 @@
+     return allocateDmaBuf(m_device->gbmDevice(), m_device->deviceId(), options);
+ }
+ 
+-GbmGraphicsBuffer::GbmGraphicsBuffer(DmaBufAttributes attributes)
+-    : m_dmabufAttributes(std::move(attributes))
++GbmGraphicsBuffer::GbmGraphicsBuffer(DmaBufAttributes attributes, gbm_bo *nativeBo)
++    : m_nativeBo(nativeBo)
++    , m_dmabufAttributes(std::move(attributes))
+     , m_size(m_dmabufAttributes.width, m_dmabufAttributes.height)
+     , m_hasAlphaChannel(alphaChannelFromDrmFormat(m_dmabufAttributes.format))
+ {
+@@ -242,6 +280,7 @@
+ 
+ GbmGraphicsBuffer::~GbmGraphicsBuffer()
+ {
++    if (m_nativeBo) gbm_bo_destroy(m_nativeBo);
+ }
+ 
+ QSize GbmGraphicsBuffer::size() const
+--- a/src/core/graphicsbufferallocator.h
++++ b/src/core/graphicsbufferallocator.h
+@@ -39,6 +39,9 @@
+ 
+     /// Whether or not the graphics buffer needs to be usable as a render target
+     bool render = true;
++
++    // Private descriptor storage; never a DRM modifier.
++    bool wsxOpaque = false;
+ };
+ 
+ class KWIN_EXPORT GraphicsBufferAllocator
+--- a/src/opengl/eglcontext.cpp
++++ b/src/opengl/eglcontext.cpp
+@@ -255,7 +255,12 @@
+ 
+ std::shared_ptr<GLTexture> EglContext::importDmaBufAsTexture(const DmaBufAttributes &attributes) const
+ {
+-    EGLImageKHR image = m_display->importDmaBufAsImage(attributes);
++    return importDmaBufAsTexture(attributes, nullptr);
++}
++
++std::shared_ptr<GLTexture> EglContext::importDmaBufAsTexture(const DmaBufAttributes &attributes, void *nativeBo) const
++{
++    EGLImageKHR image = nativeBo ? m_display->importWsxNativePixmap(nativeBo) : m_display->importDmaBufAsImage(attributes);
+     if (image != EGL_NO_IMAGE_KHR) {
+         const auto info = FormatInfo::get(attributes.format);
+         return EGLImageTexture::create(m_display, image, info ? info->openglFormat : GL_RGBA8, QSize(attributes.width, attributes.height), m_display->isExternalOnly(attributes.format, attributes.modifier));
+--- a/src/opengl/eglcontext.h
++++ b/src/opengl/eglcontext.h
+@@ -44,6 +44,7 @@
+     [[nodiscard]] bool makeCurrent();
+     void doneCurrent() const;
+     std::shared_ptr<GLTexture> importDmaBufAsTexture(const DmaBufAttributes &attributes) const;
++    std::shared_ptr<GLTexture> importDmaBufAsTexture(const DmaBufAttributes &attributes, void *nativeBo) const;
+ 
+     EglDisplay *displayObject() const;
+     ::EGLContext handle() const;
+--- a/src/opengl/egldisplay.cpp
++++ b/src/opengl/egldisplay.cpp
+@@ -1,3 +1,5 @@
++#include "wsx/gbm-descriptor.h"
++#include <gbm.h>
+ /*
+     KWin - the KDE window manager
+     This file is part of the KDE project.
+@@ -227,12 +229,44 @@
+     return m_isSoftwareRenderer;
+ }
+ 
++EGLImageKHR EglDisplay::importWsxNativePixmap(void *nativeBo) const
++{
++    auto bo = static_cast<gbm_bo *>(nativeBo);
++    if (!bo || !m_drmDevice || gbm_bo_get_device(bo) != m_drmDevice->gbmDevice()
++        || !m_extensions.contains(QByteArrayLiteral("EGL_KHR_image_pixmap"))) {
++        return EGL_NO_IMAGE_KHR;
++    }
++    // Mesa GBM duplicates the original DRI image reference, preserving VkImage
++    // identity. It does not import the fd into a second image or copy pixels.
++    const EGLint attribs[] = {EGL_IMAGE_PRESERVED_KHR, EGL_TRUE, EGL_NONE};
++    auto image = createImage(EGL_NO_CONTEXT, EGL_NATIVE_PIXMAP_KHR, bo, attribs);
++    qInfo() << "WSX_OPAQUE_NATIVE_PIXMAP" << (image != EGL_NO_IMAGE_KHR);
++    return image;
++}
++
+ EGLImageKHR EglDisplay::importDmaBufAsImage(const DmaBufAttributes &dmabuf,
+                                             YUVMatrixCoefficients coefficients,
+                                             EncodingRange range) const
+ {
+     QList<EGLint> attribs;
+     attribs.reserve(6 + dmabuf.planeCount * 10 + 1);
++    if (dmabuf.planeCount == 1 && dmabuf.pitch[0] == 0) {
++        const uint32_t format = dmabuf.format == DRM_FORMAT_ARGB8888 || dmabuf.format == DRM_FORMAT_XRGB8888 ? 44
++            : dmabuf.format == DRM_FORMAT_ABGR8888 || dmabuf.format == DRM_FORMAT_XBGR8888 ? 37 : 0;
++        drm_wsx_opaque_query descriptor{};
++        if (qEnvironmentVariable("WSX_OPAQUE_COMPOSITOR") != QLatin1String("1")
++            || !m_extensions.contains(QByteArrayLiteral("EGL_WSX_opaque_image"))
++            || !m_drmDevice || !format || dmabuf.offset[0]
++            || dmabuf.modifier != DRM_FORMAT_MOD_INVALID
++            || wsx_gbm_opaque_consumer_supported(m_drmDevice->fileDescriptor()) != 1
++            || wsx_gbm_lookup_opaque_fd(m_drmDevice->fileDescriptor(), dmabuf.fd[0].get(),
++                                       dmabuf.width, dmabuf.height, format, &descriptor)) {
++            return EGL_NO_IMAGE_KHR;
++        }
++        // Mesa validates the same immutable descriptor again at import time.
++        attribs << EGLint(EGL_WSX_OPAQUE_DESCRIPTOR) << EGL_TRUE;
++    }
++
+ 
+     attribs << EGL_WIDTH << dmabuf.width
+             << EGL_HEIGHT << dmabuf.height
+--- a/src/opengl/egldisplay.h
++++ b/src/opengl/egldisplay.h
+@@ -53,6 +53,7 @@
+ 
+     EGLImageKHR createImage(EGLContext ctx, EGLenum target, EGLClientBuffer buffer, const EGLint *attrib_list) const;
+     void destroyImage(EGLImageKHR image) const;
++    EGLImageKHR importWsxNativePixmap(void *nativeBo) const;
+ 
+     EGLImageKHR importDmaBufAsImage(const DmaBufAttributes &dmabuf,
+                                     YUVMatrixCoefficients coefficients = YUVMatrixCoefficients::Identity,
+--- a/src/opengl/eglswapchain.cpp
++++ b/src/opengl/eglswapchain.cpp
+@@ -8,6 +8,7 @@
+     SPDX-License-Identifier: GPL-2.0-or-later
+ */
+ #include "opengl/eglswapchain.h"
++#include "wsx/kwin-native-buffer.h"
+ #include "core/graphicsbuffer.h"
+ #include "core/graphicsbufferallocator.h"
+ #include "core/renderdevice.h"
+@@ -79,7 +80,8 @@
+ 
+ std::shared_ptr<EglSwapchainSlot> EglSwapchainSlot::create(const std::shared_ptr<EglContext> &context, GraphicsBuffer *buffer)
+ {
+-    auto texture = context->importDmaBufAsTexture(*buffer->dmabufAttributes());
++    auto native = dynamic_cast<WsxNativeBuffer *>(buffer);
++    auto texture = context->importDmaBufAsTexture(*buffer->dmabufAttributes(), native ? native->wsxNativeBo() : nullptr);
+     if (!texture) {
+         buffer->drop();
+         return nullptr;
+--- a/src/wayland/linuxdmabufv1clientbuffer.cpp
++++ b/src/wayland/linuxdmabufv1clientbuffer.cpp
+@@ -11,6 +11,9 @@
+ */
+ 
+ #include "linuxdmabufv1clientbuffer.h"
++#include "wsx/gbm-descriptor.h"
++#include "wsx-opaque-buffer-v1-server-protocol.h"
++#include "opengl/egldisplay.h"
+ #include "clientconnection.h"
+ #include "core/drmdevice.h"
+ #include "core/gpumanager.h"
+@@ -28,6 +31,8 @@
+ namespace KWin
+ {
+ 
++#include "wsx/kwin-wayland.inc"
++
+ static const int s_version = 6;
+ 
+ LinuxDmaBufV1ClientBufferIntegrationPrivate::LinuxDmaBufV1ClientBufferIntegrationPrivate(LinuxDmaBufV1ClientBufferIntegration *q, Display *display)
+@@ -376,6 +381,17 @@
+ void LinuxDmaBufV1ClientBufferIntegration::setRenderBackend(RenderBackend *renderBackend)
+ {
+     d->renderBackend = renderBackend;
++    if (renderBackend && !d->wsxOpaqueManager
++        && qEnvironmentVariable("WSX_OPAQUE_COMPOSITOR") == QLatin1String("1")) {
++        for (const auto &device : GpuManager::s_self->renderDevices()) {
++            if (device->drmDevice() && device->eglDisplay()
++                && device->eglDisplay()->extensions().contains(QByteArrayLiteral("EGL_WSX_opaque_image"))
++                && wsx_gbm_opaque_consumer_supported(device->drmDevice()->fileDescriptor()) == 1) {
++                d->wsxOpaqueManager = new WsxOpaqueManager(this, static_cast<Display *>(parent()));
++                break;
++            }
++        }
++    }
+ }
+ 
+ void LinuxDmaBufV1ClientBufferIntegration::setSupportedFormatsWithModifiers(const QList<LinuxDmaBufV1Feedback::Tranche> &tranches)
+--- a/src/wayland/linuxdmabufv1clientbuffer_p.h
++++ b/src/wayland/linuxdmabufv1clientbuffer_p.h
+@@ -40,6 +40,7 @@
+     QPointer<RenderBackend> renderBackend;
+     QHash<dev_t, FormatModifierMap> perDeviceFormats;
+ 
++    QObject *wsxOpaqueManager = nullptr;
+     dev_t currentMainDevice = 0;
+     QHash<wl_client *, dev_t> mainDevices;
+ 
+@@ -111,6 +112,7 @@
+     bool m_hasAlphaChannel = false;
+ 
+     friend class LinuxDmaBufParamsV1;
++    friend class WsxOpaqueManager;
+ };
+ 
+ class LinuxDmaBufV1FormatTable
+--- a/src/backends/drm/drm_buffer.cpp
++++ b/src/backends/drm/drm_buffer.cpp
+@@ -36,11 +36,22 @@
+     , m_framebufferId(fbid)
+     , m_buffer(buffer)
+ {
++    const auto attrs = buffer ? buffer->dmabufAttributes() : nullptr;
++    m_wsxOpaque = qEnvironmentVariable("WSX_OPAQUE_COMPOSITOR") == QLatin1String("1")
++        && attrs && attrs->planeCount == 1 && attrs->pitch[0] == 0
++        && attrs->modifier == DRM_FORMAT_MOD_INVALID;
+ }
+ 
+ DrmFramebufferData::~DrmFramebufferData()
+ {
+-    if (drmModeCloseFB(m_gpu->fd(), m_framebufferId) != 0) {
++    // CLOSEFB deliberately preserves active scanout for compositor handoff.
++    // A private opaque surface retains a Venus context while scanned out, so
++    // explicitly remove it when its final KWin framebuffer owner retires.
++    // RMFB performs the real KMS disable; no GPU completion is fabricated.
++    if (m_wsxOpaque) {
++        const int result = drmModeRmFB(m_gpu->fd(), m_framebufferId);
++        qInfo() << "WSX_OPAQUE_FB retired" << m_framebufferId << "result" << result;
++    } else if (drmModeCloseFB(m_gpu->fd(), m_framebufferId) != 0) {
+         drmModeRmFB(m_gpu->fd(), m_framebufferId);
+     }
+     if (m_buffer) {
+--- a/src/backends/drm/drm_buffer.h
++++ b/src/backends/drm/drm_buffer.h
+@@ -29,6 +29,7 @@
+     DrmGpu *const m_gpu;
+     const uint32_t m_framebufferId;
+     const QPointer<GraphicsBuffer> m_buffer;
++    bool m_wsxOpaque = false;
+ };
+ 
+ class KWIN_EXPORT DrmFramebuffer

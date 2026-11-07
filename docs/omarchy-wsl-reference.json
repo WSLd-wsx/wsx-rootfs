@@ -1,0 +1,31 @@
+{
+  "repository": "https://github.com/craigloewen-msft/Omarchy-wsl",
+  "commit": "fff45f01ac2e6c6c3e85b340779e4e53f51f9d99",
+  "scope": "WSL configuration and initialization patterns only; not CLI-only or GUI-removal logic",
+  "files": [
+    {
+      "path": "Containerfile",
+      "sha256": "50144856f5b2dba8f5a84b0774b9a90ca6548d3e70aecdc6f478762ff7510841"
+    },
+    {
+      "path": "README.md",
+      "sha256": "7dfbd76f0c7f801f13817d26348509f7d9426d441ee9af3252baa68e75d4169f"
+    },
+    {
+      "path": "install/omarchy-wsl-install.sh",
+      "sha256": "ea8403e526b2fc158506c240161f05457de6ca6ddf71e44b3cfcb8cb4bfe114c"
+    },
+    {
+      "path": "wsl/oobe.sh",
+      "sha256": "a85e05a7b19bed8a5154115c8458f448e96f2f714b9088116d3df508d127913a"
+    },
+    {
+      "path": "wsl.conf",
+      "sha256": "3c636970285982dc18d7c3768d52064488c79c8cea0abf4b97b5cd9d438bf078"
+    },
+    {
+      "path": "packages/omarchy-wsl.packages",
+      "sha256": "42d4a2dcf335a9a03bde73a00a9ed625442421262ad34dc8d83df7521e362229"
+    }
+  ]
+}

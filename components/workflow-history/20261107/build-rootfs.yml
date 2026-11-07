@@ -1,0 +1,219 @@
+name: Shared rootfs build and private artifacts
+on:
+  workflow_call:
+    inputs:
+      test_only:
+        type: boolean
+        default: true
+      distribution_id:
+        required: true
+        type: string
+      upstream_version:
+        type: string
+        default: ''
+      revision:
+        type: number
+        default: 0
+      debug_enabled:
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: rootfs-${{ inputs.distribution_id }}-${{ inputs.upstream_version || 'latest' }}-r${{ inputs.revision }}
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      completed: ${{ steps.prepare.outputs.completed }}
+      tag: ${{ steps.prepare.outputs.tag }}
+      build_json: ${{ steps.prepare.outputs.build_json }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check source and binary workflow access
+        id: access
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/check-workflow-access.py --repo "$REPOSITORY" --operation omarchy-candidate
+      - name: Check mandatory Guest protocol runtime pairing
+        run: python3 scripts/desktop_contract.py --check-pin
+      - name: Require an explicit component package pin
+        env:
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/reuse-components.py --check-pin --profile omarchy --repo "$REPOSITORY" --work out
+      - name: Require publicly available shared graphics sources
+        run: python3 scripts/check-shared-sources.py --profile omarchy
+      - name: Resolve and deduplicate immutable inputs
+        id: prepare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DISTRO: ${{ inputs.distribution_id }}
+          VERSION: ${{ inputs.upstream_version }}
+          REVISION: ${{ format('{0}', inputs.revision) }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          test "$DISTRO" = wsx-omarchy
+          args=()
+          if [[ -n "$VERSION" ]]; then args+=(--version "$VERSION"); fi
+          python3 scripts/prepare-build.py "${args[@]}" --revision "$REVISION" --repo "$REPOSITORY" --output out/build.json
+          python3 - <<'PY'
+          import base64, json, os
+          data=json.load(open('out/build.json'))
+          with open(os.environ['GITHUB_OUTPUT'],'a') as stream:
+              stream.write('completed='+str(data['completed']).lower()+'\n')
+              stream.write('tag='+data['tag']+'\n')
+              encoded=base64.b64encode(json.dumps(data).encode()).decode()
+              if len(encoded) > 400000: raise ValueError('Resolved input output exceeds safe job-output size')
+              stream.write('build_json='+encoded+'\n')
+          PY
+  build:
+    needs: prepare
+    if: needs.prepare.outputs.completed != 'true' || inputs.debug_enabled
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    permissions:
+      contents: write
+      actions: read
+      packages: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check source and binary workflow access
+        id: access
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/check-workflow-access.py --repo "$REPOSITORY" --operation omarchy-candidate
+      - name: Restore resolved inputs without Artifact storage
+        env:
+          BUILD_JSON: ${{ needs.prepare.outputs.build_json }}
+        run: |
+          python3 - <<'PYTHON'
+          import base64, json, os
+          from pathlib import Path
+          data=json.loads(base64.b64decode(os.environ['BUILD_JSON'], validate=True))
+          Path('out').mkdir(exist_ok=True)
+          Path('out/build.json').write_text(json.dumps(data, indent=2)+'\n')
+          PYTHON
+      - name: Admit pinned source-built components without compilation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zstd
+          python3 scripts/reuse-components.py --profile omarchy --repo "$REPOSITORY" --work out
+      - name: Reclaim unused hosted-runner SDK space
+        run: bash scripts/prepare-runner.sh
+      - name: Start isolated pinned builder
+        run: |
+          image=$(python3 -c 'import json; print(json.load(open("components/builder.json"))["image"])')
+          docker run -d --name wsx-rootfs-builder --privileged -v "$PWD:/workspace:ro" -v "$PWD/out:/output" "$image" sleep infinity
+      - name: Install signed SSH debugging tools
+        if: github.event_name == 'workflow_dispatch' && inputs.debug_enabled
+        run: sudo apt-get update && sudo apt-get install -y tmate openssh-client
+      - name: Start actor-key SSH debugging session
+        if: github.event_name == 'workflow_dispatch' && inputs.debug_enabled
+        id: tmate
+        uses: mxschmitt/action-tmate@35b54afac29c97fb54faba5b513f8fbd1882f113 # v3
+        timeout-minutes: 5
+        with:
+          detached: true
+          limit-access-to-actor: true
+          install-dependencies: false
+          connect-timeout-seconds: 600
+      - name: Record connection for authenticated gh retrieval
+        if: github.event_name == 'workflow_dispatch' && inputs.debug_enabled
+        env:
+          SSH_ADDRESS: ${{ steps.tmate.outputs.ssh-address }}
+        run: |
+          python3 - <<'PYTHON'
+          import json, os
+          from pathlib import Path
+          data = dict(ssh_address=os.environ['SSH_ADDRESS'], run_id=os.environ['GITHUB_RUN_ID'],
+                      build_commit=os.environ['GITHUB_SHA'], actor=os.environ['GITHUB_ACTOR'],
+                      publication_allowed=False)
+          Path('out/runner-debug.json').write_text(json.dumps(data, indent=2)+'\n')
+          PYTHON
+      - name: Transfer temporary connection details
+        if: github.event_name == 'workflow_dispatch' && inputs.debug_enabled
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: runner-debug-connection
+          path: out/runner-debug.json
+          retention-days: 1
+          if-no-files-found: error
+      - name: Install signed desktop base
+        run: docker exec wsx-rootfs-builder bash /workspace/distros/omarchy/bootstrap-rootfs.sh
+      - name: Build and validate signed-package rootfs
+        run: docker exec wsx-rootfs-builder bash /workspace/distros/omarchy/build-rootfs.sh
+      - name: Retain failed builder briefly for diagnosis
+        if: failure() && inputs.debug_enabled && steps.tmate.outcome == 'success'
+        run: |
+          echo 'Inspect through the actor-key session; touch continue to release the builder.'
+          for ((waited=0; waited<600; waited+=5)); do
+            if [[ -f continue || -f /continue ]]; then break; fi
+            sleep 5
+          done
+      - name: Stop the owned isolated builder
+        if: always()
+        run: |
+          if docker container inspect wsx-rootfs-builder >/dev/null 2>&1; then
+            docker stop wsx-rootfs-builder
+            docker rm wsx-rootfs-builder
+          fi
+      - name: Verify archive and finalize candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zstd acl libcap2-bin python3-jsonschema
+          df -h .
+          python3 scripts/archive_policy.py --repo "$REPOSITORY" --work out
+          sudo /usr/bin/python3 scripts/finalize.py out
+      - name: Preserve diagnostics
+        if: ${{ always() && steps.access.outcome == 'success' && github.event.repository.private }}
+        continue-on-error: true
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: build-diagnostics
+          path: |
+            out/*.json
+            out/*.txt
+            out/*.conf
+            out/components/*.txt
+            out/components/*.conf
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Preserve source inputs and adapted build materials
+        if: ${{ always() && steps.access.outcome == 'success' && github.event.repository.private }}
+        continue-on-error: true
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: component-source-materials
+          path: |
+            out/component-materials/**
+            out/component-reuse.json
+          compression-level: 0
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Require Omarchy candidate artifact and source checks
+        if: ${{ !inputs.test_only && !inputs.debug_enabled }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/private-artifact-gate.py --repo "$REPOSITORY" --kind rootfs --public-prerelease --work out
+      - name: Publish verified Omarchy prerelease with shared source references
+        if: ${{ !inputs.test_only && !inputs.debug_enabled }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/publish.py --repo "$REPOSITORY" --directory out/payload --public-prerelease

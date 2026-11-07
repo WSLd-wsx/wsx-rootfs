@@ -1,0 +1,603 @@
+{
+  "schema_version": 1,
+  "license_grant": true,
+  "release_ready": false,
+  "scope": "Explicit commands/data plus discovered local Python imports; external package closure pending",
+  "dependencies": {
+    "scripts/build-kwin.py": [
+      "components/sources.json",
+      "components/cachyos-provenance.json",
+      "vendor/wsx-proto/guest-opaque/prepare-kwin.py"
+    ],
+    "vendor/wsx-proto/guest-opaque/prepare-kwin.py": [
+      "vendor/wsx-proto/guest-opaque/kwin-opaque-consumer.patch",
+      "vendor/wsx-proto/guest-opaque/kwin-native-buffer.h",
+      "vendor/wsx-proto/guest-opaque/kwin-framebuffer.c",
+      "vendor/wsx-proto/guest-opaque/kwin-framebuffer.h",
+      "vendor/wsx-proto/guest-opaque/kwin-wayland.inc",
+      "vendor/wsx-proto/guest-opaque/gbm-descriptor.c",
+      "vendor/wsx-proto/guest-opaque/gbm-descriptor.h",
+      "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h",
+      "vendor/wsx-proto/guest-opaque/wayland/wsx-opaque-buffer-v1.xml"
+    ],
+    "scripts/build-components.py": [
+      "components/sources.json",
+      "scripts/build-kwin.py",
+      "vendor/wsx-proto/guest-compat/build.py",
+      "vendor/wsx-proto/guest-compat/build-venus.py",
+      "vendor/wsx-proto/guest-opaque/build-compositor.py"
+    ],
+    "scripts/stage-guest.py": [
+      "vendor/wsx-proto/device-host/production/start-guest.py",
+      "guest/input.c",
+      "vendor/wsx-proto/input/guest.c",
+      "vendor/rvgpu/include/librvgpu/rvgpu-protocol.h",
+      "vendor/wsx-proto/session/enter.py",
+      "vendor/wsx-proto/session/install.py",
+      "vendor/wsx-proto/session/wsx-launch-app",
+      "scripts/stage-protocol.py"
+    ],
+    "scripts/stage-cachyos.py": [
+      "vendor/wsx-proto/device-host/production/start-cachyos-plasma.py",
+      "guest/input.c",
+      "vendor/wsx-proto/input/guest.c",
+      "vendor/rvgpu/include/librvgpu/rvgpu-protocol.h",
+      "vendor/wsx-proto/session/enter.py",
+      "vendor/wsx-proto/session/install.py",
+      "vendor/wsx-proto/session/wsx-launch-app",
+      "scripts/stage-protocol.py"
+    ],
+    "scripts/check-provenance.py": [
+      "docs/provenance.json"
+    ],
+    "scripts/fetch-components.py": [
+      "components/sources.json"
+    ],
+    "scripts/assemble-source-components.py": [
+      "components/sources.json"
+    ],
+    "distros/omarchy/build-components.sh": [
+      "scripts/check-provenance.py",
+      "scripts/fetch-components.py",
+      "scripts/build-components.py",
+      "scripts/assemble-source-components.py",
+      "scripts/collect-component-materials.py",
+      "distros/omarchy/build-dependencies.txt"
+    ],
+    "distros/omarchy/bootstrap-rootfs.sh": [
+      "distros/omarchy/rootfs-packages.txt"
+    ],
+    "distros/cachyos-plasma/build-components.sh": [
+      "scripts/check-provenance.py",
+      "scripts/fetch-components.py",
+      "scripts/build-components.py",
+      "scripts/assemble-source-components.py",
+      "scripts/collect-component-materials.py",
+      "distros/cachyos-plasma/build-dependencies.txt"
+    ],
+    "distros/cachyos-plasma/bootstrap-rootfs.sh": [
+      "distros/cachyos-plasma/packages.txt",
+      "scripts/source-support.py",
+      "distros/cachyos-plasma/upstream/source.json",
+      "distros/cachyos-plasma/upstream/iso-os-release",
+      "distros/cachyos-plasma/upstream/iso-cachyos-release",
+      "distros/cachyos-plasma/upstream/pacstrap.conf"
+    ],
+    "distros/omarchy/build-rootfs.sh": [
+      "scripts/stage-guest.py",
+      "scripts/sanitize-rootfs.py",
+      "scripts/write-image-license-map.py",
+      "scripts/validate-rootfs.py",
+      "vendor/wsx-proto/network/install.py"
+    ],
+    "distros/cachyos-plasma/configure-rootfs.sh": [
+      "scripts/stage-cachyos.py",
+      "scripts/sanitize-rootfs.py",
+      "scripts/reset-cachyos-keyring.py",
+      "scripts/write-image-license-map.py",
+      "scripts/validate-cachyos.py",
+      "distros/cachyos-plasma/upstream/iso-os-release",
+      "distros/cachyos-plasma/upstream/iso-cachyos-release"
+    ],
+    "vendor/wsx-proto/guest-compat/build.py": [
+      "vendor/wsx-proto/guest-compat/import-diagnostics.patch",
+      "vendor/wsx-proto/guest-compat/linear-depth-segregation.patch",
+      "vendor/wsx-proto/guest-compat/linear-feedback-compat.patch",
+      "vendor/wsx-proto/guest-compat/linear-modifier-feedback.patch",
+      "vendor/wsx-proto/guest-compat/linear-shared-compat.patch",
+      "vendor/wsx-proto/guest-compat/modifier-features2.patch",
+      "vendor/wsx-proto/guest-compat/negotiated-export.patch",
+      "vendor/wsx-proto/guest-compat/opaque-consumer.patch",
+      "vendor/wsx-proto/guest-compat/opaque-gbm-export.patch",
+      "vendor/wsx-proto/guest-compat/venus-direct-wsi.patch",
+      "vendor/wsx-proto/guest-compat/venus-nv-linear-color.patch",
+      "vendor/wsx-proto/guest-compat/venus-opaque-bind-order.patch",
+      "vendor/wsx-proto/guest-compat/venus-opaque-export-order.patch",
+      "vendor/wsx-proto/guest-compat/venus-opaque-import.patch",
+      "vendor/wsx-proto/guest-compat/venus-opaque-query.patch",
+      "vendor/wsx-proto/guest-compat/venus-opaque-wsi.patch",
+      "vendor/wsx-proto/guest-compat/venus-zink-drm-identity.patch",
+      "vendor/wsx-proto/guest-opaque/gbm-descriptor.c",
+      "vendor/wsx-proto/guest-opaque/gbm-descriptor.h",
+      "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h",
+      "vendor/wsx-proto/guest-opaque/wayland/wsx-opaque-buffer-v1.xml"
+    ],
+    "vendor/wsx-proto/guest-compat/build-venus.py": [
+      "vendor/wsx-proto/guest-compat/import-diagnostics.patch",
+      "vendor/wsx-proto/guest-compat/linear-depth-segregation.patch",
+      "vendor/wsx-proto/guest-compat/linear-feedback-compat.patch",
+      "vendor/wsx-proto/guest-compat/linear-modifier-feedback.patch",
+      "vendor/wsx-proto/guest-compat/linear-shared-compat.patch",
+      "vendor/wsx-proto/guest-compat/modifier-features2.patch",
+      "vendor/wsx-proto/guest-compat/negotiated-export.patch",
+      "vendor/wsx-proto/guest-compat/opaque-consumer.patch",
+      "vendor/wsx-proto/guest-compat/opaque-gbm-export.patch",
+      "vendor/wsx-proto/guest-compat/venus-direct-wsi.patch",
+      "vendor/wsx-proto/guest-compat/venus-nv-linear-color.patch",
+      "vendor/wsx-proto/guest-compat/venus-opaque-bind-order.patch",
+      "vendor/wsx-proto/guest-compat/venus-opaque-export-order.patch",
+      "vendor/wsx-proto/guest-compat/venus-opaque-import.patch",
+      "vendor/wsx-proto/guest-compat/venus-opaque-query.patch",
+      "vendor/wsx-proto/guest-compat/venus-opaque-wsi.patch",
+      "vendor/wsx-proto/guest-compat/venus-zink-drm-identity.patch",
+      "vendor/wsx-proto/guest-opaque/gbm-descriptor.c",
+      "vendor/wsx-proto/guest-opaque/gbm-descriptor.h",
+      "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h",
+      "vendor/wsx-proto/guest-opaque/wayland/wsx-opaque-buffer-v1.xml"
+    ],
+    "vendor/wsx-proto/guest-opaque/build-compositor.py": [
+      "vendor/wsx-proto/guest-opaque/aquamarine-opaque-consumer.patch",
+      "vendor/wsx-proto/guest-opaque/hyprland-opaque-consumer.patch",
+      "vendor/wsx-proto/guest-opaque/kwin-opaque-consumer.patch",
+      "vendor/wsx-proto/guest-opaque/gbm-descriptor.c",
+      "vendor/wsx-proto/guest-opaque/gbm-descriptor.h",
+      "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h",
+      "vendor/wsx-proto/guest-opaque/wayland/wsx-opaque-buffer-v1.xml"
+    ],
+    "vendor/wsx-proto/network/install.py": [
+      "vendor/wsx-proto/network/Panel.qml.patch",
+      "vendor/wsx-proto/network/manifest.json",
+      "vendor/wsx-proto/network/omarchy-4.0.6/Panel.qml.patch",
+      "vendor/wsx-proto/network/omarchy-4.0.6/manifest.json",
+      "vendor/wsx-proto/network/omarchy-4.0.6/wifi.sh.patch",
+      "vendor/wsx-proto/network/wifi.sh.patch"
+    ],
+    "scripts/license_inputs.py": [
+      "components/license-boundaries.json",
+      "docs/licensing/license-text-sources.json",
+      "docs/licensing/licenses/Apache-2.0.txt",
+      "docs/licensing/licenses/CC0-1.0.txt",
+      "docs/licensing/licenses/GPL-2.0.txt",
+      "docs/licensing/licenses/MIT.txt",
+      "docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt",
+      "docs/licensing/licenses/upstream/aquamarine-LICENSE",
+      "docs/licensing/licenses/upstream/glaze-LICENSE",
+      "docs/licensing/licenses/upstream/hyprland-LICENSE",
+      "docs/licensing/licenses/upstream/udis86-LICENSE",
+      "docs/licensing/modules.json",
+      "docs/licensing/rules.json",
+      "LICENSE",
+      "LICENSE-MAP.md",
+      "docs/licensing/OUTPUT-LICENSES.md",
+      "docs/licensing/PRIVATE-ARTIFACTS.md",
+      "docs/licensing/licenses/WSX-MIT.txt"
+    ],
+    "scripts/product_licenses.py": [
+      "components/license-boundaries.json",
+      "docs/licensing/license-text-sources.json",
+      "docs/licensing/licenses/Apache-2.0.txt",
+      "docs/licensing/licenses/CC0-1.0.txt",
+      "docs/licensing/licenses/GPL-2.0.txt",
+      "docs/licensing/licenses/MIT.txt",
+      "docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt",
+      "docs/licensing/licenses/upstream/aquamarine-LICENSE",
+      "docs/licensing/licenses/upstream/glaze-LICENSE",
+      "docs/licensing/licenses/upstream/hyprland-LICENSE",
+      "docs/licensing/licenses/upstream/udis86-LICENSE",
+      "docs/licensing/modules.json",
+      "docs/licensing/rules.json",
+      "LICENSE",
+      "LICENSE-MAP.md",
+      "docs/licensing/OUTPUT-LICENSES.md",
+      "docs/licensing/PRIVATE-ARTIFACTS.md",
+      "docs/licensing/licenses/WSX-MIT.txt"
+    ],
+    "scripts/source_support.py": [
+      "components/sources.json"
+    ],
+    "scripts/prepare-build.py": [
+      "scripts/releases.py",
+      "distros/omarchy/revisions.json"
+    ],
+    "scripts/prepare-cachyos.py": [
+      "distros/cachyos-plasma/upstream/source.json"
+    ],
+    "scripts/reuse-components.py": [
+      "components/reuse.json",
+      "scripts/consume-source-components.py"
+    ],
+    "scripts/private-artifact-gate.py": [
+      "scripts/audit-licenses.py",
+      "scripts/audit-license-modules.py",
+      "scripts/check-provenance.py"
+    ]
+  },
+  "roots": {
+    "kwin-module-rebuild": [
+      "scripts/build-kwin.py",
+      "distros/cachyos-plasma/build-dependencies.txt"
+    ],
+    "paired-component-build": [
+      "distros/cachyos-plasma/build-components.sh",
+      "distros/omarchy/build-components.sh"
+    ],
+    "image-assembly": [
+      "distros/cachyos-plasma/bootstrap-rootfs.sh",
+      "distros/cachyos-plasma/configure-rootfs.sh",
+      "distros/omarchy/bootstrap-rootfs.sh",
+      "distros/omarchy/build-rootfs.sh",
+      "scripts/reuse-components.py"
+    ],
+    "image-packaging": [
+      "scripts/finalize.py",
+      "scripts/finalize-cachyos.py",
+      "scripts/package-source-components.py",
+      "scripts/consume-source-components.py"
+    ],
+    "preflight-and-delivery": [
+      "scripts/prepare-build.py",
+      "scripts/prepare-cachyos.py",
+      "scripts/private-artifact-gate.py"
+    ]
+  },
+  "installed_inputs": {
+    "scripts/stage-guest.py": [
+      "guest/wsx-guest.py",
+      "guest/initialize-user.sh"
+    ],
+    "scripts/stage-cachyos.py": [
+      "guest/wsx-guest.py"
+    ],
+    "distros/omarchy/build-rootfs.sh": [
+      "guest/first-run.sh"
+    ]
+  },
+  "outputs": [
+    {
+      "id": "mesa",
+      "profiles": [
+        "omarchy",
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/runtime/mesa/**"
+      ],
+      "source_paths": [
+        "vendor/wsx-proto/guest-compat/*",
+        "vendor/wsx-proto/guest-opaque/gbm-descriptor.c",
+        "vendor/wsx-proto/guest-opaque/gbm-descriptor.h",
+        "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h"
+      ],
+      "license_treatment": "Exact Mesa and dependency terms plus retained MIT adapters",
+      "kind": "compiled",
+      "license_grant": false
+    },
+    {
+      "id": "venus",
+      "profiles": [
+        "omarchy",
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/runtime/venus/**"
+      ],
+      "source_paths": [
+        "vendor/wsx-proto/guest-compat/*",
+        "vendor/wsx-proto/guest-opaque/gbm-descriptor.c",
+        "vendor/wsx-proto/guest-opaque/gbm-descriptor.h",
+        "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h"
+      ],
+      "license_treatment": "Exact Venus/Mesa and dependency terms plus retained MIT adapters",
+      "kind": "compiled",
+      "license_grant": false
+    },
+    {
+      "id": "hyprland-aquamarine",
+      "profiles": [
+        "omarchy"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/runtime/opaque-consumer/**"
+      ],
+      "source_paths": [
+        "vendor/wsx-proto/guest-opaque/build-compositor.py",
+        "vendor/wsx-proto/guest-opaque/aquamarine-opaque-consumer.patch",
+        "vendor/wsx-proto/guest-opaque/hyprland-opaque-consumer.patch",
+        "vendor/wsx-proto/guest-opaque/wayland/*",
+        "vendor/wsx-proto/guest-opaque/gbm-descriptor.c",
+        "vendor/wsx-proto/guest-opaque/gbm-descriptor.h",
+        "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h"
+      ],
+      "license_treatment": "Upstream BSD/MIT and exact dependency terms; not the KWin GPL license",
+      "kind": "compiled",
+      "license_grant": false
+    },
+    {
+      "id": "kwin",
+      "profiles": [
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/runtime/kwin-opaque/**"
+      ],
+      "source_paths": [
+        "scripts/build-kwin.py",
+        "vendor/wsx-proto/guest-opaque/kwin-*",
+        "vendor/wsx-proto/guest-opaque/prepare-kwin.py",
+        "vendor/wsx-proto/guest-opaque/wayland/*",
+        "vendor/wsx-proto/guest-opaque/gbm-descriptor.c",
+        "vendor/wsx-proto/guest-opaque/gbm-descriptor.h",
+        "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h"
+      ],
+      "license_treatment": "GPL-covered combined output; retain original per-file MIT/GPL declarations",
+      "kind": "compiled",
+      "license_grant": false
+    },
+    {
+      "id": "input",
+      "profiles": [
+        "omarchy",
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/runtime/wsx-input-guest"
+      ],
+      "source_paths": [
+        "guest/input.c",
+        "vendor/wsx-proto/input/guest.c",
+        "vendor/rvgpu/include/librvgpu/rvgpu-protocol.h"
+      ],
+      "license_treatment": "MIT source and Apache-2.0 header; preserve both notices",
+      "kind": "compiled",
+      "license_grant": false
+    },
+    {
+      "id": "session",
+      "profiles": [
+        "omarchy",
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/runtime/session/**"
+      ],
+      "source_paths": [
+        "vendor/wsx-proto/session/*"
+      ],
+      "license_treatment": "GPL-2.0-or-later for approved original helpers/adaptations; upstream patch context retains its terms",
+      "kind": "copied-or-adapted",
+      "license_grant": true
+    },
+    {
+      "id": "network",
+      "profiles": [
+        "omarchy"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/runtime/network/**"
+      ],
+      "source_paths": [
+        "vendor/wsx-proto/network/*"
+      ],
+      "license_treatment": "GPL-2.0-or-later for approved original helpers/adaptations; upstream patch context retains its terms",
+      "kind": "copied",
+      "license_grant": true
+    },
+    {
+      "id": "desktop-omarchy",
+      "profiles": [
+        "omarchy"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/runtime/desktop.py"
+      ],
+      "source_paths": [
+        "vendor/wsx-proto/device-host/production/start-guest.py",
+        "scripts/stage-guest.py"
+      ],
+      "license_treatment": "MIT original adapter and expressly MIT-licensed owner-original staging additions",
+      "kind": "generated",
+      "license_grant": true
+    },
+    {
+      "id": "desktop-cachyos-plasma",
+      "profiles": [
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/runtime/desktop.py"
+      ],
+      "source_paths": [
+        "vendor/wsx-proto/device-host/production/start-cachyos-plasma.py",
+        "scripts/stage-cachyos.py"
+      ],
+      "license_treatment": "MIT original adapter and expressly MIT-licensed owner-original staging additions",
+      "kind": "generated",
+      "license_grant": true
+    },
+    {
+      "id": "first-run",
+      "profiles": [
+        "omarchy"
+      ],
+      "installed_paths": [
+        "usr/share/omarchy/bin/omarchy-provision-first-run"
+      ],
+      "source_paths": [
+        "guest/first-run.sh"
+      ],
+      "license_treatment": "PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates",
+      "kind": "copied",
+      "license_grant": true
+    },
+    {
+      "id": "guest-omarchy",
+      "profiles": [
+        "omarchy"
+      ],
+      "installed_paths": [
+        "usr/bin/wsx-guest"
+      ],
+      "source_paths": [
+        "guest/wsx-guest.py"
+      ],
+      "license_treatment": "PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates",
+      "kind": "copied",
+      "license_grant": true
+    },
+    {
+      "id": "initialization-omarchy",
+      "profiles": [
+        "omarchy"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/initialize-user.sh"
+      ],
+      "source_paths": [
+        "guest/initialize-user.sh"
+      ],
+      "license_treatment": "PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates",
+      "kind": "copied",
+      "license_grant": true
+    },
+    {
+      "id": "guest-cachyos-plasma",
+      "profiles": [
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/bin/wsx-guest"
+      ],
+      "source_paths": [
+        "guest/wsx-guest.py",
+        "scripts/stage-cachyos.py"
+      ],
+      "license_treatment": "PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates",
+      "kind": "generated",
+      "license_grant": true
+    },
+    {
+      "id": "initialization-cachyos-plasma",
+      "profiles": [
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/initialize-user.sh"
+      ],
+      "source_paths": [
+        "scripts/stage-cachyos.py"
+      ],
+      "license_treatment": "PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates",
+      "kind": "generated",
+      "license_grant": true
+    },
+    {
+      "id": "kwin-xwayland-helper-link",
+      "profiles": [
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "opt/wsx/kwin-opaque-6.8.1/lib/libexec/plasma-setup-xwayland"
+      ],
+      "source_paths": [
+        "scripts/stage-cachyos.py"
+      ],
+      "license_treatment": "Generated link to a system package helper; target package rights reviewed separately",
+      "kind": "symlink",
+      "license_grant": false
+    },
+    {
+      "id": "protocol-guest-protocol",
+      "profiles": [
+        "omarchy",
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/guest-protocol.py"
+      ],
+      "source_paths": [
+        "guest/protocol.py"
+      ],
+      "license_treatment": "PolyForm-Noncommercial-1.0.0",
+      "kind": "copied",
+      "license_grant": true
+    },
+    {
+      "id": "protocol-device-view",
+      "profiles": [
+        "omarchy",
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/device-view.py"
+      ],
+      "source_paths": [
+        "guest/device-view.py"
+      ],
+      "license_treatment": "PolyForm-Noncommercial-1.0.0",
+      "kind": "copied",
+      "license_grant": true
+    },
+    {
+      "id": "protocol-protocol-display",
+      "profiles": [
+        "omarchy",
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/protocol-display.py"
+      ],
+      "source_paths": [
+        "guest/protocol-display.py"
+      ],
+      "license_treatment": "PolyForm-Noncommercial-1.0.0",
+      "kind": "copied",
+      "license_grant": true
+    },
+    {
+      "id": "protocol-protocol-retirement",
+      "profiles": [
+        "omarchy",
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/protocol-retirement.py"
+      ],
+      "source_paths": [
+        "guest/protocol-retirement.py"
+      ],
+      "license_treatment": "MIT retained from the verified retirement adapter",
+      "kind": "copied",
+      "license_grant": true
+    },
+    {
+      "id": "protocol-guest-profile",
+      "profiles": [
+        "omarchy",
+        "cachyos-plasma"
+      ],
+      "installed_paths": [
+        "usr/lib/wsx/guest-profile.json"
+      ],
+      "source_paths": [
+        "scripts/stage-protocol.py"
+      ],
+      "license_treatment": "GPL-2.0-or-later reconstruction metadata",
+      "kind": "generated",
+      "license_grant": true
+    }
+  ],
+  "activation_blockers": [
+    "Public binary distribution remains unapproved; exact built component and image payloads require source/notice delivery review"
+  ],
+  "private_artifacts_allowed": true
+}

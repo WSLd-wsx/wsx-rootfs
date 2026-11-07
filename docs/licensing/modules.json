@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "status": "active-owner-approved-2026-11-03",
+  "license_grant": true,
+  "modules": {
+    "wsx-independent": {
+      "treatment": "PolyForm-Noncommercial-1.0.0 for owner-original expression; effective 2026-11-03",
+      "polyform_scope": true,
+      "license": "PolyForm-Noncommercial-1.0.0",
+      "new_grant": true
+    },
+    "gpl-build-materials": {
+      "treatment": "GPL-2.0-or-later for owner-original expression; effective 2026-11-03",
+      "polyform_scope": false,
+      "license": "GPL-2.0-or-later",
+      "new_grant": true
+    },
+    "kwin-combination": {
+      "treatment": "Retain per-file notices and applicable GPL combined-output obligations",
+      "polyform_scope": false
+    },
+    "mit-adapters": {
+      "treatment": "Retain existing MIT declarations",
+      "polyform_scope": false
+    },
+    "upstream-patches": {
+      "treatment": "Retain upstream context and existing notices; owner-original additions without an existing applicable grant are MIT",
+      "polyform_scope": false,
+      "contribution_license": "MIT"
+    },
+    "third-party": {
+      "treatment": "Retain applicable third-party terms",
+      "polyform_scope": false
+    },
+    "origin-review": {
+      "treatment": "No WSX grant; exact upstream permission unresolved",
+      "polyform_scope": false
+    }
+  },
+  "rule_modules": {
+    "independent-candidates": "wsx-independent",
+    "imported-helpers": "origin-review",
+    "upstream-patches": "upstream-patches",
+    "existing-mit": "mit-adapters",
+    "kwin-gpl-context": "kwin-combination",
+    "rvgpu-apache": "third-party",
+    "imported-config": "origin-review",
+    "pacstrap-cc0": "third-party",
+    "upstream-index": "wsx-independent",
+    "apache-text": "third-party",
+    "supplemental-license-texts": "third-party",
+    "new-component-producer-origin-review": "gpl-build-materials",
+    "additional-official-notice-copies": "third-party",
+    "polyform-reference-text": "third-party",
+    "gpl-tools": "gpl-build-materials",
+    "approved-imported-helpers": "gpl-build-materials",
+    "operative-map": "gpl-build-materials",
+    "cachyos-identity-gpl": "third-party"
+  },
+  "path_overrides": {
+    "vendor/wsx-proto/guest-opaque/kwin-opaque-consumer.patch": "kwin-combination",
+    "vendor/wsx-proto/guest-opaque/kwin-framebuffer.c": "kwin-combination",
+    "vendor/wsx-proto/guest-opaque/kwin-framebuffer.h": "kwin-combination",
+    "vendor/wsx-proto/guest-opaque/kwin-native-buffer.h": "kwin-combination",
+    "vendor/wsx-proto/guest-opaque/kwin-wayland.inc": "kwin-combination",
+    "vendor/wsx-proto/guest-opaque/prepare-kwin.py": "gpl-build-materials",
+    "vendor/wsx-proto/guest-opaque/gbm-descriptor.c": "kwin-combination",
+    "vendor/wsx-proto/guest-opaque/gbm-descriptor.h": "kwin-combination",
+    "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h": "kwin-combination",
+    "vendor/wsx-proto/guest-opaque/wayland/wsx-opaque-buffer-v1.xml": "kwin-combination",
+    "scripts/build-kwin.py": "gpl-build-materials",
+    "scripts/build-components.py": "gpl-build-materials",
+    "scripts/fetch-components.py": "gpl-build-materials",
+    "scripts/assemble-source-components.py": "gpl-build-materials",
+    "scripts/stage-cachyos.py": "gpl-build-materials",
+    "scripts/stage-guest.py": "gpl-build-materials",
+    "scripts/check-provenance.py": "gpl-build-materials",
+    "scripts/source_support.py": "gpl-build-materials",
+    "scripts/source-support.py": "gpl-build-materials",
+    "distros/cachyos-plasma/build-components.sh": "gpl-build-materials",
+    "distros/cachyos-plasma/build-dependencies.txt": "gpl-build-materials",
+    "distros/cachyos-plasma/bootstrap-rootfs.sh": "gpl-build-materials",
+    "distros/omarchy/build-components.sh": "gpl-build-materials",
+    "distros/omarchy/build-dependencies.txt": "gpl-build-materials",
+    "distros/omarchy/bootstrap-rootfs.sh": "gpl-build-materials",
+    "distros/cachyos-plasma/configure-rootfs.sh": "gpl-build-materials",
+    "distros/omarchy/build-rootfs.sh": "gpl-build-materials",
+    "components/cachyos-provenance.json": "gpl-build-materials",
+    "components/sources.json": "gpl-build-materials",
+    "docs/provenance.json": "gpl-build-materials",
+    "scripts/collect-component-materials.py": "gpl-build-materials",
+    "scripts/component_materials.py": "gpl-build-materials",
+    "distros/cachyos-plasma/packages.txt": "gpl-build-materials",
+    "distros/cachyos-plasma/upstream/source.json": "gpl-build-materials",
+    "distros/omarchy/rootfs-packages.txt": "gpl-build-materials",
+    "scripts/archive.py": "gpl-build-materials",
+    "scripts/image_paths.py": "gpl-build-materials",
+    "scripts/license_inputs.py": "gpl-build-materials",
+    "scripts/product_licenses.py": "gpl-build-materials",
+    "scripts/reset-cachyos-keyring.py": "gpl-build-materials",
+    "scripts/sanitize-rootfs.py": "gpl-build-materials",
+    "scripts/validate-cachyos.py": "gpl-build-materials",
+    "scripts/validate-rootfs.py": "gpl-build-materials",
+    "scripts/write-image-license-map.py": "gpl-build-materials",
+    "scripts/consume-source-components.py": "gpl-build-materials",
+    "scripts/contract.py": "gpl-build-materials",
+    "scripts/finalize-cachyos.py": "gpl-build-materials",
+    "scripts/finalize.py": "gpl-build-materials",
+    "scripts/package-source-components.py": "gpl-build-materials",
+    "scripts/payload_contract.py": "gpl-build-materials",
+    "scripts/source_delivery.py": "gpl-build-materials",
+    "components/license-boundaries.json": "gpl-build-materials",
+    "docs/licensing/license-text-sources.json": "gpl-build-materials",
+    "docs/licensing/modules.json": "gpl-build-materials",
+    "docs/licensing/rules.json": "gpl-build-materials",
+    "distros/omarchy/revisions.json": "gpl-build-materials",
+    "scripts/prepare-build.py": "gpl-build-materials",
+    "scripts/prepare-cachyos.py": "gpl-build-materials",
+    "scripts/releases.py": "gpl-build-materials",
+    "scripts/reuse-components.py": "gpl-build-materials",
+    "components/reuse.json": "gpl-build-materials",
+    "vendor/wsx-proto/device-host/production/test-plasma-session.py": "gpl-build-materials",
+    "vendor/wsx-proto/guest-compat/build-venus.py": "gpl-build-materials",
+    "vendor/wsx-proto/guest-compat/build.py": "gpl-build-materials",
+    "vendor/wsx-proto/guest-opaque/build-compositor.py": "gpl-build-materials",
+    "vendor/wsx-proto/network/README.md": "gpl-build-materials",
+    "vendor/wsx-proto/network/install.py": "gpl-build-materials",
+    "vendor/wsx-proto/network/manifest.json": "gpl-build-materials",
+    "vendor/wsx-proto/network/omarchy-4.0.6/manifest.json": "gpl-build-materials",
+    "vendor/wsx-proto/session/README.md": "gpl-build-materials",
+    "vendor/wsx-proto/session/enter.py": "gpl-build-materials",
+    "vendor/wsx-proto/session/install.py": "gpl-build-materials",
+    "vendor/wsx-proto/session/wsx-launch-app": "gpl-build-materials",
+    "LICENSE": "gpl-build-materials",
+    "LICENSE-MAP.md": "gpl-build-materials",
+    "docs/licensing/LICENSE-MAP.md": "gpl-build-materials",
+    "docs/licensing/OUTPUT-LICENSES.md": "gpl-build-materials",
+    "docs/licensing/PRIVATE-ARTIFACTS.md": "gpl-build-materials",
+    "guest/protocol-retirement.py": "mit-adapters",
+    "guest/input.c": "mit-adapters"
+  },
+  "release_ready": false,
+  "license_selection": {
+    "spdx": "PolyForm-Noncommercial-1.0.0",
+    "text_path": "docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt",
+    "text_sha256": "ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8",
+    "unmodified": true,
+    "additional_permissions": [],
+    "additional_restrictions": [],
+    "enterprise_evaluation_addendum": false,
+    "selected_by_owner": true,
+    "effective": true
+  },
+  "private_artifacts_allowed": true,
+  "activation": {
+    "date": "2026-11-03",
+    "approved_by": "WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>",
+    "approval": "Owner approved ACTIVATION-PROPOSAL.md in this conversation",
+    "scope": "Owner-controlled original expression only; existing third-party rights retained",
+    "public_distribution_approved": false
+  },
+  "expression_exceptions": {
+    "vendor/wsx-proto/guest-opaque/kwin-opaque-consumer.patch": {
+      "owner_contribution_license": "GPL-2.0-or-later",
+      "existing_notices": "retained"
+    },
+    "scripts/stage-guest.py": {
+      "desktop.py-inserted-expression": "MIT",
+      "session-adaptation": "GPL-2.0-or-later"
+    },
+    "scripts/stage-cachyos.py": {
+      "session_source-output-inserted-expression": "MIT",
+      "guest_source-output-inserted-expression": "PolyForm-Noncommercial-1.0.0",
+      "initialize-user.sh-template": "PolyForm-Noncommercial-1.0.0"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "image": "ghcr.io/wsld-wsx/wsx-rootfs/verified-components@sha256:fbf7a09de32f616c1198191af8346f071f13c4e530580eff4289bb668fea84e9",
+  "archive_sha256": "6dd87b7082bd93a330e397c8aa315b18c6f06428405be7760da930fdd6318206",
+  "scope": "Historical Omarchy and CachyOS desktop components; target image compatibility requires validation"
+}

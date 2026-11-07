@@ -1,0 +1,39 @@
+name: Recover uploaded public candidate
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Original completed image build run
+        required: true
+        type: string
+      tag:
+        description: Exact existing Draft tag
+        required: true
+        type: string
+      rootfs_sha256:
+        description: Original archive SHA-256 from the validated build log
+        required: true
+        type: string
+permissions: {}
+concurrency:
+  group: recover-public-${{ inputs.tag }}
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Verify original image and finish its public Pre-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          ORIGINAL_RUN: ${{ inputs.run_id }}
+          ORIGINAL_TAG: ${{ inputs.tag }}
+          ORIGINAL_SHA256: ${{ inputs.rootfs_sha256 }}
+        run: python3 scripts/recover-public-prerelease.py --repo "$REPOSITORY" --run-id "$ORIGINAL_RUN" --tag "$ORIGINAL_TAG" --rootfs-sha256 "$ORIGINAL_SHA256"

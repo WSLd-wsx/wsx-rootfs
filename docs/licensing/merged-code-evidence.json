@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "status": "review-only",
+  "claim": "User reports extracting the component producer from wsx-proto into wsx-rootfs.",
+  "scope": "Differences from the previous local inventory, not a proven list of verbatim imports.",
+  "origin_repository_inspected": false,
+  "rights_statement": "Personal independent development previously attested for original WSX portions only.",
+  "files": [
+    {
+      "path": ".github/workflows/cachyos-plasma.yml",
+      "sha256_at_recheck": "b1754a255263b2c785917f0717a0a7e746d2b0e3d7fae1f0f0938126006c1cfc",
+      "previous_inventory_sha256": "aa3ad59c3506d942f73f2b5ca9988210525afcff3a5ff37caffee8643104d6f3",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": ".github/workflows/components.yml",
+      "sha256_at_recheck": "c051023e0e535bce46dbbe3de9500922c4f2c18d6e6dc6c6e5c57dec0f9b74cb",
+      "previous_inventory_sha256": "dc5d86e9b1afc4a24795dec571f401891c30f312fb4bb51f1d9ae324b630195d",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "components/sources.json",
+      "sha256_at_recheck": "07cc139989c99106d6becf5c9d1740a9cebefc7e4057f1cced00ab2fffe28d0f",
+      "previous_inventory_sha256": "193c7a599c47b42cf5d99ca0856ea95063f6d2dc130eb59e9cd69b2ad5733b9c",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "distros/cachyos-plasma/build-components.sh",
+      "sha256_at_recheck": "2e46e32ad203099e7ff399b89d11590a9b22659ad0d650b85b3f647542fdb917",
+      "previous_inventory_sha256": null,
+      "change": "added",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "distros/cachyos-plasma/build-dependencies.txt",
+      "sha256_at_recheck": "88301ad811c94cc20f7d41bc80fcb3c3b87d7200326c5d0f0c4c3cf86876899f",
+      "previous_inventory_sha256": null,
+      "change": "added",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "docs/component-package.md",
+      "sha256_at_recheck": "3d9ef943f99271bf72c2effcc7197776e981a7ae4d09c3b0e1ed471ab05129b2",
+      "previous_inventory_sha256": "382d747a794c865e00f9dc83052d9db9843425a5b7b547728ad36e7b875b34ae",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "docs/licensing/SOURCE-MIGRATION.md",
+      "sha256_at_recheck": "e0e5816cf5de1cce4aa20e80260b4bd7f08e2abe62e0112469af8a8e5537f6a2",
+      "previous_inventory_sha256": "32e03f1c090a848cb7ead7907da4645012ff76c5a46d44871623404be3c1d256",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "scripts/assemble-source-components.py",
+      "sha256_at_recheck": "e7d67b2b7b7d3b140027cbe5889bcd1a83f3ec659abdd2fbf076bd74a91c4fc5",
+      "previous_inventory_sha256": "91b01ae8d6aa188f23a2de1903f44016d6f8c53547a2a4a8eabada20d9329812",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "scripts/build-components.py",
+      "sha256_at_recheck": "5de5901b4f4fc5d46b925437341c9655c72d24d69696b9915945346c462870b1",
+      "previous_inventory_sha256": "e45ddad7934f6618831f7979257b1458d18c8f45778f5048f0f712b0f99219f7",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "scripts/build-kwin.py",
+      "sha256_at_recheck": "9a67e12d1df1a4aa80541cf97ff967f8ee3954147f87c9f29f6a7f37b246f509",
+      "previous_inventory_sha256": null,
+      "change": "added",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "scripts/consume-source-components.py",
+      "sha256_at_recheck": "1fba3da4b6332d73286ad83a6c71fedc448107f48e7bcf7d38532fa09d64445f",
+      "previous_inventory_sha256": null,
+      "change": "added",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "scripts/finalize-cachyos.py",
+      "sha256_at_recheck": "90f7fc7c3bfc813037edc82903aae6130bad64cd436a2dcb79f1b024974de569",
+      "previous_inventory_sha256": "b31206b922928a79ed015ab569761886adf18f698dfdaa16d442494d49e64a59",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "scripts/package-source-components.py",
+      "sha256_at_recheck": "dfc88c03ccadfe35bda2ac77a85e0d59e804d5d3966dae61ac189f383b8f1505",
+      "previous_inventory_sha256": null,
+      "change": "added",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "scripts/prepare-cachyos.py",
+      "sha256_at_recheck": "aacd55a1ddc27c36a983ba37b6ec2f4e7d0c86a08334856d6fc32d3330e5850b",
+      "previous_inventory_sha256": "87eff19d1403bebda4b79a5fe7b63c7da6d8a819aa124b3b5925e4aeebc94fe7",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "scripts/source_support.py",
+      "sha256_at_recheck": "6522b7ff4cab03b9480e91fe73e3068c3fc2210e9e1c064f092d6676d59e2104",
+      "previous_inventory_sha256": "533eed9a87ae04dc67d1d5a6611fccd1c9720372e0746abdca788160d7589137",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "tests/test_source_components.py",
+      "sha256_at_recheck": "0346e820d5678969c689090fe4deecc975df48092092b2adbc096339d3e94d6e",
+      "previous_inventory_sha256": "1d310163d15dcb4d923901219c3e796e7c78b976f1f521ff14aa6be9446e895d",
+      "change": "changed",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    },
+    {
+      "path": "tests/test_source_package_roundtrip.py",
+      "sha256_at_recheck": "39a51fb10817f2b0df447054ba58aae54d018689c0ebd806330397e2d7ff92d0",
+      "previous_inventory_sha256": null,
+      "change": "added",
+      "origin_path": null,
+      "origin_commit": null,
+      "origin_working_tree_sha256": null
+    }
+  ]
+}

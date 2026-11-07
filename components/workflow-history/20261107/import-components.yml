@@ -1,0 +1,12 @@
+name: Retired component import
+on:
+  workflow_dispatch:
+permissions: {}
+jobs:
+  retired:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Reject retired binary import
+        run: |
+          echo 'Historical component imports are retired. Use the source build workflow; no package is published.' >&2
+          exit 1
