@@ -109,8 +109,6 @@ def resolve(request, releases, compatible):
             continue
         if manifest['guest_interface_abi'] is None or manifest['minimum_wsx_core_version'] is None:
             continue
-        if any(manifest['validation'][s] != 'passed' for s in ('wsl_boot', 'gpu_first_frame', 'desktop')):
-            continue
         if compatible(manifest):
             candidates.append(manifest)
     if not candidates:

@@ -53,8 +53,7 @@ class ContractTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 resolve('wsx-omarchy', [release(m)], lambda m: True)
         m = manifest(); m['validation']['gpu_first_frame'] = 'not_run'
-        with self.assertRaises(ValueError):
-            resolve('wsx-omarchy', [release(m)], lambda m: True)
+        self.assertEqual(resolve('wsx-omarchy', [release(m)], lambda m: True), m)
 
     def test_corrupt_manifest_rejects(self):
         for key, value in [('schema_version', True), ('wsx_revision', True), ('wsx_revision', 2), ('asset_name', '../escape'), ('sha256', 'bad'),

@@ -60,8 +60,8 @@ distribution/version/revision; never mark failed builds as completed.
 `scripts/contract.py` is a resolution example, not the wsld.exe implementation.
 It receives already fetched and asset-verified manifests. It excludes Drafts and
 prereleases, checks the tag against the manifest, filters by distro, refuses
-unknown compatibility and requires real boot/first-frame/desktop acceptance.
-The caller supplies actual compatibility checks. Explicit versions never fall
+unknown compatibility. Manual acceptance is reviewed before promotion, separately
+from the immutable build-time validation fields. The caller supplies compatibility checks. Explicit versions never fall
 back. Latest does not use repository-wide releases/latest or upload timestamps.
 
 ## Candidate testing and preservation
@@ -93,3 +93,35 @@ operations runs bind the separate operations repository and commit in the build
 identity. An absent or incomplete original payload is not reconstructed by
 silently rebuilding; choose a new revision when the original bytes cannot be
 verified. No recovery or publication runs automatically.
+
+## External hardware acceptance evidence (draft v1)
+
+A separate acceptance record may describe actual testing of an immutable
+candidate image. It identifies the exact tag, SHA-256 of the rootfs archive and
+manifest, UTC observation time, Windows/WSL/GPU/runtime context, and individual
+manual results for WSL boot, account initialization, GPU first frame, desktop
+input and normal stop. Each stage is `passed`, `failed` or `not_run`; manual
+reports are explicitly labeled and are never inferred from a build or a probe.
+The reference validator is `scripts/acceptance_evidence.py` and reads actual
+manifest and archive bytes. Records must contain no passwords or personal data.
+
+This is an evidence collection format, not a publisher signature. A JSON file
+and matching hash do not authenticate the person or publisher; maintainers
+review the report as part of their manual promotion decision.
+
+The local recorder `wsld/scripts/record-acceptance.ps1` requires the verified
+candidate archive, its manifest and the exact graphics runtime identity. It
+rehashes both files and prompts for each human-observed result. The operator
+must establish that the tested WSL registration was imported from those exact
+bytes; the recorder does not independently prove that association. The private
+operations verifier checks the recorded archive against published candidate
+bytes, but cannot independently verify a human observation or its author.
+
+Manual stable promotion treats the repository's approved release status as the
+publisher's decision; historical build-time hardware validation may remain
+`not_run` and must not be rewritten. Before promotion, maintainers review a
+separate report tied to the exact archive and manifest hashes. The stable client
+still validates release channel, complete payload hashes, compatibility and CPU
+requirements. Release status and hash matching are not cryptographic publisher
+signatures or guarantees of hardware compatibility. License inventory and source
+delivery are reviewed as evidence, not as a claim of legal certification.

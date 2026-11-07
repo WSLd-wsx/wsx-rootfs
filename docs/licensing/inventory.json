@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "51ae17d07406da1a0ffd43979724aa72ad442fb1",
+  "head": "e70d49028cc657376d6075861437556d62ec5254",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -17,6 +17,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -32,6 +33,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -47,6 +49,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "6cead0ea756974b0989ab448aa213e633e14e08f",
@@ -81,6 +84,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -172,6 +176,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -240,6 +245,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "11a43332471f2aae46e4712a4b60f32f51dd89b6",
         "e9ded5787db27970aadb12d40a70ec23e3d40c6f",
@@ -293,6 +299,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "ee735c65142049e03ee5a38cf4d7518ce4ea93a6",
         "11a43332471f2aae46e4712a4b60f32f51dd89b6",
         "e9ded5787db27970aadb12d40a70ec23e3d40c6f",
@@ -344,6 +351,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -359,6 +367,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -374,6 +383,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
       "observations": []
@@ -389,6 +399,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
@@ -405,6 +416,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
@@ -421,6 +433,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -824,6 +837,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "a615af7f0924bec50c56d6de731d13bd96d3e7df",
         "11a43332471f2aae46e4712a4b60f32f51dd89b6",
         "8ed36f1cd58821383a5865cd3b2e13611064511b",
@@ -843,6 +857,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0d2ff7eba8cb971e24964f0ffabe9c5f78c0f3d4",
         "11a43332471f2aae46e4712a4b60f32f51dd89b6",
         "e9ded5787db27970aadb12d40a70ec23e3d40c6f",
@@ -869,6 +884,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -882,8 +898,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -895,8 +913,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -908,8 +928,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -921,8 +943,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -934,8 +958,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -947,8 +973,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": [
         {
           "line": 32,
@@ -971,8 +999,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -984,8 +1014,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -997,8 +1029,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -1010,8 +1044,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -1023,8 +1059,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": [
         {
           "line": 1,
@@ -1057,8 +1095,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": [
         {
           "line": 1,
@@ -1086,8 +1126,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": [
         {
           "line": 32,
@@ -1110,8 +1152,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": [
         {
           "line": 16,
@@ -1136,6 +1180,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1151,6 +1196,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "e2e2b066d8ba4ab9473e24fef3f38ca2eabae902",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -1167,6 +1213,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1182,6 +1229,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1197,6 +1245,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -1229,6 +1278,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1252,6 +1302,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1275,6 +1326,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1298,6 +1350,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -1324,6 +1377,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -1355,6 +1409,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1370,6 +1425,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1385,6 +1441,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1400,6 +1457,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -1432,6 +1490,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "e9ded5787db27970aadb12d40a70ec23e3d40c6f",
@@ -1450,6 +1509,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1465,6 +1525,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "f5eb4b1242b204ff158b0c4b3bf4024b662c5525",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -1481,6 +1542,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1496,6 +1558,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1511,6 +1574,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1526,6 +1590,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8040feaab8df05cbd803215d8261364575236630",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -1554,6 +1619,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -1585,6 +1651,7 @@
       "source_index": [],
       "first_local_commit": "a615af7f0924bec50c56d6de731d13bd96d3e7df",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "51ae17d07406da1a0ffd43979724aa72ad442fb1",
         "a615af7f0924bec50c56d6de731d13bd96d3e7df"
       ],
@@ -1617,6 +1684,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -1632,6 +1700,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -1648,6 +1717,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
       "observations": [
@@ -1669,6 +1739,7 @@
       "source_index": [],
       "first_local_commit": "8d4a6351f28e89290f5dab297e306e68b6e3722c",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c"
       ],
       "observations": []
@@ -1684,6 +1755,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -1795,6 +1867,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -1866,6 +1939,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -1892,6 +1966,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -1913,6 +1988,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -1964,6 +2040,7 @@
       "source_index": [],
       "first_local_commit": "6cd7711e288e5ae3001ac7ba62dbc8795c859ca0",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "890b0be5563435b2caa73bcdf77c3a95ba3af2e2",
         "6cd7711e288e5ae3001ac7ba62dbc8795c859ca0"
       ],
@@ -1991,6 +2068,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2022,6 +2100,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2043,6 +2122,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2074,6 +2154,7 @@
       "source_index": [],
       "first_local_commit": "191013db0fe4f9037c767df5cb31a1233beea564",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "9847f4142e4b1117f2f21285a45b00c280f1406e",
         "191013db0fe4f9037c767df5cb31a1233beea564"
       ],
@@ -2161,6 +2242,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2212,6 +2294,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2238,6 +2321,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -2253,6 +2337,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2279,6 +2364,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2380,6 +2466,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2401,6 +2488,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2427,6 +2515,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -2442,6 +2531,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2563,6 +2653,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2594,6 +2685,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2845,6 +2937,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2916,6 +3009,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2937,6 +3031,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -2988,6 +3083,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -3104,6 +3200,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -3155,6 +3252,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -3186,6 +3284,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -3282,6 +3381,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -3323,6 +3423,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -3338,6 +3439,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -3409,6 +3511,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -3570,6 +3673,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -3816,6 +3920,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -3907,6 +4012,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -4278,6 +4384,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -4319,6 +4426,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -4485,6 +4593,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -4526,6 +4635,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -4577,6 +4687,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -5278,6 +5389,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -5324,6 +5436,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -5375,6 +5488,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -5416,6 +5530,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -5431,6 +5546,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -5534,6 +5650,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -5585,6 +5702,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -5606,6 +5724,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -5797,6 +5916,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -5826,8 +5946,10 @@
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": [
         {
           "line": 59,
@@ -5847,6 +5969,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -5862,6 +5985,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -5877,6 +6001,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -5892,6 +6017,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -5907,6 +6033,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -5938,6 +6065,7 @@
       "source_index": [],
       "first_local_commit": "2281d078de4b3bc60b2fa143e511a9a52c97194b",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "f5eb4b1242b204ff158b0c4b3bf4024b662c5525",
         "418496f19f7b21c9623fffe71d580a35b74f729c",
         "2281d078de4b3bc60b2fa143e511a9a52c97194b"
@@ -5961,6 +6089,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -5976,6 +6105,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -5997,6 +6127,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -6093,6 +6224,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -6145,7 +6277,7 @@
     },
     {
       "path": "docs/release-protocol.md",
-      "sha256": "8d96833e1259a69d6144520155862d0ea31f328ddfe5ac26dc6075cefbab6a0f",
+      "sha256": "4f238dda6d2e093a47598f68a4503aea13b7600495e6cac44190b718a397fcd6",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -6154,12 +6286,19 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "ffaa7d6d24ead461a585abdc967090494eb4359d",
         "6cead0ea756974b0989ab448aa213e633e14e08f",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
-      "observations": []
+      "observations": [
+        {
+          "line": 126,
+          "kind": "mention",
+          "text": "signatures or guarantees of hardware compatibility. License inventory and source"
+        }
+      ]
     },
     {
       "path": "docs/runner-debugging.md",
@@ -6172,6 +6311,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6187,6 +6327,7 @@
       "source_index": [],
       "first_local_commit": "8d4a6351f28e89290f5dab297e306e68b6e3722c",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c"
       ],
       "observations": [
@@ -6208,6 +6349,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6223,6 +6365,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6238,6 +6381,7 @@
       "source_index": [],
       "first_local_commit": "8d4a6351f28e89290f5dab297e306e68b6e3722c",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c"
       ],
       "observations": [
@@ -6259,6 +6403,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
       "observations": []
@@ -6274,6 +6419,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
@@ -6301,6 +6447,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
@@ -6323,6 +6470,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -6340,11 +6488,31 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "ffaa7d6d24ead461a585abdc967090494eb4359d",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
+    },
+    {
+      "path": "scripts/acceptance_evidence.py",
+      "sha256": "1a5dd47c368b579484bc7de0641c5029ed08d6fee6cb737156ba3b4a59c02ac6",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 2,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        }
+      ]
     },
     {
       "path": "scripts/archive.py",
@@ -6357,6 +6525,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "6cead0ea756974b0989ab448aa213e633e14e08f",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -6373,6 +6542,7 @@
       "source_index": [],
       "first_local_commit": "6cead0ea756974b0989ab448aa213e633e14e08f",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "6cead0ea756974b0989ab448aa213e633e14e08f"
       ],
       "observations": []
@@ -6388,6 +6558,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6403,6 +6574,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -6474,6 +6646,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -6515,6 +6688,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -6561,6 +6735,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6576,6 +6751,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6591,6 +6767,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6606,6 +6783,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
         "ffaa7d6d24ead461a585abdc967090494eb4359d"
       ],
@@ -6622,6 +6800,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "11a43332471f2aae46e4712a4b60f32f51dd89b6",
         "e9ded5787db27970aadb12d40a70ec23e3d40c6f",
         "a48128c2904b8388d6b0789a52bf576a0d10e54e",
@@ -6640,6 +6819,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6655,6 +6835,7 @@
       "source_index": [],
       "first_local_commit": "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15"
       ],
       "observations": [
@@ -6701,6 +6882,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -6763,6 +6945,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
         "a48128c2904b8388d6b0789a52bf576a0d10e54e",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -6780,6 +6963,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -6787,7 +6971,7 @@
     },
     {
       "path": "scripts/contract.py",
-      "sha256": "b421a948643897052dd2d4d242563aae8f7c1474253ba8dfd6e0403d321f3e77",
+      "sha256": "5ccd00e4940cf88b11c298e3a589f02b0d3111e945a6831b87e3ffc76b89cb0e",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -6796,6 +6980,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6811,6 +6996,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
@@ -6833,6 +7019,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6848,6 +7035,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "ffaa7d6d24ead461a585abdc967090494eb4359d",
         "6cead0ea756974b0989ab448aa213e633e14e08f",
@@ -6872,6 +7060,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "ffaa7d6d24ead461a585abdc967090494eb4359d",
         "6cead0ea756974b0989ab448aa213e633e14e08f",
@@ -6896,6 +7085,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
       "observations": [
@@ -6977,6 +7167,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -6992,6 +7183,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -7007,6 +7199,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -7041,8 +7234,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": [
         {
           "line": 1,
@@ -7062,6 +7257,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -7084,6 +7280,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "ffaa7d6d24ead461a585abdc967090494eb4359d",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -7100,6 +7297,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -7126,6 +7324,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -7147,6 +7346,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -7162,6 +7362,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
         "323c1d2bfba211c0a4e41487b9eac0a6a7654b35",
         "ffaa7d6d24ead461a585abdc967090494eb4359d"
@@ -7179,6 +7380,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "e9ded5787db27970aadb12d40a70ec23e3d40c6f",
         "a48128c2904b8388d6b0789a52bf576a0d10e54e",
@@ -7245,6 +7447,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -7491,6 +7694,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -7504,8 +7708,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": [
         {
           "line": 2,
@@ -7525,6 +7731,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -7540,6 +7747,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -7555,6 +7763,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "a615af7f0924bec50c56d6de731d13bd96d3e7df",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
         "8040feaab8df05cbd803215d8261364575236630",
@@ -7582,6 +7791,7 @@
       "source_index": [],
       "first_local_commit": "3ad8c8a126dc48e696cca3ddfa7d6f7af734b4c1",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "a615af7f0924bec50c56d6de731d13bd96d3e7df",
         "3ad8c8a126dc48e696cca3ddfa7d6f7af734b4c1"
       ],
@@ -7614,6 +7824,7 @@
       "source_index": [],
       "first_local_commit": "59c2cfeb33485f8f31270a1f34d6933fa11784ac",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "06c56cab873bda7fef42f50853cf3458ebfba207",
         "6cd7711e288e5ae3001ac7ba62dbc8795c859ca0",
         "44b80ec271a31f92ca1e2af8dcad36ad3de71864",
@@ -7763,6 +7974,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -7778,6 +7990,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "ffaa7d6d24ead461a585abdc967090494eb4359d"
       ],
       "observations": []
@@ -7793,6 +8006,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
         "40dcc00ec61d001f9bd086fd50082ca53412816d",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
@@ -7822,6 +8036,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -7837,6 +8052,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
@@ -7902,6 +8118,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -7917,6 +8134,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -7940,6 +8158,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -7968,6 +8187,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
@@ -7990,6 +8210,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -8006,6 +8227,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -8022,6 +8244,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -8037,6 +8260,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -8069,6 +8293,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -8130,6 +8355,25 @@
       ]
     },
     {
+      "path": "tests/test_acceptance_evidence.py",
+      "sha256": "38fdaa07ea1885b81ba47a78aac460efa3a72e392f1ff597f3d20a725b32cc8e",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        }
+      ]
+    },
+    {
       "path": "tests/test_archive.py",
       "sha256": "89f73d3de6658565040961ef44f34ada8bef67a9ba3157d66d29fcd23c70cc7d",
       "group": "conditional-future-license",
@@ -8140,6 +8384,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "6cead0ea756974b0989ab448aa213e633e14e08f",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -8156,6 +8401,7 @@
       "source_index": [],
       "first_local_commit": "6cead0ea756974b0989ab448aa213e633e14e08f",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "6cead0ea756974b0989ab448aa213e633e14e08f"
       ],
       "observations": []
@@ -8171,6 +8417,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -8186,6 +8433,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -8201,6 +8449,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -8216,6 +8465,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -8262,6 +8512,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -8284,6 +8535,7 @@
       "source_index": [],
       "first_local_commit": "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15"
       ],
       "observations": [
@@ -8330,6 +8582,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -8387,6 +8640,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -8402,6 +8656,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
         "a48128c2904b8388d6b0789a52bf576a0d10e54e",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -8419,6 +8674,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "a615af7f0924bec50c56d6de731d13bd96d3e7df",
         "8040feaab8df05cbd803215d8261364575236630",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
@@ -8464,7 +8720,7 @@
     },
     {
       "path": "tests/test_contract.py",
-      "sha256": "39e751a7b98a9bd264cf607a4d2cb56f14d05276cc281debd39bb587ab9214c9",
+      "sha256": "f53f72ec659120cb90e5d1aafbacd51d744e6d84ac391d998122a6d34678b411",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -8473,6 +8729,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -8488,6 +8745,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -8503,6 +8761,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
@@ -8519,6 +8778,7 @@
       "source_index": [],
       "first_local_commit": "8d4a6351f28e89290f5dab297e306e68b6e3722c",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c"
       ],
       "observations": []
@@ -8534,6 +8794,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -8549,6 +8810,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
@@ -8565,6 +8827,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
       "observations": [
@@ -8596,6 +8859,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -8611,6 +8875,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -8642,6 +8907,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -8688,6 +8954,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "11a43332471f2aae46e4712a4b60f32f51dd89b6",
         "e9ded5787db27970aadb12d40a70ec23e3d40c6f",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -8709,8 +8976,10 @@
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -8724,6 +8993,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "ffaa7d6d24ead461a585abdc967090494eb4359d",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -8740,6 +9010,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -8801,6 +9072,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -8897,6 +9169,7 @@
       "source_index": [],
       "first_local_commit": "59c2cfeb33485f8f31270a1f34d6933fa11784ac",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "6cd7711e288e5ae3001ac7ba62dbc8795c859ca0",
         "44b80ec271a31f92ca1e2af8dcad36ad3de71864",
         "4a4803401574e6076ab5125b2d6c5592abaa5aba",
@@ -9007,6 +9280,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9022,6 +9296,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "ffaa7d6d24ead461a585abdc967090494eb4359d",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -9039,6 +9314,7 @@
       "source_index": [],
       "first_local_commit": "8d4a6351f28e89290f5dab297e306e68b6e3722c",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c"
       ],
       "observations": []
@@ -9054,6 +9330,7 @@
       "source_index": [],
       "first_local_commit": "323c1d2bfba211c0a4e41487b9eac0a6a7654b35",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
         "323c1d2bfba211c0a4e41487b9eac0a6a7654b35"
       ],
@@ -9070,6 +9347,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
         "44b80ec271a31f92ca1e2af8dcad36ad3de71864",
         "da69f54dfb7253276f377aefe2b4e54a48aa8529",
@@ -9109,6 +9387,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "72daa69d748e4bba74418ff9e9fcdfe3673d0ab3",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -9141,6 +9420,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9167,6 +9447,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9198,6 +9479,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -9220,6 +9502,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "11a43332471f2aae46e4712a4b60f32f51dd89b6",
         "e9ded5787db27970aadb12d40a70ec23e3d40c6f",
         "a48128c2904b8388d6b0789a52bf576a0d10e54e",
@@ -9236,8 +9519,10 @@
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
+      "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254"
+      ],
       "observations": []
     },
     {
@@ -9259,6 +9544,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9328,6 +9614,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9357,6 +9644,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9386,6 +9674,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9409,6 +9698,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9432,6 +9722,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9455,6 +9746,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9478,6 +9770,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9507,6 +9800,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9530,6 +9824,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9553,6 +9848,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9576,6 +9872,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9599,6 +9896,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9622,6 +9920,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9651,6 +9950,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9680,6 +9980,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9703,6 +10004,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9726,6 +10028,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9749,6 +10052,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9772,6 +10076,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9795,6 +10100,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9818,6 +10124,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9852,6 +10159,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9875,6 +10183,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9898,6 +10207,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -9928,6 +10238,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9964,6 +10275,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -9993,6 +10305,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10023,6 +10336,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -10059,6 +10373,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -10095,6 +10410,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -10131,6 +10447,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -10177,6 +10494,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -10213,6 +10531,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10243,6 +10562,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -10279,6 +10599,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -10308,6 +10629,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
@@ -10337,6 +10659,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10360,6 +10683,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10383,6 +10707,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10406,6 +10731,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10429,6 +10755,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10452,6 +10779,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10475,6 +10803,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10498,6 +10827,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10521,6 +10851,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10544,6 +10875,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10567,6 +10899,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
@@ -10590,6 +10923,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
