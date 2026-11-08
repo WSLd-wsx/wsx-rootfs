@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "90ddf4a0d1f6111f8dea6af7f7308464f49c4d73",
+  "head": "fffa1ade08b881bdd758f72c20486e20f713da67",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -299,6 +299,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "ee735c65142049e03ee5a38cf4d7518ce4ea93a6",
         "11a43332471f2aae46e4712a4b60f32f51dd89b6",
@@ -6318,6 +6319,19 @@
       "observations": []
     },
     {
+      "path": "docs/shared-source-package-20261108.md",
+      "sha256": "45c47e2d434cf13206c3b4b03f3a042ffac9e73e43200bd336e7769672455d80",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": []
+    },
+    {
       "path": "guest/device-view.py",
       "sha256": "9b4c753ce2f8d22cd08d20fbd3103fcbda9023d5c44e2793eb67e32de5740f66",
       "group": "conditional-future-license",
@@ -7366,6 +7380,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
         "323c1d2bfba211c0a4e41487b9eac0a6a7654b35",
@@ -7828,6 +7843,7 @@
       "source_index": [],
       "first_local_commit": "59c2cfeb33485f8f31270a1f34d6933fa11784ac",
       "local_change_commits": [
+        "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "06c56cab873bda7fef42f50853cf3458ebfba207",
         "6cd7711e288e5ae3001ac7ba62dbc8795c859ca0",
@@ -7994,6 +8010,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "ffaa7d6d24ead461a585abdc967090494eb4359d"
       ],
@@ -8008,8 +8025,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "fffa1ade08b881bdd758f72c20486e20f713da67",
+      "local_change_commits": [
+        "fffa1ade08b881bdd758f72c20486e20f713da67"
+      ],
       "observations": []
     },
     {
@@ -8023,6 +8042,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
         "40dcc00ec61d001f9bd086fd50082ca53412816d",
@@ -8069,6 +8089,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
@@ -9367,6 +9388,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
         "44b80ec271a31f92ca1e2af8dcad36ad3de71864",
