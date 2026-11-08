@@ -10,6 +10,7 @@ import tempfile
 import time
 
 import component_registry as registry
+import shared_registry
 from component_materials import sha
 from shared_sources import ROOT, REPOSITORY, INDEX, ARCHIVES, make_bundle, verify_bundle
 
@@ -114,6 +115,36 @@ def publish_draft(bundle):
                 raise ValueError('Shared source read-back mismatch: '+name)
     return dict(tag=tag,manifest_sha256=sha(bundle/INDEX),draft=release['draft'],
                 release_id=release['id'],url=release['html_url'])
+
+
+def publish_package(bundle):
+    """Publish a source-only artifact and read back its exact immutable digest."""
+    index = verify_bundle(bundle)
+    run = os.environ.get('GITHUB_RUN_ID', '')
+    attempt = os.environ.get('GITHUB_RUN_ATTEMPT', '')
+    token = os.environ.get('WSX_SOURCE_PACKAGE_TOKEN', '')
+    actor = os.environ.get('GITHUB_ACTOR', '')
+    if not run.isdecimal() or not attempt.isdecimal() or not token or not actor:
+        raise ValueError('Source package publication requires a workflow identity and token')
+    tag = f'{index["tag"]}-{run}-{attempt}'
+    reference = shared_registry.IMAGE + ':' + tag
+    with tempfile.TemporaryDirectory(prefix='wsx-oras-') as temporary:
+        env = dict(os.environ)
+        config = str(Path(temporary)/'registry.json')
+        subprocess.run(['oras', 'login', '--registry-config', config, 'ghcr.io', '-u', actor, '--password-stdin'],
+                       input=token, text=True, env=env, check=True, stdout=subprocess.DEVNULL)
+        manifest = Path(temporary)/'manifest.json'
+        subprocess.run(['oras', 'push', '--registry-config', config, '--artifact-type', 'application/vnd.wsx.graphics-sources.v1',
+                        '--export-manifest', str(manifest), reference, *ARCHIVES, INDEX],
+                       cwd=bundle, env=env, check=True)
+        digest = sha(manifest)
+        image = shared_registry.IMAGE + '@sha256:' + digest
+        with tempfile.TemporaryDirectory(prefix='wsx-source-readback-') as readback:
+            subprocess.run(['oras', 'pull', '--registry-config', config, image, '--output', readback], env=env, check=True)
+            verify_bundle(Path(readback))
+            if any(sha(Path(readback)/name) != sha(bundle/name) for name in (*ARCHIVES, INDEX)):
+                raise ValueError('Published source package read-back differs')
+    return dict(tag=index['tag'], manifest_sha256=sha(bundle/INDEX), image=image)
 
 
 if __name__=='__main__':

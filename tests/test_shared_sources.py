@@ -150,6 +150,20 @@ class SharedSources(unittest.TestCase):
         with patch.object(shared,'public_json',side_effect=[metadata,release]):
             with self.assertRaisesRegex(ValueError,'missing or changed'):shared.verify_public(pin,index)
 
+    def test_oci_pin_requires_exact_source_layers(self):
+        _, index, pin = self.prepared()
+        pin['image'] = shared.shared_registry.IMAGE + '@sha256:' + 'a' * 64
+        records = list(index['files']) + [dict(name=shared.INDEX, sha256=pin['manifest_sha256'])]
+        layers = {r['name']: dict(digest='sha256:' + r['sha256'], size=r.get('size', 1)) for r in records}
+        with patch.object(shared.shared_registry, 'manifest', return_value=('anonymous', layers)):
+            shared.verify_public(pin, index)
+            layers[shared.ARCHIVES[0]]['digest'] = 'sha256:' + '0' * 64
+            with self.assertRaisesRegex(ValueError, 'differs from source index'):
+                shared.verify_public(pin, index)
+        pin['image'] = 'ghcr.io/unapproved/package@sha256:' + 'a' * 64
+        with self.assertRaisesRegex(ValueError, 'source-only package'):
+            shared.validate_pin(pin, 'omarchy')
+
     def test_two_image_recipes_share_one_graphics_source_reference(self):
         bundle,index,pin=self.prepared()
         (self.repo/'components/source-delivery.json').write_text(json.dumps(dict(schema_version=1,mode='shared-v2',profiles={'omarchy':pin})))
