@@ -8,11 +8,8 @@ parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--profile',choices=('omarchy','cachyos-plasma'),required=True)
 parser.add_argument('--tag',required=True)
 parser.add_argument('--sha256',required=True)
-parser.add_argument('--image', help='Digest-pinned public source-only OCI package')
 args=parser.parse_args()
 pin=dict(tag=args.tag,manifest_sha256=args.sha256)
-if args.image:
-    pin['image']=args.image
 index=json.loads(download_index(pin,args.profile))
 if index['profile']!=args.profile:
     raise SystemExit('Shared source profile mismatch')

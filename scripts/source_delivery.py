@@ -268,6 +268,4 @@ def check_private_source_delivery(directory, sources):
     if delivery.get('schema_version') != 2:
         raise ValueError('Private source delivery requires schema 2')
     required_shared_assets(directory, sources)
-    pin = delivery['shared_source']
-    (shared_sources.verify_public if 'image' in pin else shared_sources.verify_private)(
-        pin, json.loads((directory/'graphics-sources.json').read_text()))
+    shared_sources.verify_private(delivery['shared_source'], json.loads((directory/'graphics-sources.json').read_text()))

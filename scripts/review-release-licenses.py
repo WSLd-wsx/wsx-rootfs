@@ -127,12 +127,6 @@ def require(condition, message):
 
 def fetch_shared(pin, index, destination):
     """Fetch only verified public source assets; never require package credentials."""
-    if 'image' in pin:
-        auth, layers = shared_sources.registry_layers(pin, index)
-        for row in index['files']:
-            with (destination/row['name']).open('wb') as output:
-                shared_sources.shared_registry.fetch(auth, layers[row['name']], output)
-        return
     def metadata(url):
         # Authenticated metadata avoids shared-runner anonymous API rate limits.
         # Visibility is checked independently; asset downloads below stay anonymous.

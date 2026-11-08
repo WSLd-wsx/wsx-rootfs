@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "fffa1ade08b881bdd758f72c20486e20f713da67",
+  "head": "5a20cae24b5ea92fc0ea529a085c9f24161b9ad4",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -290,7 +290,7 @@
     },
     {
       "path": "components/SOURCE-DELIVERY.md",
-      "sha256": "315e3d0858be98bc60acfc4ee2479367a528304c079cc09aae5bedba01e2b9bb",
+      "sha256": "ae0cf75110cee33a16c6f86360f39ccfe58ec7e4e042b8a512602f4ecad35a8d",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -310,32 +310,32 @@
       ],
       "observations": [
         {
-          "line": 36,
+          "line": 18,
           "kind": "mention",
           "text": "ABI, installed source and license policy changes still require a new component"
         },
         {
-          "line": 42,
+          "line": 24,
           "kind": "mention",
           "text": "  vendored inputs and existing license texts; individual licenses remain intact."
         },
         {
-          "line": 52,
+          "line": 34,
           "kind": "mention",
           "text": "| `graphics-notices.tar.gz` | All retained original component notices and license mappings |"
         },
         {
-          "line": 54,
+          "line": 36,
           "kind": "mention",
           "text": "| `graphics-retained-sources.tar.gz` | KWin's original/patched source and build materials for CachyOS; fixed Mesa/Venus archives retained conservatively because their trees contain mixed licenses |"
         },
         {
-          "line": 62,
+          "line": 44,
           "kind": "mention",
           "text": "This is a component-specific delivery policy, not a blanket license inference."
         },
         {
-          "line": 83,
+          "line": 65,
           "kind": "mention",
           "text": "python3 scripts/audit-licenses.py"
         }
@@ -6320,15 +6320,17 @@
     },
     {
       "path": "docs/shared-source-package-20261108.md",
-      "sha256": "45c47e2d434cf13206c3b4b03f3a042ffac9e73e43200bd336e7769672455d80",
+      "sha256": "1ecb5cc2bb4e9b30fadb1fb4238c571e80a289a24ce5c08164b6977378423318",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "5a20cae24b5ea92fc0ea529a085c9f24161b9ad4",
+      "local_change_commits": [
+        "5a20cae24b5ea92fc0ea529a085c9f24161b9ad4"
+      ],
       "observations": []
     },
     {
@@ -7371,7 +7373,7 @@
     },
     {
       "path": "scripts/prepare-shared-sources.py",
-      "sha256": "2b86a877f4126b3ab44fd0717e7c4220d397d366f1bee97f19cf521987a2c759",
+      "sha256": "ddefc04550c69451076e88e1a5bd3ba313b7592cedac3f5e4465163c2a8a0331",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -7834,7 +7836,7 @@
     },
     {
       "path": "scripts/review-release-licenses.py",
-      "sha256": "a83ff51f670013216a9f04772b3c79b16e387d148fbf8570e97953d7670c2d6b",
+      "sha256": "b6c58da831dd81c6b00fd41b537db8441fa7440d5ca5387d48669b79230022eb",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -7882,102 +7884,102 @@
           "text": "                capture = (name.startswith('usr/share/licenses/') or"
         },
         {
-          "line": 143,
+          "line": 137,
           "kind": "mention",
           "text": "        with urlopen(Request(url,headers={'User-Agent':'WSX-license-review'}),timeout=120) as stream:"
         },
         {
-          "line": 184,
+          "line": 178,
           "kind": "mention",
           "text": "    materials=dict(notice_files=notices,license_review='evidence checked; legal conclusions remain scoped',"
         },
         {
-          "line": 198,
+          "line": 192,
           "kind": "mention",
           "text": "    names=('MODULE-LICENSES.json','MODULE-NOTICES.txt')"
         },
         {
-          "line": 206,
+          "line": 200,
           "kind": "mention",
           "text": "        image_policy={'LICENSE':'rootfs-recipe/LICENSE',"
         },
         {
-          "line": 207,
+          "line": 201,
           "kind": "mention",
           "text": "                      'LICENSE-MAP.md':'rootfs-recipe/LICENSE-MAP.md',"
         },
         {
-          "line": 208,
+          "line": 202,
           "kind": "mention",
           "text": "                      'OUTPUT-LICENSES.md':'rootfs-recipe/docs/licensing/OUTPUT-LICENSES.md',"
         },
         {
-          "line": 242,
+          "line": 236,
           "kind": "mention",
           "text": "    prefix = 'usr/share/licenses/wsx-components/'"
         },
         {
-          "line": 243,
+          "line": 237,
           "kind": "mention",
           "text": "    image_map = json.loads(texts[prefix+'IMAGE-LICENSES.json'])"
         },
         {
-          "line": 244,
+          "line": 238,
           "kind": "mention",
           "text": "    module_map = json.loads(texts[prefix+'MODULE-LICENSES.json'])"
         },
         {
-          "line": 245,
+          "line": 239,
           "kind": "mention",
           "text": "    require(image_map['module_map_sha256'] == hashes[prefix+'MODULE-LICENSES.json'],"
         },
         {
-          "line": 247,
+          "line": 241,
           "kind": "mention",
           "text": "    require(image_map['license_grant'] is True and module_map['license_grant'] is True,"
         },
         {
-          "line": 262,
+          "line": 256,
           "kind": "mention",
           "text": "    for row in evidence['installed_license_files']:"
         },
         {
-          "line": 273,
+          "line": 267,
           "kind": "mention",
           "text": "    packages = [dict(name=p['name'], version=p['version'], declared_licenses=p['declared_licenses'])"
         },
         {
-          "line": 279,
+          "line": 273,
           "kind": "mention",
           "text": "        mapped_image_files=len(image_map['files']), system_notice_entries=len(evidence['installed_license_files']),"
         },
         {
-          "line": 281,
+          "line": 275,
           "kind": "mention",
           "text": "        outputs=[dict(id=o['id'], treatment=o['license_treatment']) for o in module_map['outputs']],"
         },
         {
-          "line": 289,
+          "line": 283,
           "kind": "mention",
           "text": "        packages=packages, packages_without_license_declaration=[p for p in packages if not p['declared_licenses']],"
         },
         {
-          "line": 290,
+          "line": 284,
           "kind": "mention",
           "text": "        declared_legal_status={k:materials[k] for k in ('license_review','distribution_allowed','corresponding_source_complete')},"
         },
         {
-          "line": 292,
+          "line": 286,
           "kind": "mention",
           "text": "        limitations=['Package license declarations are evidence, not permission conclusions.',"
         },
         {
-          "line": 309,
+          "line": 303,
           "kind": "mention",
           "text": "        print('LICENSE_REVIEW_CHUNK ' + payload[offset:offset+2000])"
         },
         {
-          "line": 310,
+          "line": 304,
           "kind": "mention",
           "text": "    print('LICENSE_REVIEW_SHA256 ' + digest(args.report))"
         }
@@ -8001,7 +8003,7 @@
     },
     {
       "path": "scripts/select-shared-sources.py",
-      "sha256": "529787c98294675c166f254a610854df0d2f1a2f741be6bbf5952a8d757e1d80",
+      "sha256": "aba9de12eca2ddfdac1abfcb72d6beedcd5638962e5da10c510e65e4de9f84af",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8017,23 +8019,8 @@
       "observations": []
     },
     {
-      "path": "scripts/shared_registry.py",
-      "sha256": "09bfa344a47de6173ba0b00df0d495693671e1f2ae06220780aa7d159bc78dae",
-      "group": "conditional-future-license",
-      "rule": "gpl-tools",
-      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
-      "limitation": "Existing third-party expression excluded.",
-      "next_step": "Preserve source and reconstruction permissions.",
-      "source_index": [],
-      "first_local_commit": "fffa1ade08b881bdd758f72c20486e20f713da67",
-      "local_change_commits": [
-        "fffa1ade08b881bdd758f72c20486e20f713da67"
-      ],
-      "observations": []
-    },
-    {
       "path": "scripts/shared_sources.py",
-      "sha256": "885fdfb27ce12a629c287053224350ae02c5c0d05fdefd882fa0901fdc6c580e",
+      "sha256": "2896273adafdd77298a439f2404f4c2bfe22f44b6af9a6b0eca039d2add3e449",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8056,7 +8043,7 @@
           "text": "\"\"\"Project immutable component evidence into reusable, separately licensed sources.\"\"\""
         },
         {
-          "line": 28,
+          "line": 27,
           "kind": "mention",
           "text": "# compiled-source license review justifies reference-only delivery."
         }
@@ -8080,7 +8067,7 @@
     },
     {
       "path": "scripts/source_delivery.py",
-      "sha256": "e79339d854025e2c9da617ea0616a8f133cb04870ed048474f52cbe3092fef85",
+      "sha256": "441b14ea0bc54e47eaaa642df3cd0310d0f216487de0e11f3b1e4ddddc1bc86c",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -9379,7 +9366,7 @@
     },
     {
       "path": "tests/test_shared_sources.py",
-      "sha256": "3975003a0f928c38fabe95446c717573d74c1a5f3806ede11dc1ddeb80568fc3",
+      "sha256": "e2c10288edd6011af2b459028a6ddde653747f9f44a9a1701ffbbc3fe106cc55",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -9407,12 +9394,12 @@
           "text": "            notice_files={'LICENSE':sha(self.material/'notices/LICENSE')})"
         },
         {
-          "line": 197,
+          "line": 183,
           "kind": "mention",
           "text": "        spec=importlib.util.spec_from_file_location('release_review',Path(__file__).resolve().parents[1]/'scripts/review-release-licenses.py')"
         },
         {
-          "line": 210,
+          "line": 196,
           "kind": "mention",
           "text": "            self.assertEqual(material['notice_files'],{'LICENSE':sha(self.material/'notices/LICENSE')})"
         }

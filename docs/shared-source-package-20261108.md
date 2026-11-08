@@ -1,5 +1,10 @@
 # Shared graphics source package migration
 
+The migration was abandoned at the user's request. The two existing public
+source Releases remain the active delivery path; source-only OCI package
+publication and admission have been removed. The private experimental package
+and the run evidence below are retained; they are not used by image builds.
+
 The private operations workflow at commit `f9a9af1` recovered and published
 source-only OCI artifacts from rootfs commit `fffa1ade08b881bdd758f72c20486e20f713da67`.
 Both runs verified the original component origin, source index, complete bundle

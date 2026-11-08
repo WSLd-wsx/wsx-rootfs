@@ -13,7 +13,6 @@ import tarfile
 from urllib.request import Request, urlopen
 
 from component_materials import relative, sha, verify
-import shared_registry
 
 REPOSITORY = 'WSLd-wsx/wsx-rootfs'
 ROOT = Path(__file__).resolve().parents[1]
@@ -232,21 +231,6 @@ def validate_pin(pin, profile):
         raise ValueError('Unexpected shared source release tag')
     if not re.fullmatch(r'[0-9a-f]{64}', pin.get('manifest_sha256','')):
         raise ValueError('Invalid shared source manifest hash')
-    if 'image' in pin:
-        shared_registry.validate_image(pin['image'])
-
-
-def registry_layers(pin, index):
-    validate_pin(pin, index['profile'])
-    if index['tag'] != pin['tag']:
-        raise ValueError('Shared source identity mismatch')
-    auth, layers = shared_registry.manifest(pin, set(ARCHIVES) | {INDEX})
-    records = list(index['files']) + [dict(name=INDEX, sha256=pin['manifest_sha256'])]
-    for row in records:
-        layer = layers[row['name']]
-        if layer['digest'] != 'sha256:' + row['sha256'] or ('size' in row and layer['size'] != row['size']):
-            raise ValueError('OCI source layer differs from source index')
-    return auth, layers
 
 
 def public_json(url):
@@ -282,9 +266,6 @@ def _verify_release(pin, index, read_metadata, private):
 
 
 def verify_public(pin, index, metadata_reader=None):
-    if 'image' in pin:
-        registry_layers(pin, index)
-        return
     return _verify_release(pin, index, metadata_reader or public_json, False)
 
 
@@ -301,14 +282,7 @@ def verify_private(pin, index, metadata_reader=None):
 
 def download_index(pin, profile):
     validate_pin(pin, profile)
-    if 'image' in pin:
-        auth, layers = shared_registry.manifest(pin, set(ARCHIVES) | {INDEX})
-        if layers[INDEX]['size'] > 16*1024*1024:
-            raise ValueError('Source index exceeds size limit')
-        output = io.BytesIO()
-        shared_registry.fetch(auth, layers[INDEX], output)
-        data = output.getvalue()
-    elif os.environ.get('WSX_PRIVATE_SOURCE') == '1':
+    if os.environ.get('WSX_PRIVATE_SOURCE') == '1':
         repo = private_json('https://api.github.com/repos/' + REPOSITORY)
         if repo.get('full_name') != REPOSITORY or repo.get('private') is not True:
             raise ValueError('Private source mode requires the approved private repository')
@@ -327,5 +301,5 @@ def download_index(pin, profile):
     if hashlib.sha256(data).hexdigest() != pin['manifest_sha256']:
         raise ValueError('Public shared source index hash mismatch')
     index = validate_index(json.loads(data))
-    (verify_private if 'image' not in pin and os.environ.get('WSX_PRIVATE_SOURCE') == '1' else verify_public)(pin, index)
+    (verify_private if os.environ.get('WSX_PRIVATE_SOURCE') == '1' else verify_public)(pin, index)
     return data

@@ -1,23 +1,5 @@
 # Shared graphics source delivery
 
-Source-only OCI packages can be published to
-`ghcr.io/wsld-wsx/wsx-rootfs/graphics-sources`. Each profile is bound by an
-immutable OCI manifest digest and its existing source index hash. The package
-contains only the source index and the three source archives; private runtime
-component images are separate. The recovery workflow verifies the component
-origin and the complete source bundle before publishing and reads back all bytes.
-New packages are private until their GitHub package visibility is explicitly
-changed. Activate a pin only after anonymous download and validation succeed:
-
-```sh
-python3 scripts/select-shared-sources.py --profile omarchy \
-  --tag graphics-sources-omarchy-<content-id> --sha256 <index-sha256> \
-  --image ghcr.io/wsld-wsx/wsx-rootfs/graphics-sources@sha256:<oci-digest>
-```
-
-Existing release-based source pins remain supported until replaced. Published
-source references must remain available while images refer to them.
-
 Existing private GHCR packages remain unchanged and readable. No recompilation
 is needed to project their historical source evidence.
 
