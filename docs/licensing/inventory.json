@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "b87dac9af8cb73bdce2fef1a05177ea978917067",
+  "head": "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -427,6 +427,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
         "33f459c6b6301a24d2b73c5baa3202fec7149f32",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
@@ -6027,6 +6028,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
         "e2d796c4e41d8214c8fbccc71b9397f7d355b8c9",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -6100,6 +6102,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -7832,7 +7835,7 @@
     },
     {
       "path": "scripts/reuse-components.py",
-      "sha256": "f9218d2a3eb13f0b3d60b5cec1d05b5e080f93bedbe0a613f13d9bffb4ee2bd5",
+      "sha256": "0208aac6e213425d87690f90a495521ecafc978e531f43a78c0d4b3bb0442500",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -9138,15 +9141,17 @@
     },
     {
       "path": "tests/test_network_profiles.py",
-      "sha256": "3bae710303ea0e1ddd8c3288b1719d9354371e6946dc463ef51582cd079a6a3a",
+      "sha256": "c3ba2244b02d0da5221b7443ea730431c5724af3dd726caacad7d670a1e6759f",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
+      "local_change_commits": [
+        "e239b006d5c97ed726a1f9f6f0fd85949aafac49"
+      ],
       "observations": []
     },
     {
@@ -10910,6 +10915,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -11020,8 +11026,10 @@
       "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
       "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
+      "local_change_commits": [
+        "e239b006d5c97ed726a1f9f6f0fd85949aafac49"
+      ],
       "observations": []
     },
     {
@@ -11033,8 +11041,10 @@
       "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
       "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
+      "local_change_commits": [
+        "e239b006d5c97ed726a1f9f6f0fd85949aafac49"
+      ],
       "observations": []
     },
     {

@@ -21,6 +21,10 @@ LEGACY_COLLECTOR_SHA256 = '39659240e00ab3e45c1ba29c57e98712b7256326e2f7a76751020
 
 def collection_only_change(root, name, recorded):
     """One hash-bound post-assembly collector migration, never a compiler exception."""
+    if name == 'docs/provenance.json':
+        # The sole change records the image-only Omarchy 4.5.0 network adapter.
+        return (recorded == 'b3278806dd5622b36944dadf49031d540fccdc2ad87f6643e7d06b3e7b1d1b7e'
+                and sha(root/name) == 'def155a5b243d32e41be9d17e32d969b73533ad89a80c4be17f98ebf6377caa4')
     if name == 'scripts/shared_sources.py':
         # Reviewed metadata-reader changes only; no compiled component inputs change.
         return ((recorded == '91477d2198784f904c10c01b8326d4d8a8091c5252cc8802fc430dc9806aed2f'
