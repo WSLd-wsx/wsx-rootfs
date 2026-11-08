@@ -44,6 +44,24 @@ Official stable Release `v4.5.0` resolves to commit
 and `install/user/first-run/wifi.sh` has SHA-256
 `af88e353b3ff5d347a2399c9bcbe1be134540329362125aa29e5b2084d9eaa25`.
 Neither matches the reviewed 4.0.6 profile. An isolated dry run of its Panel
-patch rejected four of eight hunks with fuzz disabled; no 4.5.0 adapter or
-desktop acceptance is implied. The source hash gate must continue to reject it
-until a version-specific adaptation is reviewed and tested.
+patch rejected four of eight hunks with fuzz disabled. The separately reviewed
+4.5.0 candidate below uses its own exact-hash profile; no desktop acceptance is
+implied.
+
+### Version-specific adapter candidate
+
+The 4.5.0 network adapter uses the fixed upstream commit and source hashes above.
+The WSX adapter derives from `prototypes/venus-rutabaga/network/install.py` at
+prototype commit `3199b15dd898d6033e255e6894411b4bb4cab816`, working-tree
+SHA-256 `40ed88fff12ce0b278eb25400970fb714dd5079349157d6a787b4608326c9392`.
+Its 4.0.6 profile working-tree manifest, Panel patch and wifi patch SHA-256 are
+`1d14fa0b6a6a542d0aebbad6875099c26b0aa1e7aad51bd074658671d4414305`,
+`0cb79d53615f52103900af4b70d71ee84b9c41dbc56e8c3b0394c6d28fbf7a87`, and
+`8e76cd1ddcc036256e065244bddd6b7a261dc6ca9780af1e8d3c84215f5d7e81`.
+The 4.5.0 Panel's Model.js dependency has SHA-256
+`1562b0752495f693ef8231148f5e6d99c375d120852e9c312a2b47067aa9a8fa`
+and retains `parseNetworkStatus`. The adapted source and existing setup script
+were checked offline for exact application, reapplication and shell syntax;
+this is not WSL desktop, GPU, or hardware acceptance. The upstream source files
+are retrieved by fixed commit; patch and installer bytes are recorded in the
+source inventory and image snapshot.

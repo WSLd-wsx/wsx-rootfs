@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "452afe00f7731f27cf6fda7125b2d19eceb60ce9",
+  "head": "b87dac9af8cb73bdce2fef1a05177ea978917067",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -418,7 +418,7 @@
     },
     {
       "path": "components/license-boundaries.json",
-      "sha256": "30409f7e87c4729f4a4acdf6f909541dc1670625e1f28a98809a4cb6a956bd5b",
+      "sha256": "0136c99a168b4fee14cd19043fbe584b83a8f1263555aeb28e6943542755ca5d",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -450,372 +450,372 @@
           "text": "      \"scripts/write-image-license-map.py\","
         },
         {
-          "line": 168,
+          "line": 170,
           "kind": "mention",
           "text": "    \"scripts/license_inputs.py\": ["
         },
         {
-          "line": 169,
-          "kind": "mention",
-          "text": "      \"components/license-boundaries.json\","
-        },
-        {
-          "line": 170,
-          "kind": "mention",
-          "text": "      \"docs/licensing/license-text-sources.json\","
-        },
-        {
           "line": 171,
           "kind": "mention",
-          "text": "      \"docs/licensing/licenses/Apache-2.0.txt\","
+          "text": "      \"components/license-boundaries.json\","
         },
         {
           "line": 172,
           "kind": "mention",
-          "text": "      \"docs/licensing/licenses/CC0-1.0.txt\","
+          "text": "      \"docs/licensing/license-text-sources.json\","
         },
         {
           "line": 173,
           "kind": "mention",
-          "text": "      \"docs/licensing/licenses/GPL-2.0.txt\","
+          "text": "      \"docs/licensing/licenses/Apache-2.0.txt\","
         },
         {
           "line": 174,
           "kind": "mention",
-          "text": "      \"docs/licensing/licenses/MIT.txt\","
+          "text": "      \"docs/licensing/licenses/CC0-1.0.txt\","
         },
         {
           "line": 175,
           "kind": "mention",
-          "text": "      \"docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt\","
+          "text": "      \"docs/licensing/licenses/GPL-2.0.txt\","
         },
         {
           "line": 176,
           "kind": "mention",
-          "text": "      \"docs/licensing/licenses/upstream/aquamarine-LICENSE\","
+          "text": "      \"docs/licensing/licenses/MIT.txt\","
         },
         {
           "line": 177,
           "kind": "mention",
-          "text": "      \"docs/licensing/licenses/upstream/glaze-LICENSE\","
+          "text": "      \"docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt\","
         },
         {
           "line": 178,
           "kind": "mention",
-          "text": "      \"docs/licensing/licenses/upstream/hyprland-LICENSE\","
+          "text": "      \"docs/licensing/licenses/upstream/aquamarine-LICENSE\","
         },
         {
           "line": 179,
           "kind": "mention",
-          "text": "      \"docs/licensing/licenses/upstream/udis86-LICENSE\","
-        },
-        {
-          "line": 182,
-          "kind": "mention",
-          "text": "      \"LICENSE\","
-        },
-        {
-          "line": 183,
-          "kind": "mention",
-          "text": "      \"LICENSE-MAP.md\","
-        },
-        {
-          "line": 184,
-          "kind": "mention",
-          "text": "      \"docs/licensing/OUTPUT-LICENSES.md\","
-        },
-        {
-          "line": 186,
-          "kind": "mention",
-          "text": "      \"docs/licensing/licenses/WSX-MIT.txt\""
-        },
-        {
-          "line": 188,
-          "kind": "mention",
-          "text": "    \"scripts/product_licenses.py\": ["
-        },
-        {
-          "line": 189,
-          "kind": "mention",
-          "text": "      \"components/license-boundaries.json\","
-        },
-        {
-          "line": 190,
-          "kind": "mention",
-          "text": "      \"docs/licensing/license-text-sources.json\","
-        },
-        {
-          "line": 191,
-          "kind": "mention",
-          "text": "      \"docs/licensing/licenses/Apache-2.0.txt\","
-        },
-        {
-          "line": 192,
-          "kind": "mention",
-          "text": "      \"docs/licensing/licenses/CC0-1.0.txt\","
-        },
-        {
-          "line": 193,
-          "kind": "mention",
-          "text": "      \"docs/licensing/licenses/GPL-2.0.txt\","
-        },
-        {
-          "line": 194,
-          "kind": "mention",
-          "text": "      \"docs/licensing/licenses/MIT.txt\","
-        },
-        {
-          "line": 195,
-          "kind": "mention",
-          "text": "      \"docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt\","
-        },
-        {
-          "line": 196,
-          "kind": "mention",
-          "text": "      \"docs/licensing/licenses/upstream/aquamarine-LICENSE\","
-        },
-        {
-          "line": 197,
-          "kind": "mention",
           "text": "      \"docs/licensing/licenses/upstream/glaze-LICENSE\","
         },
         {
-          "line": 198,
+          "line": 180,
           "kind": "mention",
           "text": "      \"docs/licensing/licenses/upstream/hyprland-LICENSE\","
         },
         {
-          "line": 199,
+          "line": 181,
           "kind": "mention",
           "text": "      \"docs/licensing/licenses/upstream/udis86-LICENSE\","
         },
         {
-          "line": 202,
+          "line": 184,
           "kind": "mention",
           "text": "      \"LICENSE\","
         },
         {
-          "line": 203,
+          "line": 185,
           "kind": "mention",
           "text": "      \"LICENSE-MAP.md\","
         },
         {
-          "line": 204,
+          "line": 186,
           "kind": "mention",
           "text": "      \"docs/licensing/OUTPUT-LICENSES.md\","
         },
         {
-          "line": 206,
+          "line": 188,
           "kind": "mention",
           "text": "      \"docs/licensing/licenses/WSX-MIT.txt\""
         },
         {
-          "line": 223,
+          "line": 190,
+          "kind": "mention",
+          "text": "    \"scripts/product_licenses.py\": ["
+        },
+        {
+          "line": 191,
+          "kind": "mention",
+          "text": "      \"components/license-boundaries.json\","
+        },
+        {
+          "line": 192,
+          "kind": "mention",
+          "text": "      \"docs/licensing/license-text-sources.json\","
+        },
+        {
+          "line": 193,
+          "kind": "mention",
+          "text": "      \"docs/licensing/licenses/Apache-2.0.txt\","
+        },
+        {
+          "line": 194,
+          "kind": "mention",
+          "text": "      \"docs/licensing/licenses/CC0-1.0.txt\","
+        },
+        {
+          "line": 195,
+          "kind": "mention",
+          "text": "      \"docs/licensing/licenses/GPL-2.0.txt\","
+        },
+        {
+          "line": 196,
+          "kind": "mention",
+          "text": "      \"docs/licensing/licenses/MIT.txt\","
+        },
+        {
+          "line": 197,
+          "kind": "mention",
+          "text": "      \"docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt\","
+        },
+        {
+          "line": 198,
+          "kind": "mention",
+          "text": "      \"docs/licensing/licenses/upstream/aquamarine-LICENSE\","
+        },
+        {
+          "line": 199,
+          "kind": "mention",
+          "text": "      \"docs/licensing/licenses/upstream/glaze-LICENSE\","
+        },
+        {
+          "line": 200,
+          "kind": "mention",
+          "text": "      \"docs/licensing/licenses/upstream/hyprland-LICENSE\","
+        },
+        {
+          "line": 201,
+          "kind": "mention",
+          "text": "      \"docs/licensing/licenses/upstream/udis86-LICENSE\","
+        },
+        {
+          "line": 204,
+          "kind": "mention",
+          "text": "      \"LICENSE\","
+        },
+        {
+          "line": 205,
+          "kind": "mention",
+          "text": "      \"LICENSE-MAP.md\","
+        },
+        {
+          "line": 206,
+          "kind": "mention",
+          "text": "      \"docs/licensing/OUTPUT-LICENSES.md\","
+        },
+        {
+          "line": 208,
+          "kind": "mention",
+          "text": "      \"docs/licensing/licenses/WSX-MIT.txt\""
+        },
+        {
+          "line": 225,
           "kind": "mention",
           "text": "      \"scripts/audit-licenses.py\","
         },
         {
-          "line": 224,
+          "line": 226,
           "kind": "mention",
           "text": "      \"scripts/audit-license-modules.py\","
         },
         {
-          "line": 284,
+          "line": 286,
           "kind": "mention",
           "text": "      \"license_treatment\": \"Exact Mesa and dependency terms plus retained MIT adapters\","
         },
         {
-          "line": 286,
+          "line": 288,
           "kind": "mention",
           "text": "      \"license_grant\": false"
-        },
-        {
-          "line": 303,
-          "kind": "mention",
-          "text": "      \"license_treatment\": \"Exact Venus/Mesa and dependency terms plus retained MIT adapters\","
         },
         {
           "line": 305,
           "kind": "mention",
-          "text": "      \"license_grant\": false"
+          "text": "      \"license_treatment\": \"Exact Venus/Mesa and dependency terms plus retained MIT adapters\","
         },
         {
-          "line": 324,
+          "line": 307,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"Upstream BSD/MIT and exact dependency terms; not the KWin GPL license\","
+          "text": "      \"license_grant\": false"
         },
         {
           "line": 326,
           "kind": "mention",
-          "text": "      \"license_grant\": false"
+          "text": "      \"license_treatment\": \"Upstream BSD/MIT and exact dependency terms; not the KWin GPL license\","
         },
         {
-          "line": 345,
+          "line": 328,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"GPL-covered combined output; retain original per-file MIT/GPL declarations\","
+          "text": "      \"license_grant\": false"
         },
         {
           "line": 347,
           "kind": "mention",
-          "text": "      \"license_grant\": false"
+          "text": "      \"license_treatment\": \"GPL-covered combined output; retain original per-file MIT/GPL declarations\","
         },
         {
-          "line": 363,
+          "line": 349,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"MIT source and Apache-2.0 header; preserve both notices\","
+          "text": "      \"license_grant\": false"
         },
         {
           "line": 365,
           "kind": "mention",
-          "text": "      \"license_grant\": false"
+          "text": "      \"license_treatment\": \"MIT source and Apache-2.0 header; preserve both notices\","
         },
         {
-          "line": 379,
+          "line": 367,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"GPL-2.0-or-later for approved original helpers/adaptations; upstream patch context retains its terms\","
+          "text": "      \"license_grant\": false"
         },
         {
           "line": 381,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"GPL-2.0-or-later for approved original helpers/adaptations; upstream patch context retains its terms\","
         },
         {
-          "line": 394,
+          "line": 383,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"GPL-2.0-or-later for approved original helpers/adaptations; upstream patch context retains its terms\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 396,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"GPL-2.0-or-later for approved original helpers/adaptations; upstream patch context retains its terms\","
         },
         {
-          "line": 410,
+          "line": 398,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"MIT original adapter and expressly MIT-licensed owner-original staging additions\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 412,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"MIT original adapter and expressly MIT-licensed owner-original staging additions\","
         },
         {
-          "line": 426,
+          "line": 414,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"MIT original adapter and expressly MIT-licensed owner-original staging additions\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 428,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"MIT original adapter and expressly MIT-licensed owner-original staging additions\","
         },
         {
-          "line": 441,
+          "line": 430,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 443,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates\","
         },
         {
-          "line": 456,
+          "line": 445,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 458,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates\","
         },
         {
-          "line": 471,
+          "line": 460,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 473,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates\","
         },
         {
-          "line": 487,
+          "line": 475,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 489,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates\","
         },
         {
-          "line": 502,
+          "line": 491,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 504,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0 for original Guest expression and explicitly covered generated templates\","
         },
         {
-          "line": 517,
+          "line": 506,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"Generated link to a system package helper; target package rights reviewed separately\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 519,
           "kind": "mention",
-          "text": "      \"license_grant\": false"
+          "text": "      \"license_treatment\": \"Generated link to a system package helper; target package rights reviewed separately\","
         },
         {
-          "line": 533,
+          "line": 521,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0\","
+          "text": "      \"license_grant\": false"
         },
         {
           "line": 535,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0\","
         },
         {
-          "line": 549,
+          "line": 537,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 551,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0\","
         },
         {
-          "line": 565,
+          "line": 553,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 567,
           "kind": "mention",
-          "text": "      \"license_grant\": true"
+          "text": "      \"license_treatment\": \"PolyForm-Noncommercial-1.0.0\","
         },
         {
-          "line": 581,
+          "line": 569,
           "kind": "mention",
-          "text": "      \"license_treatment\": \"MIT retained from the verified retirement adapter\","
+          "text": "      \"license_grant\": true"
         },
         {
           "line": 583,
           "kind": "mention",
+          "text": "      \"license_treatment\": \"MIT retained from the verified retirement adapter\","
+        },
+        {
+          "line": 585,
+          "kind": "mention",
           "text": "      \"license_grant\": true"
         },
         {
-          "line": 597,
+          "line": 599,
           "kind": "mention",
           "text": "      \"license_treatment\": \"GPL-2.0-or-later reconstruction metadata\","
         },
         {
-          "line": 599,
+          "line": 601,
           "kind": "mention",
           "text": "      \"license_grant\": true"
         }
@@ -6018,7 +6018,7 @@
     },
     {
       "path": "docs/omarchy-wsl-reference.md",
-      "sha256": "a2e0643e1052999fcf6db543bce116c76ddb1aa881db14a7def7ec9e879925e6",
+      "sha256": "297b06f1d6e0991042461ec577c70b97135c9bd52da94fbaba6cde3633add30f",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -6091,7 +6091,7 @@
     },
     {
       "path": "docs/provenance.json",
-      "sha256": "b3278806dd5622b36944dadf49031d540fccdc2ad87f6643e7d06b3e7b1d1b7e",
+      "sha256": "def155a5b243d32e41be9d17e32d969b73533ad89a80c4be17f98ebf6377caa4",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -7841,6 +7841,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "b87dac9af8cb73bdce2fef1a05177ea978917067",
         "e70d49028cc657376d6075861437556d62ec5254",
         "a615af7f0924bec50c56d6de731d13bd96d3e7df",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
@@ -8070,6 +8071,7 @@
       "source_index": [],
       "first_local_commit": "34f830716802726f83ae4e9c315712b1645e5e43",
       "local_change_commits": [
+        "b87dac9af8cb73bdce2fef1a05177ea978917067",
         "452afe00f7731f27cf6fda7125b2d19eceb60ce9",
         "34f830716802726f83ae4e9c315712b1645e5e43"
       ],
@@ -8775,6 +8777,7 @@
       "source_index": [],
       "first_local_commit": "34f830716802726f83ae4e9c315712b1645e5e43",
       "local_change_commits": [
+        "b87dac9af8cb73bdce2fef1a05177ea978917067",
         "34f830716802726f83ae4e9c315712b1645e5e43"
       ],
       "observations": []
@@ -9132,6 +9135,19 @@
           "text": "\"\"\"Prevent candidate binary uploads from bypassing the current license review.\"\"\""
         }
       ]
+    },
+    {
+      "path": "tests/test_network_profiles.py",
+      "sha256": "3bae710303ea0e1ddd8c3288b1719d9354371e6946dc463ef51582cd079a6a3a",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": []
     },
     {
       "path": "tests/test_operations_provenance.py",
@@ -10877,7 +10893,7 @@
     },
     {
       "path": "vendor/wsx-proto/network/install.py",
-      "sha256": "40ed88fff12ce0b278eb25400970fb714dd5079349157d6a787b4608326c9392",
+      "sha256": "67c68172a5f82235b0c1f418d7b800e9573250588614d5cb597e6c8819b60bba",
       "group": "conditional-future-license",
       "rule": "approved-imported-helpers",
       "basis": "Owner attested independent WSX authorship and explicitly approved GPL-2.0-or-later for these imported original helpers.",
@@ -10888,7 +10904,7 @@
           "index": "docs/provenance.json",
           "source_path": "prototypes/venus-rutabaga/network/install.py",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
-          "expected_sha256": "40ed88fff12ce0b278eb25400970fb714dd5079349157d6a787b4608326c9392",
+          "expected_sha256": "67c68172a5f82235b0c1f418d7b800e9573250588614d5cb597e6c8819b60bba",
           "hash_matches": true
         }
       ],
@@ -10993,6 +11009,32 @@
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
+      "observations": []
+    },
+    {
+      "path": "vendor/wsx-proto/network/omarchy-4.5.0/Panel.qml.patch",
+      "sha256": "5d9ef301e792956e573b724a4fdc18266008d5c39ef41bfe471884624253a947",
+      "group": "retain-original",
+      "rule": "upstream-patches",
+      "basis": "Upstream modifications and context, including named upstream copyright.",
+      "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
+      "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": []
+    },
+    {
+      "path": "vendor/wsx-proto/network/omarchy-4.5.0/wifi.sh.patch",
+      "sha256": "fc3437aca393ad5a88ce918a1c8c23e8cf0f445ff7b0f8d3fffd13b85fb99828",
+      "group": "retain-original",
+      "rule": "upstream-patches",
+      "basis": "Upstream modifications and context, including named upstream copyright.",
+      "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
+      "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {

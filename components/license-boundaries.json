@@ -163,7 +163,9 @@
       "vendor/wsx-proto/network/omarchy-4.0.6/Panel.qml.patch",
       "vendor/wsx-proto/network/omarchy-4.0.6/manifest.json",
       "vendor/wsx-proto/network/omarchy-4.0.6/wifi.sh.patch",
-      "vendor/wsx-proto/network/wifi.sh.patch"
+      "vendor/wsx-proto/network/wifi.sh.patch",
+      "vendor/wsx-proto/network/omarchy-4.5.0/Panel.qml.patch",
+      "vendor/wsx-proto/network/omarchy-4.5.0/wifi.sh.patch"
     ],
     "scripts/license_inputs.py": [
       "components/license-boundaries.json",

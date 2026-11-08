@@ -5,8 +5,10 @@
   "files": [
     {
       "source_path": "prototypes/venus-rutabaga/network/install.py",
-      "sha256": "40ed88fff12ce0b278eb25400970fb714dd5079349157d6a787b4608326c9392",
-      "vendored": true
+      "sha256": "67c68172a5f82235b0c1f418d7b800e9573250588614d5cb597e6c8819b60bba",
+      "vendored": true,
+      "derived_from_sha256": "40ed88fff12ce0b278eb25400970fb714dd5079349157d6a787b4608326c9392",
+      "adaptation": "Add the reviewed Omarchy 4.5.0 exact-hash profile; prototype source retained unchanged."
     },
     {
       "source_path": "prototypes/venus-rutabaga/network/README.md",
