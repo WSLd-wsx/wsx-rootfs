@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "33f459c6b6301a24d2b73c5baa3202fec7149f32",
+  "head": "e2d796c4e41d8214c8fbccc71b9397f7d355b8c9",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -6026,6 +6026,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "e2d796c4e41d8214c8fbccc71b9397f7d355b8c9",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -7425,7 +7426,7 @@
     },
     {
       "path": "scripts/prepare-shared-sources.py",
-      "sha256": "ddefc04550c69451076e88e1a5bd3ba313b7592cedac3f5e4465163c2a8a0331",
+      "sha256": "a29ca5a554179bb951a2657e2b36f899b02dff919dbd4303b499ea405f302566",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8084,6 +8085,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "e2d796c4e41d8214c8fbccc71b9397f7d355b8c9",
         "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
@@ -9423,7 +9425,7 @@
     },
     {
       "path": "tests/test_shared_source_draft.py",
-      "sha256": "e5ac0fdf3a91be45e01f4c5726f1a52028aca272a790710fb7f50d4f5963c73e",
+      "sha256": "ba4af3bbbb7ee3ca4dc1101784b1f0061e6dd0092da8a55e495d04ad12f8b0db",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -9449,6 +9451,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "e2d796c4e41d8214c8fbccc71b9397f7d355b8c9",
         "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",

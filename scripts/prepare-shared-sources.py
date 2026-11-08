@@ -48,9 +48,12 @@ def find_release(tag, attempts=10):
     raise ValueError('Shared source Draft not visible yet; retry with the same inputs')
 
 
-def acquire(profile, directory):
-    config = json.loads((ROOT/'components/source-delivery.json').read_text())
-    pin = config['component_origins'][profile]
+def acquire(profile, directory, pin=None):
+    if pin is None:
+        config = json.loads((ROOT/'components/source-delivery.json').read_text())
+        pin = config['component_origins'][profile]
+    if not isinstance(pin, dict):
+        raise ValueError('A verified component origin is required')
     reuse = load_script('reuse-components.py')
     run_repo = pin.get('run_repository', REPOSITORY)
     if run_repo not in (REPOSITORY, 'WSLd-wsx/wsx-rootfs-ops'):
@@ -120,10 +123,13 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile',choices=('omarchy','cachyos-plasma'),required=True)
     parser.add_argument('--work',type=Path,required=True)
+    parser.add_argument('--component-pin',type=Path,
+                        help='Explicit component origin JSON; all origin and package checks still apply')
     parser.add_argument('--publish-draft',action='store_true')
     args=parser.parse_args()
     args.work.mkdir(parents=True,exist_ok=False)
-    admitted=acquire(args.profile,args.work)
+    pin=json.loads(args.component_pin.read_text()) if args.component_pin else None
+    admitted=acquire(args.profile,args.work,pin)
     bundle=args.work/'shared-sources'
     index=make_bundle(admitted,bundle)
     result=dict(profile=args.profile,tag=index['tag'],manifest_sha256=sha(bundle/INDEX),

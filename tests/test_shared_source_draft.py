@@ -11,6 +11,11 @@ prepare=importlib.util.module_from_spec(spec);spec.loader.exec_module(prepare)
 
 
 class DraftDiscovery(unittest.TestCase):
+    def test_explicit_pin_still_rejects_unapproved_run_repository(self):
+        pin = {'run_repository': 'unapproved/repository'}
+        with self.assertRaisesRegex(ValueError, 'Unapproved component workflow repository'):
+            prepare.acquire('omarchy', Path('/unused'), pin)
+
     def test_draft_discovery_uses_release_id_after_eventual_visibility(self):
         draft=dict(id=123,tag_name='fixture',draft=True)
         with patch.object(prepare,'api',side_effect=[[],[draft],draft]) as api,patch.object(prepare.time,'sleep'):
