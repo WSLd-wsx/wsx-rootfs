@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "34f830716802726f83ae4e9c315712b1645e5e43",
+  "head": "54c3490ded627c5189691af69240ec77bada8027",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -8061,7 +8061,7 @@
     },
     {
       "path": "scripts/select-component-origin.py",
-      "sha256": "d75635c3baf22070e501ee567a7d345042d8d8077ba22fda8785cfb48f7a638d",
+      "sha256": "1c2d34fb19e2676488b88c4b60cf23620b0566cb0e60ee5fd6d45df75bb3c574",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8109,6 +8109,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "54c3490ded627c5189691af69240ec77bada8027",
         "e2d796c4e41d8214c8fbccc71b9397f7d355b8c9",
         "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",
@@ -9513,6 +9514,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "54c3490ded627c5189691af69240ec77bada8027",
         "e2d796c4e41d8214c8fbccc71b9397f7d355b8c9",
         "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",

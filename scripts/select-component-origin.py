@@ -60,7 +60,11 @@ def main():
             continue
         run_id = row['databaseId']
         log = subprocess.check_output(['gh','run','view',str(run_id),'--repo',OPS,'--log'],env=env,text=True)
-        pin = pin_from_log(log,args.profile,run_id)
+        try:
+            pin = pin_from_log(log,args.profile,run_id)
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f'Skipping component run {run_id}: {error}', flush=True)
+            continue
         if pin is None:
             continue
         run = json.loads(subprocess.check_output(['gh','api',f'repos/{OPS}/actions/runs/{run_id}'],env=env,text=True))
