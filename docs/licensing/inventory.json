@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
+  "head": "dbd40aa7d3518afd0c3f55545dcbcd1de7da7c63",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -6019,7 +6019,7 @@
     },
     {
       "path": "docs/omarchy-wsl-reference.md",
-      "sha256": "297b06f1d6e0991042461ec577c70b97135c9bd52da94fbaba6cde3633add30f",
+      "sha256": "dcad75d0637d634eeef136dddcdf50591863ddc7f644ea59fac2ec4dc2ae9e3a",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -7844,6 +7844,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "dbd40aa7d3518afd0c3f55545dcbcd1de7da7c63",
         "b87dac9af8cb73bdce2fef1a05177ea978917067",
         "e70d49028cc657376d6075861437556d62ec5254",
         "a615af7f0924bec50c56d6de731d13bd96d3e7df",
@@ -9150,6 +9151,7 @@
       "source_index": [],
       "first_local_commit": "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
       "local_change_commits": [
+        "dbd40aa7d3518afd0c3f55545dcbcd1de7da7c63",
         "e239b006d5c97ed726a1f9f6f0fd85949aafac49"
       ],
       "observations": []

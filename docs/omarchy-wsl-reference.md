@@ -65,3 +65,14 @@ were checked offline for exact application, reapplication and shell syntax;
 this is not WSL desktop, GPU, or hardware acceptance. The upstream source files
 are retrieved by fixed commit; patch and installer bytes are recorded in the
 source inventory and image snapshot.
+
+Remote operations run `42482863720` built `wsx-omarchy-4.5.0-r1` from rootfs
+commit `dbd40aa7d3518afd0c3f55545dcbcd1de7da7c63` and upstream commit
+`ac2690cd7be4f47e4a255f5e2e78d904d436b068`. Its log records exact application of
+both network patches. The existing Omarchy paired component image was admitted
+by immutable digest `sha256:f258bf8678e43c6fb905cdee1f3a75648cb877c2e6e356dda771524df31880e1`;
+no graphics component compilation was performed. The verified candidate is a
+Draft with compressed rootfs SHA-256
+`5d61831e6d4b30e9dc71e11201723a38b11be7b75f5e47f3303acb4f37330181`.
+Build and offline validation passed; WSL boot, GPU first frame, desktop and
+stability remain `not_run`. This is not hardware compatibility evidence.
