@@ -34,3 +34,16 @@ Deliberately not adopted:
 
 This reference does not prove that the newly built WSX rootfs boots or presents
 on any hardware. It supplies applicable setup patterns, not GPU acceptance.
+
+## Omarchy 4.5.0 compatibility check
+
+Official stable Release `v4.5.0` resolves to commit
+`ac2690cd7be4f47e4a255f5e2e78d904d436b068`. At that commit,
+`shell/plugins/panels/network/Panel.qml` has SHA-256
+`8beba301a1d87db144543ad888226099c3dd1c2999f2a52106964b5851959adb`
+and `install/user/first-run/wifi.sh` has SHA-256
+`af88e353b3ff5d347a2399c9bcbe1be134540329362125aa29e5b2084d9eaa25`.
+Neither matches the reviewed 4.0.6 profile. An isolated dry run of its Panel
+patch rejected four of eight hunks with fuzz disabled; no 4.5.0 adapter or
+desktop acceptance is implied. The source hash gate must continue to reject it
+until a version-specific adaptation is reviewed and tested.

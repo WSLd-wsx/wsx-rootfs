@@ -8,6 +8,7 @@ import sys
 import tarfile
 import tempfile
 import unittest
+from urllib.error import HTTPError
 from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 import shared_sources as shared
@@ -149,6 +150,38 @@ class SharedSources(unittest.TestCase):
         release['assets'][0]['digest']='sha256:'+'0'*64
         with patch.object(shared,'public_json',side_effect=[metadata,release]):
             with self.assertRaisesRegex(ValueError,'missing or changed'):shared.verify_public(pin,index)
+
+    def test_public_download_falls_back_only_to_verified_anonymous_asset(self):
+        bundle, index, pin = self.prepared()
+        content = (bundle/shared.INDEX).read_bytes()
+        release = self.release(index, pin)
+        index_asset = next(a for a in release['assets'] if a['name'] == shared.INDEX)
+        index_asset.update(id=123, size=len(content))
+        repo = dict(full_name=shared.REPOSITORY, private=False)
+        error = HTTPError('https://github.com/test', 504, 'gateway timeout', {}, None)
+        with patch.dict('os.environ', {'WSX_PRIVATE_SOURCE': '0'}), \
+             patch.object(shared, 'public_json', side_effect=[repo, release, repo, release]), \
+             patch.object(shared, 'urlopen', side_effect=[error, io.BytesIO(content)]) as opened:
+            self.assertEqual(json.loads(shared.download_index(pin, 'omarchy')), index)
+            self.assertEqual(opened.call_args_list[1].args[0].full_url,
+                             'https://api.github.com/repos/'+shared.REPOSITORY+'/releases/assets/123')
+            self.assertIsNone(opened.call_args_list[1].args[0].get_header('Authorization'))
+        index_asset['digest'] = 'sha256:' + '0' * 64
+        with patch.dict('os.environ', {'WSX_PRIVATE_SOURCE': '0'}), \
+             patch.object(shared, 'public_json', side_effect=[repo, release]), \
+             patch.object(shared, 'urlopen', side_effect=error):
+            with self.assertRaisesRegex(ValueError, 'metadata differs'):
+                shared.download_index(pin, 'omarchy')
+
+    def test_public_download_does_not_fallback_on_not_found(self):
+        _, _, pin = self.prepared()
+        error = HTTPError('https://github.com/test', 404, 'not found', {}, None)
+        with patch.dict('os.environ', {'WSX_PRIVATE_SOURCE': '0'}), \
+             patch.object(shared, 'public_json') as metadata, \
+             patch.object(shared, 'urlopen', side_effect=error):
+            with self.assertRaises(HTTPError):
+                shared.download_index(pin, 'omarchy')
+            metadata.assert_not_called()
 
     def test_two_image_recipes_share_one_graphics_source_reference(self):
         bundle,index,pin=self.prepared()

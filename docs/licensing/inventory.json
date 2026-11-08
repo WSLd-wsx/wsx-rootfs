@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "b255847703fc002c81c8511b02cf570d7260f193",
+  "head": "33f459c6b6301a24d2b73c5baa3202fec7149f32",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -426,6 +426,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "33f459c6b6301a24d2b73c5baa3202fec7149f32",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
@@ -1691,8 +1692,10 @@
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "33f459c6b6301a24d2b73c5baa3202fec7149f32",
+      "local_change_commits": [
+        "33f459c6b6301a24d2b73c5baa3202fec7149f32"
+      ],
       "observations": []
     },
     {
@@ -6014,7 +6017,7 @@
     },
     {
       "path": "docs/omarchy-wsl-reference.md",
-      "sha256": "661ece1aeb813f5f0b1c3ee98ec7098916be7c7e6fb9ad88ef984e8f4dd446f5",
+      "sha256": "a2e0643e1052999fcf6db543bce116c76ddb1aa881db14a7def7ec9e879925e6",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -6713,6 +6716,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "33f459c6b6301a24d2b73c5baa3202fec7149f32",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -7109,8 +7113,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "33f459c6b6301a24d2b73c5baa3202fec7149f32",
+      "local_change_commits": [
+        "33f459c6b6301a24d2b73c5baa3202fec7149f32"
+      ],
       "observations": [
         {
           "line": 1,
@@ -7128,8 +7134,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "33f459c6b6301a24d2b73c5baa3202fec7149f32",
+      "local_change_commits": [
+        "33f459c6b6301a24d2b73c5baa3202fec7149f32"
+      ],
       "observations": [
         {
           "line": 1,
@@ -8067,7 +8075,7 @@
     },
     {
       "path": "scripts/shared_sources.py",
-      "sha256": "2896273adafdd77298a439f2404f4c2bfe22f44b6af9a6b0eca039d2add3e449",
+      "sha256": "91477d2198784f904c10c01b8326d4d8a8091c5252cc8802fc430dc9806aed2f",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8091,7 +8099,7 @@
           "text": "\"\"\"Project immutable component evidence into reusable, separately licensed sources.\"\"\""
         },
         {
-          "line": 27,
+          "line": 28,
           "kind": "mention",
           "text": "# compiled-source license review justifies reference-only delivery."
         }
@@ -8208,6 +8216,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "33f459c6b6301a24d2b73c5baa3202fec7149f32",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
@@ -8232,6 +8241,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "33f459c6b6301a24d2b73c5baa3202fec7149f32",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
@@ -8869,8 +8879,10 @@
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "33f459c6b6301a24d2b73c5baa3202fec7149f32",
+      "local_change_commits": [
+        "33f459c6b6301a24d2b73c5baa3202fec7149f32"
+      ],
       "observations": []
     },
     {
@@ -9428,7 +9440,7 @@
     },
     {
       "path": "tests/test_shared_sources.py",
-      "sha256": "e2c10288edd6011af2b459028a6ddde653747f9f44a9a1701ffbbc3fe106cc55",
+      "sha256": "aa9bcb87e8dac3b1a5f79f15732e8380ec47364fd126d63eeb1fa9e806591fd6",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -9447,22 +9459,22 @@
       ],
       "observations": [
         {
-          "line": 26,
+          "line": 27,
           "kind": "mention",
           "text": "        (self.material/'notices/LICENSE').write_text('Retained original notice')"
         },
         {
-          "line": 51,
+          "line": 52,
           "kind": "mention",
           "text": "            notice_files={'LICENSE':sha(self.material/'notices/LICENSE')})"
         },
         {
-          "line": 183,
+          "line": 216,
           "kind": "mention",
           "text": "        spec=importlib.util.spec_from_file_location('release_review',Path(__file__).resolve().parents[1]/'scripts/review-release-licenses.py')"
         },
         {
-          "line": 196,
+          "line": 229,
           "kind": "mention",
           "text": "            self.assertEqual(material['notice_files'],{'LICENSE':sha(self.material/'notices/LICENSE')})"
         }

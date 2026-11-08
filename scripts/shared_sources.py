@@ -11,6 +11,7 @@ import shutil
 import subprocess
 import tarfile
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
 
 from component_materials import relative, sha, verify
 
@@ -280,6 +281,32 @@ def verify_private(pin, index, metadata_reader=None):
     return _verify_release(pin, index, metadata_reader or private_json, True)
 
 
+def public_asset_index(pin):
+    """Use the anonymous asset API when the public download endpoint fails."""
+    repo = public_json('https://api.github.com/repos/' + REPOSITORY)
+    release = public_json('https://api.github.com/repos/' + REPOSITORY + '/releases/tags/' + pin['tag'])
+    if (repo.get('full_name') != REPOSITORY or repo.get('private') is not False
+            or release.get('draft') is not False or release.get('tag_name') != pin['tag']):
+        raise ValueError('Shared source must be publicly accessible')
+    matches = [a for a in release.get('assets', []) if a.get('name') == INDEX]
+    if len(matches) != 1:
+        raise ValueError('Public source index asset is missing or ambiguous')
+    asset = matches[0]
+    expected = f'https://github.com/{REPOSITORY}/releases/download/{pin["tag"]}/{INDEX}'
+    if (type(asset.get('id')) is not int or asset['id'] <= 0
+            or asset.get('state') != 'uploaded' or asset.get('browser_download_url') != expected
+            or asset.get('digest') != 'sha256:' + pin['manifest_sha256']
+            or type(asset.get('size')) is not int or not 0 < asset['size'] <= 16*1024*1024):
+        raise ValueError('Public source index metadata differs from pin')
+    url = f'https://api.github.com/repos/{REPOSITORY}/releases/assets/{asset["id"]}'
+    request = Request(url, headers={'User-Agent':'WSX-source-delivery/2', 'Accept':'application/octet-stream'})
+    with urlopen(request, timeout=60) as response:
+        data = response.read(16*1024*1024 + 1)
+    if len(data) != asset['size']:
+        raise ValueError('Public source index size mismatch')
+    return data
+
+
 def download_index(pin, profile):
     validate_pin(pin, profile)
     if os.environ.get('WSX_PRIVATE_SOURCE') == '1':
@@ -296,8 +323,17 @@ def download_index(pin, profile):
             raise ValueError('Private source index exceeds size limit')
     else:
         url = f'https://github.com/{REPOSITORY}/releases/download/{pin["tag"]}/{INDEX}'
-        with urlopen(Request(url,headers={'User-Agent':'WSX-source-delivery/2'}),timeout=60) as stream:
-            data = stream.read(16*1024*1024)
+        try:
+            with urlopen(Request(url,headers={'User-Agent':'WSX-source-delivery/2'}),timeout=60) as stream:
+                data = stream.read(16*1024*1024 + 1)
+        except HTTPError as error:
+            if error.code not in (500, 502, 503, 504):
+                raise
+            data = public_asset_index(pin)
+        except (URLError, TimeoutError):
+            data = public_asset_index(pin)
+        if len(data) > 16*1024*1024:
+            raise ValueError('Public source index exceeds size limit')
     if hashlib.sha256(data).hexdigest() != pin['manifest_sha256']:
         raise ValueError('Public shared source index hash mismatch')
     index = validate_index(json.loads(data))
