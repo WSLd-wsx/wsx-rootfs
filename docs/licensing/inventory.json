@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "5a20cae24b5ea92fc0ea529a085c9f24161b9ad4",
+  "head": "86d0161a8394234a43795cbff054f1578f62e3ad",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -236,7 +236,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "85fd6325a9b0b1bf0f94afcac0f8f9abb4c3cce27eb1b03fef18848080231ee4",
+      "sha256": "cb059dad9878e82032a44b752da9bed90a9c87a5eacd5604936f6889fb2d03c3",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -257,34 +257,24 @@
       ],
       "observations": [
         {
-          "line": 33,
+          "line": 23,
           "kind": "mention",
-          "text": "and requires independently verified source and license delivery. Earlier remote"
+          "text": "record compiler inputs and retain source and license materials. Distribution"
         },
         {
-          "line": 41,
+          "line": 185,
           "kind": "mention",
-          "text": "## License boundaries and source materials"
+          "text": "Source materials and license boundaries are documented in"
         },
         {
-          "line": 43,
+          "line": 186,
           "kind": "mention",
-          "text": "Source grants are effective under the [module license map](LICENSE-MAP.md)."
+          "text": "[LICENSE-MAP.md](LICENSE-MAP.md) and [components/SOURCE-DELIVERY.md](components/SOURCE-DELIVERY.md)."
         },
         {
-          "line": 49,
+          "line": 187,
           "kind": "mention",
-          "text": "of differently licensed components, not a wholly noncommercial work."
-        },
-        {
-          "line": 56,
-          "kind": "mention",
-          "text": "No new blanket license or permission is created by these source-delivery records."
-        },
-        {
-          "line": 65,
-          "kind": "mention",
-          "text": "active license map. Repository visibility is not a finding that every upstream"
+          "text": "Individual third-party terms remain in force; source and license evidence is not"
         }
       ]
     },
@@ -299,6 +289,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "ee735c65142049e03ee5a38cf4d7518ce4ea93a6",
@@ -6329,6 +6320,7 @@
       "source_index": [],
       "first_local_commit": "5a20cae24b5ea92fc0ea529a085c9f24161b9ad4",
       "local_change_commits": [
+        "86d0161a8394234a43795cbff054f1578f62e3ad",
         "5a20cae24b5ea92fc0ea529a085c9f24161b9ad4"
       ],
       "observations": []
@@ -7382,6 +7374,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
@@ -7845,6 +7838,7 @@
       "source_index": [],
       "first_local_commit": "59c2cfeb33485f8f31270a1f34d6933fa11784ac",
       "local_change_commits": [
+        "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "06c56cab873bda7fef42f50853cf3458ebfba207",
@@ -8012,6 +8006,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "ffaa7d6d24ead461a585abdc967090494eb4359d"
@@ -8029,6 +8024,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
@@ -8076,6 +8072,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
@@ -9375,6 +9372,7 @@
       "source_index": [],
       "first_local_commit": "ffaa7d6d24ead461a585abdc967090494eb4359d",
       "local_change_commits": [
+        "86d0161a8394234a43795cbff054f1578f62e3ad",
         "fffa1ade08b881bdd758f72c20486e20f713da67",
         "e70d49028cc657376d6075861437556d62ec5254",
         "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
