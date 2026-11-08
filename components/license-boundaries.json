@@ -22,12 +22,14 @@
     ],
     "scripts/build-components.py": [
       "components/sources.json",
+      "scripts/graphics_log_policy.py",
       "scripts/build-kwin.py",
       "vendor/wsx-proto/guest-compat/build.py",
       "vendor/wsx-proto/guest-compat/build-venus.py",
       "vendor/wsx-proto/guest-opaque/build-compositor.py"
     ],
     "scripts/stage-guest.py": [
+      "scripts/graphics_debug.py",
       "vendor/wsx-proto/device-host/production/start-guest.py",
       "guest/input.c",
       "vendor/wsx-proto/input/guest.c",
@@ -38,6 +40,7 @@
       "scripts/stage-protocol.py"
     ],
     "scripts/stage-cachyos.py": [
+      "scripts/graphics_debug.py",
       "vendor/wsx-proto/device-host/production/start-cachyos-plasma.py",
       "guest/input.c",
       "vendor/wsx-proto/input/guest.c",

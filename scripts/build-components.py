@@ -54,7 +54,28 @@ def build(args):
     old = "'-j', '3'"
     if text.count(old) != 1:
         raise ValueError('Unexpected Mesa concurrency binding')
-    builder.write_text(text.replace(old, "'-j', " + repr(jobs)))
+    text = text.replace(old, "'-j', " + repr(jobs))
+    anchor = "        run('configure', meson + ['setup', str(out / 'build'), str(source),"
+    if text.count(anchor) != 1:
+        raise ValueError('Unexpected Mesa patch completion point')
+    policy = str(ROOT/'scripts/graphics_log_policy.py')
+    text = text.replace(anchor, "        import runpy\n"
+        "        trace_files = runpy.run_path(" + repr(policy) + ")[\"apply\"](source, 'mesa')\n"
+        "        for relative in trace_files:\n"
+        "            changed[pin['directory'] + '/' + relative] = sha(source / relative)\n"
+        "        report['graphics_trace_policy'] = {relative: sha(source / relative) for relative in trace_files}\n" + anchor)
+    builder.write_text(text)
+    venus_builder = sources/'guest-compat/build-venus.py'
+    text = venus_builder.read_text()
+    anchor = '        patched_hashes = {name: sha(source / name) for name in changed_files}'
+    if text.count(anchor) != 1:
+        raise ValueError('Unexpected Venus patch completion point')
+    text = text.replace(anchor, "        import runpy\n"
+        "        trace_files = runpy.run_path(" + repr(policy) + ")[\"apply\"](source, 'venus')\n"
+        "        if not set(trace_files).issubset(changed_files):\n"
+        "            raise ValueError('Graphics trace source is not covered by the patch receipt')\n"
+        "        report['graphics_trace_policy'] = {relative: sha(source / relative) for relative in trace_files}\n" + anchor)
+    venus_builder.write_text(text)
     run(sys.executable, builder, out/'mesa', '--import-diagnostics', '--negotiated-export',
         '--modifier-features2', '--linear-feedback-compat', '--linear-shared-compat',
         '--linear-modifier-feedback', '--linear-depth-segregation', '--opaque-gbm-export', '--opaque-consumer')

@@ -39,6 +39,7 @@ def session_source():
     text = (header + '# Adapted by the WSX rootfs staging recipe from vendor/wsx-proto/device-host/production/start-cachyos-plasma.py.\n'
             'import atexit, hashlib, json, os, pwd, runpy, shlex, signal, subprocess, sys, tempfile, time, uuid\n'
             'from pathlib import Path\n\n' + '\n\n'.join(parts))
+    text = runpy.run_path(str(ROOT/'scripts/graphics_debug.py'))['configure'](text)
     text = replace_once(text, "account = pwd.getpwnam('wsx')", "account = pwd.getpwnam(os.environ['WSX_USER'])")
     text = replace_once(text, "LANG='C.UTF-8', XDG_CURRENT_DESKTOP='KDE'", "LANG=os.environ['WSX_LOCALE'], XDG_CURRENT_DESKTOP='KDE'")
     text = replace_once(text, "profile = json.loads((deployment.parent / 'wsx-runtime.json').read_text())",

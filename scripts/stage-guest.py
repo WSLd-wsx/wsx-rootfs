@@ -50,6 +50,7 @@ def main():
     # AST extraction omits comments, including the original license notice.
     header=''.join(lines[:tree.body[0].lineno-1])
     text=header + '# Adapted by the WSX rootfs staging recipe from vendor/wsx-proto/device-host/production/start-guest.py.\nimport runpy\n' + '\n'.join(parts)
+    text=runpy.run_path(str(ROOT/'scripts/graphics_debug.py'))['configure'](text)
     replacements={
       "LANG='C.UTF-8'":"LANG=os.environ['WSX_LOCALE']",
       "env.update(private_mesa)":"env.update(private_mesa)\n    if profile.get('pulse_server'):\n        env['PULSE_SERVER'] = profile['pulse_server']",
