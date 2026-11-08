@@ -23,9 +23,12 @@ def collection_only_change(root, name, recorded):
     """One hash-bound post-assembly collector migration, never a compiler exception."""
     if name == 'scripts/shared_sources.py':
         # Reviewed metadata-reader changes only; no compiled component inputs change.
-        return (recorded == '2bd3704a025829b397b14d053c45d1ca36f2201d1afc444262306aeaf54ed7c7'
+        return ((recorded == '91477d2198784f904c10c01b8326d4d8a8091c5252cc8802fc430dc9806aed2f'
+                 and sha(root/name) == '10ac2f902653d2969f894f6ae501d90ae08fca973795721b53e767c21efbfdde')
+                or (recorded == '2bd3704a025829b397b14d053c45d1ca36f2201d1afc444262306aeaf54ed7c7'
                 and sha(root/name) in {'32c6b645d21b7ab10057bad9d5d4f957978c836a58897e152d19d4257b6ac07c',
-                                       '2896273adafdd77298a439f2404f4c2bfe22f44b6af9a6b0eca039d2add3e449'})
+                                       '2896273adafdd77298a439f2404f4c2bfe22f44b6af9a6b0eca039d2add3e449',
+                                       '10ac2f902653d2969f894f6ae501d90ae08fca973795721b53e767c21efbfdde'}))
     if name != 'scripts/component_materials.py' or recorded != LEGACY_COLLECTOR_SHA256:
         return False
     config=root/'components/source-delivery.json'

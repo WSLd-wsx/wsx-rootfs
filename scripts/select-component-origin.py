@@ -30,13 +30,22 @@ def pin_from_log(log, profile, run_id):
         raise ValueError('Ambiguous component profile in run log')
     blocks = []
     lines = [text for step,text in rows if step == 'Upload and verify paired private GHCR package']
+    # GitHub's archived job logs may omit step names; the run identity and
+    # package receipt are independently verified before admission below.
+    if not lines:
+        lines = [text for step,text in rows if step == 'UNKNOWN STEP']
     for i, line in enumerate(lines):
         if line.strip() != '```json':
             continue
         end = next((j for j in range(i+1,len(lines)) if lines[j].strip() == '```'), None)
         if end is None:
             raise ValueError('Incomplete component pin in run log')
-        blocks.append(json.loads('\n'.join(lines[i+1:end])))
+        try:
+            block = json.loads('\n'.join(lines[i+1:end]))
+        except json.JSONDecodeError:
+            continue
+        if isinstance(block, dict) and block.get('run_id') == run_id and block.get('transport') == 'ghcr':
+            blocks.append(block)
     if len(blocks) != 1 or blocks[0].get('run_id') != run_id:
         raise ValueError('Missing or ambiguous verified component pin')
     return blocks[0]

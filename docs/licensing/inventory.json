@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "54c3490ded627c5189691af69240ec77bada8027",
+  "head": "452afe00f7731f27cf6fda7125b2d19eceb60ce9",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -7832,7 +7832,7 @@
     },
     {
       "path": "scripts/reuse-components.py",
-      "sha256": "9169b3921c70eac55254206cbdad48432e3e52545f362563d15fd95ac8c835ac",
+      "sha256": "f9218d2a3eb13f0b3d60b5cec1d05b5e080f93bedbe0a613f13d9bffb4ee2bd5",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8061,7 +8061,7 @@
     },
     {
       "path": "scripts/select-component-origin.py",
-      "sha256": "1c2d34fb19e2676488b88c4b60cf23620b0566cb0e60ee5fd6d45df75bb3c574",
+      "sha256": "77ad5bfcf1fb41f24defdc9946959399a4c453cb6b5f054a41a2e059b7e05552",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8070,6 +8070,7 @@
       "source_index": [],
       "first_local_commit": "34f830716802726f83ae4e9c315712b1645e5e43",
       "local_change_commits": [
+        "452afe00f7731f27cf6fda7125b2d19eceb60ce9",
         "34f830716802726f83ae4e9c315712b1645e5e43"
       ],
       "observations": [
@@ -8765,7 +8766,7 @@
     },
     {
       "path": "tests/test_component_origin_selection.py",
-      "sha256": "d0f7ac6335a94574d3b6d647cdfa2559e12dd027a044e9274866016d851a353f",
+      "sha256": "7e3a94f969b63be7e25f553c692e97e340b960c6569528104ca25d4289a1777e",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
