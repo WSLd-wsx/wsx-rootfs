@@ -56,8 +56,10 @@ Actions runner, verifies the original receipt, prepares the source-only archives
 creates/reuses a Draft and reads back every uploaded asset. It neither compiles
 nor uploads binaries and never changes the Draft's visibility.
 
-After separate approval to publish that specific source-only release, publish it
-as a non-latest Pre-release. Activate the exact resulting index using:
+For an explicitly authorized manual rootfs workflow, a source-only Draft may be
+published as a non-latest Pre-release after the complete asset set has been read
+back and verified. Verify anonymous access before selecting its exact index. This
+authorization does not promote a rootfs Draft to stable. For manual activation:
 
 ```sh
 python3 scripts/select-shared-sources.py --profile omarchy \

@@ -11,7 +11,7 @@ import time
 
 import component_registry as registry
 from component_materials import sha
-from shared_sources import ROOT, REPOSITORY, INDEX, ARCHIVES, make_bundle, verify_bundle
+from shared_sources import ROOT, REPOSITORY, INDEX, ARCHIVES, make_bundle, verify_bundle, download_index
 
 
 def gh(*args):
@@ -34,11 +34,18 @@ def load_script(name):
     return module
 
 
+def releases():
+    pages = json.loads(gh('api', '--paginate', '--slurp', f'repos/{REPOSITORY}/releases?per_page=100'))
+    if not isinstance(pages, list) or any(not isinstance(page, list) for page in pages):
+        raise ValueError('Invalid release listing')
+    return [release for page in pages for release in page]
+
+
 def find_release(tag, attempts=10):
     # GitHub's tag endpoint does not resolve unpublished Drafts reliably.
     # Discover the authenticated Draft through the list, then use its stable ID.
     for attempt in range(attempts):
-        matches=[r for r in api(f'repos/{REPOSITORY}/releases?per_page=100') if r['tag_name']==tag]
+        matches=[r for r in releases() if r['tag_name']==tag]
         if len(matches)>1:
             raise ValueError('Duplicate shared source release')
         if matches:
@@ -74,8 +81,7 @@ def acquire(profile, directory, pin=None):
 def publish_draft(bundle):
     index = verify_bundle(bundle)
     tag = index['tag']
-    releases = api(f'repos/{REPOSITORY}/releases?per_page=100')
-    matches = [r for r in releases if r['tag_name']==tag]
+    matches = [r for r in releases() if r['tag_name']==tag]
     if len(matches)>1:
         raise ValueError('Duplicate shared source release')
     if not matches:
@@ -89,6 +95,8 @@ def publish_draft(bundle):
                '--title','Shared graphics sources: '+index['profile'],'--notes-file',path)
     release = find_release(tag)
     assets = {a['name']:a for a in release['assets']}
+    if len(assets) != len(release['assets']):
+        raise ValueError('Duplicate shared source release assets')
     names = list(ARCHIVES)+[INDEX]
     if set(assets)-set(names):
         raise ValueError('Unexpected shared source release assets')
@@ -104,7 +112,7 @@ def publish_draft(bundle):
             gh('release','upload',tag,bundle/name,'--repo',REPOSITORY)
     release=api(f'repos/{REPOSITORY}/releases/{release["id"]}')
     assets={a['name']:a for a in release['assets']}
-    if set(assets)!=set(names):
+    if len(assets)!=len(release['assets']) or set(assets)!=set(names):
         raise ValueError('Incomplete shared source upload')
     # Read back every source-only asset, without changing release visibility.
     with tempfile.TemporaryDirectory() as temporary:
@@ -119,17 +127,42 @@ def publish_draft(bundle):
                 release_id=release['id'],url=release['html_url'])
 
 
+def publish_public(bundle):
+    """Publish a fully read-back source-only Draft and verify anonymous access."""
+    index = verify_bundle(bundle)
+    repo = api('repos/' + REPOSITORY)
+    if repo.get('full_name') != REPOSITORY or repo.get('private') is not False:
+        raise ValueError('Public source publication requires the approved public repository')
+    result = publish_draft(bundle)
+    if result['tag'] != index['tag'] or result['manifest_sha256'] != sha(bundle/INDEX):
+        raise ValueError('Published source identity differs from verified bundle')
+    if result['draft']:
+        gh('release', 'edit', result['tag'], '--repo', REPOSITORY,
+           '--draft=false', '--prerelease', '--latest=false')
+    pin = dict(tag=result['tag'], manifest_sha256=result['manifest_sha256'])
+    if download_index(pin, index['profile']) != (bundle/INDEX).read_bytes():
+        raise ValueError('Public source index differs from verified bundle')
+    return pin
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile',choices=('omarchy','cachyos-plasma'),required=True)
     parser.add_argument('--work',type=Path,required=True)
     parser.add_argument('--component-pin',type=Path,
                         help='Explicit component origin JSON; all origin and package checks still apply')
-    parser.add_argument('--publish-draft',action='store_true')
+    parser.add_argument('--require-current-compatibility',action='store_true',
+                        help='Reject components whose compiled inputs differ from the current recipe')
+    publication=parser.add_mutually_exclusive_group()
+    publication.add_argument('--publish-draft',action='store_true')
+    publication.add_argument('--publish-public',action='store_true',
+                             help='Publish the verified source-only bundle as a public prerelease')
     args=parser.parse_args()
     args.work.mkdir(parents=True,exist_ok=False)
     pin=json.loads(args.component_pin.read_text()) if args.component_pin else None
     admitted=acquire(args.profile,args.work,pin)
+    if args.require_current_compatibility:
+        load_script('reuse-components.py').check_compatibility(ROOT,admitted)
     bundle=args.work/'shared-sources'
     index=make_bundle(admitted,bundle)
     result=dict(profile=args.profile,tag=index['tag'],manifest_sha256=sha(bundle/INDEX),
@@ -140,5 +173,7 @@ if __name__=='__main__':
     (args.work/'summary.json').write_text(json.dumps(result,indent=2)+'\n')
     if args.publish_draft:
         result['release']=publish_draft(bundle)
+    elif args.publish_public:
+        result['public_source']=publish_public(bundle)
     (args.work/'summary.json').write_text(json.dumps(result,indent=2)+'\n')
     print('SHARED_SOURCE_RESULT '+json.dumps(result,separators=(',',':')))
