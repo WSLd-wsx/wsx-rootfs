@@ -183,6 +183,21 @@ class SharedSources(unittest.TestCase):
                 shared.download_index(pin, 'omarchy')
             metadata.assert_not_called()
 
+    def test_anonymous_metadata_retries_transient_errors_only(self):
+        error = HTTPError('https://api.github.com/test', 504, 'gateway timeout', {}, None)
+        with patch.object(shared, 'urlopen', side_effect=[error, io.BytesIO(b'{"ok": true}')]) as opened, \
+             patch.object(shared.time, 'sleep') as sleep:
+            self.assertEqual(shared.public_json('https://api.github.com/test'), {'ok': True})
+            self.assertIsNone(opened.call_args.args[0].get_header('Authorization'))
+            sleep.assert_called_once_with(1)
+        error = HTTPError('https://api.github.com/test', 404, 'not found', {}, None)
+        with patch.object(shared, 'urlopen', side_effect=error) as opened, \
+             patch.object(shared.time, 'sleep') as sleep:
+            with self.assertRaises(HTTPError):
+                shared.public_json('https://api.github.com/test')
+            self.assertEqual(opened.call_count, 1)
+            sleep.assert_not_called()
+
     def test_two_image_recipes_share_one_graphics_source_reference(self):
         bundle,index,pin=self.prepared()
         (self.repo/'components/source-delivery.json').write_text(json.dumps(dict(schema_version=1,mode='shared-v2',profiles={'omarchy':pin})))

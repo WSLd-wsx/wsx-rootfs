@@ -10,6 +10,7 @@ import re
 import shutil
 import subprocess
 import tarfile
+import time
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
@@ -234,10 +235,24 @@ def validate_pin(pin, profile):
         raise ValueError('Invalid shared source manifest hash')
 
 
+def public_read(request, limit):
+    # Anonymous requests must remain anonymous even when GitHub is temporarily unavailable.
+    for attempt in range(4):
+        try:
+            with urlopen(request, timeout=60) as response:
+                return response.read(limit)
+        except HTTPError as error:
+            if error.code not in (500, 502, 503, 504) or attempt == 3:
+                raise
+        except (URLError, TimeoutError):
+            if attempt == 3:
+                raise
+        time.sleep(2 ** attempt)
+
+
 def public_json(url):
     # No credentials: a private/Draft source bundle cannot satisfy public delivery.
-    with urlopen(Request(url, headers={'User-Agent':'WSX-source-delivery/2'}), timeout=60) as response:
-        return json.loads(response.read(16*1024*1024))
+    return json.loads(public_read(Request(url, headers={'User-Agent':'WSX-source-delivery/2'}), 16*1024*1024))
 
 
 def _verify_release(pin, index, read_metadata, private):
@@ -300,8 +315,7 @@ def public_asset_index(pin):
         raise ValueError('Public source index metadata differs from pin')
     url = f'https://api.github.com/repos/{REPOSITORY}/releases/assets/{asset["id"]}'
     request = Request(url, headers={'User-Agent':'WSX-source-delivery/2', 'Accept':'application/octet-stream'})
-    with urlopen(request, timeout=60) as response:
-        data = response.read(16*1024*1024 + 1)
+    data = public_read(request, 16*1024*1024 + 1)
     if len(data) != asset['size']:
         raise ValueError('Public source index size mismatch')
     return data
