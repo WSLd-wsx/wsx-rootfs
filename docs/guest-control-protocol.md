@@ -62,6 +62,27 @@ details. Other desktops must add such capabilities before claiming those semanti
 Core must not infer them from unit state. The existing Omarchy/Plasma normal-stop
 adapters remain the implementation basis, including the scoped PAM logout path.
 
+### Optional LINEAR Guest preflight
+
+Guests advertising `graphics.linear-preflight-v1` accept an optional
+`requested_sharing_path` in `desktop.preflight`. Omitting it keeps the existing
+`opaque-v1` behavior. An explicit `linear-v1` request checks the pinned Guest
+profile, every component manifest and its file hashes, then requires Mesa's
+`linear_shared_compat`, Venus's `direct_wsi: "linear-v1"`, a compatible
+compositor bundle and disabled Guest presentation staging. The Hyprland adapter
+also requires `linear_modifier_feedback`, which its startup path uses to select
+LINEAR WSI; it does not enable the opaque import environment in LINEAR mode.
+The reply repeats
+the requested `sharing_path`. Other paths fail explicitly.
+
+Callers must first require this capability and must check the returned path:
+older Guests may ignore an unknown optional parameter. This is a Guest
+component check only. It does not select or admit a Windows Host, prove that
+its staging copy or GPU works, alter the immutable release contract, or claim
+Guest/HDV coherence or safe retirement. A compatible paired runtime and actual
+desktop acceptance are separate requirements. Existing images must be rebuilt
+to obtain this capability; no running image is modified by this source change.
+
 ## Display ABI 1
 
 A query returns `session_generation`, `generation`, `outputs`, `limits` and

@@ -21,8 +21,10 @@ MAJOR, MINOR = 1, 0
 LIMIT = 1024 * 1024
 CAPABILITIES = ['account.status', 'desktop.preflight', 'session.status', 'session.stop',
                 'display.query', 'display.apply', 'lifecycle.cli-v1',
-                'graphics.distro-device-view-v1', 'graphics.distro-input-view-v1']
+                'graphics.distro-device-view-v1', 'graphics.distro-input-view-v1',
+                'graphics.linear-preflight-v1']
 PROFILE = Path('/usr/lib/wsx/guest-profile.json')
+RUNTIME = Path('/usr/lib/wsx/runtime')
 
 
 class ProtocolError(Exception):
@@ -69,11 +71,14 @@ def preflight(params, guest):
         raise ProtocolError('profile_mismatch', 'Installed Guest profile differs from the release')
     if contract['sharing_path'] != 'opaque-v1' or contract['producer_abi'] != 1 or contract['consumer_abi'] != 2:
         raise ProtocolError('unsupported_graphics', 'Guest cannot satisfy the requested graphics protocol')
+    requested = params.get('requested_sharing_path', 'opaque-v1')
+    if requested not in ('opaque-v1', 'linear-v1'):
+        raise ProtocolError('unsupported_graphics', 'Requested Guest sharing path is unavailable')
     manifests = {}
     for name, expected in spec['component_manifests'].items():
         if not re.fullmatch(r'[a-z0-9-]+', name):
             raise ProtocolError('invalid_profile', 'Invalid internal component identifier')
-        directory = Path('/usr/lib/wsx/runtime') / name
+        directory = RUNTIME / name
         raw = trusted(directory / 'manifest.json')
         if hashlib.sha256(raw).hexdigest() != expected:
             raise ProtocolError('component_mismatch', 'Installed component manifest differs from Guest profile')
@@ -89,10 +94,16 @@ def preflight(params, guest):
                     raise ProtocolError('component_mismatch', 'Installed component bytes changed')
         manifests[name] = component
     mesa, venus, consumer = (manifests[n] for n in ('mesa', 'venus', spec['consumer']))
-    if not (mesa.get('opaque_consumer') and mesa.get('opaque_gbm_export') and
-            not mesa.get('presentation_staging_policy') and venus.get('opaque_wsi') and
-            venus.get('opaque_import') and consumer.get('abi') == 2):
-        raise ProtocolError('unsupported_graphics', 'Required opaque capabilities are unavailable')
+    if requested == 'opaque-v1':
+        if not (mesa.get('opaque_consumer') and mesa.get('opaque_gbm_export') and
+                not mesa.get('presentation_staging_policy') and venus.get('opaque_wsi') and
+                venus.get('opaque_import') and consumer.get('abi') == 2):
+            raise ProtocolError('unsupported_graphics', 'Required opaque capabilities are unavailable')
+    elif not (mesa.get('linear_shared_compat') is True and
+              mesa.get('presentation_staging_policy') is False and
+              venus.get('direct_wsi') == 'linear-v1' and consumer.get('abi') == 2 and
+              (spec['implementation'] != 'hyprland' or mesa.get('linear_modifier_feedback') is True)):
+        raise ProtocolError('unsupported_graphics', 'Required LINEAR Guest capabilities are unavailable')
     if spec['implementation'] == 'plasma':
         expected = json.loads(trusted('/usr/lib/wsx/plasma-compat.json', 65536))['packages']
         actual = subprocess.run(['/usr/bin/pacman', '-Q', 'kwin', 'plasma-workspace', 'qt6-base'],
@@ -106,7 +117,7 @@ def preflight(params, guest):
     if params.get('require_idle', True) and Path('/run/seatd.sock').exists():
         raise ProtocolError('session_busy', 'A Guest seat owner already exists')
     return dict(compatible=True, guest_interface_abi=1, guest_profile_sha256=contract['guest_profile_sha256'],
-                sharing_path='opaque-v1', account=account,
+                sharing_path=requested, account=account,
                 components_verified={name: value.get('version') for name, value in manifests.items()})
 
 

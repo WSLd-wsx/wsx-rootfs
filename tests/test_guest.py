@@ -3,6 +3,7 @@ import importlib.util
 import json
 from pathlib import Path
 import tempfile
+import uuid
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -50,3 +51,16 @@ class GuestAdmissionTests(unittest.TestCase):
         with patch.object(guest,'run') as run, self.assertRaises(ValueError):
             guest.initialize(self.args)
         run.assert_not_called()
+
+    def test_session_passes_negotiated_path_to_installed_desktop(self):
+        instance=uuid.UUID('12345678-1234-4234-8234-123456789abc')
+        for path in ('opaque-v1','linear-v1'):
+            spec={'user':'fixture','locale':'C.UTF-8','sharing_path':path,'drm_node':'/dev/dri/card7'}
+            with self.subTest(path=path), patch.object(guest.os,'geteuid',return_value=0), \
+                 patch.object(guest.sys,'argv',['wsx-guest','session','--instance',str(instance)]), \
+                 patch.object(guest,'read_spec',return_value=spec), patch.object(guest.os,'execve') as execute:
+                guest.main()
+                executable,argv,env=execute.call_args.args
+                self.assertEqual(executable,'/usr/bin/python3')
+                self.assertEqual(argv,['python3','-I',str(guest.RUNTIME/'desktop.py'),spec['drm_node'],str(instance)])
+                self.assertEqual(env['WSX_SHARING_PATH'],path)

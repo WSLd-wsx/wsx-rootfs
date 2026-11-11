@@ -57,6 +57,8 @@ def main():
       "account = pwd.getpwnam('omarchy')":"account = pwd.getpwnam(os.environ['WSX_USER'])",
       "profile = json.loads((deployment.parent / 'wsx-runtime.json').read_text())":"profile = json.loads((Path('/run/wsx') / (instance.hex + '.json')).read_text())",
       "if consumer.exists():":"if os.environ['WSX_SHARING_PATH'] == 'opaque-v1' and consumer.exists():",
+      "if metadata.get('opaque_import'):":"if os.environ['WSX_SHARING_PATH'] == 'opaque-v1' and metadata.get('opaque_import'):",
+      "    if manifest.get('linear_modifier_feedback'):":"    if os.environ['WSX_SHARING_PATH'] == 'linear-v1' and not manifest.get('linear_modifier_feedback'):\n        raise RuntimeError('Missing paired LINEAR modifier support')\n    if manifest.get('linear_modifier_feedback'):",
     }
     for old,new in replacements.items():
         if text.count(old)!=1: raise ValueError('Unexpected prototype entry: '+old)

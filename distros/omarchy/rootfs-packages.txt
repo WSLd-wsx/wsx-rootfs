@@ -19,6 +19,9 @@ quickshell
 qt6-wayland
 qt6-svg
 qt6-imageformats
+imagemagick
+libvips
+ffmpegthumbnailer
 foot
 alacritty
 noto-fonts

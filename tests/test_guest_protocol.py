@@ -1,9 +1,11 @@
 """Protocol conformance and mocked adapters; no desktop or device is started."""
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -22,6 +24,72 @@ def display():
 
 
 class ProtocolTests(unittest.TestCase):
+    def test_explicit_linear_preflight_verifies_the_actual_component_closure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            manifests={
+                'mesa':dict(version='m',linear_shared_compat=True,linear_modifier_feedback=True,presentation_staging_policy=False,
+                            opaque_consumer=True,opaque_gbm_export=True),
+                'venus':dict(version='v',direct_wsi='linear-v1',opaque_wsi=True,opaque_import=True),
+                'compositor':dict(version='c',abi=2),
+            }
+            hashes={}
+            for name,manifest in manifests.items():
+                directory=root/name;directory.mkdir()
+                (directory/'component').write_bytes(name.encode())
+                manifest['files']={'component':hashlib.sha256(name.encode()).hexdigest()}
+                raw=json.dumps(manifest).encode();(directory/'manifest.json').write_bytes(raw)
+                hashes[name]=hashlib.sha256(raw).hexdigest()
+            profile=dict(implementation='hyprland',component_manifests=hashes,consumer='compositor')
+            contract=dict(guest_profile_sha256='profile',sharing_path='opaque-v1',producer_abi=1,consumer_abi=2)
+            with patch.object(p,'RUNTIME',root),patch.object(p,'profile',return_value=(profile,'profile')), \
+                 patch.object(p,'trusted',side_effect=lambda path,*args:Path(path).read_bytes()), \
+                 patch.object(p,'account_status',return_value={'initialized':True}):
+                base={'contract':contract,'require_idle':False}
+                self.assertEqual(p.preflight(base,{})['sharing_path'],'opaque-v1')
+                linear=dict(base,requested_sharing_path='linear-v1')
+                result=p.preflight(linear,{})
+                self.assertEqual(result['sharing_path'],'linear-v1')
+                self.assertEqual(result['components_verified'],{'mesa':'m','venus':'v','compositor':'c'})
+                for invalid in ('staging-copy', '', None, ['linear-v1']):
+                    with self.assertRaises(p.ProtocolError):
+                        p.preflight(dict(base,requested_sharing_path=invalid),{})
+                (root/'venus'/'component').write_bytes(b'tampered')
+                with self.assertRaises(p.ProtocolError) as error:
+                    p.preflight(linear,{})
+                self.assertEqual(error.exception.code,'component_mismatch')
+
+    def test_linear_preflight_rejects_missing_or_incompatible_capabilities(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            components={
+                'mesa':dict(linear_shared_compat=True,linear_modifier_feedback=True,presentation_staging_policy=False),
+                'venus':dict(direct_wsi='linear-v1'),
+                'compositor':dict(abi=2),
+            }
+            hashes={}
+            def store(name):
+                directory=root/name;directory.mkdir(exist_ok=True)
+                (directory/'component').write_bytes(name.encode())
+                components[name]['files']={'component':hashlib.sha256(name.encode()).hexdigest()}
+                raw=json.dumps(components[name]).encode();(directory/'manifest.json').write_bytes(raw)
+                hashes[name]=hashlib.sha256(raw).hexdigest()
+            for name in components: store(name)
+            profile=dict(implementation='hyprland',component_manifests=hashes,consumer='compositor')
+            params=dict(contract=dict(guest_profile_sha256='p',sharing_path='opaque-v1',producer_abi=1,consumer_abi=2),
+                        requested_sharing_path='linear-v1',require_idle=False)
+            with patch.object(p,'RUNTIME',root),patch.object(p,'profile',return_value=(profile,'p')), \
+                 patch.object(p,'trusted',side_effect=lambda path,*args:Path(path).read_bytes()), \
+                 patch.object(p,'account_status',return_value={'initialized':True}):
+                for name,key,bad in [('mesa','linear_shared_compat',False),
+                                     ('mesa','linear_modifier_feedback',False),
+                                     ('mesa','presentation_staging_policy',True),
+                                     ('venus','direct_wsi','opaque-v1'),('compositor','abi',1)]:
+                    old=components[name][key];components[name][key]=bad;store(name)
+                    with self.assertRaises(p.ProtocolError) as error:p.preflight(params,{})
+                    self.assertEqual(error.exception.code,'unsupported_graphics')
+                    components[name][key]=old;store(name)
+
     def test_drained_failed_session_reports_failure_without_claiming_gpu_retirement(self):
         import uuid
         instance=uuid.uuid4()
