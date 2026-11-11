@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "dbd40aa7d3518afd0c3f55545dcbcd1de7da7c63",
+  "head": "81cc09539876e98e23cd74d22104f3efd6ceebd6",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -1496,7 +1496,7 @@
     },
     {
       "path": "distros/omarchy/rootfs-packages.txt",
-      "sha256": "c334ddf2d66d101189bc323f20f35965fd91623950c47be6034eaa8cd0761c8f",
+      "sha256": "033dac30412cf4e78f4a815d8a57190404cef8c34b66093f0bf183001470da15",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -1505,6 +1505,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -1719,7 +1720,7 @@
     },
     {
       "path": "docs/guest-control-protocol.md",
-      "sha256": "40196708a008b18e34b8034b852399aa23bbf1d008dda01dbce0265601b06cdd",
+      "sha256": "618cff9720de55b2b2cfcc2a6890b181f8d301453c4eaf3308fb5994a697d7e9",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -1728,12 +1729,13 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
       "observations": [
         {
-          "line": 155,
+          "line": 176,
           "kind": "mention",
           "text": "profile mismatch and session-vs-GPU retirement. Staging and license boundary tests"
         }
@@ -6028,6 +6030,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "75decdc412288f717f30fb3aaf238c00233189f8",
         "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
         "e2d796c4e41d8214c8fbccc71b9397f7d355b8c9",
         "e70d49028cc657376d6075861437556d62ec5254",
@@ -6469,7 +6472,7 @@
     },
     {
       "path": "guest/protocol.py",
-      "sha256": "23e613dd24001fbfe94deab28752b54f1c8b095b0d0fb2947068debeab02d1e2",
+      "sha256": "614d22994efe7d1076521b550e8d872e3236a54c74b4e506d36b59d27cb66bc1",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -6478,6 +6481,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
@@ -8266,7 +8270,7 @@
     },
     {
       "path": "scripts/stage-guest.py",
-      "sha256": "d8b257006a9c23a684e12c9d697b0d6d473f0d91c6b5c4aabf783d0d8046e29f",
+      "sha256": "ff173f0abec72a91770407c9b47e588ecd92dd64b406eb38675dd4feb92e5cdc",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8275,6 +8279,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "33f459c6b6301a24d2b73c5baa3202fec7149f32",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
@@ -8958,7 +8963,7 @@
     },
     {
       "path": "tests/test_guest.py",
-      "sha256": "2301103f2bfe1215408424851e5e46e0af0bd2a2eb92abe0369c99d957321a74",
+      "sha256": "546da105ca73f4949a2647445904ea7d995f1d4b178e7d04f66f2c265592cac5",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -8967,6 +8972,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -8974,7 +8980,7 @@
     },
     {
       "path": "tests/test_guest_protocol.py",
-      "sha256": "e800dcb3c434a25773e64b9596de4b9410eaea2bb67ddd0897204df50269a517",
+      "sha256": "4b113761770188e1ef46edb45b039cbc1e4815fecc16cc0e8f127f9a5d4035f5",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -8983,6 +8989,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
@@ -9665,7 +9672,7 @@
     },
     {
       "path": "tests/test_stage.py",
-      "sha256": "6fc4ae3f7ba3de514f73a5c9fe74b34ea39e41c00770e175d352d2d39b483b99",
+      "sha256": "3f4c49d7d063f8eec44fb0eb0eddd9bbb574087e6deecff5b40bbfa347b57ef5",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -9674,13 +9681,14 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
         {
-          "line": 49,
+          "line": 50,
           "kind": "declaration-observation",
           "text": "            self.assertTrue(generated.startswith('# SPDX-License-Identifier: MIT\\n'))"
         }
