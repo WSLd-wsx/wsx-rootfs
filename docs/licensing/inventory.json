@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "81cc09539876e98e23cd74d22104f3efd6ceebd6",
+  "head": "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -1720,7 +1720,7 @@
     },
     {
       "path": "docs/guest-control-protocol.md",
-      "sha256": "618cff9720de55b2b2cfcc2a6890b181f8d301453c4eaf3308fb5994a697d7e9",
+      "sha256": "cd722eba958c0ef81aa8e13cc939a3fd4232e21e79791e91510d460e19eb27d2",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -1729,13 +1729,14 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
       ],
       "observations": [
         {
-          "line": 176,
+          "line": 194,
           "kind": "mention",
           "text": "profile mismatch and session-vs-GPU retirement. Staging and license boundary tests"
         }
@@ -2246,7 +2247,7 @@
     },
     {
       "path": "docs/licensing/OUTPUT-LICENSES.md",
-      "sha256": "e873bf9bd2acc38cc72c9cee6e9cfb5ca3cf850447e71f8f7944d2d66621a5e7",
+      "sha256": "001e85b6c4ac995c5a8ae1aa7932619eff66eea0c3f8298335ffd611cc04daa0",
       "group": "conditional-future-license",
       "rule": "operative-map",
       "basis": "Owner-approved reconstruction metadata under GPL-2.0-or-later.",
@@ -2265,32 +2266,32 @@
           "text": "The GPL grant on a generator does not automatically license its output."
         },
         {
-          "line": 20,
+          "line": 21,
           "kind": "mention",
           "text": "The MIT grant for the named original expressions is in `licenses/WSX-MIT.txt`."
         },
         {
-          "line": 21,
+          "line": 22,
           "kind": "mention",
           "text": "The PolyForm standard and Required Notice are in the root LICENSE and the retained"
         },
         {
-          "line": 22,
+          "line": 23,
           "kind": "mention",
           "text": "license text. These exceptions apply to the identified embedded expressions in"
         },
         {
-          "line": 23,
+          "line": 24,
           "kind": "mention",
           "text": "source form as well as in generated files. They do not relicense upstream code."
         },
         {
-          "line": 25,
+          "line": 26,
           "kind": "mention",
           "text": "`MODULE-LICENSES.json`, `MODULE-NOTICES.txt`, license texts and original notices"
         },
         {
-          "line": 26,
+          "line": 27,
           "kind": "mention",
           "text": "are shipped with component sources and installed in the image. `IMAGE-LICENSES.json`"
         }
@@ -8110,6 +8111,25 @@
       "observations": []
     },
     {
+      "path": "scripts/session_venus_policy.py",
+      "sha256": "6d8d68fed534bd17f9f3b8e53f6c3e796ae15a5c23ab83ef85403ecfe4b285b6",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        }
+      ]
+    },
+    {
       "path": "scripts/shared_sources.py",
       "sha256": "10ac2f902653d2969f894f6ae501d90ae08fca973795721b53e767c21efbfdde",
       "group": "conditional-future-license",
@@ -8245,7 +8265,7 @@
     },
     {
       "path": "scripts/stage-cachyos.py",
-      "sha256": "b7efb09fdfc21b8b56049bc2a4f5819035bd398ddc975df72a4d55fd50595acb",
+      "sha256": "8ce0ed4e0fc203a50db01e71749d801ed8a8890e63a8920973113e47625d3c79",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8254,6 +8274,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "33f459c6b6301a24d2b73c5baa3202fec7149f32",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
@@ -8270,7 +8291,7 @@
     },
     {
       "path": "scripts/stage-guest.py",
-      "sha256": "ff173f0abec72a91770407c9b47e588ecd92dd64b406eb38675dd4feb92e5cdc",
+      "sha256": "72a26ec9ac215b19b6defd35e6363aba5d6c56b254b8ca16fc3374dbb07cb53b",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8279,6 +8300,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "33f459c6b6301a24d2b73c5baa3202fec7149f32",
         "e70d49028cc657376d6075861437556d62ec5254",
@@ -8293,7 +8315,7 @@
           "text": "# See docs/licensing/OUTPUT-LICENSES.md and licenses/WSX-MIT.txt."
         },
         {
-          "line": 50,
+          "line": 51,
           "kind": "mention",
           "text": "    # AST extraction omits comments, including the original license notice."
         }
@@ -8649,7 +8671,7 @@
     },
     {
       "path": "tests/test_cachyos_stage.py",
-      "sha256": "9b7c0e909a2e484697cbf60dbba262e2fd65e56b24dd4e9aaf691cbae92dc78c",
+      "sha256": "d535b4f87f12c90ff8787536e985431c12c65ce82a376bef924fdbda45e2d6ee",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -8658,13 +8680,14 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": [
         {
-          "line": 54,
+          "line": 55,
           "kind": "declaration-observation",
           "text": "        self.assertTrue(session.startswith('# SPDX-License-Identifier: MIT\\n'))"
         }
@@ -8896,6 +8919,27 @@
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
+    },
+    {
+      "path": "tests/test_dbus_activation_environment.py",
+      "sha256": "0ed11c036017d037040147eb6abfe791573c9f3dd521a93d210464f2a19c8057",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
+      "local_change_commits": [
+        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586"
+      ],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: MIT"
+        }
+      ]
     },
     {
       "path": "tests/test_deduplication.py",
@@ -9516,6 +9560,27 @@
       "observations": []
     },
     {
+      "path": "tests/test_session_environment.py",
+      "sha256": "b871a44d01e32aedb1d9fb7815d6b7a28224783862ae52b3c5bfaf67c7c7483a",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
+      "local_change_commits": [
+        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586"
+      ],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: MIT"
+        }
+      ]
+    },
+    {
       "path": "tests/test_shared_source_draft.py",
       "sha256": "3c68e9dfe5a5bd173302a73b290f444a86435578422fdd287db485db459fd9ab",
       "group": "conditional-future-license",
@@ -9672,7 +9737,7 @@
     },
     {
       "path": "tests/test_stage.py",
-      "sha256": "3f4c49d7d063f8eec44fb0eb0eddd9bbb574087e6deecff5b40bbfa347b57ef5",
+      "sha256": "65c00523ab1e2ef8d8f2547602192bc9a2fa6fed7822649a9e16d1956dd6c230",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -9681,6 +9746,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
@@ -11124,6 +11190,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -11172,6 +11239,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],

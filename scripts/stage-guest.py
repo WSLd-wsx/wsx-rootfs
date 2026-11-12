@@ -36,6 +36,7 @@ def main():
     shutil.copytree(args.components/'opaque-consumer', consumer, symlinks=True)
     for folder in ('session','network'):
         shutil.copytree(ROOT/'vendor/wsx-proto'/folder,runtime/folder)
+    runpy.run_path(str(ROOT/'scripts/session_venus_policy.py'))['configure'](runtime/'session')
     # Parameterize the reference session installer; retain its ownership checks.
     installer=runtime/'session/install.py'
     text=installer.read_text().replace("account = pwd.getpwnam('omarchy')", "account = pwd.getpwnam(os.environ['WSX_USER'])")

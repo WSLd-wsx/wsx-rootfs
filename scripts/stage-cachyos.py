@@ -244,6 +244,7 @@ def main():
     helper_link.parent.mkdir(parents=True, exist_ok=True)
     helper_link.symlink_to('/usr/lib/plasma-setup-xwayland')
     shutil.copytree(ROOT/'vendor/wsx-proto/session', runtime/'session')
+    runpy.run_path(str(ROOT/'scripts/session_venus_policy.py'))['configure'](runtime/'session')
     (runtime/'desktop.py').write_text(session_source())
     subprocess.run(['cc', '-std=c11', '-O2', '-Wall', '-Wextra', '-Werror',
                     '-I'+str(ROOT/'vendor/rvgpu/include'), str(ROOT/'guest/input.c'),

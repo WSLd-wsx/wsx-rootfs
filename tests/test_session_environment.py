@@ -6,6 +6,8 @@ from unittest.mock import patch
 import os
 from pathlib import Path
 import subprocess
+import runpy
+import shutil
 import tempfile
 import unittest
 
@@ -14,9 +16,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class LauncherEnvironmentTests(unittest.TestCase):
     def test_uwsm_launcher_preserves_only_explicit_session_value(self):
-        source = (ROOT / 'vendor/wsx-proto/session/wsx-launch-app').read_text()
         with tempfile.TemporaryDirectory() as tmp:
             tmp = Path(tmp)
+            session = tmp / 'session'
+            shutil.copytree(ROOT / 'vendor/wsx-proto/session', session)
+            runpy.run_path(str(ROOT / 'scripts/session_venus_policy.py'))['configure'](session)
+            source = (session / 'wsx-launch-app').read_text()
             mock = tmp / 'uwsm-app'
             mock.write_text('#!/bin/bash\nshift 3\nexec "$@"\n')
             mock.chmod(0o755)
@@ -35,8 +40,16 @@ class LauncherEnvironmentTests(unittest.TestCase):
             self.assertIsNone(json.loads(result.stdout))
 
 
+    def _temporary_session_cleanup(self):
+        self._temporary_session.cleanup()
+
     def test_session_entry_publishes_policy_before_compositor(self):
-        path = ROOT / 'vendor/wsx-proto/session/enter.py'
+        self.addCleanup(self._temporary_session_cleanup)
+        self._temporary_session = tempfile.TemporaryDirectory()
+        session = Path(self._temporary_session.name) / 'session'
+        shutil.copytree(ROOT / 'vendor/wsx-proto/session', session)
+        runpy.run_path(str(ROOT / 'scripts/session_venus_policy.py'))['configure'](session)
+        path = session / 'enter.py'
         spec = importlib.util.spec_from_file_location('session_entry', path)
         entry = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(entry)
