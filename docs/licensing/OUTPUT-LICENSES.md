@@ -13,7 +13,6 @@ The GPL grant on a generator does not automatically license its output.
 | Remaining staging tool logic | GPL-2.0-or-later |
 | Original `guest/` files copied into the image | PolyForm-Noncommercial-1.0.0 |
 | Imported original `session/` and `network/` helpers/adaptations | GPL-2.0-or-later; upstream patch context separate |
-| `scripts/session_venus_policy.py`: modifications to staged session helpers | GPL-2.0-or-later; original copied notices retained |
 | Private KWin combined binaries/source | Applicable GPL, with original per-file MIT and GPL notices preserved |
 | Mesa/Venus and Hyprland/Aquamarine outputs | Exact upstream/dependency terms and retained adapter notices; not PolyForm or automatically GPL |
 | Input adapter binary | Applicable MIT source and Apache-2.0 header terms |

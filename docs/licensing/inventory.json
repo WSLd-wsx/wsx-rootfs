@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
+  "head": "62dc475154e06e01a4c354587dd3349ba19a14f5",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -2247,7 +2247,7 @@
     },
     {
       "path": "docs/licensing/OUTPUT-LICENSES.md",
-      "sha256": "001e85b6c4ac995c5a8ae1aa7932619eff66eea0c3f8298335ffd611cc04daa0",
+      "sha256": "e873bf9bd2acc38cc72c9cee6e9cfb5ca3cf850447e71f8f7944d2d66621a5e7",
       "group": "conditional-future-license",
       "rule": "operative-map",
       "basis": "Owner-approved reconstruction metadata under GPL-2.0-or-later.",
@@ -2256,6 +2256,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "62dc475154e06e01a4c354587dd3349ba19a14f5",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -2266,32 +2267,32 @@
           "text": "The GPL grant on a generator does not automatically license its output."
         },
         {
-          "line": 21,
+          "line": 20,
           "kind": "mention",
           "text": "The MIT grant for the named original expressions is in `licenses/WSX-MIT.txt`."
         },
         {
-          "line": 22,
+          "line": 21,
           "kind": "mention",
           "text": "The PolyForm standard and Required Notice are in the root LICENSE and the retained"
         },
         {
-          "line": 23,
+          "line": 22,
           "kind": "mention",
           "text": "license text. These exceptions apply to the identified embedded expressions in"
         },
         {
-          "line": 24,
+          "line": 23,
           "kind": "mention",
           "text": "source form as well as in generated files. They do not relicense upstream code."
         },
         {
-          "line": 26,
+          "line": 25,
           "kind": "mention",
           "text": "`MODULE-LICENSES.json`, `MODULE-NOTICES.txt`, license texts and original notices"
         },
         {
-          "line": 27,
+          "line": 26,
           "kind": "mention",
           "text": "are shipped with component sources and installed in the image. `IMAGE-LICENSES.json`"
         }
@@ -8119,8 +8120,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "62dc475154e06e01a4c354587dd3349ba19a14f5",
+      "local_change_commits": [
+        "62dc475154e06e01a4c354587dd3349ba19a14f5"
+      ],
       "observations": [
         {
           "line": 1,
@@ -8274,6 +8277,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "62dc475154e06e01a4c354587dd3349ba19a14f5",
         "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "33f459c6b6301a24d2b73c5baa3202fec7149f32",
         "e70d49028cc657376d6075861437556d62ec5254",
@@ -8300,6 +8304,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "62dc475154e06e01a4c354587dd3349ba19a14f5",
         "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "81cc09539876e98e23cd74d22104f3efd6ceebd6",
         "33f459c6b6301a24d2b73c5baa3202fec7149f32",
@@ -9570,6 +9575,7 @@
       "source_index": [],
       "first_local_commit": "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
       "local_change_commits": [
+        "62dc475154e06e01a4c354587dd3349ba19a14f5",
         "d80ec4939faa8a2f5b78b5c1eda5336436ec1586"
       ],
       "observations": [
@@ -11190,6 +11196,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "62dc475154e06e01a4c354587dd3349ba19a14f5",
         "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -11239,6 +11246,7 @@
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "62dc475154e06e01a4c354587dd3349ba19a14f5",
         "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
