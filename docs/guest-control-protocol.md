@@ -75,6 +75,24 @@ LINEAR WSI; it does not enable the opaque import environment in LINEAR mode.
 The reply repeats
 the requested `sharing_path`. Other paths fail explicitly.
 
+The Guest owns `VN_PERF` for a WSX desktop session: `linear-v1` sets
+`no_async_mem_alloc`, and `opaque-v1` sets an empty value. Before the compositor
+starts, the PAM session entry publishes that value to both the D-Bus activation
+and systemd user environments. Omarchy's application launcher forwards it to
+UWSM application scopes; Plasma's KWin unit also receives the selected desktop
+environment. Every subsequent WSX desktop start replaces the shared value.
+
+These activation environments are per user, not isolated to a single graphical
+session: this policy replaces any pre-existing `VN_PERF` value for subsequently
+activated user services. Existing processes retain their original environment.
+On exit the activation value is not restored; the next WSX desktop start resets
+it according to its selected path. Concurrent unrelated graphical sessions for
+the same Guest user can therefore be affected. An Omarchy r15 diagnostic run
+with staging displayed a working desktop and retired normally; that was not a
+validation of the production activation-environment integration. A disposable
+D-Bus test validates setting and replacing the value, but not actual desktop
+application behavior on a new image.
+
 Callers must first require this capability and must check the returned path:
 older Guests may ignore an unknown optional parameter. This is a Guest
 component check only. It does not select or admit a Windows Host, prove that

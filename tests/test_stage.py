@@ -67,13 +67,14 @@ class StageTests(unittest.TestCase):
                 'opaque_import':True,'opaque_wsi':True,'nv_linear_color_protocol':True,
                 'direct_wsi':'linear-v1','files':files}))
             desktop=module('generated_desktop',runtime/'desktop.py')
-            with patch.dict(os.environ,{'WSX_SHARING_PATH':'linear-v1'}):
+            with patch.dict(os.environ,{'WSX_SHARING_PATH':'linear-v1', 'VN_PERF':'no_query_feedback'}):
                 env=desktop.mesa_environment(runtime)
             self.assertEqual(env['WSX_COMPOSITOR_EXECUTABLE'],str(runtime/'opaque-consumer/bin/Hyprland'))
             self.assertNotIn('WSX_OPAQUE_COMPOSITOR',env)
             self.assertNotIn('WSX_ZINK_OPAQUE_SHARED',env)
             self.assertNotIn('WSX_VENUS_OPAQUE_IMPORT',env)
             self.assertEqual(env['WSX_VENUS_DIRECT_WSI'],'linear-v1')
+            self.assertEqual(env['VN_PERF'],'no_async_mem_alloc')
             class IoctlFixture:
                 def ioctl(self,fd,command,pointer):
                     request=pointer._obj
@@ -84,6 +85,7 @@ class StageTests(unittest.TestCase):
                 opaque=desktop.mesa_environment(runtime,str(node))
             self.assertEqual(opaque['WSX_VENUS_OPAQUE_IMPORT'],'1')
             self.assertEqual(opaque['WSX_VENUS_DIRECT_WSI'],'opaque-v1')
+            self.assertEqual(opaque['VN_PERF'], '')
             self.assertEqual(opaque['WSX_OPAQUE_COMPOSITOR'],'1')
             mesa_manifest['linear_modifier_feedback']=False
             (mesa/'manifest.json').write_text(json.dumps(mesa_manifest))

@@ -43,6 +43,7 @@ class PlasmaStageTests(unittest.TestCase):
             with patch.dict(os.environ, {'WSX_SHARING_PATH': 'linear-v1'}):
                 env = namespace['mesa_environment'](root)
                 self.assertEqual(env['WSX_VENUS_DIRECT_WSI'], 'linear-v1')
+                self.assertEqual(env['VN_PERF'], 'no_async_mem_alloc')
                 self.assertNotIn('WSX_OPAQUE_COMPOSITOR', env)
                 self.assertTrue(env['PATH'].startswith(str(root/'kwin-opaque/bin')))
                 (root/'kwin-opaque/bin/kwin_wayland').write_bytes(b'corrupt')

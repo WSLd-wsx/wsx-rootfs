@@ -90,6 +90,7 @@ def main():
     env['LD_LIBRARY_PATH'] = str(consumer / 'lib') + ':' + str(prefix / 'lib')
     return env"""
     text = text.replace(old, common)
+    text = text.replace("    return env", "    env['VN_PERF'] = 'no_async_mem_alloc' if os.environ['WSX_SHARING_PATH'] == 'linear-v1' else ''\n    return env", 1)
     old = "private_mesa.get('WSX_OPAQUE_COMPOSITOR_EXECUTABLE', '/usr/bin/Hyprland')"
     if text.count(old) != 1:
         raise ValueError('Unexpected compositor selection')

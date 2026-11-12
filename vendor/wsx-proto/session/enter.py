@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Enter the real PAM session without inheriting WSLg's default display."""
 import os
+import subprocess
 from pathlib import Path
 import sys
 
@@ -28,6 +29,12 @@ def main():
     os.environ.pop('DISPLAY', None)
     os.environ.pop('WAYLAND_DISPLAY', None)
     os.environ.pop('XAUTHORITY', None)
+    # Publish the negotiated Venus policy before desktop services can activate.
+    # An empty value disables the WSX staging option for zero-copy.
+    if 'VN_PERF' not in os.environ:
+        raise RuntimeError('Missing WSX Venus session policy')
+    subprocess.run(['/usr/bin/dbus-update-activation-environment', '--systemd', 'VN_PERF'],
+                   check=True, timeout=10)
     os.execvpe(sys.argv[1], sys.argv[1:], os.environ)
 
 

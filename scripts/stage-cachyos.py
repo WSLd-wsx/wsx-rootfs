@@ -60,6 +60,7 @@ def session_source():
 """ + text[end:]
     text = replace_once(text, 'def mesa_environment(root=None):', 'def mesa_environment(root=None, render_node=None):')
     text = replace_once(text, 'private_mesa = mesa_environment()', 'private_mesa = mesa_environment(render_node=card)')
+    text = replace_once(text, "    return env\n", "    env['VN_PERF'] = 'no_async_mem_alloc' if os.environ['WSX_SHARING_PATH'] == 'linear-v1' else ''\n    return env\n")
     text = replace_once(text, "    icd = root / 'venus'\n", "    if os.environ.get('WSX_SHARING_PATH') not in ('linear-v1', 'opaque-v1'):\n        raise RuntimeError('Missing negotiated sharing path')\n    icd = root / 'venus'\n")
     text = replace_once(text, "if metadata.get('opaque_import'):", "if os.environ['WSX_SHARING_PATH'] == 'opaque-v1' and metadata.get('opaque_import'):")
     text = replace_once(text, "        env['VK_DRIVER_FILES'] = str(icd / 'virtio_icd.json')", "        env['VK_DRIVER_FILES'] = str(icd / 'virtio_icd.json')\n        if os.environ['WSX_SHARING_PATH'] == 'linear-v1':\n            if metadata.get('direct_wsi') != 'linear-v1':\n                raise RuntimeError('Missing paired LINEAR WSI support')\n            env['WSX_VENUS_DIRECT_WSI'] = 'linear-v1'")
