@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
+  "head": "bddaf74f7404984905ddd2ed4799995aa48c95fb",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -393,6 +393,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "a6e5b4d799a7d9ee487399369998906d02a07c3b",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
@@ -1731,6 +1732,7 @@
       "source_index": [],
       "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
       "local_change_commits": [
+        "a6e5b4d799a7d9ee487399369998906d02a07c3b",
         "1046d58dda0a466e02748db74b5ce432ed28e3ea"
       ],
       "observations": [
@@ -6408,6 +6410,7 @@
       "source_index": [],
       "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
       "local_change_commits": [
+        "a6e5b4d799a7d9ee487399369998906d02a07c3b",
         "1046d58dda0a466e02748db74b5ce432ed28e3ea"
       ],
       "observations": [
@@ -6591,6 +6594,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "a6e5b4d799a7d9ee487399369998906d02a07c3b",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "ffaa7d6d24ead461a585abdc967090494eb4359d",
@@ -6925,6 +6929,7 @@
       "source_index": [],
       "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
       "local_change_commits": [
+        "a6e5b4d799a7d9ee487399369998906d02a07c3b",
         "1046d58dda0a466e02748db74b5ce432ed28e3ea"
       ],
       "observations": [
@@ -7124,6 +7129,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "a6e5b4d799a7d9ee487399369998906d02a07c3b",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
@@ -7138,7 +7144,7 @@
     },
     {
       "path": "scripts/export-guest-adapter.py",
-      "sha256": "e4bdbcfd9d68149e623606c70109fff89668a26d3daf310c9cee9cc9de0771a3",
+      "sha256": "02648238c50bc77160a60af99198b2aa4950fc8ac488b8d6821acc8b9a85c433",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -7147,6 +7153,7 @@
       "source_index": [],
       "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
       "local_change_commits": [
+        "bddaf74f7404984905ddd2ed4799995aa48c95fb",
         "1046d58dda0a466e02748db74b5ce432ed28e3ea"
       ],
       "observations": []
@@ -8463,6 +8470,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "a6e5b4d799a7d9ee487399369998906d02a07c3b",
         "1046d58dda0a466e02748db74b5ce432ed28e3ea",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
@@ -8481,6 +8489,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "a6e5b4d799a7d9ee487399369998906d02a07c3b",
         "1046d58dda0a466e02748db74b5ce432ed28e3ea",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
@@ -8716,6 +8725,7 @@
       "source_index": [],
       "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
       "local_change_commits": [
+        "a6e5b4d799a7d9ee487399369998906d02a07c3b",
         "1046d58dda0a466e02748db74b5ce432ed28e3ea"
       ],
       "observations": [
@@ -9120,6 +9130,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "a6e5b4d799a7d9ee487399369998906d02a07c3b",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
@@ -9144,7 +9155,7 @@
     },
     {
       "path": "tests/test_export_guest_adapter.py",
-      "sha256": "f655aa606260b8f8abc6b2cdaf9b3162421db56e09191d7f6a36357efd2f5670",
+      "sha256": "9f4176abdfaf278e3e02cbfe6ef3868f433b8a48ada8c55285efbbe196f52042",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -9153,6 +9164,7 @@
       "source_index": [],
       "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
       "local_change_commits": [
+        "bddaf74f7404984905ddd2ed4799995aa48c95fb",
         "1046d58dda0a466e02748db74b5ce432ed28e3ea"
       ],
       "observations": []
