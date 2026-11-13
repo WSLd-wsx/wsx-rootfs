@@ -42,7 +42,11 @@ def transform(name, text):
             ("'/usr/bin/wsx-guest','session'", "'/usr/bin/python3','-I',str(Path(__file__).resolve()),'session'"),
             ("str(RUNTIME/'desktop.py')", "str(Path(__file__).resolve().with_name('desktop.py'))"),
         ],
-        'desktop.py': [("'/usr/lib/wsx/device-view.py'", "str(Path(__file__).resolve().with_name('device-view.py'))")],
+        'desktop.py': [
+            ("'/usr/lib/wsx/device-view.py'", "str(Path(__file__).resolve().with_name('device-view.py'))"),
+            ("deployment = Path(__file__).resolve().parent", "deployment = Path('/usr/lib/wsx/runtime')"),
+            ("root = Path(__file__).resolve().parent if root is None else Path(root).resolve()", "root = Path('/usr/lib/wsx/runtime') if root is None else Path(root).resolve()"),
+        ],
     }
     for old, new in replacements.get(name, []):
         text = replace_once(text, old, new)

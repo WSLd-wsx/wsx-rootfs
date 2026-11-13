@@ -17,6 +17,9 @@ class ExportTests(unittest.TestCase):
         for name, generate in [('desktop.py', generator['session_source']), ('wsx-guest.py', generator['guest_source'])]:
             transformed = module.transform(name, generate())
             self.assertIn("Path(__file__).resolve()", transformed)
+            if name == 'desktop.py':
+                self.assertIn("deployment = Path('/usr/lib/wsx/runtime')", transformed)
+                self.assertIn("root = Path('/usr/lib/wsx/runtime') if root is None", transformed)
 
     def staged_image(self, root):
         files = {
@@ -32,7 +35,7 @@ class ExportTests(unittest.TestCase):
             path.write_bytes((ROOT/'guest'/source).read_bytes())
         desktop = root/'usr/lib/wsx/runtime/desktop.py'
         desktop.parent.mkdir(parents=True, exist_ok=True)
-        desktop.write_text("from pathlib import Path\nimport runpy\nrunpy.run_path('/usr/lib/wsx/device-view.py')\n")
+        desktop.write_text("from pathlib import Path\nimport runpy\nroot = Path(__file__).resolve().parent if root is None else Path(root).resolve()\ndeployment = Path(__file__).resolve().parent\nrunpy.run_path('/usr/lib/wsx/device-view.py')\n")
         (root/'usr/lib/wsx/guest-profile.json').write_text(json.dumps({'schema_version': 1, 'implementation': 'hyprland'}))
 
     def test_real_guest_sources_are_bound_to_the_same_bundle(self):
@@ -45,6 +48,8 @@ class ExportTests(unittest.TestCase):
             guest = (output/'wsx-guest.py').read_text()
             self.assertIn("str(Path(__file__).resolve()),'session'", guest)
             self.assertIn("Path(__file__).resolve().with_name('desktop.py')", guest)
+            self.assertIn("deployment = Path('/usr/lib/wsx/runtime')", (output/'desktop.py').read_text())
+            self.assertIn("root = Path('/usr/lib/wsx/runtime') if root is None", (output/'desktop.py').read_text())
             with self.assertRaises(ValueError): module.export(root, Path(tmp)/'wrong', 'plasma')
 
     def test_drift_does_not_publish_partial_adapter(self):
