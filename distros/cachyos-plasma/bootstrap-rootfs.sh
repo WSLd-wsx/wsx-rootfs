@@ -35,11 +35,12 @@ python - <<'PY'
 from pathlib import Path
 p = Path('/etc/pacman.conf')
 s = p.read_text()
-anchor = '[core]'
-if s.count(anchor) != 1:
+if s.count('[core]') != 1 or s.count('[extra]') != 1 or '[cachyos]' in s:
     raise ValueError('Unexpected Arch repository configuration')
-s = s.replace(anchor, Path('/tmp/wsx-cachyos-repository.conf').read_text() + '\n' + anchor)
-p.write_text(s)
+# Resolve packages available in the pinned Arch snapshot before falling back
+# to CachyOS-only packages. A rolling CachyOS override of core packages can
+# require a newer ABI than the snapshot provides.
+p.write_text(s.rstrip() + '\n\n' + Path('/tmp/wsx-cachyos-repository.conf').read_text())
 PY
 pacman -Sy --noconfirm
 pacman-conf > /output/rootfs-repositories.conf
@@ -51,4 +52,17 @@ cp /tmp/wsx-rolling-mirrorlist /output/rootfs/etc/pacman.d/mirrorlist
 pacman -Q > /output/build-packages.txt
 pacman-conf > /output/build-repositories.conf
 arch-chroot /output/rootfs pacman -Q > /output/rootfs-packages.txt
+# Restore the normal CachyOS repository priority for the installed rolling
+# system. This does not change the already captured build repository evidence.
+python - <<'PY'
+from pathlib import Path
+p = Path('/etc/pacman.conf')
+s = p.read_text()
+repo = Path('/tmp/wsx-cachyos-repository.conf').read_text().strip()
+if s.count(repo) != 1 or s.count('[core]') != 1:
+    raise ValueError('Cannot restore CachyOS repository priority')
+s = s.replace(repo, '', 1)
+s = s.replace('[core]', repo + '\n\n[core]', 1)
+p.write_text(s)
+PY
 printf '%s\n' 'Signed Plasma package bootstrap passed; Guest integration is still pending.'

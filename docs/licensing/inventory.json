@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "62dc475154e06e01a4c354587dd3349ba19a14f5",
+  "head": "41051abc17d13976eb5c9921c2e688d32d155a2b",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -1167,7 +1167,7 @@
     },
     {
       "path": "distros/cachyos-plasma/README.md",
-      "sha256": "a9fbaeb6b9c7da096275dfe3675080582d7e1d8371b6b7c133592b44786d782b",
+      "sha256": "f8da3d7a68697c3b88fe1dfe01e24225e0325bcee9879cca4c22219c424392d0",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -1183,7 +1183,7 @@
     },
     {
       "path": "distros/cachyos-plasma/bootstrap-rootfs.sh",
-      "sha256": "f6049ba0a9b9afde291dc8b4010e097d69bbbb07440a0efd78d86dcf94ef11bc",
+      "sha256": "60d1e64b3457be26de84c49c37f19e741fa501ddd74d691b9ebe43d31d541716",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -1717,6 +1717,25 @@
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
+    },
+    {
+      "path": "docs/guest-bootstrap-v2.md",
+      "sha256": "e4987f33e64e03254df143de4de6c2f3e490d4c23dc596e31abcadad01fae6bb",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 19,
+          "kind": "declaration-observation",
+          "text": "files retain their existing copyright and license notices. The bootstrap still"
+        }
+      ]
     },
     {
       "path": "docs/guest-control-protocol.md",
@@ -2256,6 +2275,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "41051abc17d13976eb5c9921c2e688d32d155a2b",
         "62dc475154e06e01a4c354587dd3349ba19a14f5",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -6353,6 +6373,44 @@
       "observations": []
     },
     {
+      "path": "guest/adapter-store.py",
+      "sha256": "dec39838ec8f351baaa3de95a538a0fea58c44f9cc2cb8d530e37f642708c7dc",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "mention",
+          "text": "# Original WSX code, PolyForm-Noncommercial-1.0.0. See LICENSE-MAP.md."
+        }
+      ]
+    },
+    {
+      "path": "guest/bootstrap-v2.py",
+      "sha256": "3fa330a0696db394c51e8bcd4b8541fa891b15183df7baa439d0b1157fabfafd",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "mention",
+          "text": "# Original WSX code, PolyForm-Noncommercial-1.0.0. See LICENSE-MAP.md."
+        }
+      ]
+    },
+    {
       "path": "guest/device-view.py",
       "sha256": "9b4c753ce2f8d22cd08d20fbd3103fcbda9023d5c44e2793eb67e32de5740f66",
       "group": "conditional-future-license",
@@ -6849,6 +6907,25 @@
       "observations": []
     },
     {
+      "path": "scripts/check_guest_bootstrap.py",
+      "sha256": "15be6b6067fb895a0bfe7480c2ec9b54e2d27edef06e76d3c87f458347128b36",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "mention",
+          "text": "# Original WSX code, PolyForm-Noncommercial-1.0.0. See LICENSE-MAP.md."
+        }
+      ]
+    },
+    {
       "path": "scripts/collect-component-materials.py",
       "sha256": "b769d78af47ae4f7d8460261c69ebd0af491d07f1d08260bd76475c9520fa9ee",
       "group": "conditional-future-license",
@@ -7048,6 +7125,19 @@
           "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
         }
       ]
+    },
+    {
+      "path": "scripts/export-guest-adapter.py",
+      "sha256": "e4bdbcfd9d68149e623606c70109fff89668a26d3daf310c9cee9cc9de0771a3",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": []
     },
     {
       "path": "scripts/fetch-components.py",
@@ -8328,7 +8418,7 @@
     },
     {
       "path": "scripts/stage-protocol.py",
-      "sha256": "5d93fae9824658d585f751c0950b7fa5755549b5da755bbecf320e685e9353bf",
+      "sha256": "5c5e3d7820ec171cd24bafb75a05e306701a09bd8467547b15a7ea29c747e014",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8351,7 +8441,7 @@
     },
     {
       "path": "scripts/validate-cachyos.py",
-      "sha256": "b2afd4a4cecc14df63abfa465927c5948c761f8cdd44eb852543677ce6d1bcfb",
+      "sha256": "23778be12eb400d5a23b1eafa61e9310e54837e0f3bd146fe59a9bbc1c1b2c49",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8368,7 +8458,7 @@
     },
     {
       "path": "scripts/validate-rootfs.py",
-      "sha256": "c1f615508fd73a31c2d938ac5d6aa24f2a8f8b986f70f4b51e82eb7d7669f4d4",
+      "sha256": "ac9cea9b78c5a33748a8655153a80d1a12e220b146c9ed5cc8d2a27f4ac46c1a",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8547,6 +8637,25 @@
       ]
     },
     {
+      "path": "tests/test_adapter_store.py",
+      "sha256": "e3d8cc1941b3cd5035d04c442c0bec3e44bb46f6a92f25bc6242c1033870ce4e",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "mention",
+          "text": "# Original WSX code, PolyForm-Noncommercial-1.0.0. See LICENSE-MAP.md."
+        }
+      ]
+    },
+    {
       "path": "tests/test_archive.py",
       "sha256": "89f73d3de6658565040961ef44f34ada8bef67a9ba3157d66d29fcd23c70cc7d",
       "group": "conditional-future-license",
@@ -8578,6 +8687,25 @@
         "6cead0ea756974b0989ab448aa213e633e14e08f"
       ],
       "observations": []
+    },
+    {
+      "path": "tests/test_bootstrap_v2.py",
+      "sha256": "dd59115d173ede4806a891c2485825a119b6b1f28259abd1c98875476d90b1d9",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "mention",
+          "text": "# Original WSX code, PolyForm-Noncommercial-1.0.0. See LICENSE-MAP.md."
+        }
+      ]
     },
     {
       "path": "tests/test_build_progress.py",
@@ -8993,6 +9121,19 @@
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c"
       ],
+      "observations": []
+    },
+    {
+      "path": "tests/test_export_guest_adapter.py",
+      "sha256": "f655aa606260b8f8abc6b2cdaf9b3162421db56e09191d7f6a36357efd2f5670",
+      "group": "conditional-future-license",
+      "rule": "independent-candidates",
+      "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
+      "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
+      "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {

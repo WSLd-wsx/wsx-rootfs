@@ -51,6 +51,13 @@ must advertise that requirement and reject unsupported Guest CPUs. The tested
 KWin was paired with Plasma 6.8.1 and Qt 6.12.0. The initial candidate builds
 against the signed Arch 2026-10-28 repository snapshot, while retaining the
 CachyOS repository; normal rolling Arch mirrors are restored in the image.
+During the pinned-snapshot build, Arch repositories take precedence over the
+rolling CachyOS repository so that overrides of core packages cannot replace
+the snapshot's compatible dependency set. CachyOS-only packages remain available
+from its signed repository; normal CachyOS priority is restored in the image.
+Because the CachyOS repository is rolling, a CachyOS-only package can still
+require a newer Arch dependency; such a mismatch must fail the build rather than
+silently change the snapshot or bypass package signatures.
 Offline validation and the Guest lifecycle gate reject mismatched KWin, Plasma
 Workspace or Qt versions, including after an unsupported rolling update. This
 is a scoped compatibility constraint, not proof of future package compatibility.
