@@ -49,6 +49,24 @@ class DeclarationTests(unittest.TestCase):
             (rootfs/'usr/lib/wsx/runtime/mesa/manifest.json').write_text('{"changed":true}')
             with self.assertRaisesRegex(ValueError,'profile mismatch'): module.declaration(rootfs)
 
+    def test_v2_declaration_requires_the_pinned_dispatch_entry(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(module,'PIN_DIR',Path(tmp)):
+            rootfs, _ = self.fixture(Path(tmp))
+            pin = json.loads((Path(tmp)/'contract.json').read_text())
+            pin['guest_bootstrap_major'] = 2
+            (Path(tmp)/'contract.json').write_text(json.dumps(pin))
+            with self.assertRaisesRegex(ValueError, 'bootstrap is not packaged'):
+                module.declaration(rootfs)
+            base = rootfs/'usr/lib/wsx'
+            (base/'adapter-store.py').write_text('pass\n')
+            (base/'bootstrap-v2.py').write_text('def dispatch():\n    pass\n')
+            value = module.declaration(rootfs)
+            self.assertEqual(value['guest_bootstrap_major'], 2)
+            pin['guest_bootstrap_major'] = 3
+            (Path(tmp)/'contract.json').write_text(json.dumps(pin))
+            with self.assertRaisesRegex(ValueError, 'Unsupported Guest bootstrap'):
+                module.declaration(rootfs)
+
     def test_optional_local_runtime_verification_does_not_allow_pair_override(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(module,'PIN_DIR',Path(tmp)):
             rootfs, receipt = self.fixture(Path(tmp))

@@ -23,8 +23,11 @@ EXPECTED = dict(schema_version=1, guest_protocol_major=1, guest_protocol_minor=0
 
 def runtime_pin():
     pin = json.loads((PIN_DIR/'contract.json').read_text())
-    if set(pin) != set(EXPECTED) | {'minimum_wsx_core_version','runtime_receipt_sha256'}:
+    required = set(EXPECTED) | {'minimum_wsx_core_version','runtime_receipt_sha256'}
+    if set(pin) not in (required, required | {'guest_bootstrap_major'}):
         raise ValueError('Incomplete or unknown runtime protocol pin')
+    if 'guest_bootstrap_major' in pin and (type(pin['guest_bootstrap_major']) is not int or pin['guest_bootstrap_major'] != 2):
+        raise ValueError('Unsupported Guest bootstrap version')
     if any(type(pin[k]) is not type(v) or pin[k] != v for k,v in EXPECTED.items()):
         raise ValueError('Unsupported runtime protocol pin')
     minimum = pin['minimum_wsx_core_version']
@@ -48,13 +51,21 @@ def runtime_pin():
     return pin, files
 
 
-def packaged_profile(rootfs):
+def packaged_profile(rootfs, require_bootstrap=False):
     rootfs = Path(rootfs)
     base = rootfs/'usr/lib/wsx'
     for name in FILES:
         path = base/name
         if path.is_symlink() or not path.is_file() or path.stat().st_mode & 0o022:
             raise ValueError('Guest protocol is not packaged with safe permissions: '+name)
+    if require_bootstrap:
+        for name in ('bootstrap-v2.py', 'adapter-store.py'):
+            path = base/name
+            if path.is_symlink() or not path.is_file() or path.stat().st_mode & 0o022:
+                raise ValueError('Guest bootstrap is not packaged with safe permissions: '+name)
+        tree = ast.parse((base/'bootstrap-v2.py').read_text())
+        if not any(isinstance(node, ast.FunctionDef) and node.name == 'dispatch' for node in tree.body):
+            raise ValueError('Guest bootstrap does not provide pinned dispatch')
     tree = ast.parse((base/'guest-protocol.py').read_text())
     declarations = [n.value for n in tree.body if isinstance(n, ast.Assign)
                     and any(isinstance(t, ast.Name) and t.id == 'CAPABILITIES' for t in n.targets)]
@@ -99,7 +110,7 @@ def declaration(rootfs, runtime_receipt=None, minimum_core=None):
                 if hashlib.file_digest(stream,'sha256').hexdigest() != entry['sha256']:
                     raise ValueError('Runtime hash mismatch')
     result = {k:v for k,v in pin.items() if k != 'minimum_wsx_core_version'}
-    result.update(guest_profile_sha256=packaged_profile(rootfs), required_capabilities=CAPABILITIES)
+    result.update(guest_profile_sha256=packaged_profile(rootfs, pin.get('guest_bootstrap_major') == 2), required_capabilities=CAPABILITIES)
     return result
 
 

@@ -17,7 +17,7 @@ root = a.root.resolve(strict=True)
 check_hygiene(root)
 protocol_contract = declaration(root)
 bootstrap_reply = check_guest_bootstrap(root)
-(a.output/'guest-bootstrap-v2-check.json').write_text(json.dumps(dict(scope='offline bootstrap only; activation unsupported', response=bootstrap_reply), indent=2)+'\n')
+(a.output/'guest-bootstrap-v2-check.json').write_text(json.dumps(dict(scope='offline bootstrap capabilities only; no session or GPU execution', response=bootstrap_reply), indent=2)+'\n')
 # Exercise the packaged public endpoint inside the image without starting a
 # session, systemd, a graphics device or account initialization.
 protocol_request = dict(protocol='wsx-guest',major=1,minor=0,id='offline-build',

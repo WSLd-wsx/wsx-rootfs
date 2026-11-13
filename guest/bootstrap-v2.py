@@ -1,19 +1,37 @@
 # Original WSX code, PolyForm-Noncommercial-1.0.0. See LICENSE-MAP.md.
-"""WSX Guest bootstrap v2: constrained adapter staging, not a shell endpoint.
-
-This first slice deliberately does not activate or execute staged code.
-"""
+"""WSX Guest bootstrap v2: constrained adapter storage and pinned dispatch."""
 import json
 import os
 from pathlib import Path
 import re
 import runpy
 import sys
+import uuid
 
 PROTOCOL = 'wsx-guest-bootstrap'
 MAJOR = 2
 MAX_REQUEST = 12 * 1024 * 1024
 STORE = Path('/var/lib/wsx/guest-adapters')
+
+
+def dispatch(store, adapter_store, profile_path, operation, instance):
+    """Return only a fixed adapter command after verifying its session pin.
+
+    This routing primitive does not prove session start or GPU retirement.
+    """
+    if operation not in ('host-call', 'prepare', 'start'):
+        raise ValueError('Unsupported adapter entry operation')
+    instance = uuid.UUID(instance)
+    if not instance.int: raise ValueError('Invalid session identity')
+    profile = json.loads(adapter_store['_read_regular'](profile_path, 65536))
+    if (not isinstance(profile, dict) or type(profile.get('schema_version')) is not int
+            or profile['schema_version'] != 1 or profile.get('implementation') not in ('hyprland', 'plasma')):
+        raise ValueError('Invalid Guest desktop profile')
+    pin = adapter_store['session_pin'](store, str(instance), profile['implementation'])
+    entry = str(store / pin['sha256'] / 'wsx-guest.py')
+    args = ['/usr/bin/python3', '-I', entry, operation]
+    if operation == 'start': args.extend(['--instance', str(instance)])
+    return args
 
 
 def handle(request, store, adapter_store, profile_path=Path('/usr/lib/wsx/guest-profile.json')):
@@ -33,7 +51,7 @@ def handle(request, store, adapter_store, profile_path=Path('/usr/lib/wsx/guest-
             if params: raise ValueError('Unexpected capabilities parameters')
             result = dict(bootstrap_major=MAJOR, adapter_protocol_major=2,
                           operations=['capabilities', 'adapter.stage', 'adapter.inspect', 'adapter.select', 'session.pin', 'session.inspect'],
-                          activation_supported=False)
+                          dispatch_supported=True, activation_supported=True)
         elif request['operation'] == 'adapter.stage':
             if set(params) != {'manifest', 'expected_sha256', 'files'} or not isinstance(params['manifest'], str):
                 raise ValueError('Invalid adapter stage parameters')
@@ -42,7 +60,7 @@ def handle(request, store, adapter_store, profile_path=Path('/usr/lib/wsx/guest-
             if set(params) != {'sha256'} or not isinstance(params['sha256'], str) or not re.fullmatch(r'[0-9a-f]{64}', params['sha256']):
                 raise ValueError('Invalid adapter identity')
             manifest = adapter_store['verify'](store / params['sha256'], params['sha256'])
-            result = dict(sha256=params['sha256'], implementation=manifest['implementation'], integrity_verified=True, publisher_verified=False, activation_supported=False)
+            result = dict(sha256=params['sha256'], implementation=manifest['implementation'], integrity_verified=True, publisher_verified=False)
         elif request['operation'] in ('adapter.select', 'session.pin', 'session.inspect'):
             # The image profile, rather than a caller-provided desktop name,
             # determines which adapter implementation can be used.
@@ -74,6 +92,14 @@ def main():
     adapter_store['_trusted_dir'](STORE.parent)
     STORE.mkdir(mode=0o700, exist_ok=True)
     adapter_store['_trusted_dir'](STORE)
+    if len(sys.argv) > 1:
+        if len(sys.argv) != 5 or sys.argv[1] != 'dispatch' or sys.argv[3] != '--instance':
+            raise SystemExit('Invalid bootstrap dispatch arguments')
+        try:
+            args = dispatch(STORE, adapter_store, Path('/usr/lib/wsx/guest-profile.json'), sys.argv[2], sys.argv[4])
+        except (ValueError, TypeError, KeyError, OSError) as exc:
+            raise SystemExit('Bootstrap dispatch rejected: ' + str(exc)) from exc
+        os.execve(args[0], args, {'PATH': '/usr/bin:/bin'})
     raw = sys.stdin.buffer.read(MAX_REQUEST + 1)
     if len(raw) > MAX_REQUEST: raise SystemExit('Bootstrap request exceeds limit')
     def unique(pairs):

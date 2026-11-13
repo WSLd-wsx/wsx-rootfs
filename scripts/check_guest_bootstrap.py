@@ -14,6 +14,7 @@ def check(root):
     reply = json.loads(result.stdout)
     if (reply.get('protocol') != request['protocol'] or reply.get('major') != 2
             or reply.get('id') != request['id'] or reply.get('ok') is not True
-            or reply.get('result', {}).get('activation_supported') is not False):
+            or reply.get('result', {}).get('activation_supported') is not True
+            or reply.get('result', {}).get('dispatch_supported') is not True):
         raise ValueError('Packaged Guest v2 bootstrap capability check failed')
     return reply

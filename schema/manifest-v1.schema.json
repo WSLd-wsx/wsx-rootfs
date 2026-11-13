@@ -242,6 +242,9 @@
         "guest_protocol_minor": {
           "const": 0
         },
+        "guest_bootstrap_major": {
+          "const": 2
+        },
         "runtime_receipt_sha256": {
           "type": "string",
           "pattern": "^[a-f0-9]{64}$"

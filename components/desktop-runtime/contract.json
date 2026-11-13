@@ -4,6 +4,7 @@
   "runtime_receipt_sha256": "442f6032d8645c413b7398e2654c669169e79e9b46e79220134bb881b51d0561",
   "guest_protocol_major": 1,
   "guest_protocol_minor": 0,
+  "guest_bootstrap_major": 2,
   "lifecycle_abi": 1,
   "display_abi": 1,
   "sharing_path": "opaque-v1",

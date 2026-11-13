@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "41051abc17d13976eb5c9921c2e688d32d155a2b",
+  "head": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -384,7 +384,7 @@
     },
     {
       "path": "components/desktop-runtime/contract.json",
-      "sha256": "6b65689eb300ac7134cb3039a1943659718660616ca3438d5f3f2e69a83fcf93",
+      "sha256": "cec878be1145120152a6b5d325266a6872398976e4ac2977417e42994263c449",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -1176,6 +1176,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -1192,6 +1193,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea",
         "e70d49028cc657376d6075861437556d62ec5254",
         "e2e2b066d8ba4ab9473e24fef3f38ca2eabae902",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -1720,18 +1722,20 @@
     },
     {
       "path": "docs/guest-bootstrap-v2.md",
-      "sha256": "e4987f33e64e03254df143de4de6c2f3e490d4c23dc596e31abcadad01fae6bb",
+      "sha256": "52ef312f459d04a501f33c81fa059641788c6bed23b73d7cebbd7d5d21b5133d",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
+      "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea"
+      ],
       "observations": [
         {
-          "line": 19,
+          "line": 24,
           "kind": "declaration-observation",
           "text": "files retain their existing copyright and license notices. The bootstrap still"
         }
@@ -6381,8 +6385,10 @@
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
+      "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea"
+      ],
       "observations": [
         {
           "line": 1,
@@ -6393,15 +6399,17 @@
     },
     {
       "path": "guest/bootstrap-v2.py",
-      "sha256": "3fa330a0696db394c51e8bcd4b8541fa891b15183df7baa439d0b1157fabfafd",
+      "sha256": "e51b8e896d3472a31aefeafadd5ba15b555a968d677df549e0c06510d1f31b6d",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
+      "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea"
+      ],
       "observations": [
         {
           "line": 1,
@@ -6574,7 +6582,7 @@
     },
     {
       "path": "schema/manifest-v1.schema.json",
-      "sha256": "684c3d7d3b5bbd2d2f1bb5901474c5bce79cfe14e7b9f1a16b7a360056a20dc1",
+      "sha256": "a3a3dae3baf938d99432ac4dc954da3dcf9df3133297f45189e40ac46facbf9c",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -6908,15 +6916,17 @@
     },
     {
       "path": "scripts/check_guest_bootstrap.py",
-      "sha256": "15be6b6067fb895a0bfe7480c2ec9b54e2d27edef06e76d3c87f458347128b36",
+      "sha256": "ac64cbc7ee115d8abb3d9f0d5fe6ffd715c141b94dd54daabade1add68116271",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
+      "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea"
+      ],
       "observations": [
         {
           "line": 1,
@@ -7105,7 +7115,7 @@
     },
     {
       "path": "scripts/desktop_contract.py",
-      "sha256": "5252df7d9b38b15da873d669927578ddf74866a28571455839decf785312289e",
+      "sha256": "21a0c4e614e58436fb0f15fd7b96d5fab795102349733e33feea5b0f676e1956",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -7135,8 +7145,10 @@
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
+      "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea"
+      ],
       "observations": []
     },
     {
@@ -8427,6 +8439,7 @@
       "source_index": [],
       "first_local_commit": "2b068810e48c72eb620c91b65fb090e7e703df60",
       "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea",
         "e70d49028cc657376d6075861437556d62ec5254",
         "8d4a6351f28e89290f5dab297e306e68b6e3722c",
         "2b068810e48c72eb620c91b65fb090e7e703df60"
@@ -8441,7 +8454,7 @@
     },
     {
       "path": "scripts/validate-cachyos.py",
-      "sha256": "23778be12eb400d5a23b1eafa61e9310e54837e0f3bd146fe59a9bbc1c1b2c49",
+      "sha256": "5122aec421fec9be712145bc8453e2e5d9b64e31b0c3747afef2485ea97b469c",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8450,6 +8463,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -8458,7 +8472,7 @@
     },
     {
       "path": "scripts/validate-rootfs.py",
-      "sha256": "ac9cea9b78c5a33748a8655153a80d1a12e220b146c9ed5cc8d2a27f4ac46c1a",
+      "sha256": "3503f10fdd486aaac3ce5410ee3809600dc1486c000a7e1da345de28820b46d6",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8467,6 +8481,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -8645,8 +8660,10 @@
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
+      "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea"
+      ],
       "observations": [
         {
           "line": 1,
@@ -8690,15 +8707,17 @@
     },
     {
       "path": "tests/test_bootstrap_v2.py",
-      "sha256": "dd59115d173ede4806a891c2485825a119b6b1f28259abd1c98875476d90b1d9",
+      "sha256": "ada0548e4ec2a481beedfaabf8043bca79ed25e434bf6b7e423c09fb5d7d1304",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
+      "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea"
+      ],
       "observations": [
         {
           "line": 1,
@@ -9092,7 +9111,7 @@
     },
     {
       "path": "tests/test_desktop_contract.py",
-      "sha256": "4a8f4be4d074e1629120c8b11a14ba47b5a92bfb77000bbed0afec7162049d4f",
+      "sha256": "a6f2dbd7c9c8958bbbf076d0a6683e1dea995a95f50d5bdce728d85edf0b1c49",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -9132,8 +9151,10 @@
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "1046d58dda0a466e02748db74b5ce432ed28e3ea",
+      "local_change_commits": [
+        "1046d58dda0a466e02748db74b5ce432ed28e3ea"
+      ],
       "observations": []
     },
     {
