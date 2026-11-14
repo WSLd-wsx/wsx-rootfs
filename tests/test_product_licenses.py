@@ -89,6 +89,23 @@ class ProductLicenses(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'differs'):
             product.write_image_map(rootfs,self.work)
 
+    def test_external_guest_output_is_absent_only_for_omarchy(self):
+        product.write_component_map(self.root,self.receipt,self.notices)
+        mapping_path = self.notices/'MODULE-LICENSES.json'
+        mapping = json.loads(mapping_path.read_text())
+        mapping['outputs'].append(dict(id='desktop-omarchy', installed_paths=['usr/lib/wsx/runtime/desktop.py']))
+        mapping_path.write_text(json.dumps(mapping))
+        rootfs = self.work/'rootfs'
+        shutil.copytree(self.notices, rootfs/'usr/share/licenses/wsx-components')
+        (rootfs/'usr/bin').mkdir(parents=True)
+        (rootfs/'usr/bin/fixture').write_bytes(b'fixture')
+        self.assertEqual(len(product.image_report(rootfs,self.work)['files']), 1)
+        desktop = rootfs/'usr/lib/wsx/runtime/desktop.py'
+        desktop.parent.mkdir(parents=True)
+        desktop.write_text('unexpected')
+        with self.assertRaisesRegex(ValueError, 'unexpectedly installed'):
+            product.image_report(rootfs,self.work)
+
     def test_package_metadata_and_notices_are_bound_without_clearance(self):
         product.write_component_map(self.root,self.receipt,self.notices)
         rootfs=self.work/'rootfs'
