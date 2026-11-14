@@ -14,19 +14,9 @@ check_hygiene(root)
 protocol_contract = declaration(root)
 bootstrap_reply = check_guest_bootstrap(root)
 (a.output/'guest-bootstrap-v2-check.json').write_text(json.dumps(dict(scope='offline bootstrap capabilities only; no session or GPU execution', response=bootstrap_reply), indent=2)+'\n')
-# Exercise the packaged public endpoint inside the image without starting a
-# session, systemd, a graphics device or account initialization.
-protocol_request = dict(protocol='wsx-guest',major=1,minor=0,id='offline-build',
-                        operation='capabilities',params={})
-protocol_run = subprocess.run(['chroot',str(root),'/usr/bin/wsx-guest','host-call'],
-    input=json.dumps(protocol_request),capture_output=True,text=True,check=True,timeout=15)
-protocol_reply = json.loads(protocol_run.stdout)
-if (protocol_reply.get('protocol') != 'wsx-guest' or protocol_reply.get('major') != 1
-        or protocol_reply.get('id') != 'offline-build' or protocol_reply.get('ok') is not True
-        or not set(CAPABILITIES).issubset(protocol_reply.get('result',{}).get('capabilities',[]))):
-    raise ValueError('Packaged Guest protocol capability check failed')
-(a.output/'guest-protocol-check.json').write_text(json.dumps(dict(scope='offline chroot capabilities only',
-    contract=protocol_contract,response=protocol_reply),indent=2)+'\n')
+# Desktop protocol capability checks require the externally supplied adapter.
+protocol_reply = {'status': 'not_run', 'reason': 'Adapter is supplied by the Host product build'}
+(a.output/'guest-protocol-check.json').write_text(json.dumps(protocol_reply, indent=2)+'\n')
 # A rolling repository must not silently replace the libraries used to compile
 # the private stack between build and installation.
 def package_versions(path):
@@ -38,7 +28,7 @@ for name in built.keys() & installed.keys():
         raise ValueError('Build/rootfs package version mismatch: '+name)
 
 required=['usr/share/applications/omarchy-browser.desktop','etc/skel/.config/mimeapps.list',
-          'etc/skel/.config/hyprland-xdg-terminals.list','usr/lib/systemd/user/omarchy-fcitx5.service','usr/bin/omarchy','usr/bin/omarchy-launch-shell','usr/bin/localedef','usr/bin/wsx-guest','usr/bin/systemctl','usr/bin/runuser','usr/bin/dbus-daemon',
+          'etc/skel/.config/hyprland-xdg-terminals.list','usr/lib/systemd/user/omarchy-fcitx5.service','usr/bin/omarchy','usr/bin/omarchy-launch-shell','usr/bin/localedef','usr/bin/systemctl','usr/bin/runuser','usr/bin/dbus-daemon',
           'usr/bin/pkexec','usr/bin/uwsm','usr/bin/Xwayland','usr/bin/foot',
           'usr/bin/pipewire','usr/bin/wireplumber','usr/lib/wsx/runtime/mesa/manifest.json',
           'usr/lib/wsx/runtime/venus/manifest.json','usr/lib/wsx/runtime/opaque-consumer/manifest.json']

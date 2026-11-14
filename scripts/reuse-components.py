@@ -77,12 +77,19 @@ def validate_origin(pin, profile, repo, run, artifact):
             raise ValueError('Operations build must use the operations component package')
     else:
         raise ValueError('Unapproved component workflow repository')
+    def repository_matches(value):
+        if value.get('full_name') == run_repo:
+            return True
+        # GitHub returns the current name for historical runs after a rename.
+        return (run_repo == 'WSLd-wsx/wsx-rootfs-ops'
+                and value.get('full_name') == 'WSLd-wsx/wsx-devops'
+                and value.get('id') == 1449208538)
     if (run.get('conclusion') != 'success' or run.get('status') != 'completed'
             or run.get('event') != 'workflow_dispatch'
             or run.get('path') != '.github/workflows/components.yml'
             or run.get('head_sha') != expected_head
-            or run.get('repository',{}).get('full_name') != run_repo
-            or run.get('head_repository',{}).get('full_name') != run_repo):
+            or not repository_matches(run.get('repository',{}))
+            or not repository_matches(run.get('head_repository',{}))):
         raise ValueError('Component workflow origin mismatch or unsuccessful run')
     if pin.get('transport') == 'ghcr':
         registry.check_reference(pin['image'])

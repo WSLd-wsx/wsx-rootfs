@@ -9,15 +9,17 @@ import shutil
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def stage(root, implementation):
+def stage(root, implementation, bootstrap_only=False):
     target = root/'usr/lib/wsx'
     target.mkdir(parents=True, exist_ok=True)
-    for source, name in [('protocol.py','guest-protocol.py'),
+    files = [('protocol.py','guest-protocol.py'),
                          ('protocol-display.py','protocol-display.py'),
                          ('device-view.py','device-view.py'),
-                         ('protocol-retirement.py','protocol-retirement.py'),
-                         ('bootstrap-v2.py','bootstrap-v2.py'),
-                         ('adapter-store.py','adapter-store.py')]:
+                         ('protocol-retirement.py','protocol-retirement.py')]
+    if bootstrap_only:
+        files = []
+    files += [('bootstrap-v2.py','bootstrap-v2.py'), ('adapter-store.py','adapter-store.py')]
+    for source, name in files:
         shutil.copy2(ROOT/'guest'/source, target/name)
         (target/name).chmod(0o644)
     state = root/'var/lib/wsx'

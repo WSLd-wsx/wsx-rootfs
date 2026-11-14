@@ -45,6 +45,12 @@ class ReuseTests(unittest.TestCase):
                    repository=dict(full_name=pin['run_repository']),
                    head_repository=dict(full_name=pin['run_repository']))
         reuse.validate_origin(pin, 'omarchy', 'WSLd-wsx/wsx-rootfs', run, {})
+        renamed = dict(full_name='WSLd-wsx/wsx-devops', id=1449208538)
+        reuse.validate_origin(pin, 'omarchy', 'WSLd-wsx/wsx-rootfs',
+                              dict(run, repository=renamed, head_repository=renamed), {})
+        with self.assertRaisesRegex(ValueError, 'origin mismatch'):
+            reuse.validate_origin(pin, 'omarchy', 'WSLd-wsx/wsx-rootfs',
+                                  dict(run, repository=dict(renamed, id=1), head_repository=renamed), {})
         for changed in (dict(pin, workflow_commit='d'*40),
                         dict(pin, run_repository='other/repo'),
                         dict(pin, image=reuse.registry.IMAGE+'@sha256:'+'c'*64)):

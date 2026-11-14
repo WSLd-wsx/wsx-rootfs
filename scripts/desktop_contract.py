@@ -54,7 +54,7 @@ def runtime_pin():
 def packaged_profile(rootfs, require_bootstrap=False):
     rootfs = Path(rootfs)
     base = rootfs/'usr/lib/wsx'
-    for name in FILES:
+    for name in (('guest-profile.json',) if require_bootstrap else FILES):
         path = base/name
         if path.is_symlink() or not path.is_file() or path.stat().st_mode & 0o022:
             raise ValueError('Guest protocol is not packaged with safe permissions: '+name)
@@ -66,15 +66,16 @@ def packaged_profile(rootfs, require_bootstrap=False):
         tree = ast.parse((base/'bootstrap-v2.py').read_text())
         if not any(isinstance(node, ast.FunctionDef) and node.name == 'dispatch' for node in tree.body):
             raise ValueError('Guest bootstrap does not provide pinned dispatch')
-    tree = ast.parse((base/'guest-protocol.py').read_text())
-    declarations = [n.value for n in tree.body if isinstance(n, ast.Assign)
-                    and any(isinstance(t, ast.Name) and t.id == 'CAPABILITIES' for t in n.targets)]
-    if len(declarations) != 1:
-        raise ValueError('Guest protocol capability declaration is missing or ambiguous')
-    actual = ast.literal_eval(declarations[0])
-    if not isinstance(actual, list) or not set(CAPABILITIES).issubset(actual):
-        raise ValueError('Packaged Guest does not provide required capabilities')
-    for name in ('desktop.py', 'wsx-input-guest'):
+    if not require_bootstrap:
+        tree = ast.parse((base/'guest-protocol.py').read_text())
+        declarations = [n.value for n in tree.body if isinstance(n, ast.Assign)
+                        and any(isinstance(t, ast.Name) and t.id == 'CAPABILITIES' for t in n.targets)]
+        if len(declarations) != 1:
+            raise ValueError('Guest protocol capability declaration is missing or ambiguous')
+        actual = ast.literal_eval(declarations[0])
+        if not isinstance(actual, list) or not set(CAPABILITIES).issubset(actual):
+            raise ValueError('Packaged Guest does not provide required capabilities')
+    for name in (('wsx-input-guest',) if require_bootstrap else ('desktop.py', 'wsx-input-guest')):
         path = base/'runtime'/name
         if path.is_symlink() or not path.is_file() or path.stat().st_mode & 0o022:
             raise ValueError('Concurrent Guest component is missing or unsafe: '+name)
