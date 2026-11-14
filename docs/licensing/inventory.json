@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "977e60718348d673ae57e844e1da906f103f1a94",
+  "head": "a108814ad0647952928bacad76f0afe7c87dd64b",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -7202,7 +7202,7 @@
     },
     {
       "path": "scripts/finalize.py",
-      "sha256": "fd7c452e9e774de9c693a701c07187dced4e27c31b05c26ff4609810e10bd9fe",
+      "sha256": "3e430f68faed2fab47e1166c88214984a7071e4adfb027309b07e33bb8233bbf",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -7211,6 +7211,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "a108814ad0647952928bacad76f0afe7c87dd64b",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "ffaa7d6d24ead461a585abdc967090494eb4359d",
@@ -7221,7 +7222,7 @@
         {
           "line": 13,
           "kind": "mention",
-          "text": "from product_licenses import verify_image_map"
+          "text": "from image_licenses import verify_image_map"
         }
       ]
     },
@@ -7264,6 +7265,87 @@
           "line": 1,
           "kind": "declaration-observation",
           "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        }
+      ]
+    },
+    {
+      "path": "scripts/image_licenses.py",
+      "sha256": "6946acf98c626562e518025ca712e5972c579d083c32b72d3ace61b39630b601",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": "a108814ad0647952928bacad76f0afe7c87dd64b",
+      "local_change_commits": [
+        "a108814ad0647952928bacad76f0afe7c87dd64b"
+      ],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "mention",
+          "text": "\"\"\"Image-phase license binding for external Guest v2 adapters.\"\"\""
+        },
+        {
+          "line": 4,
+          "kind": "mention",
+          "text": "from product_licenses import sha, package_evidence"
+        },
+        {
+          "line": 13,
+          "kind": "mention",
+          "text": "    target = rootfs/'usr/share/licenses/wsx-components'"
+        },
+        {
+          "line": 16,
+          "kind": "mention",
+          "text": "    for name in ('MODULE-LICENSES.json', 'MODULE-NOTICES.txt', 'LICENSE', 'LICENSE-MAP.md',"
+        },
+        {
+          "line": 17,
+          "kind": "mention",
+          "text": "                 'OUTPUT-LICENSES.md', 'PRIVATE-ARTIFACTS.md'):"
+        },
+        {
+          "line": 20,
+          "kind": "mention",
+          "text": "    mapping = json.loads((target/'MODULE-LICENSES.json').read_text())"
+        },
+        {
+          "line": 62,
+          "kind": "mention",
+          "text": "    report = dict(schema_version=1, profile=mapping['profile'], license_grant=mapping['license_grant'],"
+        },
+        {
+          "line": 63,
+          "kind": "mention",
+          "text": "                  release_ready=False, module_map_sha256=sha(target/'MODULE-LICENSES.json'),"
+        },
+        {
+          "line": 64,
+          "kind": "mention",
+          "text": "                  scope='Declared WSX/private outputs plus installed package and license evidence; legal review pending',"
+        },
+        {
+          "line": 72,
+          "kind": "mention",
+          "text": "    destination = rootfs/'usr/share/licenses/wsx-components/IMAGE-LICENSES.json'"
+        },
+        {
+          "line": 74,
+          "kind": "mention",
+          "text": "        raise ValueError('Image license map already exists')"
+        },
+        {
+          "line": 80,
+          "kind": "mention",
+          "text": "    path = rootfs/'usr/share/licenses/wsx-components/IMAGE-LICENSES.json'"
+        },
+        {
+          "line": 82,
+          "kind": "mention",
+          "text": "        raise ValueError('Installed module license binding changed')"
         }
       ]
     },
@@ -7635,7 +7717,7 @@
     },
     {
       "path": "scripts/product_licenses.py",
-      "sha256": "7d7f255ee4768fcede2a609250758c2e270812d6197f1a5f5acdce55d91115de",
+      "sha256": "f3737eabc818d4528b9c5f863523c9869b38ab77f0434009bc42158559f91477",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -7644,6 +7726,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "a108814ad0647952928bacad76f0afe7c87dd64b",
         "977e60718348d673ae57e844e1da906f103f1a94",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -7845,37 +7928,37 @@
           "text": "    mapping = json.loads((target/'MODULE-LICENSES.json').read_text())"
         },
         {
-          "line": 289,
+          "line": 272,
           "kind": "mention",
           "text": "    report = dict(schema_version=1, profile=mapping['profile'], license_grant=mapping['license_grant'],"
         },
         {
-          "line": 290,
+          "line": 273,
           "kind": "mention",
           "text": "                  release_ready=False, module_map_sha256=sha(target/'MODULE-LICENSES.json'),"
         },
         {
-          "line": 291,
+          "line": 274,
           "kind": "mention",
           "text": "                  scope='Declared WSX/private outputs plus installed package and license evidence; legal review pending',"
         },
         {
-          "line": 299,
+          "line": 282,
           "kind": "mention",
           "text": "    destination = rootfs/'usr/share/licenses/wsx-components/IMAGE-LICENSES.json'"
         },
         {
-          "line": 301,
+          "line": 284,
           "kind": "mention",
           "text": "        raise ValueError('Image license map already exists')"
         },
         {
-          "line": 307,
+          "line": 290,
           "kind": "mention",
           "text": "    path = rootfs/'usr/share/licenses/wsx-components/IMAGE-LICENSES.json'"
         },
         {
-          "line": 309,
+          "line": 292,
           "kind": "mention",
           "text": "        raise ValueError('Installed module license binding changed')"
         }
@@ -8537,7 +8620,7 @@
     },
     {
       "path": "scripts/write-image-license-map.py",
-      "sha256": "c0241c12b9244ac37d8dc31f87f9190d42fcb9e660ddd2484ce5a339ae73fe6b",
+      "sha256": "c5a6cb68961cf5035a42599b6e1c2f603c9441613770ca3435f598f5152d0f97",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -8546,6 +8629,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "a108814ad0647952928bacad76f0afe7c87dd64b",
         "e70d49028cc657376d6075861437556d62ec5254",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -8559,7 +8643,7 @@
         {
           "line": 6,
           "kind": "mention",
-          "text": "from product_licenses import write_image_map"
+          "text": "from image_licenses import write_image_map"
         },
         {
           "line": 14,
@@ -9484,7 +9568,7 @@
     },
     {
       "path": "tests/test_product_licenses.py",
-      "sha256": "2c08dde99f88fafb1ac2951f7eb8de66c62831908f426918d4012bd732e9d59a",
+      "sha256": "927aeee0b35d68cb20ede64a916df00d663fbeb460e786eee379b7a7202acc07",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression and approved module-level grants on 2026-11-03.",
@@ -9493,6 +9577,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "a108814ad0647952928bacad76f0afe7c87dd64b",
         "977e60718348d673ae57e844e1da906f103f1a94",
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
@@ -9506,85 +9591,100 @@
         {
           "line": 10,
           "kind": "mention",
-          "text": "from license_inputs import paths as license_paths"
+          "text": "import image_licenses"
         },
         {
           "line": 11,
           "kind": "mention",
+          "text": "from license_inputs import paths as license_paths"
+        },
+        {
+          "line": 12,
+          "kind": "mention",
           "text": "from license_fixture import seed"
         },
         {
-          "line": 14,
+          "line": 15,
           "kind": "mention",
           "text": "class ProductLicenses(unittest.TestCase):"
         },
         {
-          "line": 20,
+          "line": 21,
           "kind": "mention",
           "text": "            for n in license_paths(self.root)+['recipe.py','vendor/example.c']})"
         },
         {
-          "line": 35,
+          "line": 36,
           "kind": "mention",
           "text": "        self.assertFalse(result['license_grant'])"
         },
         {
-          "line": 52,
+          "line": 53,
           "kind": "mention",
           "text": "        policy=self.root/'components/license-boundaries.json'"
         },
         {
-          "line": 62,
+          "line": 63,
           "kind": "mention",
           "text": "        policy=self.root/'components/license-boundaries.json'"
         },
         {
-          "line": 73,
+          "line": 74,
           "kind": "mention",
           "text": "        rootfs=self.work/'rootfs';target=rootfs/'usr/share/licenses/wsx-components'"
         },
         {
-          "line": 87,
+          "line": 88,
           "kind": "mention",
           "text": "        rootfs=self.work/'rootfs';target=rootfs/'usr/share/licenses/wsx-components'"
         },
         {
-          "line": 94,
+          "line": 95,
           "kind": "mention",
           "text": "        mapping_path = self.notices/'MODULE-LICENSES.json'"
         },
         {
-          "line": 99,
+          "line": 100,
           "kind": "mention",
           "text": "        shutil.copytree(self.notices, rootfs/'usr/share/licenses/wsx-components')"
         },
         {
-          "line": 112,
+          "line": 103,
+          "kind": "mention",
+          "text": "        self.assertEqual(len(image_licenses.image_report(rootfs,self.work)['files']), 1)"
+        },
+        {
+          "line": 108,
+          "kind": "mention",
+          "text": "            image_licenses.image_report(rootfs,self.work)"
+        },
+        {
+          "line": 113,
           "kind": "mention",
           "text": "        shutil.copytree(self.notices,rootfs/'usr/share/licenses/wsx-components')"
         },
         {
-          "line": 117,
+          "line": 118,
           "kind": "mention",
           "text": "        (package/'desc').write_text('%NAME%\\nexample\\n\\n%VERSION%\\n1.0-1\\n\\n%LICENSE%\\ncustom\\nMIT\\n')"
         },
         {
-          "line": 119,
+          "line": 120,
           "kind": "mention",
           "text": "        notice=rootfs/'usr/share/licenses/example/LICENSE'"
         },
         {
-          "line": 125,
+          "line": 126,
           "kind": "mention",
           "text": "        self.assertEqual(evidence['packages'][0]['declared_licenses'],['custom','MIT'])"
         },
         {
-          "line": 147,
+          "line": 148,
           "kind": "mention",
           "text": "        self.assertEqual(result['license_review'],'pending')"
         },
         {
-          "line": 156,
+          "line": 157,
           "kind": "mention",
           "text": "        names=set(license_paths(root))"
         }
