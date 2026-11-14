@@ -10,7 +10,7 @@ from archive import pack
 from archive_policy import fingerprint
 from source_delivery import attach_current as attach
 from payload_contract import asset_names
-from product_licenses import verify_image_map
+from image_licenses import verify_image_map
 from desktop_contract import declaration, runtime_pin
 from image_materials import verify_image_snapshot
 from contract import identity, validate

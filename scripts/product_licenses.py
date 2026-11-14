@@ -246,24 +246,7 @@ def image_report(rootfs, work):
             raise ValueError('Installed module notice differs from source evidence: ' + name)
     mapping = json.loads((target/'MODULE-LICENSES.json').read_text())
     records = []
-    # The retained component receipt describes the earlier image layout. The
-    # Omarchy v2 image no longer installs these independently supplied adapters.
-    external_omarchy = {
-        'desktop-omarchy': 'usr/lib/wsx/runtime/desktop.py',
-        'guest-omarchy': 'usr/bin/wsx-guest',
-        'protocol-guest-protocol': 'usr/lib/wsx/guest-protocol.py',
-        'protocol-device-view': 'usr/lib/wsx/device-view.py',
-        'protocol-protocol-display': 'usr/lib/wsx/protocol-display.py',
-        'protocol-protocol-retirement': 'usr/lib/wsx/protocol-retirement.py',
-    }
     for output in mapping['outputs']:
-        if mapping['profile'] == 'omarchy' and output['id'] in external_omarchy:
-            path = external_omarchy[output['id']]
-            if output['installed_paths'] != [path]:
-                raise ValueError('Unexpected external Guest output mapping: ' + output['id'])
-            if (rootfs/path).exists() or (rootfs/path).is_symlink():
-                raise ValueError('External Guest adapter unexpectedly installed: ' + path)
-            continue
         found = set()
         for pattern in output['installed_paths']:
             # pathlib glob("prefix/**") alone lists directories, not every file.

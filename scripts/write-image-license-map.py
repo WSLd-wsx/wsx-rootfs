@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 from component_materials import verify
-from product_licenses import write_image_map
+from image_licenses import write_image_map
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('work', type=Path)

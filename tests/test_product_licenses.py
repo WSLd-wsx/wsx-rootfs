@@ -7,6 +7,7 @@ import tempfile
 import unittest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 import product_licenses as product
+import image_licenses
 from license_inputs import paths as license_paths
 from license_fixture import seed
 
@@ -99,12 +100,12 @@ class ProductLicenses(unittest.TestCase):
         shutil.copytree(self.notices, rootfs/'usr/share/licenses/wsx-components')
         (rootfs/'usr/bin').mkdir(parents=True)
         (rootfs/'usr/bin/fixture').write_bytes(b'fixture')
-        self.assertEqual(len(product.image_report(rootfs,self.work)['files']), 1)
+        self.assertEqual(len(image_licenses.image_report(rootfs,self.work)['files']), 1)
         desktop = rootfs/'usr/lib/wsx/runtime/desktop.py'
         desktop.parent.mkdir(parents=True)
         desktop.write_text('unexpected')
         with self.assertRaisesRegex(ValueError, 'unexpectedly installed'):
-            product.image_report(rootfs,self.work)
+            image_licenses.image_report(rootfs,self.work)
 
     def test_package_metadata_and_notices_are_bound_without_clearance(self):
         product.write_component_map(self.root,self.receipt,self.notices)
