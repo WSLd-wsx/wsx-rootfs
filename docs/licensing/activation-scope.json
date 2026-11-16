@@ -1,0 +1,991 @@
+{
+  "schema_version": 1,
+  "status": "approved-pre-implementation-scope-snapshot",
+  "base_commit": "0e73673a75b449c8ea21578c5ff44e43f188b95b",
+  "licensor": "WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>",
+  "license_grant": false,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "cb3571c5ddb15dab7701a898926c6ffe37264cc1b0b15fb911f89295f350df17",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": ".github/workflows/build-rootfs.yml",
+      "sha256": "45fd5af1d1de38d8b74583f38e99bf6cb62d99a10a007efbd8f2d68ff643ea8b",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": ".github/workflows/cachyos-plasma.yml",
+      "sha256": "7f01ecb8e547a51b602cb239810bc2d51c03bd1a5c301f49fbbb7e7425f14fb0",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": ".github/workflows/components.yml",
+      "sha256": "57c43b9e7c1936c594c1385c95b048b73a3bbbe7b3cc034a9e09352dfe6538b7",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": ".github/workflows/contracts.yml",
+      "sha256": "dc9ac91e26b8985f94c19e8f560187afdeb24e9b4b6b6098d858d47ed8d7de78",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": ".github/workflows/import-components.yml",
+      "sha256": "26079c4f44990d1d0a9a913ac57cb60448e6bed7a273b1d2175d28a9c163a186",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": ".github/workflows/omarchy.yml",
+      "sha256": "11da9d0e3fbe20fe0b575abaaed96923994fb25c790e99f6b7a430273cca6271",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "5844613c4f69c9e152441443b2df50e3df7174498995e802a44e1e15406ed790",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "9ce18871ae024f6ea470b4f5ad1a85d7ed0ba17a3004c988e996f4db37b6ddde",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "README.md",
+      "sha256": "ec01c10791a1bd1172b845ce65b31742d7afd619736fa1c8c1cd3af65deaa306",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "components/builder.json",
+      "sha256": "2b67de12921608c2d5c132c11b035791483f73ecc9e8c385a1f5e63c30c69d91",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "components/cachyos-provenance.json",
+      "sha256": "830773f83ea1e50d6ec4b768aabfdb68af36e48ef7c659baf7575d044041f80f",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "components/license-boundaries.json",
+      "sha256": "25f68b4f3699746b034d01dccec038d931608c9ca78777d33340a26365462670",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "components/reuse.json",
+      "sha256": "2133839cf15c8fe92e248fb2439723c5dc2c3d20ceb89033c84313d524686d19",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "components/sources.json",
+      "sha256": "07cc139989c99106d6becf5c9d1740a9cebefc7e4057f1cced00ab2fffe28d0f",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/cachyos-plasma/README.md",
+      "sha256": "a9fbaeb6b9c7da096275dfe3675080582d7e1d8371b6b7c133592b44786d782b",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/cachyos-plasma/bootstrap-rootfs.sh",
+      "sha256": "4c1fc1f568b3d3fc3c446e761bcd91a2a9726b750c964779b2927d6bd2f2f819",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/cachyos-plasma/build-components.sh",
+      "sha256": "f748118d0072cf3bbc471d1eb4ff14926262c1b611798bd63cb1da71ade056e2",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/cachyos-plasma/build-dependencies.txt",
+      "sha256": "88301ad811c94cc20f7d41bc80fcb3c3b87d7200326c5d0f0c4c3cf86876899f",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/cachyos-plasma/configure-rootfs.sh",
+      "sha256": "cd14d6b2ee45c2c5a5b0cb60d617d5b6ab95e3fe5cc051fcb3da394512c60c38",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/cachyos-plasma/packages.txt",
+      "sha256": "a6b91d511a3d258ef154d0a680bc8f338e29fc99df909805db4284ece9229f74",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/cachyos-plasma/upstream/iso-cachyos-release",
+      "sha256": "aa7a8e6797de821202726c71eef5c23bc9b37ed1999919ebb1a40fcc1adcad6c",
+      "proposed_treatment": "excluded-pending-upstream-evidence"
+    },
+    {
+      "path": "distros/cachyos-plasma/upstream/iso-os-release",
+      "sha256": "cd0719fd5fcf9d6393251e17721697f0c9b603bab3b4ba0895e75c94f4ef081b",
+      "proposed_treatment": "excluded-pending-upstream-evidence"
+    },
+    {
+      "path": "distros/cachyos-plasma/upstream/netinstall.yaml",
+      "sha256": "9f29e5ea796a30b43c1e4a1367960694fb2a620fd88c2911795b4e9460143486",
+      "proposed_treatment": "excluded-pending-upstream-evidence"
+    },
+    {
+      "path": "distros/cachyos-plasma/upstream/pacstrap.conf",
+      "sha256": "0369ebe03d58676ddcc20de5f50559936704bd4ae6d051d73223f498c788bf43",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "distros/cachyos-plasma/upstream/source.json",
+      "sha256": "46cdb22fafb711aa793ca172d37f6f3aad029c1907ddb84ff9337a9d55b88391",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/omarchy/bootstrap-rootfs.sh",
+      "sha256": "aa609a6610aa11c67df3e34b5a0a5f2ea6e48a6604b751de96ed06d049213725",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/omarchy/build-components.sh",
+      "sha256": "108ba32867a990892c02039d56c6b342bd5e71b2044c7a173c7e06c501aceeea",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/omarchy/build-dependencies.txt",
+      "sha256": "a6efc70c30edcc421c5022909470b71eec4523b66005ae3c74d75a1b8337759e",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/omarchy/build-rootfs.sh",
+      "sha256": "c79d4a4ab0123e713396e4f29d4238feecccd01e75b6ae0164da028fef20dcba",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/omarchy/revisions.json",
+      "sha256": "7035cfb0f9abfd944d3231999de3caf5362491f56a6c2740041b5545111c2800",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "distros/omarchy/rootfs-packages.txt",
+      "sha256": "c334ddf2d66d101189bc323f20f35965fd91623950c47be6034eaa8cd0761c8f",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "docs/build-evidence.md",
+      "sha256": "8de60f7bd8b3e1fad199b4ed1bd1424f59034acfdaf48095c31aeaf4e4ef1f05",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/build-performance.md",
+      "sha256": "23d107683eac25bdb7c8ff64e659fed896ad2e726edf34312ff93115143c19a2",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/cachyos-r1-runtime-handoff.md",
+      "sha256": "40897cd8c1044c0463dbc85d9733d49cebd741c5bea42ade86b82e7fc392d048",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/cachyos-validation.md",
+      "sha256": "56e5a40de8864b56a0ab66cdb50963ff3612fce32ab845ee25a195832bd8eaa7",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/component-ownership.md",
+      "sha256": "2203d88b5600f8826fcfa9b325f60aee3c784b6f229690a7d072f78683d2fef0",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/component-package.md",
+      "sha256": "cfa2e57510d3a3ef98c7f4c1b1aaf068aa13baa8b63482dd9e636b00ec22b545",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/draft-testing.md",
+      "sha256": "e6a880b885040218f7c84f1fc1b63c17469fb8ca950072a595cb156dbb48bc21",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/guest-abi.md",
+      "sha256": "52a3fe9513f4e47f1488fc5bf445755e2c2935cc69269ce604076e1990763036",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/AUDIT.md",
+      "sha256": "b67c66c23cead0f001a70940b080695e298525152d512946f9951625f0b2af1e",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/BINARY-RETIREMENT.md",
+      "sha256": "a4d7fc24b8d2922b018b27d90e3281ac5f7888cc092ec24181cb5b4651e3a6d0",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/CANDIDATE-TERMS.md",
+      "sha256": "36dd39d4a567f261dbe4c2eaff4d57e7b785f85fd06e1cf5c9d2a3dcdcf86c94",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/FOLLOW-UP.md",
+      "sha256": "b8d4fafb2f7062d7e2921b60c43a37219c7fa33ee397fbd39868f46080a380a3",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/HISTORY-RECONSTRUCTION.md",
+      "sha256": "c1e1136332ba1b21d28ba28efcc003778f299fa2f3bc49dff02bfc0a2b54543b",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/LICENSE-MAP.md",
+      "sha256": "e52d7c77e06d98051be87e2dd66212c9d67e7fcadf68cf94bc9512f7520e35da",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/MODULES.md",
+      "sha256": "895c9ad2f67c8161ad62c650e562b07ada3dc37278d6a982b8b0899b5b66ff5b",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/OWNERSHIP.md",
+      "sha256": "9de1a449a5a7fd11495cecc9c81b11fa5e820d63924f5ac1e2f64f0a893556ee",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/PRIORITY-MIT.md",
+      "sha256": "9e37824f50b99befb0ffc170ef7f6bed1862da880baeeb5619dde8563649c446",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/RECHECK.md",
+      "sha256": "76517fb61c9bd8cdb3bb2ed551309e1f7c8617f1acc62a7f0023011e80949389",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/REMOTE-RETIREMENT.md",
+      "sha256": "6d698dbe8694ff089ae52158fabb3d5883b742f836dd30960e8a20b2d1a0d5cb",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/SOURCE-MIGRATION.md",
+      "sha256": "0cb188f5c44a68eef708243f157b2a0c97dba57afddcd6ad15095ce2732287fd",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/TEST-ONLY.md",
+      "sha256": "ad55284a9aa295176fa81d87e1991cf7472a9ef7eb70c17e871badf19bdd9221",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/THIRD-PARTY-NOTICES.md",
+      "sha256": "029b2ed9fdc7c51eb3623ebe16f44b28fe9ecb904c4441111aa9e625edc2fd33",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/VALIDATION.md",
+      "sha256": "794ad228196d187b2f608b82898763ae224720c2f8d75c1f097961fefdaffc4d",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/history/component-package.json",
+      "sha256": "8272eb8f7b85952ae0f6133b56fbb74cc333695c27b1c9fdaccf58a3ff06275a",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/history/custom-policy-superseded.md",
+      "sha256": "d690805b4f06e0f4570efa8308b8b759624f962ce28078b603dfd952e2ddecd7",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/license-text-sources.json",
+      "sha256": "515eb0e690546f429d76ec7dbbc61a9719b32f84a46779a2e1831b4ce1527971",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "docs/licensing/licenses/Apache-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "docs/licensing/licenses/CC0-1.0.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "docs/licensing/licenses/GPL-2.0.txt",
+      "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "docs/licensing/licenses/MIT.txt",
+      "sha256": "4790c01c0726db5d666ede1ad9b0875ed4789b89c9a38a37c7b214b707b69249",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt",
+      "sha256": "ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "docs/licensing/licenses/upstream/aquamarine-LICENSE",
+      "sha256": "52d07f3457591b4496ae2e79b05efd63c7df72135666fa12428d83078c4c0de5",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "docs/licensing/licenses/upstream/glaze-LICENSE",
+      "sha256": "5d49e66411a0807a7c8d6b911b9a26b59e940c71aebe561a3ad8b0b80ac4b7b6",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "docs/licensing/licenses/upstream/hyprland-LICENSE",
+      "sha256": "e01df754903af0ab26babb317b5f5a62dd95f770b733c5275414dd3245d00ae7",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "docs/licensing/licenses/upstream/udis86-LICENSE",
+      "sha256": "1070640aab24327354da44507627d1db6c67482a6facc8375a758796a05e3dff",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "docs/licensing/merged-code-evidence.json",
+      "sha256": "e913dca14c41535aef31d267d622d934aa7ed5047974a022c40a1b3f791c8a0f",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/modules.json",
+      "sha256": "ff22d139bed406c033a5e7a3e7bc729c2ad0dd220d772ee259a1768f888759f8",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "docs/licensing/ownership-evidence.json",
+      "sha256": "f7446efab3af6abc1d7186c288e863cc33a771e4120f3e3444c406bae42b36b6",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/remote-retirement.json",
+      "sha256": "71dbb5e95047390f13b65b562396a678b3f4400f938b653a90d559e6f84b83b1",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/licensing/rules.json",
+      "sha256": "d7d3944cfbb954890f714e4c013cb1629ef9eec74ebd42bbcba1748048094763",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "docs/local-component-admission.md",
+      "sha256": "33b7074d493e68ae9cba08555f5164e39c0e833ac3c33a9943eee8b1ad8ff670",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/local-component-audit.json",
+      "sha256": "d8ba2d8991d67eadfbbcfa1e93d9d9eff864c7a6e7bf2e765099b344446c5250",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/omarchy-wsl-reference.json",
+      "sha256": "162a07ede040e0584293af9c9a11359f21d2c203dd51261c821c75c4ba5f26a4",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/omarchy-wsl-reference.md",
+      "sha256": "661ece1aeb813f5f0b1c3ee98ec7098916be7c7e6fb9ad88ef984e8f4dd446f5",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/provenance.json",
+      "sha256": "b3278806dd5622b36944dadf49031d540fccdc2ad87f6643e7d06b3e7b1d1b7e",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "docs/publication-review/README.md",
+      "sha256": "3df5f51c8a346128af4ac8f318f5d01408a4cd2ff9d0209b603a5d2a44fd22a9",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/release-protocol.md",
+      "sha256": "8cfb631696a31b5053860d7e0b6fbf3e912ea4b0b224a22396a8b0b310f71a1b",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "docs/runner-debugging.md",
+      "sha256": "ebf29910ed152a7f3106768bd2bae559bdc599bc6ae721618f1de564691bdcdf",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "guest/first-run.sh",
+      "sha256": "3a14277a1d66ffd735d3047d99aede632e035a9039fa30d544909b267adc0c5b",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "guest/initialize-user.sh",
+      "sha256": "d294a946950d144aec0e7a4f4a4331757ee5854b45640001e3be6bfd2efae4aa",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "guest/wsx-guest.py",
+      "sha256": "a4879aa3f8cd86ff439548780e3bb492e4e82d001eea27e40cd5d2e851dbb096",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "schema/manifest-v1.schema.json",
+      "sha256": "6aa8bd94f32b04537c4b2cd2edaee193266ab86b64569aa94b1b5b627f3de5f9",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/archive.py",
+      "sha256": "f34ee0f0bd740199c6b1f0adf5a8badfbdd091f2ff3dd5904d2c768e6cc7f8a3",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/assemble-source-components.py",
+      "sha256": "e7d67b2b7b7d3b140027cbe5889bcd1a83f3ec659abdd2fbf076bd74a91c4fc5",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/audit-license-modules.py",
+      "sha256": "d1c4e3b8dc8eaf6835fe38677abdcf20f632efeb81f63ac15817abc3fc6f44bd",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/audit-licenses.py",
+      "sha256": "d27cc72c4b1f26274020e5de65edfb862d6e1d2948e8e71f1dc98030f328ff4a",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/build-components.py",
+      "sha256": "d998b2fe90045876926e3f752b953c7f9f8ecae9cc02316ced273f30ba578831",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/build-kwin.py",
+      "sha256": "9a67e12d1df1a4aa80541cf97ff967f8ee3954147f87c9f29f6a7f37b246f509",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/check-provenance.py",
+      "sha256": "9f84ef3dbfd21de47383afb352837477b85ea345fc89ac2c5b7bbed616a5665c",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/collect-component-materials.py",
+      "sha256": "b769d78af47ae4f7d8460261c69ebd0af491d07f1d08260bd76475c9520fa9ee",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/component_materials.py",
+      "sha256": "6a0ef67452ae50d026666251c3a574e7e7ffae9be16ff3e652ecf262e965dd1a",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/consume-source-components.py",
+      "sha256": "628d60a42475aa54f629b66e184d3b22414016a9bdc8f4c9591328b3f1d96bf2",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/contract.py",
+      "sha256": "b421a948643897052dd2d4d242563aae8f7c1474253ba8dfd6e0403d321f3e77",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/fetch-components.py",
+      "sha256": "f21984a34e845bb633b856e49fa38ceedbb10878d51a85ecacae5b85c3a383a4",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/finalize-cachyos.py",
+      "sha256": "afd0bc17565097c95d01730bd8b0b136744aef2b346cca836e77afb952331310",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/finalize.py",
+      "sha256": "3718e2e0c4bde6bdf6a6e09c5f204d2f476cfc258394252df2864b355e6482f3",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/image_paths.py",
+      "sha256": "8bcea8b8f41938cfecd800929ba4f096ae0caef6f74d11d169fe5dc2a8a61e8b",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/import-component-package.py",
+      "sha256": "b037f6aa4fcbee3a9eafb8715028dd1d78423caa037554b072fb7f6bcf63eded",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/license_inputs.py",
+      "sha256": "0b95c0e113a2e2a1406497343807013422c52ac40008cec1cef95164d4748874",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/package-source-components.py",
+      "sha256": "31168b5bb3d24949332d4dfdcb9cd90890a26d29219b9ef5da253e1fcc687eb0",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/payload_contract.py",
+      "sha256": "0ae2823dca15b9be489944289d39b9d6f91a5d2238db504d8c60afa7246c35bd",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/prepare-build.py",
+      "sha256": "1d0e028fa0bf7990776c1a6a5495c92fa8e2b1df9fc5ffa53034e32b5847e0da",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/prepare-cachyos.py",
+      "sha256": "7ee9f7a063dcc86651371a5bd17296a72ed4f4273167001d12cdc56bea8c5cb2",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/prepare-runner.sh",
+      "sha256": "28e00b94da4255b1f49973a5a90d1adf93510d3476633ac81b0d97046c03a26e",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/product_licenses.py",
+      "sha256": "97703f1076a08d050a84ae0d976dbfb4e5269458747af841f62f47e3d407195c",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/prune-build.py",
+      "sha256": "968b49b64543c6aa462a6abffdd47efc362fbaa489f10324a3ff16c18e3c7103",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/publish.py",
+      "sha256": "487a625bccfc5a3808e8963a841479f0628e3265b9464f15b9f2b131c35f923b",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/releases.py",
+      "sha256": "7e9fe830f2ba862babb4477c53ee32f9f5806c2fac52e5f7f81bee8cec32fccd",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/reset-cachyos-keyring.py",
+      "sha256": "040842d8df70809990defb673aeb13416a20b215d96f06ba32b15b455311667a",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/retry-publication.py",
+      "sha256": "2fa05e4618815d5e8c95679d3e8237e05d0381b22b3c3c75719ef7074a02493a",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/reuse-components.py",
+      "sha256": "40f8c12a3078d57ded7cb3c264c9e0c5445026c68265a2fc72abd809f1f93758",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/sanitize-rootfs.py",
+      "sha256": "2197e3b12bf9d1a444d8108c0338b9a9dc4bcc93527fafdf3cc78515f749e2a0",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/source-support.py",
+      "sha256": "d41913812c7b7b31768eaafd71965a81251206f6372d9012b2062f7fdf87254d",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/source_delivery.py",
+      "sha256": "26e91fd50da2bf65a88654c2f252860240de4272ffca2ce60dccdf2a8464832a",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/source_support.py",
+      "sha256": "6522b7ff4cab03b9480e91fe73e3068c3fc2210e9e1c064f092d6676d59e2104",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/stage-cachyos.py",
+      "sha256": "57c2604280576d45a8f63850622b88b3b48b083a223415e540ca94152192a81a",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/stage-guest.py",
+      "sha256": "5edf0d3d272950b624533ce5bce9ee3eb9843642f323c023ff96d1c4ab12e3ec",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/validate-cachyos.py",
+      "sha256": "b743fe477adbdd7f3dce2073f80473f16110e91bb16fe76ed986c5df7982fa13",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/validate-rootfs.py",
+      "sha256": "26c91e325fa820aaf931aa0d1ecbd6f858283d814d981109c0a5a277cc12827a",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "scripts/write-image-license-map.py",
+      "sha256": "6c38909d64fd83b85edd73df64c2e213ea2870702715a3e9abad90ceaf4c1053",
+      "proposed_treatment": "GPL-2.0-or-later"
+    },
+    {
+      "path": "tests/license_fixture.py",
+      "sha256": "f91befca725e416776adebee8e9cf30cd81a983dee3a16c5bb5ab1ecbcc33c2b",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_archive.py",
+      "sha256": "541664e9e6cee3e4f218457967c9f494f8cfad948fd7501f89e47d81f3dd606b",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_cachyos_keyring.py",
+      "sha256": "6fba91cc671abdfaaab3fc18904594dba84b9a5adfb2d51f633e7409ebe55cb8",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_cachyos_recipe.py",
+      "sha256": "9ebd007ca175a61c102c3644da69912acfdef9d9478e275e034250326717bd03",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_cachyos_stage.py",
+      "sha256": "f68a8f21fff92ef3a3f7aaf2afcae25139df3f0d956a087d3eb43de9d4cfd135",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_component_materials.py",
+      "sha256": "4d4dd69d675676f6397942a1c5ac0964d73170527cf2a99bacc0169ab6e6ab58",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_component_package.py",
+      "sha256": "131923fc79b8c10541967cb5125dc1c5645e9d449859c05f7b3622882dce43a2",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_component_reuse.py",
+      "sha256": "b9a4e8df37a797e582c8a14d65dd615649c1ae509fc777f3be4509a9a842e943",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_contract.py",
+      "sha256": "39e751a7b98a9bd264cf607a4d2cb56f14d05276cc281debd39bb587ab9214c9",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_deduplication.py",
+      "sha256": "aaae900a04b680e17a494fafa0e493451faa714e4052f12b53fcc98237a798ab",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_guest.py",
+      "sha256": "2301103f2bfe1215408424851e5e46e0af0bd2a2eb92abe0369c99d957321a74",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_image_paths.py",
+      "sha256": "60cde71de731c5754e8018adceb83fa858c46ffe6bee06b4712c61ea9db88c5a",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_license_inventory.py",
+      "sha256": "e36ae41718b8c0923f30762cfc19ba866b54af244e2bbf2826573e66f98e750b",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_license_modules.py",
+      "sha256": "0224f27470c231de8a87f7ad8443103a798d0d00d5289bc90652e8f0a8a353d3",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_license_publication.py",
+      "sha256": "31a57719cc26ea1ca28c01a4fb8f4618190d7b6a7147822f2b5848051fb844af",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_payload_contract.py",
+      "sha256": "fe4764318782b10eaaebaa416031bc2a2a6dc8a78e73ff01142e452a1eac8b76",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_product_licenses.py",
+      "sha256": "137ab09b1bec0874e7fc43e45f9612efb9f1d55d806d877fc8d594f195bf9660",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_publish.py",
+      "sha256": "0af74ff5e6469effe2c656f901b5bece45c056ca78db44dcec3d6382e9492ae0",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_releases.py",
+      "sha256": "7c06aa58422e6e1f056e36a016fcb84c097ed2c9233d2c9013cba16ba8e1d675",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_schema.py",
+      "sha256": "a7c429d32896d32f0dd5e7d110db78b223bf64700603e1767ba37f33f8ee0e64",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_source_components.py",
+      "sha256": "a0c316c175e80a176966c32543705ed260925d33ef52b956edc4cdd7c4ba589f",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_source_delivery.py",
+      "sha256": "bd8f3f59bd4fd333003dba61a77a87183fcc27fa4aef2993706f50b4849c21e4",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_source_package_roundtrip.py",
+      "sha256": "1a0c324b387b3e9979d7b82d9fd7e07aa3830e0d0dadc903c0153bd3fcc45343",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "tests/test_stage.py",
+      "sha256": "e833b1f2c1ef4244f6d0474edffcc84f4c3274aeceb66255e57927145ac040ab",
+      "proposed_treatment": "PolyForm-Noncommercial-1.0.0"
+    },
+    {
+      "path": "vendor/rvgpu/include/librvgpu/rvgpu-protocol.h",
+      "sha256": "5b0fab9188be07334406ebae498fe8c992c4e81490583e0a9f030df421285608",
+      "proposed_treatment": "retain-original"
+    },
+    {
+      "path": "vendor/wsx-proto/device-host/production/start-cachyos-plasma.py",
+      "sha256": "1a1f17086f16220884c09396709742433204cf855ed671f4d94b9a5e10bc4cf1",
+      "proposed_treatment": "retain-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/device-host/production/start-guest.py",
+      "sha256": "ad37b095f13d4da78d610bf635adc54c8a2e062cd9ec0d309bfbe74f509bef85",
+      "proposed_treatment": "retain-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/device-host/production/test-plasma-session.py",
+      "sha256": "8d79f8551758138ba48a067360da658eedcf88405d0ec119aeb0a9ad2dfc8663",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/build-venus.py",
+      "sha256": "152c43017f2aec24e29298b8398e1c374ed531fdca1690062f6684c398081a38",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/build.py",
+      "sha256": "7b79e80651c6a7498f2068d45b549f4871485edc2ee0406aee4aa9007063b28b",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/import-diagnostics.patch",
+      "sha256": "fa101b2ea361bf2a052b8aa28581368201ea25e57b320ff6e0f45a9b21266e9f",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/linear-depth-segregation.patch",
+      "sha256": "5c1de8c2548461972d6315aa7bf7754a09a51f69e8e1d8f300058e688610d7c4",
+      "proposed_treatment": "retain-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/linear-feedback-compat.patch",
+      "sha256": "7a1383ba2a1201f7c1f748f8fb85dac0bafa5b033101e885b59b37e3400c2fd1",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/linear-modifier-feedback.patch",
+      "sha256": "8e5b4bd514bee2a2a7324b5f827ecdaac91e7ab3de63584b31172118078dc2f0",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/linear-shared-compat.patch",
+      "sha256": "bdb3d3ce8e8b69e8b2c9bd1313d3a0a30e659abf1118e8248d7fbb0bc741b435",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/modifier-features2.patch",
+      "sha256": "3859d82993ae381342f9d1b6294779047f58ff59b22d49fc34f5f62414359c76",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/negotiated-export.patch",
+      "sha256": "78e2a299549a3209fdfcd2c6147c1fb6ed9eac8ffaa6e833211f0b2fda253477",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/opaque-consumer.patch",
+      "sha256": "62120bf284673a6381ac054ce62a0fb824c8c2db8b052a58c70be11945f11eb7",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/opaque-gbm-export.patch",
+      "sha256": "755cd00fbef9ae5818e329621f095b3101db3f831db49db7b5293fa683a67278",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/venus-direct-wsi.patch",
+      "sha256": "1bd67ee9276b8d2fb8e78a16ce7180af07c24f04c371a12a318b457bb08ebd86",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/venus-nv-linear-color.patch",
+      "sha256": "a2723c0b15316fbbeca57f02cfa8231fbe25ad795307b889a1c4236d96e9a8f5",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/venus-opaque-bind-order.patch",
+      "sha256": "28770800c1634a5797576bb0b3fe0e237cfd84dc8cef7e018cd1199f18f61819",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/venus-opaque-export-order.patch",
+      "sha256": "edefffc1e1dd6ddcb2956c6013072d446f7e06393551e2e411ec77c595ec31e5",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/venus-opaque-import.patch",
+      "sha256": "73182a48e3a676071ea0af83b96d609eebb0ded37f7e72758636a3f1bff7120f",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/venus-opaque-query.patch",
+      "sha256": "72be94923a88c5e59af48a5da96f1b3156b033f67aeb09c9cf484e4e20629463",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/venus-opaque-wsi.patch",
+      "sha256": "10dd9744e234f17087a78284b7e4dadbc92c0a5c7f1ba2a5aa6b4fe6b6c017a2",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-compat/venus-zink-drm-identity.patch",
+      "sha256": "1945e914e08b652086ddf2ea0aa89d1e8bb24e13a3e8286848139fc6ec618a33",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/aquamarine-opaque-consumer.patch",
+      "sha256": "dfb78da51698da0b1c9549f1ff18dedb65cfc21e6b48ad8e4e749d13b3c712f4",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/build-compositor.py",
+      "sha256": "9f8026c065e9643d1319b784e01bf6e8d8c78d21421ce53bf70a57f4466e0c6e",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/gbm-descriptor.c",
+      "sha256": "88eacf59680d17b47a7f3c6d1e7fe4b970a7ef381fd2f3a5c944af444bca82e3",
+      "proposed_treatment": "retain-MIT-and-GPL-boundaries"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/gbm-descriptor.h",
+      "sha256": "f07e7fae5abf1d419290612f23105f2789fd027375469f001177744fdb83727a",
+      "proposed_treatment": "retain-MIT-and-GPL-boundaries"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/hyprland-opaque-consumer.patch",
+      "sha256": "9ff333763ac3fa8aefa0666a4cd4e37c7c46a336d68089562381e132c3809659",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/kwin-framebuffer.c",
+      "sha256": "9b1d540036cc7709b0e3bd70767522772414b8880d4ef256a6400830b6c70ce1",
+      "proposed_treatment": "retain-MIT-and-GPL-boundaries"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/kwin-framebuffer.h",
+      "sha256": "0b0fd3d598e9bd2a2546b0a62bdafea20db1497ff6094f4407bef3e0049afb46",
+      "proposed_treatment": "retain-MIT-and-GPL-boundaries"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/kwin-native-buffer.h",
+      "sha256": "6325bd6ecd0a6ee5d25bf0a88fc0c0bcae90ea595ba9efc88f98e9e3ddc6c3bb",
+      "proposed_treatment": "retain-MIT-and-GPL-boundaries"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/kwin-opaque-consumer.patch",
+      "sha256": "85c132f9ff079ed4922e512428f5c80137516915d7f8a51c56c7e0a0d68e5f72",
+      "proposed_treatment": "retain-upstream-GPL-2.0-or-later; owner-original-patch-additions-GPL-2.0-or-later"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/kwin-wayland.inc",
+      "sha256": "bdc65ff61f61d24236e3efbbb754da788819aca8df69fd8e6b8ab01248b73d58",
+      "proposed_treatment": "retain-MIT-and-GPL-boundaries"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/prepare-kwin.py",
+      "sha256": "8d6de4393d10bab48c2c44ca31638daf8edbc2e8a3364b573e11b0ffcaa31741",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/wayland/wsx-opaque-buffer-v1.xml",
+      "sha256": "76bd33d58bc275846e78092f1d6e7eaab37b1423d9d3e8535508520ff13ce4c8",
+      "proposed_treatment": "retain-MIT-and-GPL-boundaries"
+    },
+    {
+      "path": "vendor/wsx-proto/guest-opaque/wsx-opaque-uapi.h",
+      "sha256": "43745e497258880e938a303bf21b7b47431a62ab186449504088d926ccf29e6d",
+      "proposed_treatment": "retain-MIT-and-GPL-boundaries"
+    },
+    {
+      "path": "vendor/wsx-proto/input/guest.c",
+      "sha256": "1f26dd4b3593624bd5653ad55f04602350206cf5ae83e2cb1961d665e346bfeb",
+      "proposed_treatment": "retain-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/network/Panel.qml.patch",
+      "sha256": "bfca7b26bec371ccb5b18c15ad0067a4538abe544307510c52305d4a0cf5867c",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/network/README.md",
+      "sha256": "6de90c90ac35bbc7f9b05ea793707e6e4be534c92af2d8fcb1befc7bb218cbc3",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/network/install.py",
+      "sha256": "40ed88fff12ce0b278eb25400970fb714dd5079349157d6a787b4608326c9392",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/network/manifest.json",
+      "sha256": "426ae06bc09f96853ceef2b84b005d465864a442b20d4deca3b6b89247d837e4",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/network/omarchy-4.0.6/Panel.qml.patch",
+      "sha256": "0cb79d53615f52103900af4b70d71ee84b9c41dbc56e8c3b0394c6d28fbf7a87",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/network/omarchy-4.0.6/manifest.json",
+      "sha256": "1d14fa0b6a6a542d0aebbad6875099c26b0aa1e7aad51bd074658671d4414305",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/network/omarchy-4.0.6/wifi.sh.patch",
+      "sha256": "8e76cd1ddcc036256e065244bddd6b7a261dc6ca9780af1e8d3c84215f5d7e81",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/network/wifi.sh.patch",
+      "sha256": "8e76cd1ddcc036256e065244bddd6b7a261dc6ca9780af1e8d3c84215f5d7e81",
+      "proposed_treatment": "retain-target-upstream-terms; owner-original-unlicensed-additions-MIT"
+    },
+    {
+      "path": "vendor/wsx-proto/session/README.md",
+      "sha256": "c7f3c975f3d48d5309e72253eb053fb882649a3b99b41664ceeb1beb6deddd9a",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/session/enter.py",
+      "sha256": "2ac6cd242863a2a31aca914f40ad985d5c7d964b03e81aa8e48778fb5fdfa465",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/session/install.py",
+      "sha256": "08dbf647abe00a67dee1b9c2149e37ef1f85be1a2d6fdd17e84af05d7bb0ecb0",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    },
+    {
+      "path": "vendor/wsx-proto/session/wsx-launch-app",
+      "sha256": "16a0bdc8408dfc6789151fb34b24dadc2af5064f83bbc59f8c0b9ac1f2089fc8",
+      "proposed_treatment": "GPL-2.0-or-later-for-owner-original-expression"
+    }
+  ],
+  "notes": [
+    "Exact snapshot for approval; future files follow approved directory rules with explicit third-party exceptions.",
+    "Existing license declarations and upstream expression are never replaced by an original-work grant.",
+    "Generator output grants are specified separately in ACTIVATION-PROPOSAL.md.",
+    "Historical approval snapshot; current effective grants and updated paths are in LICENSE-MAP.md and modules.json."
+  ],
+  "owner_approved": true
+}

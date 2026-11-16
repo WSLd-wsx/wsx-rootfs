@@ -1,0 +1,43 @@
+--- a/src/virtio/vulkan/vn_device_memory.c
++++ b/src/virtio/vulkan/vn_device_memory.c
+@@ -139,6 +139,31 @@
+ 
+    vn_ring_roundtrip(dev->primary_ring);
+ 
++   VkDeviceSize native_size = alloc_info->allocationSize;
++   const char *opaque_import = getenv("WSX_VENUS_OPAQUE_IMPORT");
++   if (opaque_import && !strcmp(opaque_import, "1") &&
++       dev->physical_device->base.vk.supported_extensions.NV_linear_color_attachment) {
++      VkMemoryResourceAllocationSizePropertiesMESA size = {
++         .sType = VK_STRUCTURE_TYPE_MEMORY_RESOURCE_ALLOCATION_SIZE_PROPERTIES_MESA,
++      };
++      VkMemoryResourcePropertiesMESA props = {
++         .sType = VK_STRUCTURE_TYPE_MEMORY_RESOURCE_PROPERTIES_MESA, .pNext = &size,
++      };
++      result = vn_call_vkGetMemoryResourcePropertiesMESA(
++         dev->primary_ring, vn_device_to_handle(dev), bo->res_id, &props);
++      if (result != VK_SUCCESS || !size.allocationSize ||
++          size.allocationSize < alloc_info->allocationSize ||
++          !(props.memoryTypeBits & (1u << alloc_info->memoryTypeIndex))) {
++         vn_renderer_bo_unref(dev->renderer, bo);
++         return result == VK_SUCCESS ? VK_ERROR_INVALID_EXTERNAL_HANDLE : result;
++      }
++      native_size = size.allocationSize;
++      vn_log(dev->instance,
++             "WSX_OPAQUE_IMPORT_SIZE: resource=%u requested=%llu native=%llu type=%u",
++             bo->res_id, (unsigned long long)alloc_info->allocationSize,
++             (unsigned long long)native_size, alloc_info->memoryTypeIndex);
++   }
++
+    const VkImportMemoryResourceInfoMESA import_memory_resource_info = {
+       .sType = VK_STRUCTURE_TYPE_IMPORT_MEMORY_RESOURCE_INFO_MESA,
+       .pNext = alloc_info->pNext,
+@@ -147,7 +172,7 @@
+    const VkMemoryAllocateInfo memory_allocate_info = {
+       .sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
+       .pNext = &import_memory_resource_info,
+-      .allocationSize = alloc_info->allocationSize,
++      .allocationSize = native_size,
+       .memoryTypeIndex = alloc_info->memoryTypeIndex,
+    };
+    result = vn_device_memory_alloc_simple(dev, mem, &memory_allocate_info);

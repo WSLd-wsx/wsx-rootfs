@@ -1,0 +1,307 @@
+--- a/src/gallium/drivers/zink/zink_resource.c
++++ b/src/gallium/drivers/zink/zink_resource.c
+@@ -382,7 +382,26 @@
+          info.pNext = &mod_info;
+       }
+ 
++      VkPhysicalDeviceExternalImageFormatInfo external = {
++         .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
++         .pNext = info.pNext,
++         .handleType = VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT,
++      };
++      VkExternalImageFormatProperties external_props = {
++         .sType = VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES,
++         .pNext = props2.pNext,
++      };
++      const bool shared_query = screen->wsx_linear_shared && modifier != DRM_FORMAT_MOD_INVALID;
++      if (shared_query) {
++         info.pNext = &external;
++         props2.pNext = &external_props;
++      }
+       ret = VKSCR(GetPhysicalDeviceImageFormatProperties2)(screen->pdev, &info, &props2);
++      if (ret == VK_SUCCESS && shared_query &&
++          (external_props.externalMemoryProperties.externalMemoryFeatures &
++           (VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT | VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT)) !=
++          (VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT | VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT))
++         ret = VK_ERROR_FORMAT_NOT_SUPPORTED;
+       image_props = props2.imageFormatProperties;
+       if (screen->info.have_EXT_host_image_copy && ici->usage & VK_IMAGE_USAGE_HOST_TRANSFER_BIT_EXT)
+          optimalDeviceAccess = hic.optimalDeviceAccess;
+@@ -395,8 +414,15 @@
+    } else
+       ret = VKSCR(GetPhysicalDeviceImageFormatProperties)(screen->pdev, ici->format, ici->imageType,
+                                                    ici->tiling, ici->usage, ici->flags, &image_props);
+-   if (ret != VK_SUCCESS)
++   if (ret != VK_SUCCESS) {
++      static unsigned wsx_query_count;
++      if (debug_get_bool_option("WSX_ZINK_NEGOTIATE_EXPORT", false) &&
++          wsx_query_count++ < 40)
++         mesa_loge("WSX_REBIND_QUERY: format=%u tiling=%u usage=%x flags=%x modifier=%llx result=%d",
++                   ici->format, ici->tiling, ici->usage, ici->flags,
++                   (unsigned long long)modifier, ret);
+       return false;
++   }
+    if (ici->extent.depth > image_props.maxExtent.depth ||
+        ici->extent.height > image_props.maxExtent.height ||
+        ici->extent.width > image_props.maxExtent.width)
+@@ -413,11 +439,19 @@
+ }
+ 
+ static VkImageUsageFlags
+-get_image_usage_for_feats(struct zink_screen *screen, VkFormatFeatureFlags2 feats, const struct pipe_resource *templ, unsigned bind, bool *need_extended)
++get_image_usage_for_feats(struct zink_screen *screen, VkFormatFeatureFlags2 feats, const struct pipe_resource *templ, unsigned bind, bool linear_layout, bool *need_extended)
+ {
+    VkImageUsageFlags usage = 0;
+    bool is_planar = util_format_get_num_planes(templ->format) > 1;
+    *need_extended = false;
++   /* Keep conditional NV support local to an actually linear allocation.
++    * Never publish it as unconditional DRM color-attachment support.
++    */
++   const bool conditional_color = screen->wsx_linear_shared && linear_layout &&
++      (feats & VK_FORMAT_FEATURE_2_LINEAR_COLOR_ATTACHMENT_BIT_NV);
++   const bool color = (feats & VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT) || conditional_color;
++   const bool shared_linear = screen->wsx_linear_shared && linear_layout &&
++      (bind & (PIPE_BIND_SHARED | ZINK_BIND_DMABUF));
+ 
+    if (bind & ZINK_BIND_TRANSIENT)
+          return util_format_is_depth_or_stencil(templ->format) ? VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT : VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+@@ -436,9 +470,9 @@
+    }
+ 
+    if (bind & PIPE_BIND_RENDER_TARGET) {
+-      if (feats & VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT) {
++      if (color) {
+          usage |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+-         if ((bind & (PIPE_BIND_LINEAR | PIPE_BIND_SHARED)) != (PIPE_BIND_LINEAR | PIPE_BIND_SHARED))
++         if (!shared_linear && (bind & (PIPE_BIND_LINEAR | PIPE_BIND_SHARED)) != (PIPE_BIND_LINEAR | PIPE_BIND_SHARED))
+             usage |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
+          if (screen->info.have_EXT_attachment_feedback_loop_layout)
+             usage |= VK_IMAGE_USAGE_ATTACHMENT_FEEDBACK_LOOP_BIT_EXT;
+@@ -448,7 +482,7 @@
+          return 0;
+       }
+    } else if ((bind & PIPE_BIND_SAMPLER_VIEW) && !util_format_is_depth_or_stencil(templ->format)) {
+-      if (!(feats & VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT)) {
++      if (!color) {
+          /* ensure we can u_blitter this later */
+          *need_extended = true;
+          return 0;
+@@ -465,7 +499,7 @@
+          usage |= VK_IMAGE_USAGE_ATTACHMENT_FEEDBACK_LOOP_BIT_EXT;
+    /* this is unlikely to occur and has been included for completeness */
+    } else if (bind & PIPE_BIND_SAMPLER_VIEW && !(usage & VK_IMAGE_USAGE_TRANSFER_DST_BIT)) {
+-      if (feats & VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT)
++      if (color)
+          usage |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+       else
+          return 0;
+@@ -575,7 +609,7 @@
+ 
+       if (feats & VK_FORMAT_FEATURE_DISJOINT_BIT && util_format_get_num_planes(templ->format))
+          ici->flags |= VK_IMAGE_CREATE_DISJOINT_BIT;
+-      VkImageUsageFlags usage = get_image_usage_for_feats(screen, feats, templ, bind, &need_extended);
++      VkImageUsageFlags usage = get_image_usage_for_feats(screen, feats, templ, bind, false, &need_extended);
+       assert(!need_extended);
+       if (double_check_ici(screen, ici, usage, modifiers[i], true)) {
+          /* assume "best" modifiers are last in array; just return last good modifier */
+@@ -607,10 +641,14 @@
+       /* only try linear if no other options available */
+       const struct zink_modifier_props *prop = zink_get_modifier_props(screen, templ->format);
+       VkFormatFeatureFlags2 feats = find_modifier_feats(prop, DRM_FORMAT_MOD_LINEAR);
++      static unsigned wsx_linear_count;
++      if (debug_get_bool_option("WSX_ZINK_NEGOTIATE_EXPORT", false) && wsx_linear_count++ < 12)
++         mesa_logi("WSX_REBIND_LINEAR: format=%u feats=%llx bind=%x flags=%x",
++                   ici->format, (unsigned long long)feats, bind, ici->flags);
+       if (feats) {
+          if (feats & VK_FORMAT_FEATURE_DISJOINT_BIT && util_format_get_num_planes(templ->format) > 1)
+             ici->flags |= VK_IMAGE_CREATE_DISJOINT_BIT;
+-         VkImageUsageFlags usage = get_image_usage_for_feats(screen, feats, templ, bind, &need_extended);
++         VkImageUsageFlags usage = get_image_usage_for_feats(screen, feats, templ, bind, true, &need_extended);
+          assert(!need_extended);
+          if (double_check_ici(screen, ici, usage, DRM_FORMAT_MOD_LINEAR, true)) {
+             *mod = DRM_FORMAT_MOD_LINEAR;
+@@ -624,11 +662,11 @@
+          ici->flags |= VK_IMAGE_CREATE_DISJOINT_BIT;
+       if (ici->flags & VK_IMAGE_CREATE_EXTENDED_USAGE_BIT)
+          feats = UINT32_MAX;
+-      VkImageUsageFlags usage = get_image_usage_for_feats(screen, feats, templ, bind, &need_extended);
++      VkImageUsageFlags usage = get_image_usage_for_feats(screen, feats, templ, bind, tiling == VK_IMAGE_TILING_LINEAR, &need_extended);
+       if (need_extended) {
+          ici->flags |= VK_IMAGE_CREATE_EXTENDED_USAGE_BIT | VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT;
+          feats = UINT32_MAX;
+-         usage = get_image_usage_for_feats(screen, feats, templ, bind, &need_extended);
++         usage = get_image_usage_for_feats(screen, feats, templ, bind, tiling == VK_IMAGE_TILING_LINEAR, &need_extended);
+       }
+       if (double_check_ici(screen, ici, usage, DRM_FORMAT_MOD_INVALID, true))
+          return true;
+@@ -1450,7 +1488,17 @@
+       assert(num_dmabuf_planes <= 4);
+    }
+ 
++   const bool actual_linear = ici.tiling == VK_IMAGE_TILING_LINEAR ||
++      (ici.tiling == VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT && obj->modifier == DRM_FORMAT_MOD_LINEAR);
++   VkFormatFeatureFlags2 linear_features = screen->wsx_linear_shared ?
++      find_modifier_feats(zink_get_modifier_props(screen, templ->format), DRM_FORMAT_MOD_LINEAR) : 0;
++   obj->wsx_conditional_linear_color = screen->wsx_linear_shared && actual_linear &&
++      (ici.usage & VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) &&
++      !(linear_features & VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT) &&
++      (linear_features & VK_FORMAT_FEATURE_2_LINEAR_COLOR_ATTACHMENT_BIT_NV);
+    alloc_info->need_dedicated = get_image_memory_requirement(screen, obj, num_planes, &reqs);
++   if (obj->wsx_conditional_linear_color && (alloc_info->shared || alloc_info->external))
++      alloc_info->need_dedicated = true;
+    if (templ->usage == PIPE_USAGE_STAGING && ici.tiling == VK_IMAGE_TILING_LINEAR)
+       alloc_info->flags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
+    else
+@@ -1875,7 +1923,11 @@
+ {
+    struct zink_screen *screen = zink_screen(ctx->base.screen);
+    assert((res->base.b.bind & bind) == 0);
+-   res->base.b.bind |= bind;
++   struct pipe_resource candidate = res->base.b;
++   candidate.bind |= bind;
++   bool candidate_linear = res->linear;
++   uint64_t *candidate_modifiers = res->modifiers;
++   unsigned candidate_count = res->modifiers_count;
+    struct zink_resource_object *old_obj = res->obj;
+    ASSERTED uint64_t mod = DRM_FORMAT_MOD_INVALID;
+    if (bind & ZINK_BIND_DMABUF && !res->modifiers_count && !res->obj->is_buffer && screen->info.have_EXT_image_drm_format_modifier) {
+@@ -1883,19 +1935,17 @@
+       const bool negotiate = debug_get_bool_option("WSX_ZINK_NEGOTIATE_EXPORT", false);
+       unsigned count = negotiate ? props->drmFormatModifierCount : 1;
+       if (!count) {
+-         res->base.b.bind &= ~bind;
+          mesa_loge("WSX_EXPORT_CONTRACT: no native modifier candidates format=%u", res->base.b.format);
+          return false;
+       }
+       uint64_t *candidates = malloc(count * sizeof(*candidates));
+       if (!candidates) {
+-         res->base.b.bind &= ~bind;
+          return false;
+       }
+       for (unsigned i = 0; i < count; i++)
+          candidates[i] = negotiate ? props->pDrmFormatModifierProperties[i].drmFormatModifier : DRM_FORMAT_MOD_LINEAR;
+-      res->modifiers = candidates;
+-      res->modifiers_count = count;
++      candidate_modifiers = candidates;
++      candidate_count = count;
+       if (!negotiate)
+          mod = DRM_FORMAT_MOD_LINEAR;
+       /* Creation still checks the complete Vulkan format/usage combination.
+@@ -1903,13 +1953,18 @@
+        * An opaque Win32 allocation is not a DRM modifier candidate.
+        */
+    }
+-   struct zink_resource_object *new_obj = resource_object_create(screen, &res->base.b, NULL, &res->linear, res->modifiers, res->modifiers_count, NULL, NULL);
++   struct zink_resource_object *new_obj = resource_object_create(screen, &candidate, NULL, &candidate_linear, candidate_modifiers, candidate_count, NULL, NULL);
+    if (!new_obj) {
+       debug_printf("new backing resource alloc failed!\n");
+-      res->base.b.bind &= ~bind;
++      if (candidate_modifiers != res->modifiers)
++         free(candidate_modifiers);
+       return false;
+    }
+    assert(mod == DRM_FORMAT_MOD_INVALID || new_obj->modifier == DRM_FORMAT_MOD_LINEAR);
++   res->base.b.bind = candidate.bind;
++   res->linear = candidate_linear;
++   res->modifiers = candidate_modifiers;
++   res->modifiers_count = candidate_count;
+    struct zink_resource staging = *res;
+    staging.obj = old_obj;
+    staging.all_binds = 0;
+@@ -2155,6 +2210,13 @@
+          if (result != VK_SUCCESS) {
+             mesa_loge("WSX_EXPORT_DIAG stage=get_fd result=%d format=%u bind=%x modifier=%llx", result, res->base.b.format, res->base.b.bind, (unsigned long long)obj->modifier);
+             return false;
++         }
++         if (screen->wsx_linear_shared) {
++            static unsigned wsx_export_count;
++            if (wsx_export_count++ < 16)
++               mesa_logi("WSX_SHARED_FD: fd=%d format=%u modifier=%llx size=%ux%u",
++                         fd, res->base.b.format, (unsigned long long)obj->modifier,
++                         res->base.b.width0, res->base.b.height0);
+          }
+          if (whandle->type == WINSYS_HANDLE_TYPE_KMS) {
+             uint32_t h;
+--- a/src/gallium/drivers/zink/zink_types.h
++++ b/src/gallium/drivers/zink/zink_types.h
+@@ -1230,6 +1230,7 @@
+    bool is_buffer;
+    bool exportable;
+    bool exportable_dmabuf;
++   bool wsx_conditional_linear_color;
+ 
+    /* TODO: this should be a union */
+    int handle;
+@@ -1379,6 +1380,7 @@
+    bool abort_on_hang;
+    bool frame_marker_emitted;
+    bool driver_name_is_inferred;
++   bool wsx_linear_shared;
+    uint64_t curr_batch; //the current batch id
+    uint32_t last_finished;
+    VkSemaphore sem;
+--- a/src/gallium/drivers/zink/zink_screen.c
++++ b/src/gallium/drivers/zink/zink_screen.c
+@@ -2979,6 +2979,7 @@
+    screen->info.have_EXT_attachment_feedback_loop_layout = false;
+    screen->info.have_EXT_attachment_feedback_loop_dynamic_state = false;
+    screen->info.have_KHR_dynamic_rendering_local_read = false;
++   screen->wsx_linear_shared = true;
+ }
+ 
+ static void
+--- a/src/gallium/drivers/zink/zink_context.c
++++ b/src/gallium/drivers/zink/zink_context.c
+@@ -3474,9 +3474,41 @@
+       zink_batch_reference_resource(ctx, res->transient);
+ }
+ 
++static bool
++wsx_linear_framebuffer_valid(struct zink_context *ctx)
++{
++   struct zink_screen *screen = zink_screen(ctx->base.screen);
++   if (!screen->wsx_linear_shared)
++      return true;
++   bool conditional = false;
++   for (unsigned i = 0; i < ctx->fb_state.nr_cbufs; i++) {
++      struct pipe_resource *tex = ctx->fb_state.cbufs[i].texture;
++      conditional |= tex && zink_resource(tex)->obj->wsx_conditional_linear_color;
++   }
++   if (!conditional)
++      return true;
++   for (unsigned i = 0; i < ctx->fb_state.nr_cbufs; i++) {
++      const struct pipe_surface *surf = &ctx->fb_state.cbufs[i];
++      if (!surf->texture)
++         continue;
++      struct zink_resource *res = zink_resource(surf->texture);
++      const struct zink_format_props *props = zink_get_format_props(screen, surf->format);
++      if ((!res->linear && res->obj->modifier != 0) || surf->nr_samples || res->transient ||
++          !(props->linearTilingFeatures & VK_FORMAT_FEATURE_2_LINEAR_COLOR_ATTACHMENT_BIT_NV)) {
++         mesa_loge("WSX_LINEAR_FRAMEBUFFER: rejected incompatible color attachment %u", i);
++         return false;
++      }
++   }
++   return true;
++}
++
+ void
+ zink_batch_rp(struct zink_context *ctx)
+ {
++   if (!wsx_linear_framebuffer_valid(ctx)) {
++      zink_batch_no_rp(ctx);
++      return;
++   }
+    assert(!(ctx->in_rp && ctx->rp_changed));
+    if (!ctx->track_renderpasses && !ctx->blitting) {
+       if (ctx->rp_tc_info_updated)
+--- a/src/gallium/drivers/zink/zink_clear.c
++++ b/src/gallium/drivers/zink/zink_clear.c
+@@ -509,6 +509,8 @@
+       cmdbuf = ctx->bs->cmdbuf;
+       if (!ctx->in_rp)
+          zink_batch_rp(ctx);
++      if (!ctx->in_rp)
++         return;
+    } else {
+       zink_blit_barriers(ctx, NULL, res, full_clear);
+       cmdbuf = zink_get_cmdbuf(ctx, NULL, res);

@@ -1,0 +1,145 @@
+# Release protocol version 1
+
+Tags are `<distribution_id>-<major>.<minor>.<patch>-r<revision>`. Recognize the
+full registered distribution ID first; never split an arbitrary ID on hyphens.
+Omarchy ordering is numeric `(major, minor, patch, revision)`. For the explicitly
+authorized first CachyOS Draft only, `2026.11.1-r1` is an internal WSX build-date
+snapshot, not an official CachyOS release. Its manifest `upstream_release` holds
+the explicit snapshot label and `upstream_commit` identifies the pinned official
+installer configuration; rolling package repositories are separately recorded.
+Future snapshot naming, ordering and automated trigger cadence remain undecided.
+
+Every image carries manifest.json, SHA256SUMS, sources.json, validation.json and
+the named .rootfs.tar.zst archive. A completion.json marker is uploaded last,
+only after every payload asset has been downloaded and its size/hash verified.
+The marker lists each payload asset's hash and size and the canonical input
+identity. Its existence alone is insufficient: consumers must validate the
+listed bytes. Incomplete Drafts are retryable; conflicting existing asset bytes
+require a new revision. Public assets are never replaced. A public release is
+not writable even during retry. External promotion must be separately authorized.
+
+The `review_index` in `sources.json` provides a compact evidence entry point for
+the image identity, workflow run, package inventory and graphics source records.
+Known source requirements are flagged as unverified until reviewed; the index is
+not a license approval. The source record is checksummed and retained alongside
+the image and recipe; CI logs remain subject to their retention policy. No manual
+review of this index is required for candidate publication.
+
+Archive checks are scoped per distribution, recipe inputs and tar/zstd versions.
+The first build without a matching completed release performs a full extraction
+and file/metadata comparison. A later identical recipe may use stream verification
+only when the prior full result, its release metadata, asset hashes and source
+record are verified. Changed or unavailable evidence falls back to full. Every
+build checks the compressed stream and archive hash; sources.json records the
+actual verification mode and, when applicable, the referenced prior release.
+Stream-only verification does not establish the new image's extracted metadata;
+rolling package changes can alter that metadata even when recipe inputs match.
+
+Build identity hashes canonical sorted JSON with distribution, upstream release
+and commit, architecture, recipe revision and all critical component inputs.
+Build commit records the source used but is not a substitute for component pins.
+The identity and immutable version slot must agree. Serialize publication by
+distribution/version/revision; never mark failed builds as completed.
+
+## Manifest fields
+
+- schema_version: integer protocol version, currently 1.
+- distribution_id: registered distro, not a human display label.
+- image_version, upstream_release, wsx_revision: matching version components.
+- upstream_commit and build_commit: full 40-character Git commits.
+- architecture: x86_64 initially; archive_format: tar.zst.
+- cpu_requirements: when present, a mandatory CPU compatibility condition;
+  `x86-64-v3` must be checked by core and cannot be treated as generic x86-64.
+- asset_name: exact derived archive name; sha256: lowercase archive digest.
+- compressed_size and unpacked_size: measured bytes, not package estimates.
+- installation_space_required: conservative total free-space requirement including
+  archive, extraction and import working space; not a guarantee against host quota.
+- build_identity: digest of canonical build inputs, distinct from archive hash.
+- guest_interface_abi: positive integer or null if unresolved.
+- graphics_components: names, versions and hashes of complete selected input sets.
+- kernel_requirements: paired protocol/kernel compatibility requirements. Core
+  selects modules by actual kernel compatibility; rootfs does not ship local .ko.
+- minimum_wsx_core_version: stable semantic version or null if not established.
+- validation: build and offline results, each passed, failed or not_run.
+  Candidate publication requires both to pass. WSL and desktop acceptance are
+  recorded separately during promotion, not in the build report. Historical
+  reports may also contain their original hardware placeholders. Unknown
+  compatibility never permits installation.
+
+`scripts/contract.py` is a resolution example, not the wsld.exe implementation.
+It receives already fetched and asset-verified manifests. It excludes Drafts and
+prereleases, checks the tag against the manifest, filters by distro, refuses
+unknown compatibility. Manual acceptance is reviewed before promotion, separately
+from the immutable build-time validation fields. The caller supplies compatibility checks. Explicit versions never fall
+back. Latest does not use repository-wide releases/latest or upload timestamps.
+
+## Candidate testing and preservation
+
+Use `gh release download TAG --repo WSLd-wsx/wsx-rootfs --dir NEW_DIRECTORY`
+with an authenticated account that can access Drafts, then verify SHA256SUMS and
+completion metadata. Draft assets are not promised to anonymous clients. Core
+must decompress zstd before WSL import and retain tar metadata. Candidate releases and their exact validation results are recorded separately;
+these protocol instructions do not establish hardware acceptance.
+
+Keep logs for failed attempts. No automatic Release/Draft deletion is configured.
+Actions artifact retention may be bounded separately once build diagnostics are
+implemented. CI success is not WSL/GPU or long-term stability evidence.
+
+## Automatic and explicit revisions
+
+A dispatch revision of 0 uses `distros/omarchy/revisions.json`: reviewed fixes
+can advance the current upstream release without rebuilding an obsolete r1 on
+every scheduled check. Unlisted new upstream versions begin at r1. An explicit
+positive revision overrides the mapping but cannot replace an existing version
+with different inputs. The selected revision is part of the build identity;
+unrelated mapping entries are not hashed as image inputs.
+
+For a partially uploaded Draft, recovery must validate the original build/run
+identity, the source commit, each uploaded byte and the expected asset set.
+Operational workflows and recovery entry points live in `wsx-rootfs-ops`.
+Legacy rootfs-repository runs retain their original provenance rules. New
+operations runs bind the separate operations repository and commit in the build
+identity. An absent or incomplete original payload is not reconstructed by
+silently rebuilding; choose a new revision when the original bytes cannot be
+verified. No recovery or publication runs automatically.
+
+## External hardware acceptance evidence (draft v1)
+
+Product direction: the operator starts the exact candidate locally and confirms
+visible desktop behavior and interactive functions. Image identification,
+environment collection, machine-observable lifecycle checks, evidence binding,
+remote retention and verification should be automated. Preserve individual
+human observations and distinguish them from automated measurements; an
+unavailable measurement remains unresolved. Existing v1 tools below do not yet
+implement this end-to-end automation, and a local report alone is not a product
+acceptance record. Stable promotion remains a separate authorized decision.
+
+A separate acceptance record may describe actual testing of an immutable
+candidate image. It identifies the exact tag, SHA-256 of the rootfs archive and
+manifest, UTC observation time, Windows/WSL/GPU/runtime context, and individual
+manual results for WSL boot, account initialization, GPU first frame, desktop
+input and normal stop. Each stage is `passed`, `failed` or `not_run`; manual
+reports are explicitly labeled and are never inferred from a build or a probe.
+The reference validator is `scripts/acceptance_evidence.py` and reads actual
+manifest and archive bytes. Records must contain no passwords or personal data.
+
+This is an evidence collection format, not a publisher signature. A JSON file
+and matching hash do not authenticate the person or publisher; maintainers
+review the report as part of their manual promotion decision.
+
+The local recorder `wsld/scripts/record-acceptance.ps1` requires the verified
+candidate archive, its manifest and the exact graphics runtime identity. It
+rehashes both files and prompts for each human-observed result. The operator
+must establish that the tested WSL registration was imported from those exact
+bytes; the recorder does not independently prove that association. The private
+operations verifier checks the recorded archive against published candidate
+bytes, but cannot independently verify a human observation or its author.
+
+Manual stable promotion treats the repository's approved release status as the
+publisher's decision; historical build-time hardware validation may remain
+`not_run` and must not be rewritten. Before promotion, maintainers review a
+separate report tied to the exact archive and manifest hashes. The stable client
+still validates release channel, complete payload hashes, compatibility and CPU
+requirements. Release status and hash matching are not cryptographic publisher
+signatures or guarantees of hardware compatibility. License inventory and source
+delivery are reviewed as evidence, not as a claim of legal certification.
