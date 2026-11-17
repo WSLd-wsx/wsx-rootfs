@@ -10747,7 +10747,7 @@
     },
     {
       "path": "scripts/reuse-components.py",
-      "sha256": "0a1cf827fb3f2b3ecb6449e13e0fa15845cfcaf7132b2b1210b7d81c75b17a10",
+      "sha256": "48ef2d19f301972c0df720420ad03eaeb578ee1014fa7c51f13b7cdaadd9d169",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -11112,7 +11112,7 @@
     },
     {
       "path": "scripts/shared_sources.py",
-      "sha256": "10ac2f902653d2969f894f6ae501d90ae08fca973795721b53e767c21efbfdde",
+      "sha256": "cebfe6757353a09e1044dfbd0446600099ad9d364de27a261792df8e8cc5157b",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -12857,7 +12857,7 @@
     },
     {
       "path": "tests/test_shared_sources.py",
-      "sha256": "72b2ff243e40024d26279c786789cc10d9004444ea4a3e687cc38a056ea272ee",
+      "sha256": "23fb183d3f4dae1bdeb13882ef499e06a41a442502a46d687561976bd38f4651",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -12892,12 +12892,12 @@
           "text": "            notice_files={'LICENSE':sha(self.material/'notices/LICENSE')})"
         },
         {
-          "line": 238,
+          "line": 261,
           "kind": "mention",
           "text": "        spec=importlib.util.spec_from_file_location('release_review',Path(__file__).resolve().parents[1]/'scripts/review-release-licenses.py')"
         },
         {
-          "line": 251,
+          "line": 274,
           "kind": "mention",
           "text": "            self.assertEqual(material['notice_files'],{'LICENSE':sha(self.material/'notices/LICENSE')})"
         }

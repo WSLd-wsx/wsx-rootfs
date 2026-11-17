@@ -282,7 +282,25 @@ def _verify_release(pin, index, read_metadata, private):
 
 
 def verify_public(pin, index, metadata_reader=None):
-    return _verify_release(pin, index, metadata_reader or public_json, False)
+    try:
+        return _verify_release(pin, index, metadata_reader or public_json, False)
+    except HTTPError as error:
+        # A public runner can share an exhausted anonymous GitHub API quota.
+        # Only fall back for a confirmed rate limit, and independently require
+        # anonymous access to every asset before accepting authenticated metadata.
+        if (metadata_reader is not None or error.code != 403 or not error.headers
+                or error.headers.get('X-RateLimit-Remaining') != '0'
+                or not os.environ.get('GH_TOKEN')):
+            raise
+        release = _verify_release(pin, index, private_json, False)
+        names = {entry['name'] for entry in index['files']} | {INDEX}
+        for asset in release['assets']:
+            if asset['name'] not in names:
+                continue
+            request = Request(asset['browser_download_url'],
+                              headers={'User-Agent':'WSX-source-delivery/2'}, method='HEAD')
+            public_read(request, 1)
+        return release
 
 
 def private_json(url):

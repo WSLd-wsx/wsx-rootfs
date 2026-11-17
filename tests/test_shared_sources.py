@@ -198,6 +198,29 @@ class SharedSources(unittest.TestCase):
             self.assertEqual(opened.call_count, 1)
             sleep.assert_not_called()
 
+    def test_rate_limited_public_metadata_requires_anonymous_asset_access(self):
+        _, index, pin = self.prepared()
+        error = HTTPError('https://api.github.com/test', 403, 'rate limit',
+                          {'X-RateLimit-Remaining': '0'}, None)
+        repo = dict(full_name=shared.REPOSITORY, private=False)
+        release = self.release(index, pin)
+        with patch.dict('os.environ', {'GH_TOKEN': 'test-token'}), \
+             patch.object(shared, 'public_json', side_effect=error), \
+             patch.object(shared, 'private_json', side_effect=[repo, release]), \
+             patch.object(shared, 'public_read', return_value=b'') as access:
+            self.assertEqual(shared.verify_public(pin, index), release)
+            self.assertEqual(access.call_count, len(index['files']) + 1)
+            for call in access.call_args_list:
+                request = call.args[0]
+                self.assertEqual(request.get_method(), 'HEAD')
+                self.assertIsNone(request.get_header('Authorization'))
+        with patch.dict('os.environ', {'GH_TOKEN': 'test-token'}), \
+             patch.object(shared, 'public_json', side_effect=error), \
+             patch.object(shared, 'private_json', side_effect=[repo, release]), \
+             patch.object(shared, 'public_read', side_effect=HTTPError('https://example.test', 404, 'missing', {}, None)):
+            with self.assertRaises(HTTPError):
+                shared.verify_public(pin, index)
+
     def test_two_image_recipes_share_one_graphics_source_reference(self):
         bundle,index,pin=self.prepared()
         (self.repo/'components/source-delivery.json').write_text(json.dumps(dict(schema_version=1,mode='shared-v2',profiles={'omarchy':pin})))
