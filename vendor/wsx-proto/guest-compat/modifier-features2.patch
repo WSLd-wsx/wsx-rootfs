@@ -1,0 +1,88 @@
+--- a/src/gallium/drivers/zink/zink_types.h
++++ b/src/gallium/drivers/zink/zink_types.h
+@@ -1354,7 +1354,7 @@
+ /** screen types */
+ struct zink_modifier_props {
+     uint32_t                             drmFormatModifierCount;
+-    VkDrmFormatModifierPropertiesEXT*    pDrmFormatModifierProperties;
++    VkDrmFormatModifierProperties2EXT*    pDrmFormatModifierProperties;
+ };
+ 
+ struct zink_format_props {
+--- a/src/gallium/drivers/zink/zink_resource.c
++++ b/src/gallium/drivers/zink/zink_resource.c
+@@ -483,7 +483,7 @@
+    return usage;
+ }
+ 
+-static VkFormatFeatureFlags
++static VkFormatFeatureFlags2
+ find_modifier_feats(const struct zink_modifier_props *prop, uint64_t modifier)
+ {
+    for (unsigned j = 0; j < prop->drmFormatModifierCount; j++) {
+@@ -569,7 +569,7 @@
+       if (modifiers[i] == DRM_FORMAT_MOD_LINEAR)
+          continue;
+ 
+-      VkFormatFeatureFlags feats = find_modifier_feats(prop, modifiers[i]);
++      VkFormatFeatureFlags2 feats = find_modifier_feats(prop, modifiers[i]);
+       if (!feats)
+          continue;
+ 
+@@ -606,7 +606,7 @@
+       }
+       /* only try linear if no other options available */
+       const struct zink_modifier_props *prop = zink_get_modifier_props(screen, templ->format);
+-      VkFormatFeatureFlags feats = find_modifier_feats(prop, DRM_FORMAT_MOD_LINEAR);
++      VkFormatFeatureFlags2 feats = find_modifier_feats(prop, DRM_FORMAT_MOD_LINEAR);
+       if (feats) {
+          if (feats & VK_FORMAT_FEATURE_DISJOINT_BIT && util_format_get_num_planes(templ->format) > 1)
+             ici->flags |= VK_IMAGE_CREATE_DISJOINT_BIT;
+--- a/src/gallium/drivers/zink/zink_screen.c
++++ b/src/gallium/drivers/zink/zink_screen.c
+@@ -2185,12 +2185,19 @@
+ 
+       VkDrmFormatModifierPropertiesListEXT mod_props;
+       VkDrmFormatModifierPropertiesEXT mods[128];
++      VkDrmFormatModifierProperties2EXT mods2[128];
++      VkDrmFormatModifierPropertiesList2EXT mod_props2 = {
++         .sType = VK_STRUCTURE_TYPE_DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT,
++         .drmFormatModifierCount = ARRAY_SIZE(mods2),
++         .pDrmFormatModifierProperties = mods2,
++      };
++      const bool wide_modifiers = screen->info.have_KHR_format_feature_flags2 || screen->info.have_vulkan13;
+       if (screen->info.have_EXT_image_drm_format_modifier) {
+          mod_props.sType = VK_STRUCTURE_TYPE_DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT;
+          mod_props.pNext = NULL;
+          mod_props.drmFormatModifierCount = ARRAY_SIZE(mods);
+          mod_props.pDrmFormatModifierProperties = mods;
+-         props.pNext = &mod_props;
++         props.pNext = wide_modifiers ? (void *)&mod_props2 : (void *)&mod_props;
+       }
+       VkFormatProperties3 props3 = {0};
+       if (screen->info.have_KHR_format_feature_flags2 || screen->info.have_vulkan13) {
+@@ -2215,15 +2222,22 @@
+          screen->format_props[pformat].bufferFeatures = props.formatProperties.bufferFeatures;
+       }
+ 
++      if (screen->info.have_EXT_image_drm_format_modifier && wide_modifiers)
++         mod_props.drmFormatModifierCount = mod_props2.drmFormatModifierCount;
+       if (screen->info.have_EXT_image_drm_format_modifier && mod_props.drmFormatModifierCount) {
+          /* The A8_UNORM workaround below can retry this query for the same pformat. */
+          ralloc_free(screen->modifier_props[pformat].pDrmFormatModifierProperties);
+ 
+          screen->modifier_props[pformat].drmFormatModifierCount = mod_props.drmFormatModifierCount;
+-         screen->modifier_props[pformat].pDrmFormatModifierProperties = ralloc_array(screen, VkDrmFormatModifierPropertiesEXT, mod_props.drmFormatModifierCount);
++         screen->modifier_props[pformat].pDrmFormatModifierProperties = ralloc_array(screen, VkDrmFormatModifierProperties2EXT, mod_props.drmFormatModifierCount);
+          if (mod_props.pDrmFormatModifierProperties) {
+             for (unsigned j = 0; j < mod_props.drmFormatModifierCount; j++)
+-               screen->modifier_props[pformat].pDrmFormatModifierProperties[j] = mod_props.pDrmFormatModifierProperties[j];
++               screen->modifier_props[pformat].pDrmFormatModifierProperties[j] = wide_modifiers ? mods2[j] :
++                  (VkDrmFormatModifierProperties2EXT) {
++                     .drmFormatModifier = mods[j].drmFormatModifier,
++                     .drmFormatModifierPlaneCount = mods[j].drmFormatModifierPlaneCount,
++                     .drmFormatModifierTilingFeatures = mods[j].drmFormatModifierTilingFeatures,
++                  };
+          }
+       }
+    } else {

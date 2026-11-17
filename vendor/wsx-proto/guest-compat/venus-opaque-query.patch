@@ -1,0 +1,76 @@
+--- a/src/virtio/vulkan/vn_physical_device.c
++++ b/src/virtio/vulkan/vn_physical_device.c
+@@ -11,6 +11,12 @@
+ #include "vn_physical_device.h"
+ 
+ #include <stdio.h>
++#include <fcntl.h>
++#include <sys/stat.h>
++#include <sys/sysmacros.h>
++#include <unistd.h>
++#include "../../vulkan/wsi/wsx/gbm-descriptor.h"
++
+ 
+ #include "git_sha1.h"
+ #include "util/mesa-blake3.h"
+@@ -21,6 +27,33 @@
+ 
+ #include "vn_android.h"
+ #include "vn_instance.h"
++
++/* WSX descriptor transport carries opaque images, not implicit DMA-BUF layouts.
++ * Use the renderer's actual DRM node and paired ABI before querying the Host.
++ * The native external-image query remains authoritative for all image flags. */
++static bool
++wsx_opaque_query_transport(struct vn_physical_device *physical_dev)
++{
++   const char *profile = getenv("WSX_VENUS_DIRECT_WSI");
++   if (!profile || strcmp(profile, "opaque-v1"))
++      return false;
++   const VkPhysicalDeviceDrmPropertiesEXT *drm =
++      &physical_dev->instance->renderer->info.drm.props;
++   if (!drm->hasRender)
++      return false;
++   char path[64];
++   snprintf(path, sizeof(path), "/dev/dri/renderD%lld", (long long)drm->renderMinor);
++   int fd = open(path, O_RDWR | O_CLOEXEC);
++   if (fd < 0)
++      return false;
++   struct stat st;
++   bool supported = !fstat(fd, &st) && S_ISCHR(st.st_mode) &&
++      major(st.st_rdev) == drm->renderMajor && minor(st.st_rdev) == drm->renderMinor &&
++      wsx_gbm_opaque_consumer_supported(fd) == 1;
++   close(fd);
++   return supported;
++}
++
+ 
+ #define IMAGE_FORMAT_CACHE_MAX_ENTRIES 100
+ 
+@@ -2738,8 +2771,11 @@
+          external_info->handleType !=
+          VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID);
+ 
+-      /* venus doesn't support legacy tiling for scanout purpose */
+-      if (renderer_handle_type ==
++      /* Standard DMA-BUF still requires modifier tiling. The explicit WSX
++       * opaque descriptor ABI can represent OPTIMAL without a DRM modifier. */
++      const bool opaque_query = pImageFormatInfo->tiling == VK_IMAGE_TILING_OPTIMAL &&
++         wsx_opaque_query_transport(physical_dev);
++      if (!opaque_query && renderer_handle_type ==
+              VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT &&
+           pImageFormatInfo->tiling !=
+              VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT) {
+@@ -2781,6 +2817,12 @@
+                                          &result, key))) {
+       result = vn_call_vkGetPhysicalDeviceImageFormatProperties2(
+          ring, physicalDevice, pImageFormatInfo, pImageFormatProperties);
++      if (external_info && pImageFormatInfo->tiling == VK_IMAGE_TILING_OPTIMAL &&
++          wsx_opaque_query_transport(physical_dev))
++         vn_log(physical_dev->instance,
++                "WSX_OPAQUE_HOST_QUERY: format=%u tiling=%u usage=0x%x flags=0x%x wire_handle=0x%x result=%d",
++                pImageFormatInfo->format, pImageFormatInfo->tiling,
++                pImageFormatInfo->usage, pImageFormatInfo->flags, renderer_handle_type, result);
+ 
+       if (result == VK_SUCCESS) {
+          vn_sanitize_image_format_properties(physical_dev, pImageFormatInfo,

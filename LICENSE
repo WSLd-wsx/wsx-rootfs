@@ -1,0 +1,13 @@
+WSX rootfs — module licenses
+
+Copyright (c) 2026 WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>.
+
+Owner-original WSX Guest code, build tools, recipes, tests and documentation
+are licensed under Apache License, Version 2.0. See
+https://www.apache.org/licenses/LICENSE-2.0 and
+docs/licensing/licenses/Apache-2.0.txt. This grant applies only to expression
+WGY has authority to license. See LICENSE-MAP.md for scope and exceptions.
+
+Existing MIT and GPL grants and third-party licenses remain applicable; this
+new grant does not revoke earlier permissions or relicense upstream material.
+KWin and other combined upstream materials retain their applicable GPL terms.

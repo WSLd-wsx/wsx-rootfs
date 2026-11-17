@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "status": "standard-texts-and-approved-owner-notice",
+  "files": [
+    {
+      "path": "docs/licensing/licenses/GPL-2.0.txt",
+      "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
+      "url": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt",
+      "retrieved_date": "2026-11-03",
+      "method": "Verbatim official text download; reference supplement, no new grant"
+    },
+    {
+      "path": "docs/licensing/licenses/CC0-1.0.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt",
+      "retrieved_date": "2026-11-03",
+      "method": "Verbatim official text download; reference supplement, no new grant"
+    },
+    {
+      "path": "docs/licensing/licenses/Apache-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "retrieved_date": "2026-11-03",
+      "method": "Existing official copy retained"
+    },
+    {
+      "path": "docs/licensing/licenses/MIT.txt",
+      "sha256": "4790c01c0726db5d666ede1ad9b0875ed4789b89c9a38a37c7b214b707b69249",
+      "url": "https://opensource.org/license/mit",
+      "retrieved_date": "2026-11-03",
+      "method": "License paragraphs extracted from official HTML; generic copyright placeholders retained, not assigned to WSX"
+    },
+    {
+      "path": "docs/licensing/licenses/upstream/aquamarine-LICENSE",
+      "sha256": "52d07f3457591b4496ae2e79b05efd63c7df72135666fa12428d83078c4c0de5",
+      "url": "https://raw.githubusercontent.com/hyprwm/aquamarine/f31c47a1b9d300847d8fc3108ad959448103dfc1/LICENSE",
+      "retrieved_date": "2026-11-03",
+      "method": "Verbatim LICENSE from the pinned upstream commit; not a blanket license for all bundled subcomponents"
+    },
+    {
+      "path": "docs/licensing/licenses/upstream/hyprland-LICENSE",
+      "sha256": "e01df754903af0ab26babb317b5f5a62dd95f770b733c5275414dd3245d00ae7",
+      "url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/LICENSE",
+      "retrieved_date": "2026-11-03",
+      "method": "Verbatim LICENSE from the pinned upstream commit; not a blanket license for all bundled subcomponents"
+    },
+    {
+      "path": "docs/licensing/licenses/upstream/udis86-LICENSE",
+      "sha256": "1070640aab24327354da44507627d1db6c67482a6facc8375a758796a05e3dff",
+      "url": "https://raw.githubusercontent.com/canihavesomecoffee/udis86/5336633af70f3917760a6d441ff02d93477b0c86/LICENSE",
+      "retrieved_date": "2026-11-03",
+      "method": "Verbatim LICENSE from the pinned upstream commit; not a blanket license for all bundled subcomponents"
+    },
+    {
+      "path": "docs/licensing/licenses/upstream/glaze-LICENSE",
+      "sha256": "5d49e66411a0807a7c8d6b911b9a26b59e940c71aebe561a3ad8b0b80ac4b7b6",
+      "url": "https://raw.githubusercontent.com/stephenberry/glaze/b518eec7a22e56ffa238b072c07f47efa7cea97f/LICENSE",
+      "retrieved_date": "2026-11-03",
+      "method": "Verbatim LICENSE from the pinned upstream commit; not a blanket license for all bundled subcomponents"
+    },
+    {
+      "path": "docs/licensing/licenses/PolyForm-Noncommercial-1.0.0.txt",
+      "sha256": "ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8",
+      "url": "https://polyformproject.org/licenses/noncommercial/1.0.0.txt",
+      "retrieved_date": "2026-11-03",
+      "method": "Verbatim official plain-text download; owner-approved grant is effective under the root LICENSE and module map"
+    },
+    {
+      "path": "docs/licensing/licenses/WSX-MIT.txt",
+      "sha256": "956ee22d67cc2ff5fa39f580f27994c7b43e8c8e71507f7a7925e954aecc2ecf",
+      "url": "https://opensource.org/license/mit",
+      "retrieved_date": "2026-11-03",
+      "method": "Existing reference MIT text with owner-approved copyright notice; applies only to the explicit original-expression exceptions"
+    },
+    {
+      "path": "docs/licensing/licenses/upstream/cachyos-live-iso-LICENSE",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "url": "https://raw.githubusercontent.com/CachyOS/CachyOS-Live-ISO/3215497d2e8c5fea90e185affcf973dfa2cf790b/LICENSE",
+      "retrieved_date": "2026-11-04",
+      "method": "Exact pinned upstream root LICENSE downloaded through GitHub contents API; retained upstream terms, not a new WSX grant"
+    }
+  ]
+}

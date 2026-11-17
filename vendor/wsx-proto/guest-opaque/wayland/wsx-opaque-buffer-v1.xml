@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol name="wsx_opaque_buffer_v1">
+  <copyright>Copyright 2026 WSX contributors. SPDX-License-Identifier: MIT</copyright>
+  <interface name="wsx_opaque_buffer_manager_v1" version="1">
+    <description summary="paired WSX opaque PRIME buffer import">
+      Private extension, not a DRM modifier or linux-dmabuf layout. Each fd must
+      refer to a real PRIME GEM object with an immutable WSX descriptor registered
+      by the paired kernel and native owner. The server verifies dimensions,
+      format, allocation identity and generation before creating a wl_buffer.
+      No stride is transmitted because optimal layouts have no linear pitch.
+      The resulting wl_buffer uses ordinary surface attach/commit, buffer release
+      and linux-drm-syncobj synchronization. This extension adds no copy path.
+    </description>
+    <enum name="error"><entry name="invalid_descriptor" value="0" summary="unregistered or incompatible opaque buffer"/></enum>
+    <request name="destroy" type="destructor"/>
+    <request name="create_buffer">
+      <arg name="id" type="new_id" interface="wl_buffer"/>
+      <arg name="fd" type="fd" summary="real PRIME fd; ownership transfers to the server"/>
+      <arg name="width" type="uint"/>
+      <arg name="height" type="uint"/>
+      <arg name="format" type="uint" summary="DRM fourcc, not a modifier"/>
+    </request>
+  </interface>
+</protocol>

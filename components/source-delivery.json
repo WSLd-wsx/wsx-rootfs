@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "mode": "shared-v2",
+  "profiles": {
+    "omarchy": null,
+    "cachyos-plasma": null
+  },
+  "component_origins": {
+    "omarchy": null,
+    "cachyos-plasma": null
+  }
+}

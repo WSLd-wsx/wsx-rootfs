@@ -1,0 +1,12 @@
+{
+  "files": {
+    "shell/plugins/panels/network/Panel.qml": {
+      "before": "0f34423d4879a1ca69dfbfbfb9819916179e651804dfc2b798ea75d633f960ee",
+      "after": "91eff32ec41c4cd68b97b1efbbd68282021bd8a17cf6a9c14d40de1b9c2de18c"
+    },
+    "install/user/first-run/wifi.sh": {
+      "before": "22a63b3365900a0672b78098f507d46d832578ca4a8de7f053deaea5a14ea816",
+      "after": "cfe81da800eb521eb13b6563db25c562c5dd15f1a592de15f63e10a5f7c0c040"
+    }
+  }
+}

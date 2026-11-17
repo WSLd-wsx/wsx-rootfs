@@ -1,0 +1,18 @@
+--- a/src/virtio/vulkan/vn_wsi.c
++++ b/src/virtio/vulkan/vn_wsi.c
+@@ -155,7 +155,14 @@
+    const bool is_nvidia = props->vendorID == 0x10de;
+    const char *app_name = physical_dev->instance->base.vk.app_info.app_name;
+    const bool is_gamescope = app_name && strcmp(app_name, "gamescope") == 0;
+-   if (is_nvidia && !is_gamescope) {
++   const char *engine_name = physical_dev->instance->base.vk.app_info.engine_name;
++   const bool is_zink = engine_name && strcmp(engine_name, "mesa zink") == 0;
++   /* Zink selects its Vulkan device by the actual DRM render node before
++    * creating a logical device. Hiding that identity prevents GBM/EGL
++    * initialization. Keep the NVIDIA WSI workaround for direct Vulkan apps;
++    * no format feature or image modifier capability is changed here.
++    */
++   if (is_nvidia && !is_gamescope && !is_zink) {
+       /* Fail same_gpu check on x11. See wsi_device_matches_drm_fd. */
+       physical_dev->base.vk.supported_extensions.EXT_pci_bus_info = false;
+       props->pciDomain = 0;

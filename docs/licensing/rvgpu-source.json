@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/unified-hmi/remote-virtio-gpu",
+  "revision": "7d29a7308a600318b1f1d957e81bf2046bf031ea",
+  "path": "include/librvgpu/rvgpu-protocol.h",
+  "vendored_path": "vendor/rvgpu/include/librvgpu/rvgpu-protocol.h",
+  "git_blob": "44430ebb06e0dc89c9f7865a2ba8ef92fef70af8",
+  "sha256": "5b0fab9188be07334406ebae498fe8c992c4e81490583e0a9f030df421285608",
+  "exact_bytes_match": true,
+  "license": "Apache-2.0",
+  "license_evidence_url": "https://github.com/unified-hmi/remote-virtio-gpu/blob/7d29a7308a600318b1f1d957e81bf2046bf031ea/LICENSE.md",
+  "notice_search": "Complete fixed-revision Git tree inspected; LICENSE.md present, no separate NOTICE file",
+  "scope": "This exact imported header only; no claim about unvendored upstream files"
+}
