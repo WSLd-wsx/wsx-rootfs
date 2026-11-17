@@ -24,7 +24,8 @@ def apply(root, profile, selection, verify=True):
             or not re.fullmatch(r'[0-9a-f]{64}', pin['manifest_sha256'])):
         raise ValueError('Invalid component origin')
     component_registry.check_reference(pin['image'])
-    if not pin['image'].startswith(component_registry.OPS_IMAGE + '@sha256:'):
+    if not any(pin['image'].startswith(image + '@sha256:')
+               for image in (component_registry.OPS_IMAGE, component_registry.IMAGE)):
         raise ValueError('Unapproved component package')
     source = selection['shared_source']
     if not isinstance(source, dict) or set(source) != {'tag', 'manifest_sha256'}:

@@ -1,0 +1,15 @@
+{
+  "component": {
+    "transport": "ghcr",
+    "image": "ghcr.io/wsld-wsx/wsx-rootfs/graphics-components@sha256:0c25591390ac70701fb6a6797e4fa3b6c867140cfc589c3364353f97140ec9d3",
+    "run_id": 43880339756,
+    "source_commit": "10ae52a4db176e1e96dc63e66f7d50db12f519f8",
+    "manifest_sha256": "2999029e6c30a035f84888847bda708f58325178988bc7df6a112f239cefe7d6",
+    "run_repository": "operations",
+    "workflow_commit": "18393987b968184dcbb3d4ffe859bf5831d64c76"
+  },
+  "shared_source": {
+    "tag": "graphics-sources-omarchy-fb3b1c6323383422a47d",
+    "manifest_sha256": "04aac0aec707a9646a7948286a94c411a29854b3e59c9834a9fc847178da98e0"
+  }
+}

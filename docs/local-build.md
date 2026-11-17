@@ -1,7 +1,7 @@
 # Independent local rootfs build
 
 The source repository contains the recipes and build/validation scripts. The
-private `operations` repository provides hosted orchestration and is not
+private `operations` repository provides other hosted orchestration and is not
 needed for a local build. Build on a compatible Linux host with Docker, Python 3,
 `python3-jsonschema`, `zstd`, `tar`, `acl`, `libcap` tools and GitHub CLI. The
 builder uses a privileged container and substantial storage; use an isolated
