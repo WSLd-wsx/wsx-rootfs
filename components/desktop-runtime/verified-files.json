@@ -1,0 +1,50 @@
+{
+  "wsx-native-host.exe": {
+    "sha256": "62c86d5316651d86c5c8e3d96245c29049cae5b9c87ba40e6b3e1b057efa0246",
+    "bytes": 68765696
+  },
+  "libvirglrenderer-1.dll": {
+    "sha256": "a9b91b562ae400b40bb4b1f5c82b5ee5b67a927b7ca9a1fb3da6dcf00a1f7b9e",
+    "bytes": 2880512
+  },
+  "direct-launch.ps1": {
+    "sha256": "c71182ea4e062954cc90c36dd609e4b299d2b9604aabe26025b200a14a374c4a",
+    "bytes": 1844
+  },
+  "libepoxy-0.dll": {
+    "sha256": "dc4055b53d0d6507740e9f3be18c9f2b1318faa531b9b2913eef3c5332fffedc",
+    "bytes": 1770497
+  },
+  "wsx-input-host.exe": {
+    "bytes": 452608,
+    "sha256": "31df6465598daa69f984b7a87f7e53fc97ec081b99d1f97b41d432af8c547bf8"
+  },
+  "guest/drm_kms_helper.ko": {
+    "sha256": "3d6376a8dbd2a1814275eb034336e6ba7dbee3ff27c0bfdec1a90a90e9489e4e",
+    "bytes": 5196648
+  },
+  "guest/virtio_dma_buf.ko": {
+    "sha256": "884a8663ab1b87970af3562260da438bf03c302614569e8d08367dd855933063",
+    "bytes": 330256
+  },
+  "guest/virtio-gpu.ko": {
+    "sha256": "ef95c3ce6d2f0f20a695b9f995fd6fadc1909b96e8a2184697cfce7b9a7286ac",
+    "bytes": 4975200
+  },
+  "guest/virtio_msg.ko": {
+    "sha256": "1bcdf38857131b87d14c58ecac4833691d62ad1b823f5c0b87409e4a920eebe0",
+    "bytes": 427248
+  },
+  "guest/virtio_msg_vsock.ko": {
+    "sha256": "214a75c6aabc214e7bf03df6a924639b773b7f38b0f11e62b05329e40762f579",
+    "bytes": 853488
+  },
+  "guest/wsx_virtio_msg_pci.ko": {
+    "bytes": 580936,
+    "sha256": "577bbfbeb0dc1c4f2e213f4b6045621c52fb1df728b3ba602b0bdacebb2c4918"
+  },
+  "guest/start-guest.py": {
+    "sha256": "ad37b095f13d4da78d610bf635adc54c8a2e062cd9ec0d309bfbe74f509bef85",
+    "bytes": 17668
+  }
+}

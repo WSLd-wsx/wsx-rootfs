@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "repository": "WSLd-wsx/wsx-rootfs",
+  "verified_at": "2026-11-03T07:54:04.541789+00:00",
+  "authorization": "All wsx-rootfs Releases/attachments and dedicated verified-components package; user subsequently waived further backup and requested immediate deletion.",
+  "releases": [
+    {
+      "id": 430347773,
+      "tag": "wsx-cachyos-plasma-2026.11.1-r2",
+      "draft": true,
+      "asset_count": 6
+    },
+    {
+      "id": 430329519,
+      "tag": "wsx-cachyos-plasma-2026.11.1-r1",
+      "draft": true,
+      "asset_count": 6
+    },
+    {
+      "id": 429946009,
+      "tag": "wsx-omarchy-4.0.6-r7",
+      "draft": true,
+      "asset_count": 6
+    },
+    {
+      "id": 429927434,
+      "tag": "component-import-6dd87b7082bd93a330e397c8aa315b18c6f06428405be7760da930fdd6318206",
+      "draft": true,
+      "asset_count": 1
+    }
+  ],
+  "deleted_asset_count": 19,
+  "package": {
+    "id": 16440856,
+    "name": "wsx-rootfs/verified-components",
+    "version_id": 1478930273,
+    "digest": "sha256:fbf7a09de32f616c1198191af8346f071f13c4e530580eff4289bb668fea84e9",
+    "get_status_after": 404
+  },
+  "remaining_releases": 0,
+  "git_refs_unchanged": true,
+  "refs_after": [
+    {
+      "ref": "refs/heads/main",
+      "sha": "ed7a9827ade026e828f4f0124c5261b46cdb2103"
+    }
+  ],
+  "visibility_unchanged": true,
+  "actions_records_untouched": true,
+  "new_build_dispatched": false,
+  "license_grant_changed": false,
+  "local_evidence_directory": "/tmp/wsx-rootfs-remote-retirement-20261103T154204",
+  "release_asset_backup_complete": false,
+  "retained_verified_asset_count": 17,
+  "package_oci_backup_verified": true
+}

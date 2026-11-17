@@ -1,0 +1,13 @@
+--- a/install/user/first-run/wifi.sh
++++ b/install/user/first-run/wifi.sh
+@@ -28,6 +28,10 @@
+ }
+ 
+ announce_network() {
++  if [[ ${WSX_WSL_NETWORK:-0} == 1 ]]; then
++    # Windows manages WSL networking.
++    return
++  fi
+   # Ethernet is still negotiating DHCP when the session starts, so probing
+   # right away calls a working machine offline. NetworkManager reports startup
+   # complete once it has tried every connection it could auto-activate, which
