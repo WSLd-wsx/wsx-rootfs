@@ -27,7 +27,9 @@ def collection_only_change(root, name, recorded):
                 and sha(root/name) == 'def155a5b243d32e41be9d17e32d969b73533ad89a80c4be17f98ebf6377caa4')
     if name == 'scripts/shared_sources.py':
         # Reviewed metadata-reader changes only; no compiled component inputs change.
-        return ((recorded == '91477d2198784f904c10c01b8326d4d8a8091c5252cc8802fc430dc9806aed2f'
+        return ((recorded == '10ac2f902653d2969f894f6ae501d90ae08fca973795721b53e767c21efbfdde'
+                 and sha(root/name) == 'cebfe6757353a09e1044dfbd0446600099ad9d364de27a261792df8e8cc5157b')
+                or (recorded == '91477d2198784f904c10c01b8326d4d8a8091c5252cc8802fc430dc9806aed2f'
                  and sha(root/name) == '10ac2f902653d2969f894f6ae501d90ae08fca973795721b53e767c21efbfdde')
                 or (recorded == '2bd3704a025829b397b14d053c45d1ca36f2201d1afc444262306aeaf54ed7c7'
                 and sha(root/name) in {'32c6b645d21b7ab10057bad9d5d4f957978c836a58897e152d19d4257b6ac07c',
