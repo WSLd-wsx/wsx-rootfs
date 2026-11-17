@@ -27,6 +27,9 @@ class WorkflowInputs(unittest.TestCase):
             pin['run_repository'] = 'WSLd-wsx/wsx-devops'
             inputs.apply(root, 'omarchy', {'component':pin,'shared_source':source}, verify=False)
             self.assertEqual(json.loads((root/'components/reuse.json').read_text())['profiles']['omarchy'], pin)
+            pin['image'] = inputs.component_registry.IMAGE+'@sha256:'+'a'*64
+            inputs.apply(root, 'omarchy', {'component':pin,'shared_source':source}, verify=False)
+            self.assertEqual(json.loads((root/'components/reuse.json').read_text())['profiles']['omarchy'], pin)
             pin['image'] = 'ghcr.io/other/package@sha256:'+'a'*64
             with self.assertRaises(ValueError):
                 inputs.apply(root, 'omarchy', {'component':pin,'shared_source':source}, verify=False)

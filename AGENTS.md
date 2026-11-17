@@ -20,7 +20,8 @@ authorizations retain their original scope.
 
 Own the independently runnable desktop rootfs recipes, source inputs, image
 validation and release protocol for `wsx-omarchy` and `wsx-cachyos-plasma`.
-Keep automated workflow definitions in the private sibling `wsx-devops`;
+The Omarchy rootfs build workflow runs in this repository; other operations
+workflows remain in the private sibling `wsx-devops` until separately migrated.
 Historical workflow evidence is retained separately in wsx-proto.
 Retain locally usable build and verification scripts and component source materials.
 Historical workflows, build receipts and their license grants remain valid.

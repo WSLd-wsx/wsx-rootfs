@@ -4,28 +4,7 @@
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
-  "removed_tracked_paths": [
-    "docs/build-performance.md",
-    "docs/cachyos-r1-runtime-handoff.md",
-    "docs/cachyos-validation.md",
-    "docs/component-registry-migration-20261107.md",
-    "docs/licensing/AUDIT.md",
-    "docs/licensing/BINARY-RETIREMENT.md",
-    "docs/licensing/FOLLOW-UP.md",
-    "docs/licensing/OMARCHY-IMAGE-REVIEW.md",
-    "docs/licensing/RECHECK.md",
-    "docs/licensing/REMOTE-RETIREMENT.md",
-    "docs/licensing/SOURCE-MIGRATION.md",
-    "docs/licensing/VALIDATION.md",
-    "docs/local-component-admission.md",
-    "docs/local-component-audit.json",
-    "docs/protocol-rebuild-20261105.md",
-    "docs/publication-review/FRESH-REPOSITORY.md",
-    "docs/publication-review/OMARCHY-4.0.6-R1-20261117.md",
-    "docs/publication-review/PUBLIC-PREPARATION.md",
-    "docs/publication-review/README.md",
-    "docs/shared-source-package-20261108.md"
-  ],
+  "removed_tracked_paths": [],
   "files": [
     {
       "path": ".gitattributes",
@@ -45,6 +24,43 @@
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
+    },
+    {
+      "path": ".github/workflows/omarchy.yml",
+      "sha256": "cba419d7b37c21886f309684c211d9e1e3eb91b228aad35d3f072e5fb6148489",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
+      "local_change_commits": [
+        "2b068810e48c72eb620c91b65fb090e7e703df60",
+        "0daf80783bc442947789f5fb7a8051f962bdd444"
+      ],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "declaration-observation",
+          "text": "# Copyright (c) 2026 WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>"
+        },
+        {
+          "line": 2,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        },
+        {
+          "line": 54,
+          "kind": "mention",
+          "text": "          python3 scripts/audit-licenses.py"
+        },
+        {
+          "line": 115,
+          "kind": "mention",
+          "text": "          python3 scripts/audit-licenses.py"
+        }
+      ]
     },
     {
       "path": ".gitignore",
@@ -67,7 +83,7 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "21cde5156d095c083e348a7e9e087ddfa2a7bb69925a26f5b3fb951f3d57afdd",
+      "sha256": "9f9c6d38fc96e8d6472dbe9d1e93597ff813245a4d01e396a3e374456a9cf833",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -97,7 +113,7 @@
           "text": "commits, pushes, publication, remote workflows, license changes, destructive"
         },
         {
-          "line": 26,
+          "line": 27,
           "kind": "mention",
           "text": "Historical workflows, build receipts and their license grants remain valid."
         }
@@ -303,7 +319,7 @@
     },
     {
       "path": "components/SOURCE-DELIVERY.md",
-      "sha256": "8ab445ea47c6dac73384aeaaf1499e52f12a9ca3a78528bcb87670d60f647048",
+      "sha256": "9afd6410c7bc8df98db1a7ab288d288b708c37078f3c61cbbf8361dec9237bec",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -812,6 +828,19 @@
           "text": "      \"license_grant\": true"
         }
       ]
+    },
+    {
+      "path": "components/omarchy-selection.json",
+      "sha256": "126d6a300ee0391ee0c20c67ea80fcfd2f5cc542eb7b4b48118b397619d93cbd",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": []
     },
     {
       "path": "components/reuse.json",
@@ -5403,7 +5432,7 @@
     },
     {
       "path": "docs/local-build.md",
-      "sha256": "a36e4b9e182c5d2b870020f5aa495d95dddc1b247d68522865ccddb60f1d98b9",
+      "sha256": "5c647fe1c227f423bd76bcf87b2ac912aa54787acd36012e18c37006d16e4541",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -10227,6 +10256,27 @@
       "observations": []
     },
     {
+      "path": "scripts/prepare-runner.sh",
+      "sha256": "1a59530f958b2c285613bc8e7a6648d253173a5a5bcd3d398416174c186bb47d",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
+      "local_change_commits": [
+        "0daf80783bc442947789f5fb7a8051f962bdd444"
+      ],
+      "observations": [
+        {
+          "line": 2,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        }
+      ]
+    },
+    {
       "path": "scripts/prepare-shared-sources.py",
       "sha256": "686f11bcb1a6aedca4bf0c0dfcc68addc67ba420e728770a456328bdb2ed928d",
       "group": "conditional-future-license",
@@ -10605,6 +10655,34 @@
       "observations": []
     },
     {
+      "path": "scripts/publish.py",
+      "sha256": "2187311574bcf1abb13e92a2d1dc89278d1cf1ab437a92b8acdbbf50714c0060",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
+      "local_change_commits": [
+        "96598dd38b9ba252872a3c55574d6d19fa4d62b4",
+        "418496f19f7b21c9623fffe71d580a35b74f729c",
+        "2281d078de4b3bc60b2fa143e511a9a52c97194b",
+        "11a43332471f2aae46e4712a4b60f32f51dd89b6",
+        "e9ded5787db27970aadb12d40a70ec23e3d40c6f",
+        "ffaa7d6d24ead461a585abdc967090494eb4359d",
+        "47c1e7614228431f59b90c505b8220c9caf649c9",
+        "0daf80783bc442947789f5fb7a8051f962bdd444"
+      ],
+      "observations": [
+        {
+          "line": 2,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        }
+      ]
+    },
+    {
       "path": "scripts/release_access.py",
       "sha256": "d72452a37d64e84ef79e21cd46bf768b1bf4f4f9a694d00ed74d189a0d536bb9",
       "group": "conditional-future-license",
@@ -10968,6 +11046,25 @@
       ]
     },
     {
+      "path": "scripts/select-omarchy-build.py",
+      "sha256": "fcecada178444523fabf0f163b8fcf8d315289273cb2f0b5013c169801dee825",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 2,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        }
+      ]
+    },
+    {
       "path": "scripts/select-shared-sources.py",
       "sha256": "aba9de12eca2ddfdac1abfcb72d6beedcd5638962e5da10c510e65e4de9f84af",
       "group": "conditional-future-license",
@@ -11320,7 +11417,7 @@
     },
     {
       "path": "scripts/workflow_component_inputs.py",
-      "sha256": "77a4f8b9741c9975f9754b3feb887d5823de39b3c4dfae424ce87f324230404b",
+      "sha256": "424d566029ea74513c393ad71f33dd826126f9d3e95822248e6e0e9624478098",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -12955,7 +13052,7 @@
     },
     {
       "path": "tests/test_workflow_component_inputs.py",
-      "sha256": "1b174880d2b62d88fb39308fbdbac05218b4f1a3563097bafcda87d0a032bc6b",
+      "sha256": "5b5189254aae9409a08cc7fad10ed7110cc88161faa3eb2f2f9d24e0162ae193",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -12973,7 +13070,7 @@
     },
     {
       "path": "tests/test_workflow_migration.py",
-      "sha256": "0bf146cb951952bf74b087a3652d8762fe947159519c394b174ba05c1dc4b992",
+      "sha256": "eaf59abc1b892142b03e1cc72f942b5a692de1db87c73634004c9be9ddc0bbbb",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",

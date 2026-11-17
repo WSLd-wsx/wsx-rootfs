@@ -1,10 +1,10 @@
 # Shared graphics source delivery
 
-> Operations update: hosted workflows now live in the separate private
-> wsx-devops repository. The workflow names and repository locations below
-> describe the source-delivery migration when recorded; use wsx-devops for the
-> current orchestration. This does not change existing published source assets
-> or establish complete system-package source delivery.
+> Operations update: the Omarchy rootfs workflow runs in wsx-rootfs and selects
+> the digest-pinned component in `omarchy-selection.json`. Component production
+> and shared-source preparation remain in the private wsx-devops repository.
+> Existing published source assets are unchanged; this does not establish
+> complete system-package source delivery.
 
 The repository was recreated on 2026-11-16 and previous image and shared-source
 Releases were retired. Both default component selections and public-source pins

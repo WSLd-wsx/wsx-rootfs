@@ -1,0 +1,179 @@
+# Copyright (c) 2026 WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Derived from wsx-devops/.github/workflows/omarchy-easy.yml and omarchy.yml.
+name: Build Omarchy rootfs
+on:
+  workflow_dispatch:
+    inputs:
+      upstream_version:
+        description: Stable Omarchy version; empty selects latest
+        type: string
+        default: '4.0.6'
+      revision:
+        description: Optional WSX revision; empty selects the next available revision
+        type: string
+        default: ''
+permissions:
+  contents: read
+concurrency:
+  group: omarchy-rootfs-manual
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: ${{ github.repository == 'WSLd-wsx/wsx-rootfs' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-24.04
+    outputs:
+      completed: ${{ steps.prepare.outputs.completed }}
+      build_json: ${{ steps.prepare.outputs.build_json }}
+      version: ${{ steps.select.outputs.version }}
+      revision: ${{ steps.select.outputs.revision }}
+      upstream_commit: ${{ steps.select.outputs.upstream_commit }}
+    steps:
+      - name: Require configured source token
+        env:
+          GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
+        run: test -n "$GH_TOKEN" || { echo 'Configure the WSLD_TOKEN repository secret.' >&2; exit 1; }
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          token: ${{ secrets.WSLD_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Select source access and verified graphics inputs
+        env:
+          GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
+        run: |
+          set -euo pipefail
+          private=$(gh api repos/WSLd-wsx/wsx-rootfs --jq '.private')
+          case "$private" in
+            true) echo 'WSX_PRIVATE_SOURCE=1' >> "$GITHUB_ENV"; export WSX_PRIVATE_SOURCE=1 ;;
+            false) echo 'WSX_PRIVATE_SOURCE=0' >> "$GITHUB_ENV"; export WSX_PRIVATE_SOURCE=0 ;;
+            *) exit 1 ;;
+          esac
+          python3 scripts/workflow_component_inputs.py --profile omarchy --selection components/omarchy-selection.json
+          python3 scripts/audit-licenses.py
+          python3 scripts/check-workflow-access.py --repo WSLd-wsx/wsx-rootfs --operation omarchy-candidate
+          python3 scripts/desktop_contract.py --check-pin
+          python3 scripts/reuse-components.py --check-pin --profile omarchy --repo WSLd-wsx/wsx-rootfs --work out
+          python3 scripts/check-shared-sources.py --profile omarchy
+      - name: Resolve stable Omarchy version and next revision
+        id: select
+        env:
+          GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
+          WSX_RECIPE_DIR: ${{ github.workspace }}
+          WSX_UPSTREAM_VERSION: ${{ inputs.upstream_version }}
+          WSX_REVISION: ${{ inputs.revision }}
+        run: python3 scripts/select-omarchy-build.py
+      - name: Resolve and deduplicate immutable inputs
+        id: prepare
+        env:
+          GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
+          VERSION: ${{ steps.select.outputs.version }}
+          REVISION: ${{ steps.select.outputs.revision }}
+          EXPECTED_UPSTREAM_COMMIT: ${{ steps.select.outputs.upstream_commit }}
+        run: |
+          set -euo pipefail
+          python3 scripts/prepare-build.py --version "$VERSION" --revision "$REVISION" --repo WSLd-wsx/wsx-rootfs --output out/build.json
+          python3 - <<'PYTHON'
+          import base64,json,os
+          data=json.load(open('out/build.json'))
+          if data['upstream']['upstream_commit'] != os.environ['EXPECTED_UPSTREAM_COMMIT']:
+              raise ValueError('Upstream release changed after selection')
+          encoded=base64.b64encode(json.dumps(data).encode()).decode()
+          if len(encoded)>400000: raise ValueError('Build input exceeds job output limit')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as stream:
+              stream.write('completed='+str(data['completed']).lower()+'\n')
+              stream.write('build_json='+encoded+'\n')
+          PYTHON
+  build:
+    needs: prepare
+    if: ${{ needs.prepare.outputs.completed != 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          token: ${{ secrets.WSLD_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Select source access and verified graphics inputs
+        env:
+          GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
+        run: |
+          set -euo pipefail
+          private=$(gh api repos/WSLd-wsx/wsx-rootfs --jq '.private')
+          case "$private" in
+            true) echo 'WSX_PRIVATE_SOURCE=1' >> "$GITHUB_ENV"; export WSX_PRIVATE_SOURCE=1 ;;
+            false) echo 'WSX_PRIVATE_SOURCE=0' >> "$GITHUB_ENV"; export WSX_PRIVATE_SOURCE=0 ;;
+            *) exit 1 ;;
+          esac
+          python3 scripts/workflow_component_inputs.py --profile omarchy --selection components/omarchy-selection.json
+          python3 scripts/audit-licenses.py
+          python3 scripts/check-workflow-access.py --repo WSLd-wsx/wsx-rootfs --operation omarchy-candidate
+      - name: Restore resolved inputs
+        env:
+          BUILD_JSON: ${{ needs.prepare.outputs.build_json }}
+        run: |
+          python3 - <<'PYTHON'
+          import base64,json,os
+          from pathlib import Path
+          data=json.loads(base64.b64decode(os.environ['BUILD_JSON'],validate=True))
+          Path('out').mkdir(exist_ok=True)
+          Path('out/build.json').write_text(json.dumps(data,indent=2)+'\n')
+          PYTHON
+      - name: Admit pinned private graphics components
+        env:
+          GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
+          WSX_COMPONENT_REGISTRY_TOKEN: ${{ secrets.WSLD_TOKEN }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zstd
+          python3 scripts/reuse-components.py --profile omarchy --repo WSLd-wsx/wsx-rootfs --work out
+      - name: Reclaim unused hosted-runner SDK space
+        run: bash scripts/prepare-runner.sh
+      - name: Start isolated pinned builder
+        run: |
+          image=$(python3 -c 'import json; print(json.load(open("components/builder.json"))["image"])')
+          docker run -d --name wsx-rootfs-builder --privileged -v "$PWD:/workspace:ro" -v "$PWD/out:/output" "$image" sleep infinity
+      - name: Install signed desktop base
+        run: docker exec wsx-rootfs-builder bash /workspace/distros/omarchy/bootstrap-rootfs.sh
+      - name: Build and validate signed-package rootfs
+        run: docker exec wsx-rootfs-builder bash /workspace/distros/omarchy/build-rootfs.sh
+      - name: Stop the owned isolated builder
+        if: always()
+        run: |
+          if docker container inspect wsx-rootfs-builder >/dev/null 2>&1; then
+            docker stop wsx-rootfs-builder
+            docker rm wsx-rootfs-builder
+          fi
+      - name: Verify archive and finalize candidate
+        env:
+          GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zstd acl libcap2-bin python3-jsonschema
+          python3 scripts/archive_policy.py --repo WSLd-wsx/wsx-rootfs --work out
+          sudo --preserve-env=GH_TOKEN,WSX_PRIVATE_SOURCE,GITHUB_SHA,GITHUB_REPOSITORY,GITHUB_RUN_ID,GITHUB_RUN_ATTEMPT /usr/bin/python3 scripts/finalize.py out
+      - name: Verify candidate and publish
+        env:
+          GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          set -euo pipefail
+          repo=WSLd-wsx/wsx-rootfs
+          private=$(gh api "repos/$repo" --jq '.private')
+          case "$private" in
+            true) python3 scripts/private-artifact-gate.py --repo "$repo" --kind rootfs --work out ;;
+            false) python3 scripts/private-artifact-gate.py --repo "$repo" --kind rootfs --public-prerelease --work out ;;
+            *) exit 1 ;;
+          esac
+          if [[ "$VERSION" == 4.0.6 ]]; then
+            if [[ "$private" == true ]]; then mode=--private-prerelease; else mode=--public-prerelease; fi
+          else
+            if [[ "$private" == true ]]; then mode=--private-draft; else mode=; fi
+          fi
+          PYTHONPATH="$PWD/scripts" python3 scripts/publish.py --repo "$repo" --directory out/payload ${mode:+"$mode"}
