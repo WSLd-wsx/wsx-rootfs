@@ -92,7 +92,7 @@ def main():
     parser.add_argument('--repo',required=True)
     parser.add_argument('--kind',choices=('component','rootfs'),required=True)
     parser.add_argument('--work',type=Path,required=True)
-    parser.add_argument('--public-prerelease',action='store_true')
+    parser.add_argument('--public-candidate', '--public-prerelease', action='store_true')
     args=parser.parse_args()
     if args.repo != REPOSITORY:
         raise ValueError('Unapproved repository')
@@ -100,7 +100,7 @@ def main():
     if args.kind == 'component':
         from component_registry import require_private as require_private_registry, IMAGE
         require_private_registry(os.environ.get('WSX_COMPONENT_IMAGE', IMAGE), allow_missing=True)
-    elif args.public_prerelease and args.kind=='rootfs':
+    elif args.public_candidate and args.kind=='rootfs':
         from publish import require_public_candidate
         from source_delivery import check_public_source_delivery
         require_public_candidate(args.repo,json.loads((args.work/'payload/manifest.json').read_text()))

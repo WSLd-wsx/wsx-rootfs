@@ -8,7 +8,11 @@ on:
       upstream_version:
         description: Stable Omarchy version; empty selects latest
         type: string
-        default: '4.0.6'
+        default: ''
+      pre_release:
+        description: Publish a pre-release (leave unchecked to keep a draft)
+        type: boolean
+        default: false
       revision:
         description: Optional WSX revision; empty selects the next available revision
         type: string
@@ -161,19 +165,19 @@ jobs:
       - name: Verify candidate and publish
         env:
           GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
-          VERSION: ${{ needs.prepare.outputs.version }}
+          PRE_RELEASE: ${{ inputs.pre_release }}
         run: |
           set -euo pipefail
           repo=WSLd-wsx/wsx-rootfs
           private=$(gh api "repos/$repo" --jq '.private')
-          case "$private" in
-            true) python3 scripts/private-artifact-gate.py --repo "$repo" --kind rootfs --work out ;;
-            false) python3 scripts/private-artifact-gate.py --repo "$repo" --kind rootfs --public-prerelease --work out ;;
+          gate=()
+          mode=()
+          case "$private:$PRE_RELEASE" in
+            true:true) mode=(--private-prerelease) ;;
+            true:false) mode=(--private-draft) ;;
+            false:true) gate=(--public-candidate); mode=(--public-prerelease) ;;
+            false:false) gate=(--public-candidate) ;;
             *) exit 1 ;;
           esac
-          if [[ "$VERSION" == 4.0.6 ]]; then
-            if [[ "$private" == true ]]; then mode=--private-prerelease; else mode=--public-prerelease; fi
-          else
-            if [[ "$private" == true ]]; then mode=--private-draft; else mode=; fi
-          fi
-          PYTHONPATH="$PWD/scripts" python3 scripts/publish.py --repo "$repo" --directory out/payload ${mode:+"$mode"}
+          python3 scripts/private-artifact-gate.py --repo "$repo" --kind rootfs --work out "${gate[@]}"
+          PYTHONPATH="$PWD/scripts" python3 scripts/publish.py --repo "$repo" --directory out/payload "${mode[@]}"
