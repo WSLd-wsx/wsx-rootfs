@@ -13,6 +13,8 @@ mkdir -p "$root/usr/share/licenses/wsx-components"
 cp -a /output/image-materials/component-materials/notices/. "$root/usr/share/licenses/wsx-components/"
 cp /etc/pacman.conf "$root/etc/pacman.conf"
 cat > "$root/etc/wsl.conf" <<'CONFIG'
+[general]
+guiApplications=false
 [boot]
 systemd=true
 [network]
