@@ -54,6 +54,8 @@ mkdir -p /output/rootfs/usr/share/fonts/omarchy
 cp -a /output/omarchy-source/default/fonts/omarchy/. /output/rootfs/usr/share/fonts/omarchy/
 cp /etc/pacman.conf /output/rootfs/etc/pacman.conf
 cat > /output/rootfs/etc/wsl.conf <<'EOF'
+[general]
+guiApplications=false
 [boot]
 systemd=true
 [network]
