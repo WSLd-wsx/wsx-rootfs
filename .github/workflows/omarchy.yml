@@ -26,9 +26,13 @@ jobs:
   prepare:
     if: ${{ github.repository == 'WSLd-wsx/wsx-rootfs' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: read
     outputs:
       completed: ${{ steps.prepare.outputs.completed }}
       build_json: ${{ steps.prepare.outputs.build_json }}
+      graphics_selection: ${{ steps.graphics.outputs.selection }}
       version: ${{ steps.select.outputs.version }}
       revision: ${{ steps.select.outputs.revision }}
       upstream_commit: ${{ steps.select.outputs.upstream_commit }}
@@ -43,21 +47,43 @@ jobs:
           token: ${{ secrets.WSLD_TOKEN }}
           fetch-depth: 1
           persist-credentials: false
-      - name: Select source access and verified graphics inputs
+      - name: Resolve latest verified Omarchy graphics and publish matching sources
+        id: graphics
         env:
           GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
+          WSX_COMPONENT_REGISTRY_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           private=$(gh api repos/WSLd-wsx/wsx-rootfs --jq '.private')
           case "$private" in
-            true) echo 'WSX_PRIVATE_SOURCE=1' >> "$GITHUB_ENV"; export WSX_PRIVATE_SOURCE=1 ;;
-            false) echo 'WSX_PRIVATE_SOURCE=0' >> "$GITHUB_ENV"; export WSX_PRIVATE_SOURCE=0 ;;
+            true) export WSX_PRIVATE_SOURCE=1; publication=--publish-private ;;
+            false) export WSX_PRIVATE_SOURCE=0; publication=--publish-public ;;
             *) exit 1 ;;
           esac
-          python3 scripts/workflow_component_inputs.py --profile omarchy --selection components/omarchy-selection.json
-          python3 scripts/audit-licenses.py
+          echo "WSX_PRIVATE_SOURCE=$WSX_PRIVATE_SOURCE" >> "$GITHUB_ENV"
           python3 scripts/check-workflow-access.py --repo WSLd-wsx/wsx-rootfs --operation omarchy-candidate
           python3 scripts/desktop_contract.py --check-pin
+          mkdir -p out
+          if ! command -v zstd >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y zstd
+          fi
+          PYTHONPATH=scripts python3 -c 'from component_registry import require_private; require_private()'
+          python3 scripts/select-component-origin.py --profile omarchy --repository WSLd-wsx/wsx-rootfs --output out/component-pin.json
+          python3 scripts/prepare-shared-sources.py --profile omarchy --work out/graphics-sources \
+            --component-pin out/component-pin.json --require-current-compatibility "$publication"
+          python3 - <<'PYTHON'
+          import base64, json, os
+          from pathlib import Path
+          pin = json.loads(Path('out/component-pin.json').read_text())
+          source = json.loads(Path('out/graphics-sources/summary.json').read_text())['public_source']
+          selection = json.dumps({'component': pin, 'shared_source': source}, separators=(',', ':'))
+          Path('out/graphics-selection.json').write_text(selection)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('selection=' + base64.b64encode(selection.encode()).decode() + '\n')
+          PYTHON
+          python3 scripts/workflow_component_inputs.py --profile omarchy --selection out/graphics-selection.json
+          python3 scripts/audit-licenses.py
           python3 scripts/reuse-components.py --check-pin --profile omarchy --repo WSLd-wsx/wsx-rootfs --work out
           python3 scripts/check-shared-sources.py --profile omarchy
       - name: Resolve stable Omarchy version and next revision
@@ -107,6 +133,7 @@ jobs:
       - name: Select source access and verified graphics inputs
         env:
           GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
+          GRAPHICS_SELECTION: ${{ needs.prepare.outputs.graphics_selection }}
         run: |
           set -euo pipefail
           private=$(gh api repos/WSLd-wsx/wsx-rootfs --jq '.private')
@@ -115,7 +142,9 @@ jobs:
             false) echo 'WSX_PRIVATE_SOURCE=0' >> "$GITHUB_ENV"; export WSX_PRIVATE_SOURCE=0 ;;
             *) exit 1 ;;
           esac
-          python3 scripts/workflow_component_inputs.py --profile omarchy --selection components/omarchy-selection.json
+          mkdir -p out
+          printf '%s' "$GRAPHICS_SELECTION" | base64 --decode > out/graphics-selection.json
+          python3 scripts/workflow_component_inputs.py --profile omarchy --selection out/graphics-selection.json
           python3 scripts/audit-licenses.py
           python3 scripts/check-workflow-access.py --repo WSLd-wsx/wsx-rootfs --operation omarchy-candidate
       - name: Restore resolved inputs
@@ -132,7 +161,7 @@ jobs:
       - name: Admit pinned private graphics components
         env:
           GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
-          WSX_COMPONENT_REGISTRY_TOKEN: ${{ secrets.WSLD_TOKEN }}
+          WSX_COMPONENT_REGISTRY_TOKEN: ${{ github.token }}
         run: |
           sudo apt-get update
           sudo apt-get install -y zstd

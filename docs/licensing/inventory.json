@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "bf60d4dba7fcccd63795be2c5be921384556f12f",
+  "head": "f0546467583e884353b9c2277dac392c037b7e3c",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -27,7 +27,7 @@
     },
     {
       "path": ".github/workflows/components.yml",
-      "sha256": "dc0a2e877d2593a5b2fdf7d7847fda35cdcb1b4e1761693f6195f1319b8018ca",
+      "sha256": "399beca9b9b75374ecfb2154856c9813dd822bcf1d1079d0342f0e3de433d230",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -36,6 +36,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "f0546467583e884353b9c2277dac392c037b7e3c",
         "bf60d4dba7fcccd63795be2c5be921384556f12f",
         "26c4777df1a87db44387d729fa1e652bc0d1fdb4",
         "a48128c2904b8388d6b0789a52bf576a0d10e54e",
@@ -54,12 +55,12 @@
           "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
         },
         {
-          "line": 47,
+          "line": 43,
           "kind": "mention",
           "text": "          python3 scripts/audit-licenses.py --check"
         },
         {
-          "line": 48,
+          "line": 44,
           "kind": "mention",
           "text": "          python3 scripts/audit-license-modules.py"
         }
@@ -67,7 +68,7 @@
     },
     {
       "path": ".github/workflows/omarchy.yml",
-      "sha256": "b763e1205a56d7256423856b2a3bca81f0350a59e8932c18eeea87688f85fd66",
+      "sha256": "98401f368249e75b24ae6117d56e5382a49a3207f098e41d6205aefdba0cfcaa",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -93,12 +94,12 @@
           "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
         },
         {
-          "line": 58,
+          "line": 86,
           "kind": "mention",
           "text": "          python3 scripts/audit-licenses.py"
         },
         {
-          "line": 119,
+          "line": 148,
           "kind": "mention",
           "text": "          python3 scripts/audit-licenses.py"
         }
@@ -9657,7 +9658,7 @@
     },
     {
       "path": "scripts/component_registry.py",
-      "sha256": "189e9580626a5225356b63eb7ad5a25e2078b788f4a6b10ecc333f59a079acc5",
+      "sha256": "da804502614616cb8764654447fccca838433de20a3843f7848618094db44853",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -9666,7 +9667,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "e70d49028cc657376d6075861437556d62ec5254",
@@ -11065,7 +11066,7 @@
     },
     {
       "path": "scripts/select-component-origin.py",
-      "sha256": "98e9545aef89d77f8d1d24387f94bcc5be32684fd9ec4b9eb16126a266a5c320",
+      "sha256": "c01d419a3011d585d2b955c63e98a0babd5e1d1e8166b42d6f21081dbfdd9aa4",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -11074,8 +11075,7 @@
       "source_index": [],
       "first_local_commit": "34f830716802726f83ae4e9c315712b1645e5e43",
       "local_change_commits": [
-        "114f8d1283065229a182a0d999b3b98da86b93f6",
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "b87dac9af8cb73bdce2fef1a05177ea978917067",
