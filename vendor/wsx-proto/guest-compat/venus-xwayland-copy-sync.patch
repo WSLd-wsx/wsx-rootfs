@@ -1,0 +1,61 @@
+--- a/src/vulkan/wsi/wsi_common.c
++++ b/src/vulkan/wsi/wsi_common.c
+@@ -2172,6 +2172,17 @@
+    return swapchain->get_wsi_image(swapchain, index)->memory;
+ }
+ 
++VkDeviceMemory
++wsi_common_get_acquire_memory(VkSwapchainKHR _swapchain, uint32_t index)
++{
++   VK_FROM_HANDLE(wsi_swapchain, swapchain, _swapchain);
++   assert(index < swapchain->image_count);
++   struct wsi_image *image = swapchain->get_wsi_image(swapchain, index);
++   if (swapchain->image_info.wsi.wsx_x11_linear)
++      return image->blit.memory;
++   return image->memory;
++}
++
+ VKAPI_ATTR VkResult VKAPI_CALL
+ wsi_GetSwapchainImagesKHR(VkDevice device,
+                           VkSwapchainKHR _swapchain,
+@@ -2891,6 +2902,17 @@
+       if (wsi->sw) {
+          wsi->WaitForFences(vk_device_to_handle(dev),
+                             1, &swapchain->fences[image_index], true, ~0ull);
++      }
++      /* The copy destination is what the X server reads. With neither a
++       * timeline nor a sync-file, wait for the actual copy submit before
++       * handing the pixmap to X11. Image reuse is gated by Present idle. */
++      if (swapchain->image_info.wsi.wsx_x11_linear &&
++          !swapchain->image_info.explicit_sync &&
++          swapchain->dma_buf_semaphore == VK_NULL_HANDLE) {
++         results[i] = wsi->WaitForFences(vk_device_to_handle(dev),
++                                       1, &swapchain->fences[image_index], true, UINT64_MAX);
++         if (results[i] != VK_SUCCESS)
++            continue;
+       }
+ 
+       const VkPresentRegionKHR *region = NULL;
+--- a/src/vulkan/wsi/wsi_common.h
++++ b/src/vulkan/wsi/wsi_common.h
+@@ -301,6 +301,9 @@
+ VkDeviceMemory
+ wsi_common_get_memory(VkSwapchainKHR _swapchain, uint32_t index);
+ 
++VkDeviceMemory
++wsi_common_get_acquire_memory(VkSwapchainKHR _swapchain, uint32_t index);
++
+ VkResult
+ wsi_common_acquire_next_image2(const struct wsi_device *wsi,
+                                VkDevice device,
+--- a/src/virtio/vulkan/vn_wsi.c
++++ b/src/virtio/vulkan/vn_wsi.c
+@@ -965,7 +965,7 @@
+    int sync_fd = -1;
+    if (!dev->renderer->info.has_implicit_fencing) {
+       VkDeviceMemory mem_handle =
+-         wsi_common_get_memory(pAcquireInfo->swapchain, *pImageIndex);
++         wsi_common_get_acquire_memory(pAcquireInfo->swapchain, *pImageIndex);
+       struct vn_device_memory *mem = vn_device_memory_from_handle(mem_handle);
+       struct vn_image *img = mem->dedicated_img;
+ 

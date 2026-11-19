@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
-  "working_tree_note": "Network README and installer are modified; omarchy-4.0.6 profile is untracked. Hashes identify inspected bytes, not merely HEAD.",
+  "working_tree_note": "Network README and installer are modified; omarchy-4.0.6 profile is untracked. Omarchy application overlays come from the wsx-proto working tree at the per-entry reference commit. Hashes identify inspected bytes, not merely HEAD.",
   "files": [
     {
       "source_path": "prototypes/venus-rutabaga/network/install.py",
@@ -97,13 +97,17 @@
     },
     {
       "source_path": "prototypes/venus-rutabaga/guest-compat/build.py",
-      "sha256": "7b79e80651c6a7498f2068d45b549f4871485edc2ee0406aee4aa9007063b28b",
-      "vendored": true
+      "sha256": "0b73cd6b0564af42b3c7415339f37f22b010a00a544d966499a5d9c0b73afa33",
+      "vendored": true,
+      "derived_from_sha256": "7b79e80651c6a7498f2068d45b549f4871485edc2ee0406aee4aa9007063b28b",
+      "adaptation": "Record and apply the validated Omarchy application overlays before the component build."
     },
     {
       "source_path": "prototypes/venus-rutabaga/guest-compat/build-venus.py",
-      "sha256": "152c43017f2aec24e29298b8398e1c374ed531fdca1690062f6684c398081a38",
-      "vendored": true
+      "sha256": "c160276a02eec0bf2f77b406cd3002fda9f604ce6963656c1bb4d0ce0f7568d0",
+      "vendored": true,
+      "derived_from_sha256": "152c43017f2aec24e29298b8398e1c374ed531fdca1690062f6684c398081a38",
+      "adaptation": "Record and apply the validated Omarchy application overlays before the component build."
     },
     {
       "source_path": "prototypes/venus-rutabaga/guest-compat/import-diagnostics.patch",
@@ -298,6 +302,64 @@
       "vendored_path": "vendor/wsx-proto/guest-opaque/kwin-wayland.inc",
       "vendored": true,
       "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816"
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/wsi-application-compat/venus-opaque-drm-identity.patch",
+      "vendored_path": "vendor/wsx-proto/guest-compat/venus-opaque-drm-identity.patch",
+      "sha256": "922e48fd9aabb21961fa763918983aa87e14eaa568b02e05ff577cfeaf9d6250",
+      "vendored": true,
+      "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+      "validation": "Omarchy 4.5.0-r2, RTX 3080 Ti, per-process Mesa/Venus candidate; release bundle validation pending."
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/wsi-application-compat/venus-opaque-swapchain-images.patch",
+      "vendored_path": "vendor/wsx-proto/guest-compat/venus-opaque-swapchain-images.patch",
+      "sha256": "e1b21618b3da9436e66590340412802832353d8b17e532a85980aede154f8bca",
+      "vendored": true,
+      "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+      "validation": "Omarchy 4.5.0-r2, RTX 3080 Ti, per-process Mesa/Venus candidate; release bundle validation pending."
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/wsi-application-compat/venus-opaque-surface-formats.patch",
+      "vendored_path": "vendor/wsx-proto/guest-compat/venus-opaque-surface-formats.patch",
+      "sha256": "a3ef6f597fc844109d55fe4b1c0ce8c50955ab9fe7e8d6d884585d03d31e5255",
+      "vendored": true,
+      "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+      "validation": "Omarchy 4.5.0-r2, RTX 3080 Ti, per-process Mesa/Venus candidate; release bundle validation pending."
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/wsi-application-compat/venus-xwayland-dri3-linear-experiment.patch",
+      "vendored_path": "vendor/wsx-proto/guest-compat/venus-xwayland-dri3-linear.patch",
+      "sha256": "1620ac88a34a83b1b421f773e1131bbf4db30f7831b3c1b8d0151834f745b3e4",
+      "vendored": true,
+      "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+      "validation": "Omarchy 4.5.0-r2, RTX 3080 Ti, per-process Mesa/Venus candidate; release bundle validation pending.",
+      "derived_from_sha256": "8a3b43092ffdfa1572c7095a50b7e7db47b8bbdf330b7b8edf82ec93292fbcba",
+      "adaptation": "Remove the per-swapchain diagnostic from the production overlay."
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/wsi-application-compat/venus-xwayland-dri3-image-copy-experiment.patch",
+      "vendored_path": "vendor/wsx-proto/guest-compat/venus-xwayland-dri3-image-copy.patch",
+      "sha256": "d2ada95b53407d8d536d820677d9aa1319e6981065967401fa6baeb3c41f1bf8",
+      "vendored": true,
+      "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+      "validation": "Omarchy 4.5.0-r2, RTX 3080 Ti, per-process Mesa/Venus candidate; release bundle validation pending."
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/wsi-application-compat/venus-xwayland-copy-sync.patch",
+      "vendored_path": "vendor/wsx-proto/guest-compat/venus-xwayland-copy-sync.patch",
+      "sha256": "012f781476d3fc51171802b6b7ea5f67330bbdbd4f5c8c49ba6c64693b7a2902",
+      "vendored": true,
+      "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+      "validation": "Omarchy 4.5.0-r2, RTX 3080 Ti, per-process Mesa/Venus candidate; release bundle validation pending."
+    },
+    {
+      "source_path": "prototypes/venus-rutabaga/wsi-application-compat/zink-stage-device-local-buffer-writes.patch",
+      "vendored_path": "vendor/wsx-proto/guest-compat/zink-stage-device-local-buffer-writes.patch",
+      "sha256": "3cb9134d1c48796d3bd8e4d5778bba7d880a1491d4599bf7129726137481cfe7",
+      "vendored": true,
+      "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+      "validation": "Omarchy 4.5.0-r2, RTX 3080 Ti, per-process Mesa/Venus candidate; release bundle validation pending."
     }
   ]
 }

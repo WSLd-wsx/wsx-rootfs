@@ -35,7 +35,11 @@ def main():
                         help='Build the opt-in per-image native LINEAR layout cache')
     parser.add_argument('--opaque-wsi', action='store_true',
                         help='Build the private opaque Wayland descriptor consumer')
+    parser.add_argument('--application-wsi', action='store_true',
+                        help='Build the Wayland and XWayland application WSI paths')
     args = parser.parse_args()
+    if args.application_wsi and not args.opaque_wsi:
+        parser.error('--application-wsi requires --opaque-wsi')
     if args.opaque_wsi and not (args.direct_wsi and args.opaque_import):
         parser.error('--opaque-wsi requires --direct-wsi and --opaque-import')
     if args.jobs < 1:
@@ -78,6 +82,21 @@ def main():
                           'src/vulkan/wsi/wsi_common_drm.c',
                           'src/vulkan/wsi/wsi_common_wayland.c',
                           'src/vulkan/wsi/meson.build']
+    if args.application_wsi:
+        patches.extend(HERE / name for name in (
+            'venus-opaque-drm-identity.patch',
+            'venus-opaque-swapchain-images.patch',
+            'venus-opaque-surface-formats.patch',
+            'venus-xwayland-dri3-linear.patch',
+            'venus-xwayland-dri3-image-copy.patch',
+            'venus-xwayland-copy-sync.patch',
+        ))
+        changed_files.extend([
+            'src/virtio/vulkan/vn_physical_device.h',
+            'src/vulkan/wsi/wsi_common.c',
+            'src/vulkan/wsi/wsi_common.h',
+            'src/vulkan/wsi/wsi_common_x11.c',
+        ])
     if args.linear_layout_cache:
         patches.append(HERE / 'venus-linear-layout-cache.patch')
         for name in ['src/virtio/vulkan/vn_image.c', 'src/virtio/vulkan/vn_image.h']:
@@ -87,7 +106,8 @@ def main():
                   linear_layout_cache=args.linear_layout_cache,
                   patch_sha256=sha(patch), commands=[], system_icd_replaced=False,
                   nv_linear_color_protocol=args.nv_linear_color,
-                  opaque_wsi=args.opaque_wsi, opaque_import=args.opaque_import, direct_wsi="linear-v1" if args.direct_wsi else False,
+                  opaque_wsi=args.opaque_wsi, application_wsi=args.application_wsi,
+                  opaque_import=args.opaque_import, direct_wsi="linear-v1" if args.direct_wsi else False,
                   patches={p.name: sha(p) for p in patches})
     env = dict(os.environ, PATH=str(Path(sys.executable).parent) + ':' + os.environ['PATH'])
     for key in ['LD_LIBRARY_PATH', 'LD_PRELOAD', 'PYTHONPATH', 'CC', 'CXX',
@@ -148,7 +168,8 @@ def main():
             linear_layout_cache=args.linear_layout_cache,
             source_sha256=ARCHIVE_SHA, zink_drm_identity=True,
             nv_linear_color_protocol=args.nv_linear_color,
-            opaque_wsi=args.opaque_wsi, opaque_import=args.opaque_import, direct_wsi="linear-v1" if args.direct_wsi else False, files=files), indent=2) + '\n')
+            opaque_wsi=args.opaque_wsi, application_wsi=args.application_wsi,
+                  opaque_import=args.opaque_import, direct_wsi="linear-v1" if args.direct_wsi else False, files=files), indent=2) + '\n')
         report.update(passed=True, patched_source_sha256=patched_hashes[changed],
                       patched_sources=patched_hashes,
                       artifacts={str(p.relative_to(out)): sha(p) for p in prefix.iterdir()})

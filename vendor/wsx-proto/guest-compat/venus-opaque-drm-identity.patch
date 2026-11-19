@@ -1,0 +1,62 @@
+--- a/src/virtio/vulkan/vn_physical_device.c
++++ b/src/virtio/vulkan/vn_physical_device.c
+@@ -31,8 +31,8 @@
+ /* WSX descriptor transport carries opaque images, not implicit DMA-BUF layouts.
+  * Use the renderer's actual DRM node and paired ABI before querying the Host.
+  * The native external-image query remains authoritative for all image flags. */
+-static bool
+-wsx_opaque_query_transport(struct vn_physical_device *physical_dev)
++bool
++vn_wsx_opaque_transport_supported(struct vn_physical_device *physical_dev)
+ {
+    const char *profile = getenv("WSX_VENUS_DIRECT_WSI");
+    if (!profile || strcmp(profile, "opaque-v1"))
+@@ -2774,7 +2774,7 @@
+       /* Standard DMA-BUF still requires modifier tiling. The explicit WSX
+        * opaque descriptor ABI can represent OPTIMAL without a DRM modifier. */
+       const bool opaque_query = pImageFormatInfo->tiling == VK_IMAGE_TILING_OPTIMAL &&
+-         wsx_opaque_query_transport(physical_dev);
++         vn_wsx_opaque_transport_supported(physical_dev);
+       if (!opaque_query && renderer_handle_type ==
+              VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT &&
+           pImageFormatInfo->tiling !=
+@@ -2818,7 +2818,7 @@
+       result = vn_call_vkGetPhysicalDeviceImageFormatProperties2(
+          ring, physicalDevice, pImageFormatInfo, pImageFormatProperties);
+       if (external_info && pImageFormatInfo->tiling == VK_IMAGE_TILING_OPTIMAL &&
+-          wsx_opaque_query_transport(physical_dev))
++          vn_wsx_opaque_transport_supported(physical_dev))
+          vn_log(physical_dev->instance,
+                 "WSX_OPAQUE_HOST_QUERY: format=%u tiling=%u usage=0x%x flags=0x%x wire_handle=0x%x result=%d",
+                 pImageFormatInfo->format, pImageFormatInfo->tiling,
+--- a/src/virtio/vulkan/vn_physical_device.h
++++ b/src/virtio/vulkan/vn_physical_device.h
+@@ -17,6 +17,8 @@
+ 
+ #include "vn_descriptor.h"
+ #include "vn_wsi.h"
++
++bool vn_wsx_opaque_transport_supported(struct vn_physical_device *physical_dev);
+ 
+ struct vn_format_properties_entry {
+    atomic_bool valid;
+--- a/src/virtio/vulkan/vn_wsi.c
++++ b/src/virtio/vulkan/vn_wsi.c
+@@ -157,12 +157,11 @@
+    const bool is_gamescope = app_name && strcmp(app_name, "gamescope") == 0;
+    const char *engine_name = physical_dev->instance->base.vk.app_info.engine_name;
+    const bool is_zink = engine_name && strcmp(engine_name, "mesa zink") == 0;
+-   /* Zink selects its Vulkan device by the actual DRM render node before
+-    * creating a logical device. Hiding that identity prevents GBM/EGL
+-    * initialization. Keep the NVIDIA WSI workaround for direct Vulkan apps;
+-    * no format feature or image modifier capability is changed here.
+-    */
+-   if (is_nvidia && !is_gamescope && !is_zink) {
++   /* The negotiated WSX opaque path uses the renderer's DRM node for
++    * descriptor registration and compositor device matching. The upstream
++    * NVIDIA workaround assumes the ordinary modifier/LINEAR WSI path. */
++   if (is_nvidia && !is_gamescope && !is_zink &&
++       !vn_wsx_opaque_transport_supported(physical_dev)) {
+       /* Fail same_gpu check on x11. See wsi_device_matches_drm_fd. */
+       physical_dev->base.vk.supported_extensions.EXT_pci_bus_info = false;
+       props->pciDomain = 0;

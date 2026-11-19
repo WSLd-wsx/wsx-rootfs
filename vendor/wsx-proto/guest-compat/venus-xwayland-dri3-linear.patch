@@ -1,0 +1,101 @@
+--- a/src/vulkan/util/vk_internal_exts.h
++++ b/src/vulkan/util/vk_internal_exts.h
+@@ -36,6 +36,7 @@
+     VkStructureType sType;
+     const void *pNext;
+     bool scanout;
++    bool wsx_x11_linear;
+     bool wsx_opaque; /* Private paired WSI/driver descriptor contract. */
+ 
+     /* if true, the image is a blit source */
+--- a/src/vulkan/wsi/wsi_common_private.h
++++ b/src/vulkan/wsi/wsi_common_private.h
+@@ -82,6 +82,7 @@
+    struct wsi_base_image_params base;
+ 
+    bool same_gpu;
++   bool wsx_x11_linear;
+    bool wsx_opaque;
+    /* See wsi_image_info.explicit_sync. */
+    bool explicit_sync;
+--- a/src/vulkan/wsi/wsi_common_drm.c
++++ b/src/vulkan/wsi/wsi_common_drm.c
+@@ -591,6 +591,7 @@
+       return result;
+ 
+    info->explicit_sync = params->explicit_sync;
++   info->wsi.wsx_x11_linear = params->wsx_x11_linear;
+ 
+    if (params->wsx_opaque) {
+       /* The opaque consumer samples the image and the native owner may
+--- a/src/vulkan/wsi/wsi_common_x11.c
++++ b/src/vulkan/wsi/wsi_common_x11.c
+@@ -1,3 +1,7 @@
++#ifdef __linux__
++#include <sys/stat.h>
++#include <sys/sysmacros.h>
++#endif
+ /*
+  * Copyright © 2015 Intel Corporation
+  *
+@@ -3231,6 +3235,34 @@
+ 
+          wsi_x11_recompute_dri3_modifier_hash(&chain->dri3_modifier_hash, &drm_image_params);
+       }
++#ifdef __linux__
++      const char *profile = getenv("WSX_VENUS_DIRECT_WSI");
++      if (profile && !strcmp(profile, "opaque-v1") && wsi_conn->is_xwayland &&
++          wsi_device->drm_info.hasRender && drm_image_params.num_modifier_lists) {
++         int fd = wsi_dri3_open(conn, window, None);
++         struct stat st;
++         bool same_render_node = fd >= 0 && fstat(fd, &st) == 0 &&
++            S_ISCHR(st.st_mode) &&
++            major(st.st_rdev) == wsi_device->drm_info.renderMajor &&
++            minor(st.st_rdev) == wsi_device->drm_info.renderMinor;
++         if (fd >= 0)
++            close(fd);
++         bool has_linear = false;
++         for (uint32_t i = 0; i < drm_image_params.num_modifier_lists; i++)
++            for (uint32_t j = 0; j < drm_image_params.num_modifiers[i]; j++)
++               has_linear |= drm_image_params.modifiers[i][j] == DRM_FORMAT_MOD_LINEAR;
++         if (same_render_node && has_linear) {
++            static const uint32_t count = 1;
++            static const uint64_t linear = DRM_FORMAT_MOD_LINEAR;
++            static const uint64_t *const layouts[] = { &linear };
++            drm_image_params.same_gpu = true;
++            drm_image_params.wsx_x11_linear = true;
++            drm_image_params.num_modifier_lists = 1;
++            drm_image_params.num_modifiers = &count;
++            drm_image_params.modifiers = layouts;
++         }
++      }
++#endif
+       image_params = &drm_image_params.base;
+ #else
+       UNREACHABLE("X11 DRM support missing!");
+--- a/src/virtio/vulkan/vn_wsi.c
++++ b/src/virtio/vulkan/vn_wsi.c
+@@ -218,7 +218,13 @@
+ {
+    const char *direct = getenv("WSX_VENUS_DIRECT_WSI");
+    const bool opaque_wsi = direct && !strcmp(direct, "opaque-v1");
+-   if (opaque_wsi && (!wsi_info->wsx_opaque || wsi_info->blit_src || wsi_info->scanout ||
++   const bool x11_linear = wsi_info->wsx_x11_linear && opaque_wsi &&
++      vn_wsx_opaque_transport_supported(dev->physical_device) &&
++      !wsi_info->blit_src && !wsi_info->scanout &&
++      create_info->tiling == VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT;
++   if (wsi_info->wsx_x11_linear && !x11_linear)
++      return VK_ERROR_FORMAT_NOT_SUPPORTED;
++   if (opaque_wsi && !x11_linear && (!wsi_info->wsx_opaque || wsi_info->blit_src || wsi_info->scanout ||
+                       create_info->tiling != VK_IMAGE_TILING_OPTIMAL))
+       return VK_ERROR_FORMAT_NOT_SUPPORTED;
+    if (wsi_info->wsx_opaque && !opaque_wsi)
+@@ -265,7 +271,7 @@
+    if (result != VK_SUCCESS)
+       return result;
+ 
+-   if (direct_wsi) {
++   if (direct_wsi || x11_linear) {
+       VkImageDrmFormatModifierPropertiesEXT props = {
+          .sType = VK_STRUCTURE_TYPE_IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT,
+          .drmFormatModifier = UINT64_MAX,
