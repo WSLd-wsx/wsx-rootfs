@@ -14,7 +14,7 @@ OPS = 'operations'
 RECIPE = 'WSLd-wsx/wsx-rootfs'
 
 
-def pin_from_log(log, profile, run_id):
+def pin_from_log(log, profile, run_id, *, require_profile=False):
     rows = []
     for line in log.splitlines():
         parts = line.split('\t', 2)
@@ -24,10 +24,12 @@ def pin_from_log(log, profile, run_id):
         if match:
             rows.append((parts[1], re.sub(r'\x1b\[[0-9;]*m', '', match.group(1))))
     profiles = {text.split('PROFILE:',1)[1].strip() for _, text in rows if 'PROFILE:' in text}
+    if require_profile and not profiles:
+        raise ValueError('Missing component profile in run log')
+    if profiles and len(profiles) != 1:
+        raise ValueError('Ambiguous component profile in run log')
     if profile not in profiles:
         return None
-    if profiles != {profile}:
-        raise ValueError('Ambiguous component profile in run log')
     blocks = []
     lines = [text for step,text in rows if step == 'Upload and verify paired private GHCR package']
     # GitHub's archived job logs may omit step names; the run identity and
@@ -55,12 +57,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile', required=True, choices=('omarchy','cachyos-plasma'))
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--repository', choices=(OPS, RECIPE), default=OPS)
     args = parser.parse_args()
-    token = os.environ.get('WSX_OPS_TOKEN')
+    token_name = 'WSX_OPS_TOKEN' if args.repository == OPS else 'GH_TOKEN'
+    token = os.environ.get(token_name)
     if not token:
-        raise ValueError('WSX_OPS_TOKEN is required')
+        raise ValueError(token_name + ' is required')
     env = dict(os.environ, GH_TOKEN=token)
-    runs = json.loads(subprocess.check_output(['gh','run','list','--repo',OPS,'--workflow','components.yml',
+    runs = json.loads(subprocess.check_output(['gh','run','list','--repo',args.repository,
+        '--workflow','components.yml','--branch','main','--status','success',
         '--limit','50','--json','databaseId,status,conclusion,event,headSha'],env=env,text=True))
     spec = importlib.util.spec_from_file_location('reuse_components', ROOT/'scripts/reuse-components.py')
     reuse = importlib.util.module_from_spec(spec); spec.loader.exec_module(reuse)
@@ -68,17 +73,25 @@ def main():
         if row.get('status') != 'completed' or row.get('conclusion') != 'success' or row.get('event') != 'workflow_dispatch':
             continue
         run_id = row['databaseId']
-        log = subprocess.check_output(['gh','run','view',str(run_id),'--repo',OPS,'--log'],env=env,text=True)
+        log = subprocess.check_output(['gh','run','view',str(run_id),'--repo',args.repository,'--log'],env=env,text=True)
         try:
-            pin = pin_from_log(log,args.profile,run_id)
+            pin = pin_from_log(log,args.profile,run_id,require_profile=args.repository == RECIPE)
         except (ValueError, json.JSONDecodeError) as error:
+            if args.repository == RECIPE:
+                raise
             print(f'Skipping component run {run_id}: {error}', flush=True)
             continue
         if pin is None:
             continue
-        run = json.loads(subprocess.check_output(['gh','api',f'repos/{OPS}/actions/runs/{run_id}'],env=env,text=True))
+        run = json.loads(subprocess.check_output(['gh','api',f'repos/{args.repository}/actions/runs/{run_id}'],env=env,text=True))
         reuse.validate_origin(pin,args.profile,RECIPE,run,{})
-        if pin.get('workflow_commit') != row.get('headSha'):
+        if args.repository == RECIPE:
+            from component_registry import IMAGE
+            if (not pin['image'].startswith(IMAGE + '@sha256:')
+                    or 'run_repository' in pin or 'workflow_commit' in pin):
+                raise ValueError('Unexpected rootfs component origin')
+        head = pin['source_commit'] if args.repository == RECIPE else pin.get('workflow_commit')
+        if head != row.get('headSha'):
             raise ValueError('Component workflow commit mismatch')
         args.output.write_text(json.dumps(pin,indent=2)+'\n')
         print(json.dumps({'profile':args.profile,'run_id':run_id,'image':pin['image']}))

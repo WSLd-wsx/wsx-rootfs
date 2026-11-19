@@ -102,6 +102,26 @@ def publication_origin(environ):
     return selected, run_repo, commit, operations_commit
 
 
+def verify_write_access():
+    """Prove write access with a fixed probe tag containing only a marker."""
+    image, _, _, _ = publication_origin(os.environ)
+    require_private(image)
+    tag = image + ':actions-write-check'
+    with tempfile.TemporaryDirectory(prefix='wsx-registry-probe-') as directory, docker_session() as env:
+        marker = Path(directory) / 'marker'
+        marker.write_text('WSX GHCR write access check\n')
+        os.utime(marker, (0, 0))
+        subprocess.run(['docker', 'build', '-t', tag, '-f', '-', directory],
+                       input='FROM scratch\nCOPY marker /marker\n',
+                       text=True, env=env, check=True)
+        try:
+            subprocess.run(['docker', 'push', tag], env=env, check=True)
+        except subprocess.CalledProcessError as error:
+            raise SystemExit('GHCR write check failed. Check the repository Write role under '
+                             'the private package settings → Manage Actions access.') from error
+    require_private(image)
+
+
 def publish(bundle, profile, probe=False):
     if probe:
         raise ValueError('Component package publication does not support probe destinations')

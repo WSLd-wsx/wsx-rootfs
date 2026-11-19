@@ -38,15 +38,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: WSLd-wsx/wsx-rootfs
         run: python3 scripts/check-workflow-access.py --repo "$REPOSITORY" --operation component-build
-      - name: Verify existing private GHCR destination
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: PYTHONPATH=scripts python3 -c 'from component_registry import require_private; require_private()'
       - name: Validate source policy before compilation
         run: |
           python3 scripts/audit-licenses.py --check
           python3 scripts/audit-license-modules.py
           python3 scripts/check-provenance.py
+      - name: Verify write access to the private GHCR package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: PYTHONPATH=scripts python3 -c 'from component_registry import verify_write_access; verify_write_access()'
       - name: Restore compiler cache
         id: ccache
         uses: actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
@@ -67,6 +67,13 @@ jobs:
             -e CCACHE_COMPILERCHECK=content -v "$cache_dir:/ccache" \
             -v "$PWD:/workspace:ro" -v "$PWD/out:/output" \
             "$image" bash /workspace/distros/"$PROFILE"/build-components.sh
+      - name: Set cache ownership for the runner
+        run: sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/wsx-graphics-ccache"
+      - name: Save compiler cache
+        uses: actions/cache/save@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: ${{ runner.temp }}/wsx-graphics-ccache
+          key: ${{ steps.ccache.outputs.cache-primary-key }}
       - name: Package paired source-built runtime
         run: |
           sudo apt-get update
@@ -82,13 +89,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PROFILE: ${{ inputs.profile }}
         run: python3 scripts/component_registry.py out/packages --profile "$PROFILE"
-      - name: Set cache ownership for the runner
-        run: sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/wsx-graphics-ccache"
-      - name: Save compiler cache
-        uses: actions/cache/save@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
-        with:
-          path: ${{ runner.temp }}/wsx-graphics-ccache
-          key: ${{ steps.ccache.outputs.cache-primary-key }}
       - name: Report build scope
         if: always()
         run: |
