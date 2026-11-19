@@ -5,7 +5,15 @@ cd /workspace
 printf 'Server = https://archive.archlinux.org/repos/2026/10/28/$repo/os/$arch\n' > /etc/pacman.d/mirrorlist
 pacman -Syu --noconfirm --needed archlinux-keyring
 mapfile -t dependencies < distros/cachyos-plasma/build-dependencies.txt
+if [[ -n ${CCACHE_DIR:-} ]]; then
+    dependencies+=(ccache)
+fi
 pacman -S --noconfirm --needed "${dependencies[@]}"
+if [[ -n ${CCACHE_DIR:-} ]]; then
+    export CMAKE_C_COMPILER_LAUNCHER=ccache CMAKE_CXX_COMPILER_LAUNCHER=ccache
+    ccache --zero-stats
+    trap 'ccache --show-stats || true' EXIT
+fi
 pacman -Q > /output/build-packages.txt
 pacman-conf > /output/build-repositories.conf
 python scripts/check-provenance.py
