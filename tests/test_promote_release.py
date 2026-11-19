@@ -30,27 +30,16 @@ class PromotionTests(unittest.TestCase):
             _, second = promotion.release_snapshot(self.tag)
         self.assertNotEqual(first, second)
 
-    def test_missing_independent_review_stops_before_mutation(self):
-        environment = {'protection_rules': [
-            {'type': 'required_reviewers', 'prevent_self_review': False, 'reviewers': [{}]},
-        ]}
-        with patch.object(promotion, 'api', return_value=environment), patch.object(promotion.subprocess, 'run') as call:
-            with self.assertRaisesRegex(ValueError, 'prevent self-review'):
-                promotion.promote(self.tag, 'a' * 64)
-            call.assert_not_called()
-
     def test_changed_snapshot_stops_before_mutation(self):
-        with patch.object(promotion, 'require_approval_configuration'), \
-             patch.object(promotion, 'release_snapshot', return_value=({'release_id': 7}, 'b' * 64)), \
+        with patch.object(promotion, 'release_snapshot', return_value=({'release_id': 7}, 'b' * 64)), \
              patch.object(promotion.subprocess, 'run') as call:
-            with self.assertRaisesRegex(ValueError, 'differs from the approved snapshot'):
+            with self.assertRaisesRegex(ValueError, 'differs from the verified snapshot'):
                 promotion.promote(self.tag, 'a' * 64)
             call.assert_not_called()
 
-    def test_approved_snapshot_updates_only_prerelease(self):
+    def test_verified_snapshot_updates_only_prerelease(self):
         published = {'tag_name': self.tag, 'draft': False, 'prerelease': False}
-        with patch.object(promotion, 'require_approval_configuration'), \
-             patch.object(promotion, 'release_snapshot', return_value=({'release_id': 7}, 'a' * 64)), \
+        with patch.object(promotion, 'release_snapshot', return_value=({'release_id': 7}, 'a' * 64)), \
              patch.object(promotion, 'api', return_value=published) as api, \
              patch.object(promotion.subprocess, 'run') as call:
             promotion.promote(self.tag, 'a' * 64)

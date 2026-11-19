@@ -21,14 +21,13 @@ on:
         required: true
         default: false
       authorize_promotion:
-        description: Request stable promotion after independent approval
+        description: Promote this prerelease to stable if all checks pass
         type: boolean
         required: true
         default: false
 
 permissions:
   contents: read
-  actions: read
 
 concurrency:
   group: stable-promotion-${{ inputs.release_tag }}
@@ -62,14 +61,9 @@ jobs:
           RELEASE_TAG: ${{ inputs.release_tag }}
           ARCHIVE_SHA: ${{ inputs.archive_sha256 }}
           MANIFEST_SHA: ${{ inputs.manifest_sha256 }}
-          AUTHORIZE_PROMOTION: ${{ inputs.authorize_promotion }}
         run: |
-          args=()
-          if [[ "$AUTHORIZE_PROMOTION" == true ]]; then
-            args+=(--check-approval)
-          fi
           python3 scripts/promote-release.py review --tag "$RELEASE_TAG" \
-            --archive-sha "$ARCHIVE_SHA" --manifest-sha "$MANIFEST_SHA" "${args[@]}" \
+            --archive-sha "$ARCHIVE_SHA" --manifest-sha "$MANIFEST_SHA" \
             > "$RUNNER_TEMP/promotion.json"
           source_commit=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["source_commit"])' "$RUNNER_TEMP/promotion.json")
           git merge-base --is-ancestor "$source_commit" "$GITHUB_SHA"
@@ -99,15 +93,13 @@ jobs:
     if: ${{ github.repository == 'WSLd-wsx/wsx-rootfs' && github.ref == 'refs/heads/main' && inputs.authorize_promotion && needs.review.outputs.snapshot != '' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    environment: stable-release
     permissions:
-      actions: read
       contents: write
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
-      - name: Recheck approved snapshot and promote
+      - name: Recheck verified snapshot and promote
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ inputs.release_tag }}

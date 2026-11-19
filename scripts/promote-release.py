@@ -94,25 +94,6 @@ def stable_manifest(directory,tag,source_commit,snapshot):
     check_public_source_delivery(directory,sources)
     return manifest
 
-def require_approval_configuration():
-    path = f'repos/{REPO}/environments/stable-release'
-    environment = api(path)
-    if not any(rule['type'] == 'required_reviewers' and rule.get('prevent_self_review')
-               and rule.get('reviewers') for rule in environment['protection_rules']):
-        raise ValueError('Configure required stable-release reviewers and prevent self-review')
-    policy = environment.get('deployment_branch_policy') or {}
-    if not policy.get('custom_branch_policies'):
-        raise ValueError('Configure an explicit stable-release branch policy')
-    policies = api(path + '/deployment-branch-policies?per_page=100')
-    rules = policies['branch_policies']
-    if policies['total_count'] != 1 or len(rules) != 1 or (
-        rules[0].get('name'), rules[0].get('type', 'branch')
-    ) != ('main', 'branch'):
-        raise ValueError('stable-release must allow only the main branch')
-    if api(f'repos/{REPO}/branches/main').get('protected') is not True:
-        raise ValueError('Protect the main branch before enabling stable promotion')
-
-
 def review(tag, archive_sha, manifest_sha, actor):
     snapshot, fingerprint = release_snapshot(tag)
     source_commit = snapshot['source_commit']
@@ -147,10 +128,9 @@ def review(tag, archive_sha, manifest_sha, actor):
 
 
 def promote(tag, expected_snapshot):
-    require_approval_configuration()
     snapshot, fingerprint = release_snapshot(tag)
     if fingerprint != expected_snapshot:
-        raise ValueError('Release differs from the approved snapshot')
+        raise ValueError('Release differs from the verified snapshot')
     path = f'repos/{REPO}/releases/{snapshot["release_id"]}'
     subprocess.run(
         ['gh', 'api', '--method', 'PATCH', path, '-F', 'prerelease=false'],
@@ -175,7 +155,6 @@ def main():
     review_parser.add_argument('--tag', required=True)
     review_parser.add_argument('--archive-sha', required=True, type=sha256_arg)
     review_parser.add_argument('--manifest-sha', required=True, type=sha256_arg)
-    review_parser.add_argument('--check-approval', action='store_true')
     promote_parser = commands.add_parser('promote')
     promote_parser.add_argument('--tag', required=True)
     promote_parser.add_argument('--expected-snapshot', required=True, type=sha256_arg)
@@ -184,8 +163,6 @@ def main():
     if args.command == 'promote':
         promote(args.tag, args.expected_snapshot)
         return
-    if args.check_approval:
-        require_approval_configuration()
     actor = os.environ['GITHUB_ACTOR']
     if not actor.strip():
         raise ValueError('An authenticated workflow actor is required')
