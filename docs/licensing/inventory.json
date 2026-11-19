@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "aaf57c8460d2cc77610cb46f479534a15eb3323c",
+  "head": "99ca34916a204fa189822da17d0c23dd6a646a50",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -24,6 +24,44 @@
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
       "observations": []
+    },
+    {
+      "path": ".github/workflows/components.yml",
+      "sha256": "e33cb4d07685165d48dc5d1ef32bc15007f57f726a4ed6a10c5e9119b7294f8f",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
+      "local_change_commits": [
+        "a48128c2904b8388d6b0789a52bf576a0d10e54e",
+        "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
+        "0daf80783bc442947789f5fb7a8051f962bdd444"
+      ],
+      "observations": [
+        {
+          "line": 2,
+          "kind": "declaration-observation",
+          "text": "# Copyright (c) 2026 WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>"
+        },
+        {
+          "line": 3,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        },
+        {
+          "line": 47,
+          "kind": "mention",
+          "text": "          python3 scripts/audit-licenses.py --check"
+        },
+        {
+          "line": 48,
+          "kind": "mention",
+          "text": "          python3 scripts/audit-license-modules.py"
+        }
+      ]
     },
     {
       "path": ".github/workflows/omarchy.yml",
@@ -11422,7 +11460,7 @@
     },
     {
       "path": "scripts/workflow_component_inputs.py",
-      "sha256": "424d566029ea74513c393ad71f33dd826126f9d3e95822248e6e0e9624478098",
+      "sha256": "b8073332496a126a72a26c0cb5355c111821c1f5d0bfadb5b1ddf0c42d5fcf69",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -11431,8 +11469,8 @@
       "source_index": [],
       "first_local_commit": "34f830716802726f83ae4e9c315712b1645e5e43",
       "local_change_commits": [
-        "114f8d1283065229a182a0d999b3b98da86b93f6",
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "94a52b74a070d4eedd11046478b13258c8785a42",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "34f830716802726f83ae4e9c315712b1645e5e43"

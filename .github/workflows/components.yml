@@ -1,0 +1,75 @@
+# Derived from the wsx-devops private component workflow.
+# Copyright (c) 2026 WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+name: Build graphics components
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        type: choice
+        options: [omarchy, cachyos-plasma]
+        default: omarchy
+        description: Paired desktop component profile
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: components-${{ github.ref }}-${{ inputs.profile }}
+  cancel-in-progress: false
+jobs:
+  build:
+    if: ${{ github.repository == 'WSLd-wsx/wsx-rootfs' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Verify pinned recipe commit
+        env:
+          SOURCE_COMMIT: ${{ github.sha }}
+        run: |
+          [[ "$SOURCE_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          test "$(git rev-parse HEAD)" = "$SOURCE_COMMIT"
+      - name: Check source and binary workflow access
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: WSLd-wsx/wsx-rootfs
+        run: python3 scripts/check-workflow-access.py --repo "$REPOSITORY" --operation component-build
+      - name: Verify existing private GHCR destination
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: PYTHONPATH=scripts python3 -c 'from component_registry import require_private; require_private()'
+      - name: Validate source policy before compilation
+        run: |
+          python3 scripts/audit-licenses.py --check
+          python3 scripts/audit-license-modules.py
+          python3 scripts/check-provenance.py
+      - name: Build pinned private source closure
+        env:
+          PROFILE: ${{ inputs.profile }}
+        run: |
+          mkdir -p out
+          image=$(python3 -c 'import json; print(json.load(open("components/builder.json"))["image"])')
+          python3 scripts/watch-component-build.py out/component-build -- docker run --rm -e PYTHONUNBUFFERED=1 -v "$PWD:/workspace:ro" -v "$PWD/out:/output" "$image" bash /workspace/distros/"$PROFILE"/build-components.sh
+      - name: Package paired source-built runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zstd
+          sudo python3 scripts/package-source-components.py out out/packages
+      - name: Require private component artifact checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: WSLd-wsx/wsx-rootfs
+        run: python3 scripts/private-artifact-gate.py --repo "$REPOSITORY" --kind component --work out
+      - name: Upload and verify paired private GHCR package
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROFILE: ${{ inputs.profile }}
+        run: python3 scripts/component_registry.py out/packages --profile "$PROFILE"
+      - name: Report build scope
+        if: always()
+        run: |
+          echo 'This job only compiles private components. It does not publish or validate a rootfs.' >> "$GITHUB_STEP_SUMMARY"
