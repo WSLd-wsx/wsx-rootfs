@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "0f01abacd48bd4bff1edeb9e15037d7b78eaa64b",
+  "head": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -109,15 +109,17 @@
     },
     {
       "path": ".github/workflows/promote-rootfs.yml",
-      "sha256": "6b54609df01f9df13da62bf0014a31a5233d1ef880de1de4d7e8160ade521026",
+      "sha256": "bdf0c999584266fcb82f823c257cf0f7579e70b2a97fdca1b7da653f5387338a",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
+      "local_change_commits": [
+        "6d8c789b5c2453e3bfed5890011bb38c29f24594"
+      ],
       "observations": [
         {
           "line": 1,
@@ -125,17 +127,17 @@
           "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
         },
         {
-          "line": 91,
+          "line": 85,
           "kind": "mention",
           "text": "      - name: Audit candidate license inventory and provenance"
         },
         {
-          "line": 93,
+          "line": 87,
           "kind": "mention",
           "text": "          python3 scripts/audit-licenses.py --check"
         },
         {
-          "line": 94,
+          "line": 88,
           "kind": "mention",
           "text": "          python3 scripts/audit-license-modules.py"
         }
@@ -5633,7 +5635,7 @@
     },
     {
       "path": "docs/release-protocol.md",
-      "sha256": "15ddd1524f9feedbc4025de986e843bdaed579f1b2981a0b27f89624278dfddf",
+      "sha256": "0ee22ba154751eb723de5fa4f1b12009e3d4e057129e43b8edc07f867db16070",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5642,6 +5644,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "6d8c789b5c2453e3bfed5890011bb38c29f24594",
         "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "c428d03f2f1955cffaa047b1c981844e4cde372a",
@@ -5666,9 +5669,9 @@
           "text": "signatures or guarantees of hardware compatibility. License inventory and source"
         },
         {
-          "line": 168,
+          "line": 160,
           "kind": "mention",
-          "text": "source delivery, and the exact recipe's license inventory and provenance. The"
+          "text": "recipe's license inventory and provenance. The publish job rechecks the"
         }
       ]
     },
@@ -10721,15 +10724,17 @@
     },
     {
       "path": "scripts/promote-release.py",
-      "sha256": "ea84d12dee07f4cbb4470456ae54d67aaefe0c2e290524f11f18ef755779595a",
+      "sha256": "254f7d78012d29decdaf83dafa701bf131fcc945e184332ff12eda4122e3a994",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
       "limitation": "Existing third-party expression excluded.",
       "next_step": "Preserve source and reconstruction permissions.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
+      "local_change_commits": [
+        "6d8c789b5c2453e3bfed5890011bb38c29f24594"
+      ],
       "observations": [
         {
           "line": 2,
@@ -12739,15 +12744,17 @@
     },
     {
       "path": "tests/test_promote_release.py",
-      "sha256": "b3627643e305578b0cd330ab341ca296f2c811f7e48e37b0a65b00feeedf082b",
+      "sha256": "30d00026c9daedb877cd0acad63f398056c0f926218bbd9ee19ed0bf2308e8da",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
       "limitation": "Directory is not ownership proof; embedded or upstream-derived fragments excluded.",
       "next_step": "Apply the active map; preserve exceptions and review new imported expression.",
       "source_index": [],
-      "first_local_commit": null,
-      "local_change_commits": [],
+      "first_local_commit": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
+      "local_change_commits": [
+        "6d8c789b5c2453e3bfed5890011bb38c29f24594"
+      ],
       "observations": [
         {
           "line": 1,
@@ -13202,6 +13209,7 @@
       "source_index": [],
       "first_local_commit": "e70d49028cc657376d6075861437556d62ec5254",
       "local_change_commits": [
+        "6d8c789b5c2453e3bfed5890011bb38c29f24594",
         "94a52b74a070d4eedd11046478b13258c8785a42",
         "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
