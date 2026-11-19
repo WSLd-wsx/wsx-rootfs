@@ -143,3 +143,29 @@ still validates release channel, complete payload hashes, compatibility and CPU
 requirements. Release status and hash matching are not cryptographic publisher
 signatures or guarantees of hardware compatibility. License inventory and source
 delivery are reviewed as evidence, not as a claim of legal certification.
+
+### Promote a public prerelease
+
+In this repository, protect `main` and configure the `stable-release`
+environment with required reviewers, **Prevent self-review**, and a selected
+deployment branch rule for the branch `main`. Disable administrator bypass.
+Review the scope of every credential that can edit public releases, including
+the token used by the Omarchy build. The environment gates this workflow;
+other release writers must leave the candidate untouched during promotion.
+
+Run **Promote verified rootfs prerelease** from `main`. Enter the exact
+prerelease tag and the SHA-256 digests of the rootfs archive and manifest
+identified during hardware acceptance. The operator must confirm WSL boot,
+account initialization, GPU first frame, desktop input and normal stop.
+GitHub records the authenticated dispatcher and the workflow publishes the
+attestation and verified candidate snapshot in its run summary. Supply only
+public candidate identifiers and digests.
+
+Leave **Request stable promotion after independent approval** unchecked to
+run the checks alone. For promotion, check it and have a designated reviewer
+compare the run summary against the accepted candidate before approving the
+environment deployment. The workflow validates the uploaded bytes, public
+source delivery, and the exact recipe's license inventory and provenance. The
+publish job rechecks the release ID, tag commit, and asset snapshot, changes
+the existing prerelease to stable, and reads back its status. It uses this
+repository's workflow token and does not rebuild or replace any assets.
