@@ -13,20 +13,22 @@ def apply(root, profile, selection, verify=True):
     if not isinstance(selection, dict) or set(selection) != {'component', 'shared_source'}:
         raise ValueError('Invalid workflow component selection')
     pin = selection['component']
-    required = {'transport', 'image', 'run_id', 'source_commit', 'manifest_sha256',
-                'run_repository', 'workflow_commit'}
-    if not isinstance(pin, dict) or set(pin) != required:
+    required = {'transport', 'image', 'run_id', 'source_commit', 'manifest_sha256'}
+    operations_fields = {'run_repository', 'workflow_commit'}
+    if not isinstance(pin, dict) or set(pin) not in (required, required | operations_fields):
         raise ValueError('Invalid component origin fields')
-    if (pin['transport'] != 'ghcr' or pin['run_repository'] not in ('operations', 'operations')
+    if (pin['transport'] != 'ghcr'
             or type(pin['run_id']) is not int or pin['run_id'] <= 0
             or not re.fullmatch(r'[0-9a-f]{40}', pin['source_commit'])
-            or not re.fullmatch(r'[0-9a-f]{40}', pin['workflow_commit'])
             or not re.fullmatch(r'[0-9a-f]{64}', pin['manifest_sha256'])):
         raise ValueError('Invalid component origin')
     component_registry.check_reference(pin['image'])
-    if not any(pin['image'].startswith(image + '@sha256:')
-               for image in (component_registry.OPS_IMAGE, component_registry.IMAGE)):
-        raise ValueError('Unapproved component package')
+    if 'run_repository' in pin:
+        if (pin['run_repository'] not in ('operations', 'operations')
+                or not re.fullmatch(r'[0-9a-f]{40}', pin['workflow_commit'])):
+            raise ValueError('Invalid operations build origin')
+    elif not pin['image'].startswith(component_registry.IMAGE + '@sha256:'):
+        raise ValueError('Rootfs builds must use the rootfs component package')
     source = selection['shared_source']
     if not isinstance(source, dict) or set(source) != {'tag', 'manifest_sha256'}:
         raise ValueError('Invalid shared source selection')
