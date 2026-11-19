@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "114f8d1283065229a182a0d999b3b98da86b93f6",
+  "head": "aaf57c8460d2cc77610cb46f479534a15eb3323c",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -27,7 +27,7 @@
     },
     {
       "path": ".github/workflows/omarchy.yml",
-      "sha256": "cba419d7b37c21886f309684c211d9e1e3eb91b228aad35d3f072e5fb6148489",
+      "sha256": "b763e1205a56d7256423856b2a3bca81f0350a59e8932c18eeea87688f85fd66",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -36,6 +36,8 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "234c673107626a99447dae48f220acaea21a8ef9",
+        "94a52b74a070d4eedd11046478b13258c8785a42",
         "2b068810e48c72eb620c91b65fb090e7e703df60",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
@@ -51,12 +53,12 @@
           "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
         },
         {
-          "line": 54,
+          "line": 58,
           "kind": "mention",
           "text": "          python3 scripts/audit-licenses.py"
         },
         {
-          "line": 115,
+          "line": 119,
           "kind": "mention",
           "text": "          python3 scripts/audit-licenses.py"
         }
@@ -990,7 +992,7 @@
     },
     {
       "path": "distros/cachyos-plasma/configure-rootfs.sh",
-      "sha256": "8cf28e901d26ea3748c813438283132d9d9dff56898a53215f4dea07bd6af34e",
+      "sha256": "37ed4f923a4cdf73d50bb18a0a7a30cb4b53bcc516a54094418550ba36be0b25",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -999,7 +1001,8 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "aaf57c8460d2cc77610cb46f479534a15eb3323c",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "e70d49028cc657376d6075861437556d62ec5254",
@@ -1018,7 +1021,7 @@
           "text": "cp -a /output/image-materials/component-materials/notices/. \"$root/usr/share/licenses/wsx-components/\""
         },
         {
-          "line": 47,
+          "line": 49,
           "kind": "mention",
           "text": "python scripts/write-image-license-map.py /output"
         }
@@ -1229,7 +1232,7 @@
     },
     {
       "path": "distros/omarchy/build-rootfs.sh",
-      "sha256": "8d6a4ffcd6170ee4df5189ec55fff433d5def6d49318f837431b1a2d9bbc285c",
+      "sha256": "52207ed423558df59c28604891f411a0ebf0a6bc8faf19bbe610429529aadf90",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -1238,7 +1241,8 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "aaf57c8460d2cc77610cb46f479534a15eb3323c",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "e70d49028cc657376d6075861437556d62ec5254",
@@ -1257,7 +1261,7 @@
           "text": "cp -a /output/image-materials/component-materials/notices/. \"/output/rootfs/usr/share/licenses/wsx-components/\""
         },
         {
-          "line": 96,
+          "line": 98,
           "kind": "mention",
           "text": "python scripts/write-image-license-map.py /output"
         }
@@ -5532,7 +5536,7 @@
     },
     {
       "path": "docs/provenance.json",
-      "sha256": "def155a5b243d32e41be9d17e32d969b73533ad89a80c4be17f98ebf6377caa4",
+      "sha256": "3232e1569bb67e2dd9556ea340d393b8f9140973c2b0bd758ee73defee7d4504",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5541,7 +5545,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
@@ -9302,7 +9306,7 @@
     },
     {
       "path": "scripts/build-components.py",
-      "sha256": "c88c9df0d8b5e466242b60fe381d480d56972c5bce1b34d46d1388e2e91c12c4",
+      "sha256": "67a997da40529671008f4ac8925d351f973f5f5f0b70192f410506fc09709c28",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -9311,7 +9315,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "33f459c6b6301a24d2b73c5baa3202fec7149f32",
@@ -9330,22 +9334,22 @@
           "text": "from product_licenses import check_boundaries"
         },
         {
-          "line": 132,
+          "line": 137,
           "kind": "mention",
           "text": "    inputs = {name: sha(ROOT/name) for name in license_paths(ROOT)}"
         },
         {
-          "line": 133,
+          "line": 138,
           "kind": "mention",
           "text": "    for directory in ('vendor', 'scripts', 'components', 'distros', 'guest', 'schema', '.github/workflows', 'docs/licensing/licenses'):"
         },
         {
-          "line": 137,
+          "line": 142,
           "kind": "mention",
           "text": "    for name in ('docs/provenance.json', 'docs/licensing/rules.json', 'docs/licensing/license-text-sources.json'):"
         },
         {
-          "line": 142,
+          "line": 147,
           "kind": "mention",
           "text": "                   license_review='pending', corresponding_source_complete=False,"
         }
@@ -10304,7 +10308,7 @@
     },
     {
       "path": "scripts/private-artifact-gate.py",
-      "sha256": "adf7088bc5db52c42bbbfc3e522fae1dc5b475f94d8ae95662867b02f2b05cf8",
+      "sha256": "4c82be8cdb7379a596e279a14f52c0b8988fa10ae1b0b3e044fbd4836f12a846",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -10313,7 +10317,8 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "234c673107626a99447dae48f220acaea21a8ef9",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "e70d49028cc657376d6075861437556d62ec5254",
@@ -12336,7 +12341,7 @@
     },
     {
       "path": "tests/test_network_profiles.py",
-      "sha256": "c3ba2244b02d0da5221b7443ea730431c5724af3dd726caacad7d670a1e6759f",
+      "sha256": "5ca70a72566de014c93a3ecf016ba637440c11a1ae691b6ea819411b14e8579d",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -12345,7 +12350,7 @@
       "source_index": [],
       "first_local_commit": "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
       "local_change_commits": [
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "dbd40aa7d3518afd0c3f55545dcbcd1de7da7c63",
@@ -13254,7 +13259,7 @@
     },
     {
       "path": "vendor/wsx-guest-sources/guest-compat/build-venus.py",
-      "sha256": "152c43017f2aec24e29298b8398e1c374ed531fdca1690062f6684c398081a38",
+      "sha256": "c160276a02eec0bf2f77b406cd3002fda9f604ce6963656c1bb4d0ce0f7568d0",
       "group": "conditional-future-license",
       "rule": "approved-imported-helpers",
       "basis": "Owner attested independent WSX authorship and explicitly approved GPL-2.0-or-later for these imported original helpers.",
@@ -13265,13 +13270,13 @@
           "index": "docs/provenance.json",
           "source_path": "archived-sources/guest-compat/build-venus.py",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
-          "expected_sha256": "152c43017f2aec24e29298b8398e1c374ed531fdca1690062f6684c398081a38",
+          "expected_sha256": "c160276a02eec0bf2f77b406cd3002fda9f604ce6963656c1bb4d0ce0f7568d0",
           "hash_matches": true
         }
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "e70d49028cc657376d6075861437556d62ec5254",
@@ -13281,7 +13286,7 @@
     },
     {
       "path": "vendor/wsx-guest-sources/guest-compat/build.py",
-      "sha256": "7b79e80651c6a7498f2068d45b549f4871485edc2ee0406aee4aa9007063b28b",
+      "sha256": "0b73cd6b0564af42b3c7415339f37f22b010a00a544d966499a5d9c0b73afa33",
       "group": "conditional-future-license",
       "rule": "approved-imported-helpers",
       "basis": "Owner attested independent WSX authorship and explicitly approved GPL-2.0-or-later for these imported original helpers.",
@@ -13292,13 +13297,13 @@
           "index": "docs/provenance.json",
           "source_path": "archived-sources/guest-compat/build.py",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
-          "expected_sha256": "7b79e80651c6a7498f2068d45b549f4871485edc2ee0406aee4aa9007063b28b",
+          "expected_sha256": "0b73cd6b0564af42b3c7415339f37f22b010a00a544d966499a5d9c0b73afa33",
           "hash_matches": true
         }
       ],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
-        "c63091ae8711948117efb6093e9e6b365faa2f86",
+        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
         "ff904a64c0ef22850129c799418ab90bdb43ead9",
         "e70d49028cc657376d6075861437556d62ec5254",
@@ -13649,6 +13654,27 @@
       "observations": []
     },
     {
+      "path": "vendor/wsx-guest-sources/guest-compat/venus-opaque-drm-identity.patch",
+      "sha256": "922e48fd9aabb21961fa763918983aa87e14eaa568b02e05ff577cfeaf9d6250",
+      "group": "retain-original",
+      "rule": "upstream-patches",
+      "basis": "Upstream modifications and context, including named upstream copyright.",
+      "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
+      "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
+      "source_index": [
+        {
+          "index": "docs/provenance.json",
+          "source_path": "archived-sources/wsi-application-compat/venus-opaque-drm-identity.patch",
+          "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+          "expected_sha256": "922e48fd9aabb21961fa763918983aa87e14eaa568b02e05ff577cfeaf9d6250",
+          "hash_matches": true
+        }
+      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": []
+    },
+    {
       "path": "vendor/wsx-guest-sources/guest-compat/venus-opaque-export-order.patch",
       "sha256": "edefffc1e1dd6ddcb2956c6013072d446f7e06393551e2e411ec77c595ec31e5",
       "group": "retain-original",
@@ -13730,6 +13756,48 @@
       "observations": []
     },
     {
+      "path": "vendor/wsx-guest-sources/guest-compat/venus-opaque-surface-formats.patch",
+      "sha256": "a3ef6f597fc844109d55fe4b1c0ce8c50955ab9fe7e8d6d884585d03d31e5255",
+      "group": "retain-original",
+      "rule": "upstream-patches",
+      "basis": "Upstream modifications and context, including named upstream copyright.",
+      "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
+      "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
+      "source_index": [
+        {
+          "index": "docs/provenance.json",
+          "source_path": "archived-sources/wsi-application-compat/venus-opaque-surface-formats.patch",
+          "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+          "expected_sha256": "a3ef6f597fc844109d55fe4b1c0ce8c50955ab9fe7e8d6d884585d03d31e5255",
+          "hash_matches": true
+        }
+      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": []
+    },
+    {
+      "path": "vendor/wsx-guest-sources/guest-compat/venus-opaque-swapchain-images.patch",
+      "sha256": "e1b21618b3da9436e66590340412802832353d8b17e532a85980aede154f8bca",
+      "group": "retain-original",
+      "rule": "upstream-patches",
+      "basis": "Upstream modifications and context, including named upstream copyright.",
+      "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
+      "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
+      "source_index": [
+        {
+          "index": "docs/provenance.json",
+          "source_path": "archived-sources/wsi-application-compat/venus-opaque-swapchain-images.patch",
+          "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+          "expected_sha256": "e1b21618b3da9436e66590340412802832353d8b17e532a85980aede154f8bca",
+          "hash_matches": true
+        }
+      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": []
+    },
+    {
       "path": "vendor/wsx-guest-sources/guest-compat/venus-opaque-wsi.patch",
       "sha256": "10dd9744e234f17087a78284b7e4dadbc92c0a5c7f1ba2a5aa6b4fe6b6c017a2",
       "group": "retain-original",
@@ -13768,6 +13836,75 @@
       ]
     },
     {
+      "path": "vendor/wsx-guest-sources/guest-compat/venus-xwayland-copy-sync.patch",
+      "sha256": "012f781476d3fc51171802b6b7ea5f67330bbdbd4f5c8c49ba6c64693b7a2902",
+      "group": "retain-original",
+      "rule": "upstream-patches",
+      "basis": "Upstream modifications and context, including named upstream copyright.",
+      "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
+      "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
+      "source_index": [
+        {
+          "index": "docs/provenance.json",
+          "source_path": "archived-sources/wsi-application-compat/venus-xwayland-copy-sync.patch",
+          "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+          "expected_sha256": "012f781476d3fc51171802b6b7ea5f67330bbdbd4f5c8c49ba6c64693b7a2902",
+          "hash_matches": true
+        }
+      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": []
+    },
+    {
+      "path": "vendor/wsx-guest-sources/guest-compat/venus-xwayland-dri3-image-copy.patch",
+      "sha256": "d2ada95b53407d8d536d820677d9aa1319e6981065967401fa6baeb3c41f1bf8",
+      "group": "retain-original",
+      "rule": "upstream-patches",
+      "basis": "Upstream modifications and context, including named upstream copyright.",
+      "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
+      "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
+      "source_index": [
+        {
+          "index": "docs/provenance.json",
+          "source_path": "archived-sources/wsi-application-compat/venus-xwayland-dri3-image-copy-experiment.patch",
+          "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+          "expected_sha256": "d2ada95b53407d8d536d820677d9aa1319e6981065967401fa6baeb3c41f1bf8",
+          "hash_matches": true
+        }
+      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": []
+    },
+    {
+      "path": "vendor/wsx-guest-sources/guest-compat/venus-xwayland-dri3-linear.patch",
+      "sha256": "1620ac88a34a83b1b421f773e1131bbf4db30f7831b3c1b8d0151834f745b3e4",
+      "group": "retain-original",
+      "rule": "upstream-patches",
+      "basis": "Upstream modifications and context, including named upstream copyright.",
+      "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
+      "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
+      "source_index": [
+        {
+          "index": "docs/provenance.json",
+          "source_path": "archived-sources/wsi-application-compat/venus-xwayland-dri3-linear-experiment.patch",
+          "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+          "expected_sha256": "1620ac88a34a83b1b421f773e1131bbf4db30f7831b3c1b8d0151834f745b3e4",
+          "hash_matches": true
+        }
+      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 39,
+          "kind": "patch-context",
+          "text": "  * Copyright © 2015 Intel Corporation"
+        }
+      ]
+    },
+    {
       "path": "vendor/wsx-guest-sources/guest-compat/venus-zink-drm-identity.patch",
       "sha256": "1945e914e08b652086ddf2ea0aa89d1e8bb24e13a3e8286848139fc6ec618a33",
       "group": "retain-original",
@@ -13792,6 +13929,27 @@
         "e70d49028cc657376d6075861437556d62ec5254",
         "0daf80783bc442947789f5fb7a8051f962bdd444"
       ],
+      "observations": []
+    },
+    {
+      "path": "vendor/wsx-guest-sources/guest-compat/zink-stage-device-local-buffer-writes.patch",
+      "sha256": "3cb9134d1c48796d3bd8e4d5778bba7d880a1491d4599bf7129726137481cfe7",
+      "group": "retain-original",
+      "rule": "upstream-patches",
+      "basis": "Upstream modifications and context, including named upstream copyright.",
+      "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
+      "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
+      "source_index": [
+        {
+          "index": "docs/provenance.json",
+          "source_path": "archived-sources/wsi-application-compat/zink-stage-device-local-buffer-writes.patch",
+          "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
+          "expected_sha256": "3cb9134d1c48796d3bd8e4d5778bba7d880a1491d4599bf7129726137481cfe7",
+          "hash_matches": true
+        }
+      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {

@@ -22,7 +22,10 @@ class NetworkProfiles(unittest.TestCase):
         reuse = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(reuse)
         original = 'b3278806dd5622b36944dadf49031d540fccdc2ad87f6643e7d06b3e7b1d1b7e'
-        self.assertTrue(reuse.collection_only_change(ROOT, 'docs/provenance.json', original))
+        legacy_current = 'def155a5b243d32e41be9d17e32d969b73533ad89a80c4be17f98ebf6377caa4'
+        with patch.object(reuse, 'sha', return_value=legacy_current):
+            self.assertTrue(reuse.collection_only_change(ROOT, 'docs/provenance.json', original))
+        self.assertFalse(reuse.collection_only_change(ROOT, 'docs/provenance.json', original))
         self.assertFalse(reuse.collection_only_change(ROOT, 'docs/provenance.json', '0' * 64))
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

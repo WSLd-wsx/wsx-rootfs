@@ -1,0 +1,64 @@
+--- a/src/vulkan/wsi/wsi_common_drm.c
++++ b/src/vulkan/wsi/wsi_common_drm.c
+@@ -593,6 +593,49 @@
+    info->explicit_sync = params->explicit_sync;
+ 
+    if (params->wsx_opaque) {
++      /* The opaque consumer samples the image and the native owner may
++       * read it as a transfer source. Query the actual allocation usage. */
++      const VkImageUsageFlags consumer_usage =
++         VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
++      info->create.usage |= consumer_usage;
++      info->usage2.usage |= consumer_usage;
++      /* The opaque descriptor carries the UNORM storage format. Vulkan
++       * clients can render to a compatible sRGB view of that same storage. */
++      const VkFormat surface_format = info->create.format;
++      VkFormat storage_format = surface_format;
++      if (surface_format == VK_FORMAT_B8G8R8A8_SRGB)
++         storage_format = VK_FORMAT_B8G8R8A8_UNORM;
++      else if (surface_format == VK_FORMAT_R8G8B8A8_SRGB)
++         storage_format = VK_FORMAT_R8G8B8A8_UNORM;
++      if (storage_format != surface_format) {
++         VkImageFormatListCreateInfo *list = &info->format_list;
++         bool has_storage = false;
++         for (uint32_t i = 0; i < list->viewFormatCount; i++)
++            has_storage |= list->pViewFormats[i] == storage_format;
++         if (!has_storage) {
++            const uint32_t count = list->viewFormatCount ? list->viewFormatCount + 1 : 2;
++            VkFormat *formats = vk_alloc(&chain->alloc, count * sizeof(*formats),
++                                         8, VK_SYSTEM_ALLOCATION_SCOPE_OBJECT);
++            if (!formats) {
++               wsi_destroy_image_info(chain, info);
++               return VK_ERROR_OUT_OF_HOST_MEMORY;
++            }
++            formats[0] = storage_format;
++            if (list->viewFormatCount) {
++               memcpy(formats + 1, list->pViewFormats,
++                      list->viewFormatCount * sizeof(*formats));
++               vk_free(&chain->alloc, (void *)list->pViewFormats);
++            } else {
++               formats[1] = surface_format;
++               list->sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO;
++               __vk_append_struct(&info->create, list);
++            }
++            list->pViewFormats = formats;
++            list->viewFormatCount = count;
++         }
++         info->create.format = storage_format;
++         info->create.flags |= VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT;
++      }
+       const VkImageCreateInfo *ci = &info->create;
+       const VkImageFormatListCreateInfo *original_views = vk_find_struct_const(ci->pNext, IMAGE_FORMAT_LIST_CREATE_INFO);
+       VkImageFormatListCreateInfo local_views = {0};
+--- a/src/vulkan/wsi/wsi_common_wayland.c
++++ b/src/vulkan/wsi/wsi_common_wayland.c
+@@ -3623,7 +3623,8 @@
+          struct drm_wsx_opaque_query descriptor = {0};
+          int fd = wsx_wsi_render_fd(chain->base.wsi);
+          int status = fd < 0 ? -ENODEV : wsx_gbm_register_opaque_fd(fd,
+-            image->base.dma_buf_fd, chain->extent.width, chain->extent.height, chain->vk_format, &descriptor);
++            image->base.dma_buf_fd, chain->extent.width, chain->extent.height,
++            chain->base.image_info.create.format, &descriptor);
+          if (fd >= 0) close(fd);
+          if (status || !display->wsx_opaque) {
+             fprintf(stderr, "WSX_OPAQUE_WSI: descriptor registration failed=%d\n", status);

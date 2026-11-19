@@ -76,13 +76,18 @@ def build(args):
         "            raise ValueError('Graphics trace source is not covered by the patch receipt')\n"
         "        report['graphics_trace_policy'] = {relative: sha(source / relative) for relative in trace_files}\n" + anchor)
     venus_builder.write_text(text)
+    profile = getattr(args, 'profile', 'omarchy')
+    omarchy = profile == 'omarchy'
+    mesa_application_options = ('--stage-device-local-buffer-writes',) if omarchy else ()
+    venus_application_options = ('--application-wsi',) if omarchy else ()
     run(sys.executable, builder, out/'mesa', '--import-diagnostics', '--negotiated-export',
         '--modifier-features2', '--linear-feedback-compat', '--linear-shared-compat',
-        '--linear-modifier-feedback', '--linear-depth-segregation', '--opaque-gbm-export', '--opaque-consumer')
+        '--linear-modifier-feedback', '--linear-depth-segregation', '--opaque-gbm-export', '--opaque-consumer',
+        *mesa_application_options)
     run(sys.executable, sources/'guest-compat/build-venus.py', out/'venus',
         '--archive', args.archives/'venus.archive', '--nv-linear-color', '--opaque-import',
-        '--direct-wsi', '--opaque-wsi', '--jobs', jobs)
-    if getattr(args, 'profile', 'omarchy') == 'cachyos-plasma':
+        '--direct-wsi', '--opaque-wsi', '--jobs', jobs, *venus_application_options)
+    if profile == 'cachyos-plasma':
         run(sys.executable, ROOT/'scripts/build-kwin.py', args.archives/'kwin.archive', out/'kwin', '--jobs', jobs)
         return
     compositor = sources/'guest-opaque/build-compositor.py'

@@ -1,0 +1,12 @@
+--- a/src/gallium/drivers/zink/zink_resource.c
++++ b/src/gallium/drivers/zink/zink_resource.c
+@@ -2806,7 +2806,8 @@
+       if (!zink_resource_usage_check_completion(screen, res, ZINK_RESOURCE_ACCESS_WRITE))
+          goto success;
+       usage |= PIPE_MAP_UNSYNCHRONIZED;
+-   } else if ((usage & PIPE_MAP_READ) && !(usage & PIPE_MAP_PERSISTENT) && !host_mem_type_check) {
++   } else if (((usage & PIPE_MAP_READ) || !res->obj->host_visible) &&
++              !(usage & PIPE_MAP_PERSISTENT) && !host_mem_type_check) {
+       /* any read, non-HV write, or unmappable that reaches this point needs staging */
+       if ((usage & PIPE_MAP_READ) || !res->obj->host_visible || res->base.b.flags & PIPE_RESOURCE_FLAG_DONT_MAP_DIRECTLY) {
+ overwrite:

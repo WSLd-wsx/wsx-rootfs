@@ -49,6 +49,8 @@ def main():
                         help='Build the paired opaque descriptor import extension')
     parser.add_argument('--gbm-shared-contract', action='store_true',
                         help='Build opt-in explicit modifier allocation and shared-format admission checks')
+    parser.add_argument('--stage-device-local-buffer-writes', action='store_true',
+                        help='Stage CPU writes to non-host-visible Zink buffers')
     args = parser.parse_args()
     if args.opaque_consumer and not args.opaque_gbm_export:
         parser.error('--opaque-consumer requires --opaque-gbm-export')
@@ -212,6 +214,14 @@ def main():
                 changed[pin['directory'] + '/' + relative] = sha(source / relative)
             report.update(gbm_shared_contract_patches=contract_patches,
                           changed_source_files=changed)
+        if args.stage_device_local_buffer_writes:
+            patch = Path(__file__).with_name('zink-stage-device-local-buffer-writes.patch')
+            run('stage-device-local-buffer-writes', ['patch', '--batch', '--fuzz=0', '-p1',
+                '-d', str(source), '-i', str(patch)])
+            relative = 'src/gallium/drivers/zink/zink_resource.c'
+            changed[pin['directory'] + '/' + relative] = sha(source / relative)
+            report.update(source_patched=True, stage_device_local_buffer_writes_patch_sha256=sha(patch),
+                          changed_source_files=changed)
         run('configure', meson + ['setup', str(out / 'build'), str(source),
             '--prefix=' + str(out / 'prefix'), '--libdir=lib', '--wrap-mode=nofallback',
             '--buildtype=release', '-Dgallium-drivers=zink', '-Dvulkan-drivers=[]',
@@ -232,6 +242,7 @@ def main():
                     'linear_shared_compat': args.linear_shared_compat,
                     'opaque_gbm_export': args.opaque_gbm_export,
                     'opaque_consumer': args.opaque_consumer,
+                    'stage_device_local_buffer_writes': args.stage_device_local_buffer_writes,
                     'gbm_shared_contract': args.gbm_shared_contract,
                     'linear_depth_segregation': args.linear_depth_segregation,
                     'linear_modifier_feedback': args.linear_modifier_feedback,
