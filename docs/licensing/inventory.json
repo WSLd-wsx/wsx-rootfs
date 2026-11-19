@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "26c4777df1a87db44387d729fa1e652bc0d1fdb4",
+  "head": "bf60d4dba7fcccd63795be2c5be921384556f12f",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -27,7 +27,7 @@
     },
     {
       "path": ".github/workflows/components.yml",
-      "sha256": "e8b019cac65297576d3fc7bb11b580ad6222fd6eb433e05b4c07ddd0cac610ea",
+      "sha256": "dc0a2e877d2593a5b2fdf7d7847fda35cdcb1b4e1761693f6195f1319b8018ca",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -36,6 +36,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "bf60d4dba7fcccd63795be2c5be921384556f12f",
         "26c4777df1a87db44387d729fa1e652bc0d1fdb4",
         "a48128c2904b8388d6b0789a52bf576a0d10e54e",
         "40071f1292dd7284bbe71e28f774dda5f1ec7f15",
