@@ -146,18 +146,17 @@ delivery are reviewed as evidence, not as a claim of legal certification.
 
 ### Promote a public prerelease
 
-Run **Promote verified rootfs prerelease** from `main`. Enter the exact
-prerelease tag and the SHA-256 digests of the rootfs archive and manifest
-identified during hardware acceptance. The operator must confirm WSL boot,
-account initialization, GPU first frame, desktop input and normal stop.
-GitHub records the authenticated dispatcher and the workflow publishes the
-attestation and verified candidate snapshot in its run summary. Supply only
-public candidate identifiers and digests.
+Run **Promote verified rootfs prerelease** from `main` and enter the exact
+prerelease tag. The workflow downloads and verifies the candidate assets and
+records the archive and manifest SHA-256 digests in the run summary.
 
-Leave **Promote this prerelease to stable if all checks pass** unchecked to
-run the checks alone. Select it to authorize promotion in the same run. The
-workflow validates the uploaded bytes, public source delivery, and the exact
-recipe's license inventory and provenance. The publish job rechecks the
+Leave the confirmation box unchecked to verify the candidate. Check it only
+after verifying WSL boot, account initialization, GPU first frame, desktop
+input and normal stop for that exact published image. The box records the
+authenticated dispatcher's hardware attestation against the verified digests
+and authorizes stable promotion in the same run. The workflow checks public
+source delivery and the exact recipe's license inventory and provenance. The
+publish job rechecks the
 release ID, tag commit, and asset snapshot immediately before it changes
 the existing prerelease to stable, and reads back its status. It uses this
 repository's workflow token and does not rebuild or replace any assets.

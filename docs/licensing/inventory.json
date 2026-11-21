@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
+  "head": "c56068bd67802c1f2fd9b68a0883dd10cfbaae38",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -109,7 +109,7 @@
     },
     {
       "path": ".github/workflows/promote-rootfs.yml",
-      "sha256": "bdf0c999584266fcb82f823c257cf0f7579e70b2a97fdca1b7da653f5387338a",
+      "sha256": "392a741548fa2483e817ce5d58dda7e99b47271e7879be40698e46d5499a519e",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -118,6 +118,7 @@
       "source_index": [],
       "first_local_commit": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
       "local_change_commits": [
+        "c56068bd67802c1f2fd9b68a0883dd10cfbaae38",
         "6d8c789b5c2453e3bfed5890011bb38c29f24594"
       ],
       "observations": [
@@ -127,17 +128,17 @@
           "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
         },
         {
-          "line": 85,
+          "line": 65,
           "kind": "mention",
           "text": "      - name: Audit candidate license inventory and provenance"
         },
         {
-          "line": 87,
+          "line": 67,
           "kind": "mention",
           "text": "          python3 scripts/audit-licenses.py --check"
         },
         {
-          "line": 88,
+          "line": 68,
           "kind": "mention",
           "text": "          python3 scripts/audit-license-modules.py"
         }
@@ -5635,7 +5636,7 @@
     },
     {
       "path": "docs/release-protocol.md",
-      "sha256": "0ee22ba154751eb723de5fa4f1b12009e3d4e057129e43b8edc07f867db16070",
+      "sha256": "b36c094bd9f5676781438c6f4134d6ab5649c223165ef6698347e05d0be8ce4c",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5644,6 +5645,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "c56068bd67802c1f2fd9b68a0883dd10cfbaae38",
         "6d8c789b5c2453e3bfed5890011bb38c29f24594",
         "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
         "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
@@ -5669,9 +5671,9 @@
           "text": "signatures or guarantees of hardware compatibility. License inventory and source"
         },
         {
-          "line": 160,
+          "line": 158,
           "kind": "mention",
-          "text": "recipe's license inventory and provenance. The publish job rechecks the"
+          "text": "source delivery and the exact recipe's license inventory and provenance. The"
         }
       ]
     },
@@ -10724,7 +10726,7 @@
     },
     {
       "path": "scripts/promote-release.py",
-      "sha256": "254f7d78012d29decdaf83dafa701bf131fcc945e184332ff12eda4122e3a994",
+      "sha256": "7714666bc558b035c43349cb68aec0ce5158853ef612f8ea746475e50c573ecf",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -10733,6 +10735,7 @@
       "source_index": [],
       "first_local_commit": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
       "local_change_commits": [
+        "c56068bd67802c1f2fd9b68a0883dd10cfbaae38",
         "6d8c789b5c2453e3bfed5890011bb38c29f24594"
       ],
       "observations": [
@@ -12744,7 +12747,7 @@
     },
     {
       "path": "tests/test_promote_release.py",
-      "sha256": "30d00026c9daedb877cd0acad63f398056c0f926218bbd9ee19ed0bf2308e8da",
+      "sha256": "d77b20af9b05e28035e4803d6655828618d2e69817c94442f488ed43b904a31d",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -12753,6 +12756,7 @@
       "source_index": [],
       "first_local_commit": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
       "local_change_commits": [
+        "c56068bd67802c1f2fd9b68a0883dd10cfbaae38",
         "6d8c789b5c2453e3bfed5890011bb38c29f24594"
       ],
       "observations": [

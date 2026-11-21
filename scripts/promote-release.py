@@ -94,7 +94,9 @@ def stable_manifest(directory,tag,source_commit,snapshot):
     check_public_source_delivery(directory,sources)
     return manifest
 
-def review(tag, archive_sha, manifest_sha, actor):
+def review(tag, archive_sha, manifest_sha, actor, *, hardware_accepted=False):
+    if (archive_sha is None) != (manifest_sha is None):
+        raise ValueError('Supply both acceptance hashes or omit both')
     snapshot, fingerprint = release_snapshot(tag)
     source_commit = snapshot['source_commit']
     with tempfile.TemporaryDirectory(prefix='wsx-promotion-') as temporary:
@@ -104,27 +106,34 @@ def review(tag, archive_sha, manifest_sha, actor):
             check=True,
         )
         manifest = stable_manifest(directory, tag, source_commit, snapshot)
-        if archive_sha != manifest['sha256'] or manifest_sha != digest(directory / 'manifest.json'):
+        hashes = {
+            'archive_sha256': manifest['sha256'],
+            'manifest_sha256': digest(directory / 'manifest.json'),
+        }
+        if archive_sha is not None and (archive_sha, manifest_sha) != (
+            hashes['archive_sha256'], hashes['manifest_sha256'],
+        ):
             raise ValueError('Acceptance hashes do not match the candidate archive and manifest')
         if release_snapshot(tag)[1] != fingerprint:
             raise ValueError('Release changed while verifying')
 
-    acceptance = {
-        'attested_by': actor,
-        'attested_at_utc': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
-        'archive_sha256': archive_sha,
-        'manifest_sha256': manifest_sha,
-        'stages': {stage: 'passed' for stage in (
-            'wsl_boot', 'account_initialization', 'gpu_first_frame', 'desktop_input', 'normal_stop',
-        )},
-    }
-    return {
+    report = {
         'tag': tag,
         'source_commit': source_commit,
         'snapshot_sha256': fingerprint,
         'minimum_wsx_core_version': manifest['minimum_wsx_core_version'],
-        'manual_attestation': acceptance,
+        'verified_asset_hashes': hashes,
     }
+    if hardware_accepted or archive_sha is not None:
+        report['manual_attestation'] = {
+            'attested_by': actor,
+            'attested_at_utc': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+            **hashes,
+            'stages': {stage: 'passed' for stage in (
+                'wsl_boot', 'account_initialization', 'gpu_first_frame', 'desktop_input', 'normal_stop',
+            )},
+        }
+    return report
 
 
 def promote(tag, expected_snapshot):
@@ -153,8 +162,10 @@ def main():
     commands = parser.add_subparsers(dest='command', required=True)
     review_parser = commands.add_parser('review')
     review_parser.add_argument('--tag', required=True)
-    review_parser.add_argument('--archive-sha', required=True, type=sha256_arg)
-    review_parser.add_argument('--manifest-sha', required=True, type=sha256_arg)
+    review_parser.add_argument('--archive-sha', type=sha256_arg)
+    review_parser.add_argument('--manifest-sha', type=sha256_arg)
+    review_parser.add_argument('--hardware-accepted', action='store_true',
+                               help='Record hardware acceptance for the verified assets')
     promote_parser = commands.add_parser('promote')
     promote_parser.add_argument('--tag', required=True)
     promote_parser.add_argument('--expected-snapshot', required=True, type=sha256_arg)
@@ -166,7 +177,8 @@ def main():
     actor = os.environ['GITHUB_ACTOR']
     if not actor.strip():
         raise ValueError('An authenticated workflow actor is required')
-    report = review(args.tag, args.archive_sha, args.manifest_sha, actor)
+    report = review(args.tag, args.archive_sha, args.manifest_sha, actor,
+                    hardware_accepted=args.hardware_accepted)
     with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
         for key in ('source_commit', 'snapshot_sha256'):
             print(f'{key}={report[key]}', file=output)
