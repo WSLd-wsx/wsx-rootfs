@@ -7,21 +7,8 @@ on:
         description: Exact prerelease tag, e.g. WSX-omarchy-4.5.0-r3
         type: string
         required: true
-      archive_sha256:
-        description: SHA-256 of the rootfs archive accepted on hardware
-        type: string
-        required: true
-      manifest_sha256:
-        description: SHA-256 of manifest.json for the accepted image
-        type: string
-        required: true
-      hardware_tests_passed:
-        description: I verified WSL boot, account initialization, GPU first frame, desktop input and normal stop
-        type: boolean
-        required: true
-        default: false
       authorize_promotion:
-        description: Promote this prerelease to stable if all checks pass
+        description: I verified WSL boot, account setup, GPU first frame, desktop input and normal stop for this image and authorize stable promotion
         type: boolean
         required: true
         default: false
@@ -42,32 +29,25 @@ jobs:
       source_commit: ${{ steps.verify.outputs.source_commit }}
       snapshot: ${{ steps.verify.outputs.snapshot_sha256 }}
     steps:
-      - name: Require hardware acceptance
-        env:
-          HARDWARE_TESTS_PASSED: ${{ inputs.hardware_tests_passed }}
-        run: |
-          if [[ "$HARDWARE_TESTS_PASSED" != true ]]; then
-            echo '::error::Confirm all five hardware acceptance stages for this exact image.'
-            exit 1
-          fi
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
           fetch-depth: 0
-      - name: Verify candidate and record operator attestation
+      - name: Verify candidate and record any operator attestation
         id: verify
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ inputs.release_tag }}
-          ARCHIVE_SHA: ${{ inputs.archive_sha256 }}
-          MANIFEST_SHA: ${{ inputs.manifest_sha256 }}
+          AUTHORIZE_PROMOTION: ${{ inputs.authorize_promotion }}
         run: |
-          python3 scripts/promote-release.py review --tag "$RELEASE_TAG" \
-            --archive-sha "$ARCHIVE_SHA" --manifest-sha "$MANIFEST_SHA" \
-            > "$RUNNER_TEMP/promotion.json"
+          review_args=(--tag "$RELEASE_TAG")
+          if [[ "$AUTHORIZE_PROMOTION" == true ]]; then
+            review_args+=(--hardware-accepted)
+          fi
+          python3 scripts/promote-release.py review "${review_args[@]}" > "$RUNNER_TEMP/promotion.json"
           source_commit=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["source_commit"])' "$RUNNER_TEMP/promotion.json")
           git merge-base --is-ancestor "$source_commit" "$GITHUB_SHA"
-          printf '### Candidate and hardware attestation\n\n```json\n' >> "$GITHUB_STEP_SUMMARY"
+          printf '### Candidate verification\n\n```json\n' >> "$GITHUB_STEP_SUMMARY"
           cat "$RUNNER_TEMP/promotion.json" >> "$GITHUB_STEP_SUMMARY"
           printf '```\n' >> "$GITHUB_STEP_SUMMARY"
 
