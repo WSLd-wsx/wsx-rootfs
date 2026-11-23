@@ -166,7 +166,7 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "dd383e7f9ddd44f9f057a1f0ead64b525af08a4fbb68931ddb72ef27da382bad",
+      "sha256": "19f51721adcbf1bf21435909c2e6563012d196f221534a097b72c160d2788e0a",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
