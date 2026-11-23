@@ -210,8 +210,10 @@ class SourceComponentsTests(unittest.TestCase):
     def test_cachyos_bootstrap_guard_runs_under_errexit(self):
         text=(ROOT/'distros/cachyos-plasma/bootstrap-rootfs.sh').read_text()
         self.assertLess(text.index('set -euo pipefail'),text.index('scripts/source-support.py'))
-        self.assertLess(text.index('pacman -Syu --noconfirm --needed archlinux-keyring arch-install-scripts python'),text.index('scripts/source-support.py'))
+        self.assertLess(text.index('pacman --config "$download_config" -Su --noconfirm'),text.index('scripts/source-support.py'))
         self.assertLess(text.index('scripts/source-support.py'),text.index('pacstrap -c'))
+        self.assertIn('pacstrap -c -C "$download_config"', text)
+        self.assertIn('--out %o %u', text)
 
     def test_active_routes_do_not_fetch_retired_package(self):
         for directory in ('.github/workflows','scripts','distros/omarchy','components'):
