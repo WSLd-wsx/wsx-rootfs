@@ -1038,7 +1038,7 @@
     },
     {
       "path": "distros/cachyos-plasma/build-components.sh",
-      "sha256": "e522d597d71561792018b80f02cb2469ea1beeac33cbdeeaabe395f10d9229c2",
+      "sha256": "d54cc03192b61b08a52028ced5455e6ffdeff447c77adeb0d62a90a7eba4e95a",
       "group": "conditional-future-license",
       "rule": "new-component-producer-origin-review",
       "basis": "User explicitly attests original work or own WSX adaptations with no new third-party code; existing vendor excluded.",
