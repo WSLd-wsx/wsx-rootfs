@@ -8,7 +8,7 @@ class WorkflowHistory(unittest.TestCase):
     def test_approved_rootfs_workflows_are_present(self):
         self.assertEqual(
             {p.name for p in (ROOT / '.github/workflows').glob('*.yml')},
-            {'components.yml', 'omarchy.yml', 'promote-rootfs.yml'},
+            {'cachyos-plasma.yml', 'components.yml', 'omarchy.yml', 'promote-rootfs.yml'},
         )
         self.assertEqual(list((ROOT/'.github/workflows').glob('*.yaml')),[])
 

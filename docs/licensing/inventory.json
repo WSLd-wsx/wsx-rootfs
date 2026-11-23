@@ -26,6 +26,46 @@
       "observations": []
     },
     {
+      "path": ".github/workflows/cachyos-plasma.yml",
+      "sha256": "e6b3e366910bb91e5cbfdb10689bfe289734947b1381edc1bf60fe617f5de311",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": "5580e069100eadb038852ce653a184271a54c87a",
+      "local_change_commits": [
+        "eac1764aab996d8f8529c97a017238a95fcfce93",
+        "5e3127a4feb997319041c6d2fe8caaaaa15683b4",
+        "0079045dc70bdc113198dc5df9ccf5e0b7e8827b",
+        "871e3d314b3f142ca5e122677790279eb46abaad",
+        "5580e069100eadb038852ce653a184271a54c87a"
+      ],
+      "observations": [
+        {
+          "line": 1,
+          "kind": "declaration-observation",
+          "text": "# Copyright (c) 2026 WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>"
+        },
+        {
+          "line": 2,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        },
+        {
+          "line": 89,
+          "kind": "mention",
+          "text": "          python3 scripts/audit-licenses.py"
+        },
+        {
+          "line": 140,
+          "kind": "mention",
+          "text": "          python3 scripts/audit-licenses.py"
+        }
+      ]
+    },
+    {
       "path": ".github/workflows/components.yml",
       "sha256": "be049cf51c04a7c3ebfa2e2d1818beef773786fc6e72cd506d800bab3e55744f",
       "group": "conditional-future-license",
@@ -11150,6 +11190,25 @@
       "observations": []
     },
     {
+      "path": "scripts/select-cachyos-build.py",
+      "sha256": "f6aad80ba3c40d8373c8afaefe1bb32a62cfdb01131a87da24e7eb19a7f7c0bc",
+      "group": "conditional-future-license",
+      "rule": "gpl-tools",
+      "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
+      "limitation": "Existing third-party expression excluded.",
+      "next_step": "Preserve source and reconstruction permissions.",
+      "source_index": [],
+      "first_local_commit": null,
+      "local_change_commits": [],
+      "observations": [
+        {
+          "line": 2,
+          "kind": "declaration-observation",
+          "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
+        }
+      ]
+    },
+    {
       "path": "scripts/select-component-origin.py",
       "sha256": "05c79989d5addf3310fc13249ce209ff02eff7cd4895e0385ae72439f5a0c473",
       "group": "conditional-future-license",
@@ -13229,7 +13288,7 @@
     },
     {
       "path": "tests/test_workflow_migration.py",
-      "sha256": "20c8c1ad3eb382eab65c0d88aea27ff0a9bc9e01b8bc63108c18865bcb47c16c",
+      "sha256": "0dd13f1d6c4742e9e612c9e96c444fe0a49f8a1eaaf1b223599b8ce214fa6f83",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
