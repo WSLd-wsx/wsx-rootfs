@@ -25,7 +25,7 @@ retry_package_operation pacman -Su --noconfirm --needed archlinux-keyring aria2
 
 # pacman supplies a .part destination and promotes it only after aria2 succeeds.
 # Keep aria2's control file on failure so the next attempt resumes its pieces.
-sed -i '/^\[options\]$/a XferCommand = /usr/bin/timeout --kill-after=15s 5m /usr/bin/aria2c --no-conf --continue=true --auto-file-renaming=false --file-allocation=none --console-log-level=warn --summary-interval=0 --connect-timeout=20 --timeout=60 --max-tries=5 --retry-wait=5 --max-file-not-found=1 --max-connection-per-server=4 --min-split-size=1M --split=4 --dir=/ --out=%o %u' /etc/pacman.conf
+sed -i '/^\[options\]$/a XferCommand = /usr/bin/timeout --kill-after=15s 5m /usr/bin/aria2c --no-conf --continue=true --auto-file-renaming=false --file-allocation=none --console-log-level=warn --summary-interval=0 --connect-timeout=20 --timeout=60 --max-tries=5 --retry-wait=5 --max-file-not-found=1 --max-connection-per-server=4 --min-split-size=1M --split=4 --dir=/ --out %o %u' /etc/pacman.conf
 
 mapfile -t dependencies < distros/cachyos-plasma/build-dependencies.txt
 if [[ -n ${CCACHE_DIR:-} ]]; then
