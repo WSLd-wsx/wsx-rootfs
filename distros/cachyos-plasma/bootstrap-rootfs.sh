@@ -20,13 +20,17 @@ retry_package_operation() {
     "$@"
 }
 
-# Use the same bounded downloader bootstrap as the component build.
+# The pinned builder already has curl. Time out individual transfers so pacman
+# can release its database lock normally.
 download_config=/tmp/wsx-pacman-download.conf
 cp /etc/pacman.conf "$download_config"
-sed -i '/^\[options\]$/a DisableDownloadTimeout' "$download_config"
-bootstrap_packages=(archlinux-keyring arch-install-scripts python curl gcc aria2)
-retry_package_operation timeout --kill-after=15s 5m pacman --config "$download_config" -Syuw --noconfirm --needed "${bootstrap_packages[@]}"
-retry_package_operation pacman --config "$download_config" -Su --noconfirm --needed "${bootstrap_packages[@]}"
+sed -i '/^\[options\]$/a DisableDownloadTimeout\nXferCommand = /usr/bin/curl --fail --location --connect-timeout 20 --max-time 120 --continue-at - --output %o %u' "$download_config"
+retry_package_operation pacman --config "$download_config" -Syu --noconfirm --needed archlinux-keyring aria2
+
+# Keep the download configuration in the builder. The finished system uses /etc/pacman.conf.
+aria2_xfer='XferCommand = /usr/bin/timeout --kill-after=15s 5m /usr/bin/aria2c --no-conf --continue=true --auto-file-renaming=false --file-allocation=none --console-log-level=warn --summary-interval=0 --connect-timeout=20 --timeout=60 --max-tries=5 --retry-wait=5 --max-file-not-found=1 --max-connection-per-server=4 --min-split-size=1M --split=4 --dir=/ --out %o %u'
+sed -i "s|^XferCommand = /usr/bin/curl .*|$aria2_xfer|" "$download_config"
+retry_package_operation pacman --config "$download_config" -S --noconfirm --needed arch-install-scripts python gcc
 python3 /workspace/scripts/source-support.py WSX-cachyos-plasma
 python - <<'PYTHON'
 import hashlib, json
@@ -63,8 +67,7 @@ if s.count('[core]') != 1 or s.count('[extra]') != 1 or '[cachyos]' in s:
 p.write_text(s.rstrip() + '\n\n' + Path('/tmp/wsx-cachyos-repository.conf').read_text())
 PY
 cp /etc/pacman.conf "$download_config"
-# The installed system receives /etc/pacman.conf, without the build downloader.
-sed -i '/^\[options\]$/a DisableDownloadTimeout\nXferCommand = /usr/bin/timeout --kill-after=15s 5m /usr/bin/aria2c --no-conf --continue=true --auto-file-renaming=false --file-allocation=none --console-log-level=warn --summary-interval=0 --connect-timeout=20 --timeout=60 --max-tries=5 --retry-wait=5 --max-file-not-found=1 --max-connection-per-server=4 --min-split-size=1M --split=4 --dir=/ --out %o %u' "$download_config"
+sed -i "/^\[options\]$/a DisableDownloadTimeout\n$aria2_xfer" "$download_config"
 retry_package_operation pacman --config "$download_config" -Sy --noconfirm
 pacman-conf --config "$download_config" > /output/rootfs-repositories.conf
 pacman --config "$download_config" -Sl > /output/repository-packages.txt

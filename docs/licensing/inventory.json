@@ -1056,7 +1056,7 @@
     },
     {
       "path": "distros/cachyos-plasma/bootstrap-rootfs.sh",
-      "sha256": "2acfd1caf5e67fe6bb8080644d843c8ede1442ecf0e7b890836b3e52475b51a0",
+      "sha256": "44c1ae998ef963a259148151b3bc48759ff87e124936c30c4e87e648fe30e0ec",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -13117,7 +13117,7 @@
     },
     {
       "path": "tests/test_source_components.py",
-      "sha256": "98322d6dfdbd8a954fe2612a4c9b98216dd05484cf650b6a9c06b07b7c36b14f",
+      "sha256": "501743fdecc2d4da16c80628eae0e9c7c1336c6bfacb31754096869bd995004c",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
