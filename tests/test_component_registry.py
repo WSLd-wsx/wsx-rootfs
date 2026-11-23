@@ -12,14 +12,21 @@ import component_registry as registry
 
 
 class RegistryTests(unittest.TestCase):
+    def setUp(self):
+        self.operations = dict(WSX_OPERATIONS_REPOSITORY='example/current-operations',
+                               WSX_LEGACY_OPERATIONS_REPOSITORY='example/legacy-operations',
+                               WSX_OPERATIONS_REPOSITORY_ID='12345',
+                               WSX_OPERATIONS_COMPONENT_IMAGE='ghcr.io/wsld-wsx/fixture-package/graphics-components')
+        self.enterContext(patch.dict(os.environ, self.operations))
+
     def test_operations_build_binds_recipe_and_workflow_commits(self):
-        env = dict(GITHUB_REPOSITORY='operations', GITHUB_SHA='a'*40,
-                   WSX_SOURCE_COMMIT='b'*40, WSX_COMPONENT_IMAGE=registry.OPS_IMAGE)
+        env = dict(self.operations, GITHUB_REPOSITORY='example/legacy-operations', GITHUB_SHA='a'*40,
+                   WSX_SOURCE_COMMIT='b'*40, WSX_COMPONENT_IMAGE=registry.operations_image())
         self.assertEqual(registry.publication_origin(env),
-                         (registry.OPS_IMAGE, 'operations', 'b'*40, 'a'*40))
-        current = dict(env, GITHUB_REPOSITORY='operations')
+                         (registry.operations_image(), 'example/legacy-operations', 'b'*40, 'a'*40))
+        current = dict(env, GITHUB_REPOSITORY='example/current-operations')
         self.assertEqual(registry.publication_origin(current),
-                         (registry.OPS_IMAGE, 'operations', 'b'*40, 'a'*40))
+                         (registry.operations_image(), 'example/current-operations', 'b'*40, 'a'*40))
         for changed in (dict(env, WSX_SOURCE_COMMIT='main'),
                         dict(env, GITHUB_SHA='bad'), dict(env, WSX_COMPONENT_IMAGE=registry.IMAGE),
                         dict(env, GITHUB_REPOSITORY='other/repo')):
@@ -38,10 +45,10 @@ class RegistryTests(unittest.TestCase):
 
     def test_reference_rejects_mutable_tags_and_other_packages(self):
         registry.check_reference(registry.IMAGE + '@sha256:' + 'a' * 64)
-        registry.check_reference(registry.OPS_IMAGE + '@sha256:' + 'b' * 64)
+        registry.check_reference(registry.operations_image() + '@sha256:' + 'b' * 64)
         for reference in (registry.IMAGE + ':latest', registry.IMAGE + '-other@sha256:' + 'a' * 64,
-                          registry.IMAGE + '@sha256:bad', registry.OPS_IMAGE + ':latest',
-                          'ghcr.io/other/operations/graphics-components@sha256:' + 'a' * 64):
+                          registry.IMAGE + '@sha256:bad', registry.operations_image() + ':latest',
+                          'ghcr.io/other/fixture-package/graphics-components@sha256:' + 'a' * 64):
             with self.assertRaises(ValueError):
                 registry.check_reference(reference)
 
@@ -73,12 +80,12 @@ class RegistryTests(unittest.TestCase):
 
     def test_public_source_allows_new_package_only_from_private_operations_repo(self):
         source = json.dumps(dict(full_name=registry.REPOSITORY, private=False)).encode()
-        operations = json.dumps(dict(full_name='operations', private=True)).encode()
+        operations = json.dumps(dict(full_name='example/current-operations', private=True)).encode()
         response = SimpleNamespace(returncode=1, stdout='HTTP/2.0 404 error\n\n{}')
-        with patch.dict(os.environ, {'GITHUB_REPOSITORY':'operations'}, clear=True), \
+        with patch.dict(os.environ, dict(self.operations, GITHUB_REPOSITORY='example/current-operations'), clear=True), \
              patch.object(registry.subprocess, 'check_output', side_effect=[source, operations]), \
              patch.object(registry.subprocess, 'run', return_value=response):
-            registry.require_private(registry.OPS_IMAGE, allow_missing=True)
+            registry.require_private(registry.operations_image(), allow_missing=True)
 
     def test_public_repository_requires_existing_private_package(self):
         with patch.object(registry.subprocess,'check_output',return_value=json.dumps(dict(full_name=registry.REPOSITORY,private=False)).encode()):

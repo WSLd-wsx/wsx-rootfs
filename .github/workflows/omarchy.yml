@@ -1,6 +1,5 @@
 # Copyright (c) 2026 WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Derived from operations/.github/workflows/omarchy-easy.yml and omarchy.yml.
 name: Build Omarchy rootfs
 on:
   workflow_dispatch:

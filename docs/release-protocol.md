@@ -96,7 +96,7 @@ unrelated mapping entries are not hashed as image inputs.
 
 For a partially uploaded Draft, recovery must validate the original build/run
 identity, the source commit, each uploaded byte and the expected asset set.
-Operational workflows and recovery entry points live in `operations`.
+Release operators maintain the recovery workflows separately.
 Legacy rootfs-repository runs retain their original provenance rules. New
 operations runs bind the separate operations repository and commit in the build
 identity. An absent or incomplete original payload is not reconstructed by

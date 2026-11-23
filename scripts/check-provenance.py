@@ -7,7 +7,7 @@ root = Path(__file__).resolve().parents[1]
 for entry in json.loads((root/'docs/provenance.json').read_text())['files']:
     if not entry['vendored']:
         continue
-    relative = entry['source_path'].removeprefix('archived-sources/')
+    relative = entry['source_path']
     actual = hashlib.sha256((root/entry.get('vendored_path', 'vendor/wsx-guest-sources/'+relative)).read_bytes()).hexdigest()
     if actual != entry['sha256']:
         raise SystemExit('Vendored source hash mismatch: ' + relative)

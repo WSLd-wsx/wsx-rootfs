@@ -2,7 +2,7 @@
 
 > Operations update: the Omarchy rootfs workflow runs in wsx-rootfs and selects
 > the digest-pinned component in `omarchy-selection.json`. Component production
-> and shared-source preparation remain in the private operations repository.
+> and shared-source preparation remain in the private release operations repository.
 > Existing published source assets are unchanged; this does not establish
 > complete system-package source delivery.
 
@@ -111,7 +111,7 @@ page is a discovery entry, not proof that a particular version's source remains
 available. Maintain access to the applicable source, modifications and build
 materials alongside the binary delivery for as long as required. WSX-modified
 graphics components retain their pinned source index and source release above.
-Historical r19 source-access evidence is retained separately in wsx-guest-sources.
+Historical r19 source-access evidence is retained separately in the archived reference.
 
 Graphics builds may run in the public source repository. Their binary destination
 must be the existing verified private GHCR package; diagnostic attachments are
@@ -140,3 +140,12 @@ archive or changed hash leaves the source status unresolved and does not
 manufacture a match. This optional collection does not assert a reproducible
 build, resolve patent licensing or make a whole-image compliance claim. The
 component and system-package review remains separate.
+
+For a hosted operations build, supply the approved repository and registry
+namespace through `WSX_OPERATIONS_REPOSITORY` and
+`WSX_OPERATIONS_COMPONENT_IMAGE` in the operator environment. For older runs
+recorded before a repository rename, also supply
+`WSX_LEGACY_OPERATIONS_REPOSITORY` and the stable
+`WSX_OPERATIONS_REPOSITORY_ID`. Main-branch, workflow commit, digest and receipt
+checks still apply. The public source repository's own builds use its existing
+registry namespace.

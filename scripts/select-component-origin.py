@@ -8,9 +8,9 @@ import os
 from pathlib import Path
 import re
 import subprocess
+from operations_provenance import repositories
 
 ROOT = Path(__file__).resolve().parents[1]
-OPS = 'operations'
 RECIPE = 'WSLd-wsx/wsx-rootfs'
 
 
@@ -57,9 +57,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile', required=True, choices=('omarchy','cachyos-plasma'))
     parser.add_argument('--output', required=True, type=Path)
-    parser.add_argument('--repository', choices=(OPS, RECIPE), default=OPS)
+    parser.add_argument('--repository', choices=(RECIPE, *repositories()), default=os.environ.get('WSX_OPERATIONS_REPOSITORY') or RECIPE)
     args = parser.parse_args()
-    token_name = 'WSX_OPS_TOKEN' if args.repository == OPS else 'GH_TOKEN'
+    if args.repository not in (RECIPE, *repositories()):
+        parser.error('Configure an approved operations repository.')
+    token_name = 'WSX_OPS_TOKEN' if args.repository != RECIPE else 'GH_TOKEN'
     token = os.environ.get(token_name)
     if not token:
         raise ValueError(token_name + ' is required')

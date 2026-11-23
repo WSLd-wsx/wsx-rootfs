@@ -14,7 +14,6 @@ import shutil
 import sys
 import tarfile
 
-ROOT = Path(__file__).resolve().parents[3]
 
 
 def sha(path):
@@ -25,6 +24,8 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('output', type=Path)
+    parser.add_argument('--source-lock', required=True, type=Path)
+    parser.add_argument('--archive', required=True, type=Path)
     parser.add_argument('--cached-host-memory', action='store_true',
                         help='Add the opt-in cached host-memory allocation policy')
     parser.add_argument("--presentation-staging", action="store_true",
@@ -66,9 +67,10 @@ def main():
                      '--modifier-features2, --negotiated-export and --import-diagnostics')
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
-    pin = json.loads((ROOT / 'archived-sources/sources.lock.json').read_text())['archives']['mesa']
+    pin = json.loads(args.source_lock.read_text())['mesa']
     assert pin['version'] == '26.1.8'
-    archive = ROOT / 'archived-evidence/inputs-01' / pin['file']
+    archive = args.archive
+    pin['directory'] = 'mesa-' + pin['version']
     assert sha(archive) == pin['sha256']
     with tarfile.open(archive) as tar:
         tar.extractall(out, filter='data')

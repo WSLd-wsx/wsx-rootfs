@@ -36,6 +36,5 @@ A version-specific backup suffix prevents collision with the older source backup
 Unknown or mixed source revisions still reject before any file is changed.
 
 The upgraded Omarchy session passes real shell IPC and menu activation on Iris Xe
-with the existing opaque runtime and the corrected Guest module. Evidence is in
-`archived-evidence/omarchy-406-start-01`. Outside-session probes must set the
+with the existing opaque runtime and the corrected Guest module. Outside-session probes must set the
 actual Wayland socket; inherited WSLg display variables do not address this shell.

@@ -10,6 +10,7 @@ import tempfile
 import time
 
 import component_registry as registry
+from operations_provenance import repositories
 from component_materials import sha
 from shared_sources import ROOT, REPOSITORY, INDEX, ARCHIVES, make_bundle, verify_bundle, download_index
 
@@ -19,7 +20,7 @@ def gh(*args):
 
 
 def api(path):
-    if path.startswith(('repos/operations/', 'repos/operations/')):
+    if path.startswith(tuple(f'repos/{name}/' for name in repositories())):
         token = os.environ.get('WSX_OPS_TOKEN')
         if not token:
             raise ValueError('Operations run access requires WSX_OPS_TOKEN')
@@ -63,7 +64,7 @@ def acquire(profile, directory, pin=None):
         raise ValueError('A verified component origin is required')
     reuse = load_script('reuse-components.py')
     run_repo = pin.get('run_repository', REPOSITORY)
-    if run_repo not in (REPOSITORY, 'operations', 'operations'):
+    if run_repo not in (REPOSITORY, *repositories()):
         raise ValueError('Unapproved component workflow repository')
     run = api(f'repos/{run_repo}/actions/runs/{pin["run_id"]}')
     reuse.validate_origin(pin,profile,REPOSITORY,run,{})

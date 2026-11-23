@@ -1,6 +1,6 @@
 # Build evidence
 
-The historical Guest protocol 1.0 rebuild record, retained in wsx-guest-sources, covers the
+The historical Guest protocol 1.0 rebuild record, retained in the archived reference, covers the
 completed Omarchy r12 and CachyOS 2026.11.5-r1 public Pre-releases, their exact
 archive hashes, failure history and separate hardware acceptance boundary.
 

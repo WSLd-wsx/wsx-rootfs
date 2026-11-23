@@ -54,7 +54,7 @@ The input executable also uses the Apache-marked rvgpu header; inspect its
 redistribution materials. Only generated comments were changed; runtime semantics remain unchanged.
 
 
-Historical post-merge review records are retained in wsx-guest-sources. KWin binary
+Historical post-merge review records are retained in the archived reference. KWin binary
 notices and source delivery remain subject to review for each distributed build.
 Reference text sources/hashes are in license-text-sources.json.
 

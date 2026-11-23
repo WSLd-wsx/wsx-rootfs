@@ -10,16 +10,16 @@ class Provenance(unittest.TestCase):
     def test_optional_and_bound(self):
         original={'distribution_id':'WSX-omarchy'}
         self.assertEqual(attach(original,{}),original)
-        updated=attach(original,dict(WSX_OPERATIONS_REPOSITORY='operations',
+        updated=attach(original,dict(WSX_OPERATIONS_REPOSITORY='example/legacy-operations',
                                      WSX_OPERATIONS_COMMIT='a'*40))
         self.assertNotEqual(identity(original),identity(updated))
         self.assertEqual(updated['operations_commit'],'a'*40)
-        renamed=attach(original,dict(WSX_OPERATIONS_REPOSITORY='operations',
+        renamed=attach(original,dict(WSX_OPERATIONS_REPOSITORY='example/current-operations',
                                     WSX_OPERATIONS_COMMIT='b'*40))
-        self.assertEqual(renamed['operations_repository'],'operations')
+        self.assertEqual(renamed['operations_repository'],'example/current-operations')
         self.assertNotEqual(identity(updated),identity(renamed))
     def test_partial_untrusted_and_invalid_origin_rejected(self):
         for env in (dict(WSX_OPERATIONS_COMMIT='a'*40),
-                    dict(WSX_OPERATIONS_REPOSITORY='other/repo',WSX_OPERATIONS_COMMIT='a'*40),
-                    dict(WSX_OPERATIONS_REPOSITORY='operations',WSX_OPERATIONS_COMMIT='main')):
+                    dict(WSX_OPERATIONS_REPOSITORY='example/current-operations', GITHUB_REPOSITORY='other/repo', WSX_OPERATIONS_COMMIT='a'*40),
+                    dict(WSX_OPERATIONS_REPOSITORY='example/legacy-operations',WSX_OPERATIONS_COMMIT='main')):
             with self.subTest(env=env), self.assertRaises(ValueError): attach({},env)

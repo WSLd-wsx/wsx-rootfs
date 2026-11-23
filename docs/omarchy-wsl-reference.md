@@ -51,7 +51,7 @@ implied.
 ### Version-specific adapter candidate
 
 The 4.5.0 network adapter uses the fixed upstream commit and source hashes above.
-The WSX adapter derives from `archived-sources/network/install.py` at
+The WSX adapter derives from the archived network adapter at
 prototype commit `3199b15dd898d6033e255e6894411b4bb4cab816`, working-tree
 SHA-256 `40ed88fff12ce0b278eb25400970fb714dd5079349157d6a787b4608326c9392`.
 Its 4.0.6 profile working-tree manifest, Panel patch and wifi patch SHA-256 are

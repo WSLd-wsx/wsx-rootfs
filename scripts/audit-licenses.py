@@ -23,7 +23,7 @@ def inventory():
         doc = json.loads((ROOT / name).read_text())
         for entry in doc['files']:
             if entry.get('vendored', True):
-                path = entry.get('vendored_path', 'vendor/wsx-guest-sources/' + entry['source_path'].removeprefix('archived-sources/'))
+                path = entry.get('vendored_path', 'vendor/wsx-guest-sources/' + entry['source_path'])
                 sources.setdefault(path, []).append(dict(index=name, source_path=entry['source_path'], reference_commit=entry.get('reference_commit', doc.get('reference_commit')), expected_sha256=entry['sha256']))
     upstream = json.loads((ROOT / 'distros/cachyos-plasma/upstream/source.json').read_text())
     for section in (upstream, upstream['iso_identity']):

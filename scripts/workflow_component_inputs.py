@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later OR Apache-2.0
 """Apply verified workflow-selected component and public-source inputs locally."""
 import json
+import os
 from pathlib import Path
 import re
 import shared_sources
 import component_registry
+from operations_provenance import repositories
 
 
 def apply(root, profile, selection, verify=True):
@@ -13,6 +15,8 @@ def apply(root, profile, selection, verify=True):
     if not isinstance(selection, dict) or set(selection) != {'component', 'shared_source'}:
         raise ValueError('Invalid workflow component selection')
     pin = selection['component']
+    if isinstance(pin, dict) and 'workflow_commit' in pin and 'run_repository' not in pin:
+        pin = dict(pin, run_repository=os.environ.get('WSX_OPERATIONS_REPOSITORY', ''))
     required = {'transport', 'image', 'run_id', 'source_commit', 'manifest_sha256'}
     operations_fields = {'run_repository', 'workflow_commit'}
     if not isinstance(pin, dict) or set(pin) not in (required, required | operations_fields):
@@ -24,7 +28,7 @@ def apply(root, profile, selection, verify=True):
         raise ValueError('Invalid component origin')
     component_registry.check_reference(pin['image'])
     if 'run_repository' in pin:
-        if (pin['run_repository'] not in ('operations', 'operations')
+        if (pin['run_repository'] not in repositories()
                 or not re.fullmatch(r'[0-9a-f]{40}', pin['workflow_commit'])):
             raise ValueError('Invalid operations build origin')
     elif not pin['image'].startswith(component_registry.IMAGE + '@sha256:'):

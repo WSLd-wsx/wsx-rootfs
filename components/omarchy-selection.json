@@ -5,7 +5,6 @@
     "run_id": 43880339756,
     "source_commit": "10ae52a4db176e1e96dc63e66f7d50db12f519f8",
     "manifest_sha256": "2999029e6c30a035f84888847bda708f58325178988bc7df6a112f239cefe7d6",
-    "run_repository": "operations",
     "workflow_commit": "18393987b968184dcbb3d4ffe859bf5831d64c76"
   },
   "shared_source": {

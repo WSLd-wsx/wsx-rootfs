@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "status": "review-only",
-  "claim": "User reports extracting the component producer from wsx-guest-sources into wsx-rootfs.",
+  "claim": "User reports extracting the component producer from the archived development source into this repository.",
   "scope": "Differences from the previous local inventory, not a proven list of verbatim imports.",
   "origin_repository_inspected": false,
   "rights_statement": "Personal independent development previously attested for original WSX portions only.",

@@ -163,8 +163,8 @@ class SourceComponentsTests(unittest.TestCase):
             command=list(map(str,args));commands.append(command)
             text=Path(command[1]).read_text();ast.parse(text)
             if command[1].endswith('/guest-compat/build.py'):
-                self.assertNotIn("pin = json.loads((ROOT / 'archived-sources/",text)
-                self.assertNotIn("archive = ROOT / 'artifacts/",text)
+                self.assertEqual(command[command.index('--source-lock') + 1], str(ROOT/'components/sources.json'))
+                self.assertEqual(command[command.index('--archive') + 1], str(archives/'mesa.archive'))
                 self.assertIn('--opaque-consumer',command)
                 self.assertNotIn('--presentation-staging',command)
                 self.assertNotIn('--gbm-shared-contract',command)

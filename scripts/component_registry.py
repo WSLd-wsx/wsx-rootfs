@@ -8,15 +8,27 @@ import re
 import subprocess
 import tempfile
 from urllib.parse import quote
+from operations_provenance import repositories
 
 REPOSITORY = 'WSLd-wsx/wsx-rootfs'
 IMAGE = 'ghcr.io/wsld-wsx/wsx-rootfs/graphics-components'
-OPS_IMAGE = 'ghcr.io/operations/graphics-components'
+
+
+def operations_image(environ=None):
+    env = os.environ if environ is None else environ
+    image = env.get('WSX_OPERATIONS_COMPONENT_IMAGE', '')
+    if image == IMAGE or not re.fullmatch(r'ghcr\.io/wsld-wsx/[a-z0-9._/-]+', image):
+        return ''
+    return image
+
+
+def approved_images(environ=None):
+    return tuple(filter(None, (IMAGE, operations_image(environ))))
 
 
 def check_reference(reference):
     if not any(re.fullmatch(re.escape(image) + r'@sha256:[0-9a-f]{64}', reference)
-               for image in (IMAGE, OPS_IMAGE)):
+               for image in approved_images()):
         raise ValueError('Expected an immutable component digest in the approved registry namespace')
 
 
@@ -24,7 +36,7 @@ def require_private(image=IMAGE, allow_missing=False):
     repo = json.loads(subprocess.check_output(['gh', 'api', 'repos/' + REPOSITORY]))
     if repo.get('full_name') != REPOSITORY or type(repo.get('private')) is not bool:
         raise ValueError('Approved repository identity and visibility required')
-    if image not in (IMAGE, OPS_IMAGE):
+    if image not in approved_images():
         raise ValueError('Unapproved component package')
     name = image.removeprefix('ghcr.io/wsld-wsx/')
     env = dict(os.environ)
@@ -37,7 +49,8 @@ def require_private(image=IMAGE, allow_missing=False):
             if repo['private']:
                 return
             operations = os.environ.get('GITHUB_REPOSITORY', '')
-            if image == OPS_IMAGE and operations == 'operations':
+            if (image == operations_image() and operations in repositories()
+                    and operations == os.environ.get('WSX_OPERATIONS_REPOSITORY')):
                 details = json.loads(subprocess.check_output(['gh', 'api', 'repos/' + operations], env=env))
                 if details.get('full_name') == operations and details.get('private') is True:
                     return
@@ -82,11 +95,11 @@ def fetch(reference, destination, pin, profile, env):
 
 def publication_origin(environ):
     selected = environ.get('WSX_COMPONENT_IMAGE', IMAGE)
-    if selected not in (IMAGE, OPS_IMAGE):
+    if selected not in approved_images(environ):
         raise ValueError('Unapproved component destination')
     run_repo = environ.get('GITHUB_REPOSITORY', REPOSITORY)
-    if run_repo in ('operations', 'operations'):
-        if selected != OPS_IMAGE:
+    if run_repo in repositories(environ):
+        if selected != operations_image(environ):
             raise ValueError('Operations builds must target the private operations package')
         commit = environ.get('WSX_SOURCE_COMMIT', '')
         operations_commit = environ.get('GITHUB_SHA', '')

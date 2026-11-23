@@ -65,12 +65,14 @@ def inspect(work, profile):
 
 
 def main():
+    from operations_provenance import repositories
+
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile',required=True,choices=sorted(PROFILES))
     parser.add_argument('--run-id',required=True,type=int)
     parser.add_argument('--image',required=True)
     parser.add_argument('--manifest-sha256',required=True)
-    parser.add_argument('--run-repository', choices=(REPOSITORY, 'operations', 'operations'), default=REPOSITORY)
+    parser.add_argument('--run-repository', choices=(REPOSITORY, *repositories()), default=REPOSITORY)
     parser.add_argument('--source-commit', default='')
     parser.add_argument('--work',required=True,type=Path)
     args=parser.parse_args()

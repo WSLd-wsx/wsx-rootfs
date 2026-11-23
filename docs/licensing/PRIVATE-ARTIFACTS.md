@@ -5,7 +5,7 @@
 > restrictions and workflow layout below do not describe the current remote
 > setup. This record does not grant rights or establish license clearance for
 > any image. Current licensing is defined by ../../LICENSE-MAP.md; current
-> release operations live in the separate private operations repository.
+> release operations live in the separate private release operations repository.
 
 Owner-approved on 2026-11-03. Source grants are effective independently of binary
 publication. In the private WSLd-wsx/wsx-rootfs repository, authenticated Actions

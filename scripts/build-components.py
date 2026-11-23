@@ -41,16 +41,6 @@ def build(args):
     shutil.copytree(ROOT/'vendor/wsx-guest-sources', sources)
     builder = sources/'guest-compat/build.py'
     text = builder.read_text()
-    old = "pin = json.loads((ROOT / 'archived-sources/sources.lock.json').read_text())['archives']['mesa']"
-    pin = json.loads((ROOT/'components/sources.json').read_text())['mesa']
-    pin.update(directory='mesa-'+pin['version'])
-    if text.count(old) != 1:
-        raise ValueError('Unexpected vendored builder structure')
-    text = text.replace(old, 'pin = ' + repr(pin))
-    old = "archive = ROOT / 'archived-evidence/inputs-01' / pin['file']"
-    if text.count(old) != 1:
-        raise ValueError('Unexpected archive binding')
-    text = text.replace(old, 'archive = Path(' + repr(str(args.archives.resolve()/'mesa.archive')) + ')')
     old = "'-j', '3'"
     if text.count(old) != 1:
         raise ValueError('Unexpected Mesa concurrency binding')
@@ -80,7 +70,8 @@ def build(args):
     omarchy = profile == 'omarchy'
     mesa_application_options = ('--stage-device-local-buffer-writes',) if omarchy else ()
     venus_application_options = ('--application-wsi',) if omarchy else ()
-    run(sys.executable, builder, out/'mesa', '--import-diagnostics', '--negotiated-export',
+    run(sys.executable, builder, out/'mesa', '--source-lock', ROOT/'components/sources.json',
+        '--archive', args.archives/'mesa.archive', '--import-diagnostics', '--negotiated-export',
         '--modifier-features2', '--linear-feedback-compat', '--linear-shared-compat',
         '--linear-modifier-feedback', '--linear-depth-segregation', '--opaque-gbm-export', '--opaque-consumer',
         *mesa_application_options)

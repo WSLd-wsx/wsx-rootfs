@@ -78,7 +78,7 @@ these were corrected to seatd/libei without changing signature checks.
 
 ## CachyOS real-machine follow-up
 
-The historical r1 handoff, retained in wsx-guest-sources, assigns image/session fixes
+The historical r1 handoff, retained in the archived reference, assigns image/session fixes
 RF-1 through RF-3 to rootfs and actual-device authorization/input reconnect
 CORE-1/CORE-2 to core. Local fixes and bounded presentation do not establish
 that the unmodified Draft or reusable lifecycle interface passes acceptance.

@@ -2,6 +2,7 @@
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -18,6 +19,12 @@ reuse=importlib.util.module_from_spec(spec);spec.loader.exec_module(reuse)
 
 class ReuseTests(unittest.TestCase):
     def setUp(self):
+        self.operations = dict(WSX_OPERATIONS_REPOSITORY='example/current-operations',
+                               WSX_LEGACY_OPERATIONS_REPOSITORY='example/legacy-operations',
+                               WSX_OPERATIONS_REPOSITORY_ID='12345',
+                               WSX_OPERATIONS_COMPONENT_IMAGE='ghcr.io/wsld-wsx/fixture-package/graphics-components')
+        self.enterContext(patch.dict(os.environ, self.operations))
+
         temp=tempfile.TemporaryDirectory();self.addCleanup(temp.cleanup);self.root=Path(temp.name)
         self.pin=dict(run_id=10,artifact_id=20,source_commit='a'*40,manifest_sha256='b'*64)
         self.run=dict(conclusion='success',status='completed',event='workflow_dispatch',
@@ -38,17 +45,17 @@ class ReuseTests(unittest.TestCase):
 
     def test_operations_origin_binds_workflow_and_source_separately(self):
         pin = dict(transport='ghcr', run_id=10, source_commit='a'*40,
-                   workflow_commit='b'*40, run_repository='operations',
-                   image=reuse.registry.OPS_IMAGE+'@sha256:'+'c'*64)
+                   workflow_commit='b'*40, run_repository='example/legacy-operations',
+                   image=reuse.registry.operations_image()+'@sha256:'+'c'*64)
         run = dict(status='completed', conclusion='success', event='workflow_dispatch',
                    path='.github/workflows/components.yml', head_sha='b'*40, head_branch='main',
                    repository=dict(full_name=pin['run_repository']),
                    head_repository=dict(full_name=pin['run_repository']))
         reuse.validate_origin(pin, 'omarchy', 'WSLd-wsx/wsx-rootfs', run, {})
-        renamed = dict(full_name='operations', id=0)
+        renamed = dict(full_name='example/current-operations', id=12345)
         reuse.validate_origin(pin, 'omarchy', 'WSLd-wsx/wsx-rootfs',
                               dict(run, repository=renamed, head_repository=renamed), {})
-        current_pin = dict(pin, run_repository='operations')
+        current_pin = dict(pin, run_repository='example/current-operations')
         reuse.validate_origin(current_pin, 'omarchy', 'WSLd-wsx/wsx-rootfs',
                               dict(run, repository=renamed, head_repository=renamed), {})
         with self.assertRaisesRegex(ValueError, 'origin mismatch'):
@@ -70,10 +77,10 @@ class ReuseTests(unittest.TestCase):
         (self.root/'components/source-delivery.json').write_text(json.dumps(dict(component_origins={'omarchy':pin})))
         with patch.object(shared_sources,'pin_for',return_value={}), patch.object(shared_sources,'download_index',return_value=b'{"verified":"index"}'):
             self.assertEqual(reuse.published_registry_origin(self.root,pin,'omarchy'),{'verified':'index'})
-            migrated=dict(pin,image=reuse.registry.OPS_IMAGE+'@sha256:'+'b'*64)
+            migrated=dict(pin,image=reuse.registry.operations_image()+'@sha256:'+'b'*64)
             self.assertEqual(reuse.published_registry_origin(self.root,migrated,'omarchy'),{'verified':'index'})
             with self.assertRaisesRegex(ValueError,'source origin'):
-                reuse.published_registry_origin(self.root,dict(migrated,image=reuse.registry.OPS_IMAGE+'@sha256:'+'c'*64),'omarchy')
+                reuse.published_registry_origin(self.root,dict(migrated,image=reuse.registry.operations_image()+'@sha256:'+'c'*64),'omarchy')
             with self.assertRaisesRegex(ValueError,'source origin'):
                 reuse.published_registry_origin(self.root,dict(pin,run_id=11),'omarchy')
         work=self.root/'work';work.mkdir()

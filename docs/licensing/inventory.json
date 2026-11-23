@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "head": "c56068bd67802c1f2fd9b68a0883dd10cfbaae38",
+  "head": "da40e66e484c59c46223ce0402f09c2095091ce6",
   "license_grant": true,
   "release_ready": false,
   "scope": "Git tracked and non-ignored untracked files; excludes this generated inventory, Git internals and ignored build outputs",
@@ -27,7 +27,7 @@
     },
     {
       "path": ".github/workflows/components.yml",
-      "sha256": "399beca9b9b75374ecfb2154856c9813dd822bcf1d1079d0342f0e3de433d230",
+      "sha256": "be049cf51c04a7c3ebfa2e2d1818beef773786fc6e72cd506d800bab3e55744f",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -46,22 +46,22 @@
       ],
       "observations": [
         {
-          "line": 2,
+          "line": 1,
           "kind": "declaration-observation",
           "text": "# Copyright (c) 2026 WGY (GitHub: wgy-wsx) <wgy@wsxdesk.com>"
         },
         {
-          "line": 3,
+          "line": 2,
           "kind": "declaration-observation",
           "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
         },
         {
-          "line": 43,
+          "line": 42,
           "kind": "mention",
           "text": "          python3 scripts/audit-licenses.py --check"
         },
         {
-          "line": 44,
+          "line": 43,
           "kind": "mention",
           "text": "          python3 scripts/audit-license-modules.py"
         }
@@ -69,7 +69,7 @@
     },
     {
       "path": ".github/workflows/omarchy.yml",
-      "sha256": "98401f368249e75b24ae6117d56e5382a49a3207f098e41d6205aefdba0cfcaa",
+      "sha256": "b93d90a65b15dbd751f6c1fb0ca99237232a47c04daaa306be50d38566b91c78",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -96,12 +96,12 @@
           "text": "# SPDX-License-Identifier: GPL-2.0-or-later"
         },
         {
-          "line": 86,
+          "line": 85,
           "kind": "mention",
           "text": "          python3 scripts/audit-licenses.py"
         },
         {
-          "line": 148,
+          "line": 147,
           "kind": "mention",
           "text": "          python3 scripts/audit-licenses.py"
         }
@@ -118,6 +118,7 @@
       "source_index": [],
       "first_local_commit": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
       "local_change_commits": [
+        "da40e66e484c59c46223ce0402f09c2095091ce6",
         "c56068bd67802c1f2fd9b68a0883dd10cfbaae38",
         "6d8c789b5c2453e3bfed5890011bb38c29f24594"
       ],
@@ -165,7 +166,7 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "9f9c6d38fc96e8d6472dbe9d1e93597ff813245a4d01e396a3e374456a9cf833",
+      "sha256": "dd383e7f9ddd44f9f057a1f0ead64b525af08a4fbb68931ddb72ef27da382bad",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -186,19 +187,9 @@
       ],
       "observations": [
         {
-          "line": 9,
+          "line": 6,
           "kind": "mention",
-          "text": "any applicable nested instructions. Keep repository responsibilities, license"
-        },
-        {
-          "line": 15,
-          "kind": "mention",
-          "text": "commits, pushes, publication, remote workflows, license changes, destructive"
-        },
-        {
-          "line": 27,
-          "kind": "mention",
-          "text": "Historical workflows, build receipts and their license grants remain valid."
+          "text": "- Keep public changes focused. Use English for repository prose and commit messages, preserve license notices, and report the checks run."
         }
       ]
     },
@@ -264,7 +255,7 @@
     },
     {
       "path": "LICENSE-MAP.md",
-      "sha256": "4085452d0fd475d94077db4b5c2616d465a4139b7b3515a66210f053f1f6a602",
+      "sha256": "e32c24629375d2e7905efa3dc35a8f7cfbf3f1bfc4e0fb279b1e7af4d1c4ed8e",
       "group": "conditional-future-license",
       "rule": "operative-map",
       "basis": "Owner-approved reconstruction metadata under GPL-2.0-or-later.",
@@ -399,7 +390,7 @@
     },
     {
       "path": "components/SOURCE-DELIVERY.md",
-      "sha256": "9afd6410c7bc8df98db1a7ab288d288b708c37078f3c61cbbf8361dec9237bec",
+      "sha256": "33bf924c38fa468b736084fc3f3168bbf9c1e1f17d151f6509b7688562bf55b7",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -503,7 +494,7 @@
     },
     {
       "path": "components/cachyos-provenance.json",
-      "sha256": "830773f83ea1e50d6ec4b768aabfdb68af36e48ef7c659baf7575d044041f80f",
+      "sha256": "4303cd585052d52103bec6f0c3c75faac05b071d811c2abd6641e84b5ba4c975",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -582,7 +573,7 @@
     },
     {
       "path": "components/license-boundaries.json",
-      "sha256": "f00936661ba63cd733f4908f2815cdf114b0e14ef74614ead78af0dcca5d1119",
+      "sha256": "bcf4eb571ac83d54f123a8dad1da16974d532d42510ae34bf61f88423225be13",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -911,7 +902,7 @@
     },
     {
       "path": "components/omarchy-selection.json",
-      "sha256": "126d6a300ee0391ee0c20c67ea80fcfd2f5cc542eb7b4b48118b397619d93cbd",
+      "sha256": "d8e6105467860fad66e211e40059a4f719da4fbccba4fd6be3a9e3a4d1450d70",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -992,7 +983,7 @@
     },
     {
       "path": "distros/cachyos-plasma/README.md",
-      "sha256": "f8da3d7a68697c3b88fe1dfe01e24225e0325bcee9879cca4c22219c424392d0",
+      "sha256": "4c2dc72c6052bc7ba11b7eef8c2ef36293e00f58eba8c01250279037fd5350be",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -1314,7 +1305,7 @@
     },
     {
       "path": "distros/omarchy/build-rootfs.sh",
-      "sha256": "52207ed423558df59c28604891f411a0ebf0a6bc8faf19bbe610429529aadf90",
+      "sha256": "462c5650d01bf5f94ab855e7943c52dc3fed58dc1adaaf39c65968756c1d9e36",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -1393,7 +1384,7 @@
     },
     {
       "path": "docs/build-evidence.md",
-      "sha256": "1152a366abceb5b16ef3c55be0c1873c636fd4d79127d79a547a7d94d53c95ed",
+      "sha256": "1d8d3cb2d58dc045f3801c6a459e52dff5b32080f85d99b54c00c4ff6b413c20",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -1413,7 +1404,7 @@
     },
     {
       "path": "docs/component-ownership.md",
-      "sha256": "7c3b6868023fbe86263d088b9506ab66f5023e33b53d34d7c09c7c101151eab4",
+      "sha256": "34ab18bc8c557c4b6b85f8bf0df0f7e6d7f07806b77751b0d0a03750c1062118",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -1499,7 +1490,7 @@
     },
     {
       "path": "docs/graphics-logging.md",
-      "sha256": "f85ead036e60d3b7d7c1649f99b48f1c5025c00a5be98f36816319173075a065",
+      "sha256": "bc0c1c3f69c61c6ac278dd3ef45251d8d2f3cd1bc97fc654e2e437c7a0b7bb49",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -1537,7 +1528,7 @@
     },
     {
       "path": "docs/guest-bootstrap-v2.md",
-      "sha256": "4b6af01631bf0f90e94dcf696e30291c7d24b6b6b7626060b25bd9cf866798c5",
+      "sha256": "c6ea298c1e1217cbe7740ee3269bbeec0cc287f50c159398c49a1f751713892f",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -1602,7 +1593,7 @@
     },
     {
       "path": "docs/licensing/ACTIVATION-PROPOSAL.md",
-      "sha256": "a4ca50996e0409da86bd5b5f6187314ea5cd1e9d64b5dbb29635c3d7c8fe62f9",
+      "sha256": "5d6d5a89edd58db903aaf1fcda56ca320d516d4bd87411ecc5f41cb3e7696d57",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -1742,7 +1733,7 @@
     },
     {
       "path": "docs/licensing/GUEST-MIGRATION-EVIDENCE.md",
-      "sha256": "8eac337048d179439d5e9821a709d46f47b4c79070c56dd34703358c4d9556ad",
+      "sha256": "cf6a5990885f1d75359b818c6c6acc97c42c2143626a3078116855749097e80d",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -1950,7 +1941,7 @@
     },
     {
       "path": "docs/licensing/PRIORITY-MIT.md",
-      "sha256": "9e37824f50b99befb0ffc170ef7f6bed1862da880baeeb5619dde8563649c446",
+      "sha256": "d11c19c01b3166575fa4d9dd3c7cb309e220c5f73fa70364219d9c5a7fd220ed",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -1969,7 +1960,7 @@
     },
     {
       "path": "docs/licensing/PRIVATE-ARTIFACTS.md",
-      "sha256": "c6c9a1a8debd12f3bcc1f5c36033c73a454742cb602896f0cd02c05826f6f110",
+      "sha256": "512661b1fa0875f6b68ecaa63df6e546915854999153186500d116d01a4d6a83",
       "group": "conditional-future-license",
       "rule": "operative-map",
       "basis": "Owner-approved reconstruction metadata under GPL-2.0-or-later.",
@@ -2034,7 +2025,7 @@
     },
     {
       "path": "docs/licensing/THIRD-PARTY-NOTICES.md",
-      "sha256": "eec10c26ddd5ee001c849bd47ad928ca68479e30fc7206b2a698b700b9b68946",
+      "sha256": "383a6d83e86b3a5807f580fe75e2ebd11563c7c551b0bdc82326700c07aa463e",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -2164,7 +2155,7 @@
     },
     {
       "path": "docs/licensing/activation-scope.json",
-      "sha256": "d8f1c2e1b0e3b5e82b7f3849dc4163f85d226d9a53e40f9c5055149af7efda00",
+      "sha256": "6a0f7a2c27eb502b02e5c4ca94fb194657715d6ba799ec464f98b7bb9b39ed80",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -2519,7 +2510,7 @@
     },
     {
       "path": "docs/licensing/history/before-activation-LICENSE-MAP.md",
-      "sha256": "e52d7c77e06d98051be87e2dd66212c9d67e7fcadf68cf94bc9512f7520e35da",
+      "sha256": "967e4cf128464d4a418cd49fa944f64ece032bd56faf2018b3dd237f467b6e0b",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5078,7 +5069,7 @@
     },
     {
       "path": "docs/licensing/merged-code-evidence.json",
-      "sha256": "e913dca14c41535aef31d267d622d934aa7ed5047974a022c40a1b3f791c8a0f",
+      "sha256": "7cbefd8c05d91a74d6053d154649552b9b83cc486ad5aa04781ac56bef7cb6f3",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5097,7 +5088,7 @@
     },
     {
       "path": "docs/licensing/modules.json",
-      "sha256": "78394130bfd5f48680fd8de2d991c6ec36a23324d2d9bf3aa77f99050c1c3506",
+      "sha256": "ad29d4f480aff926724bf39200fabc0268888b86270e5ae30af961e89f5ad93e",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5284,7 +5275,7 @@
     },
     {
       "path": "docs/licensing/rules.json",
-      "sha256": "00aaf7dcc6005189517031b81318fdbf5409b66e9942981253e13087b523e79c",
+      "sha256": "d765bca8a5f452dd3bbbed1b3ea13f3e8eca197361fae5bf5b96c6253225000d",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5514,7 +5505,7 @@
     },
     {
       "path": "docs/local-build.md",
-      "sha256": "5c647fe1c227f423bd76bcf87b2ac912aa54787acd36012e18c37006d16e4541",
+      "sha256": "ce27cfde073f188934c0bee44674b3fd90b8374b646a4fdefbb3a170ec659cfe",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5531,7 +5522,7 @@
       ],
       "observations": [
         {
-          "line": 59,
+          "line": 58,
           "kind": "mention",
           "text": "source/license checks before any publication. Building does not establish WSL,"
         }
@@ -5558,7 +5549,7 @@
     },
     {
       "path": "docs/omarchy-wsl-reference.md",
-      "sha256": "dcad75d0637d634eeef136dddcdf50591863ddc7f644ea59fac2ec4dc2ae9e3a",
+      "sha256": "4073f96f3ed6b96452106ae0a93cbd5b3ff41e900afa68014e9f5e1efb2b58bb",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5615,7 +5606,7 @@
     },
     {
       "path": "docs/provenance.json",
-      "sha256": "3232e1569bb67e2dd9556ea340d393b8f9140973c2b0bd758ee73defee7d4504",
+      "sha256": "409425c54aca7e34d36f7b9efda84837b4e01c558c4e9b5df6050e389fa9e424",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5636,7 +5627,7 @@
     },
     {
       "path": "docs/release-protocol.md",
-      "sha256": "b36c094bd9f5676781438c6f4134d6ab5649c223165ef6698347e05d0be8ce4c",
+      "sha256": "1614c091e21cce9e20a72900465d5a463187af019def2d1f6f79f2011c7d4df6",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -5645,6 +5636,7 @@
       "source_index": [],
       "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
       "local_change_commits": [
+        "da40e66e484c59c46223ce0402f09c2095091ce6",
         "c56068bd67802c1f2fd9b68a0883dd10cfbaae38",
         "6d8c789b5c2453e3bfed5890011bb38c29f24594",
         "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
@@ -5679,7 +5671,7 @@
     },
     {
       "path": "docs/runner-debugging.md",
-      "sha256": "ebf29910ed152a7f3106768bd2bae559bdc599bc6ae721618f1de564691bdcdf",
+      "sha256": "71eaea30ecca9eb18ca892adeb071413aaf3dd973d0da735a285a8d457e659eb",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -9074,7 +9066,7 @@
     },
     {
       "path": "guest/input.c",
-      "sha256": "bff1b7bd935cbd145d577855e00de9fce47e01107c925e4191cd5e9d5b735d11",
+      "sha256": "1d38d822f71b17415df3e9fbf19198b8faa43b3bf6a4c39fc3b5223b37516445",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -9342,7 +9334,7 @@
     },
     {
       "path": "scripts/audit-licenses.py",
-      "sha256": "aec8369c7d6a9d6c4515c597f5fe8eff324ef1d2c37ecaf584e0bcd7313a263f",
+      "sha256": "5eb6c2d02dc1e41f14ba0fe0298baa39740624c1d22caa08fdc623e99bf63fb9",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -9392,7 +9384,7 @@
     },
     {
       "path": "scripts/build-components.py",
-      "sha256": "67a997da40529671008f4ac8925d351f973f5f5f0b70192f410506fc09709c28",
+      "sha256": "ba3d44b742c585930a3443125c189e951205d31e5eb3515f878a72b42da818e0",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -9421,22 +9413,22 @@
           "text": "from product_licenses import check_boundaries"
         },
         {
-          "line": 137,
+          "line": 128,
           "kind": "mention",
           "text": "    inputs = {name: sha(ROOT/name) for name in license_paths(ROOT)}"
         },
         {
-          "line": 138,
+          "line": 129,
           "kind": "mention",
           "text": "    for directory in ('vendor', 'scripts', 'components', 'distros', 'guest', 'schema', '.github/workflows', 'docs/licensing/licenses'):"
         },
         {
-          "line": 142,
+          "line": 133,
           "kind": "mention",
           "text": "    for name in ('docs/provenance.json', 'docs/licensing/rules.json', 'docs/licensing/license-text-sources.json'):"
         },
         {
-          "line": 147,
+          "line": 138,
           "kind": "mention",
           "text": "                   license_review='pending', corresponding_source_complete=False,"
         }
@@ -9444,7 +9436,7 @@
     },
     {
       "path": "scripts/build-kwin.py",
-      "sha256": "b6f0aa5720cca52a23fccf9a37d6be225773de398d75038695bd76babfc6be3f",
+      "sha256": "cd381060a2c1ded6a646069b2428b2bb78d72df23ab944eeb14caafbbe03cb33",
       "group": "conditional-future-license",
       "rule": "new-component-producer-origin-review",
       "basis": "User explicitly attests original work or own WSX adaptations with no new third-party code; existing vendor excluded.",
@@ -9482,7 +9474,7 @@
     },
     {
       "path": "scripts/check-provenance.py",
-      "sha256": "9f84ef3dbfd21de47383afb352837477b85ea345fc89ac2c5b7bbed616a5665c",
+      "sha256": "8295823d800ed1cf2cf764232d2a04293d2ff98da45c1572c40dc4261888408a",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -9703,7 +9695,7 @@
     },
     {
       "path": "scripts/component_registry.py",
-      "sha256": "da804502614616cb8764654447fccca838433de20a3843f7848618094db44853",
+      "sha256": "b0b9ac79a4bc752de0fafa277f87367c4211606f12b8688575b145329f7bc532",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -10167,7 +10159,7 @@
     },
     {
       "path": "scripts/operations_provenance.py",
-      "sha256": "4c4f1b8c0337fb70b9a9917ed41073b436c77377f43670de61422c3525bc3fc0",
+      "sha256": "ff509681a3eb0b712dd1a4ff00e2cd7e21992a34c03a46db216fdede4bd9977e",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -10367,7 +10359,7 @@
     },
     {
       "path": "scripts/prepare-shared-sources.py",
-      "sha256": "686f11bcb1a6aedca4bf0c0dfcc68addc67ba420e728770a456328bdb2ed928d",
+      "sha256": "726022d69ffb51f7b516e54cd4557ebe450ff33893ffa036ad4711f24e706124",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -10735,6 +10727,7 @@
       "source_index": [],
       "first_local_commit": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
       "local_change_commits": [
+        "da40e66e484c59c46223ce0402f09c2095091ce6",
         "c56068bd67802c1f2fd9b68a0883dd10cfbaae38",
         "6d8c789b5c2453e3bfed5890011bb38c29f24594"
       ],
@@ -10858,7 +10851,7 @@
     },
     {
       "path": "scripts/reuse-components.py",
-      "sha256": "48ef2d19f301972c0df720420ad03eaeb578ee1014fa7c51f13b7cdaadd9d169",
+      "sha256": "2c67531a92fc57296890e6bc0e26dc23550193868e0069b011b4d1049690d9b7",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -10885,7 +10878,7 @@
       ],
       "observations": [
         {
-          "line": 15,
+          "line": 16,
           "kind": "mention",
           "text": "from license_inputs import paths as license_paths"
         }
@@ -10893,7 +10886,7 @@
     },
     {
       "path": "scripts/review-component-licenses.py",
-      "sha256": "fb426a8d86362c57d563de932cb75dd85ef40084028ce423623daf607f789c21",
+      "sha256": "9314e3f09511e6a275d648d44f5dd5b1bff6afaffd7402acbbf039b065e684f7",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -10921,7 +10914,7 @@
           "text": "        raise ValueError('Runtime license mapping differs from compilation receipt')"
         },
         {
-          "line": 106,
+          "line": 108,
           "kind": "mention",
           "text": "    print('COMPONENT_LICENSE_REVIEW '+json.dumps(report,separators=(',',':')))"
         }
@@ -11132,7 +11125,7 @@
     },
     {
       "path": "scripts/select-component-origin.py",
-      "sha256": "c01d419a3011d585d2b955c63e98a0babd5e1d1e8166b42d6f21081dbfdd9aa4",
+      "sha256": "05c79989d5addf3310fc13249ce209ff02eff7cd4895e0385ae72439f5a0c473",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -11353,7 +11346,7 @@
     },
     {
       "path": "scripts/source_support.py",
-      "sha256": "7323b146dae0222fcf0769431e31f8fa8bb06ec5f43a770b27a688fcdceb93be",
+      "sha256": "169fb8a8527bc799742fb170a636954d9a2978fcf0ea1ad66f26671d2648cb72",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -11373,7 +11366,7 @@
     },
     {
       "path": "scripts/stage-cachyos.py",
-      "sha256": "93299bda83593e965677299f5959e0915a22e1b77d6aaa3ab093138b9dee47d1",
+      "sha256": "a391cc14650e08baf6afe2f4edf8c1fc07252b5be6fad6fab366c96694b7e497",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -11404,7 +11397,7 @@
     },
     {
       "path": "scripts/stage-guest.py",
-      "sha256": "cf80b53475d916af0942bd9eb1e729c1f36ecd15551170591ba3ba9b4709a97e",
+      "sha256": "44fbbf87b33160a0cf7d0266c8c409e934280598791967ec72f790b4efe148b2",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -11528,7 +11521,7 @@
     },
     {
       "path": "scripts/workflow_component_inputs.py",
-      "sha256": "b8073332496a126a72a26c0cb5355c111821c1f5d0bfadb5b1ddf0c42d5fcf69",
+      "sha256": "27ccb491723d1af752bd3b8e0536e800225f0aacb32fdcf07d37ca37d9961d20",
       "group": "conditional-future-license",
       "rule": "gpl-tools",
       "basis": "Owner-approved GPL-2.0-or-later grant for original tools/recipes; higher-priority upstream exceptions prevail.",
@@ -12097,7 +12090,7 @@
     },
     {
       "path": "tests/test_component_registry.py",
-      "sha256": "aa3df548d3c5e0d4d05fd1aaa549ced8be120cc212768c5851c22ea5f9856070",
+      "sha256": "abb8b67d7860cb617ea9803525636fb151d6beeb64191a5b6c9eb790f0eb3d48",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -12118,7 +12111,7 @@
     },
     {
       "path": "tests/test_component_reuse.py",
-      "sha256": "455e75a0d08f2adb92a0c13e636029280c05fa9e6ea6011c3ef3f84dd8806683",
+      "sha256": "5fbcea064a4a413a8e5d87702f622a67f54e2ec01a074a7f6c3b86458261db9b",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -12139,37 +12132,37 @@
       ],
       "observations": [
         {
-          "line": 11,
+          "line": 12,
           "kind": "mention",
           "text": "from license_fixture import seed"
         },
         {
-          "line": 111,
+          "line": 118,
           "kind": "mention",
           "text": "        import product_licenses as product"
         },
         {
-          "line": 112,
+          "line": 119,
           "kind": "mention",
           "text": "        boundary=self.root/'components/license-boundaries.json'"
         },
         {
-          "line": 116,
+          "line": 123,
           "kind": "mention",
           "text": "        names=reuse.license_paths(self.root)+['components/sources.json','components/builder.json',"
         },
         {
-          "line": 128,
+          "line": 135,
           "kind": "mention",
           "text": "                                    source_paths=['image.py'],kind='script',license_treatment='Fixture'))"
         },
         {
-          "line": 130,
+          "line": 137,
           "kind": "mention",
           "text": "        with (self.root/'LICENSE-MAP.md').open('a') as stream:stream.write('Additional image notice\\n')"
         },
         {
-          "line": 135,
+          "line": 142,
           "kind": "mention",
           "text": "        with self.assertRaisesRegex(ValueError,'license classification'):"
         }
@@ -12286,7 +12279,7 @@
     },
     {
       "path": "tests/test_graphics_log_policy.py",
-      "sha256": "e4ebed2e8f8b73ff305bed4b96620af2a7bdaaac958f71e02ff8370cffb07ff7",
+      "sha256": "8be60fa969a968d7eea57726601830284f451ed307cc80bdb3d93a810326581e",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -12393,7 +12386,7 @@
     },
     {
       "path": "tests/test_license_modules.py",
-      "sha256": "9af25444674780ed2c0ec3287dba54306e0d7d5a71c89f2f32898be9742c1bf7",
+      "sha256": "1be21ef10d307844569835afc843742ad8eaf8af5dc5629f4eb6c13407f787bf",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -12443,7 +12436,7 @@
     },
     {
       "path": "tests/test_network_profiles.py",
-      "sha256": "5ca70a72566de014c93a3ecf016ba637440c11a1ae691b6ea819411b14e8579d",
+      "sha256": "eafa3feec920be2bf27f7b7a463913abdfe4d4a387ae159b28c1bff8e8658e07",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -12463,7 +12456,7 @@
     },
     {
       "path": "tests/test_operations_provenance.py",
-      "sha256": "3e495a8a75e2c6404f52e6f39a063bdcab5312d8c7d1c3efeaa690c9f19ac052",
+      "sha256": "c9bf9afdec262fa0d2b4e29db4e1142c9aa5481110581a5549328b4190a1eda9",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -12756,6 +12749,7 @@
       "source_index": [],
       "first_local_commit": "6d8c789b5c2453e3bfed5890011bb38c29f24594",
       "local_change_commits": [
+        "da40e66e484c59c46223ce0402f09c2095091ce6",
         "c56068bd67802c1f2fd9b68a0883dd10cfbaae38",
         "6d8c789b5c2453e3bfed5890011bb38c29f24594"
       ],
@@ -12942,7 +12936,7 @@
     },
     {
       "path": "tests/test_session_environment.py",
-      "sha256": "b871a44d01e32aedb1d9fb7815d6b7a28224783862ae52b3c5bfaf67c7c7483a",
+      "sha256": "7a63e6d9f66cf5193f65de7ded446063cda0fabd2aa12276ca3f5ba0b8fa56ff",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -13038,7 +13032,7 @@
     },
     {
       "path": "tests/test_source_components.py",
-      "sha256": "4ce5e030bd76b7ac69d126125204b79921b818d053c25566ae9d27bccf92c444",
+      "sha256": "3203711b92c0aeb3733318b7dd02575cfb6dfdae6f618cf7b959080bccf98862",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -13185,7 +13179,7 @@
     },
     {
       "path": "tests/test_workflow_component_inputs.py",
-      "sha256": "5b5189254aae9409a08cc7fad10ed7110cc88161faa3eb2f2f9d24e0162ae193",
+      "sha256": "2f0119d81ba689e724c52b9985a3b4597b5d0fda5b22134d6481d466d6dcb477",
       "group": "conditional-future-license",
       "rule": "independent-candidates",
       "basis": "Owner independently developed original WSX expression; initial grants approved 2026-11-03, GPL-2.0-or-later grant approved 2026-11-16.",
@@ -13233,7 +13227,7 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-inputs/rvgpu/include/librvgpu/rvgpu-protocol.h",
+          "source_path": "rvgpu/include/librvgpu/rvgpu-protocol.h",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "5b0fab9188be07334406ebae498fe8c992c4e81490583e0a9f030df421285608",
           "hash_matches": true
@@ -13306,20 +13300,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/device-host/production/start-cachyos-plasma.py",
+          "source_path": "device-host/production/start-cachyos-plasma.py",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "1a1f17086f16220884c09396709742433204cf855ed671f4d94b9a5e10bc4cf1",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 1,
@@ -13339,20 +13327,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/device-host/production/start-guest.py",
+          "source_path": "device-host/production/start-guest.py",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "ad37b095f13d4da78d610bf635adc54c8a2e062cd9ec0d309bfbe74f509bef85",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 1,
@@ -13372,20 +13354,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/device-host/production/test-plasma-session.py",
+          "source_path": "device-host/production/test-plasma-session.py",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "8d79f8551758138ba48a067360da658eedcf88405d0ec119aeb0a9ad2dfc8663",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13399,26 +13375,19 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/build-venus.py",
+          "source_path": "guest-compat/build-venus.py",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "c160276a02eec0bf2f77b406cd3002fda9f604ce6963656c1bb4d0ce0f7568d0",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "99ca34916a204fa189822da17d0c23dd6a646a50",
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
       "path": "vendor/wsx-guest-sources/guest-compat/build.py",
-      "sha256": "0b73cd6b0564af42b3c7415339f37f22b010a00a544d966499a5d9c0b73afa33",
+      "sha256": "9528a9f8a172bd547899a369cafa266dae0a9fe18c37fcf99bb83b71fa03b83e",
       "group": "conditional-future-license",
       "rule": "approved-imported-helpers",
       "basis": "Owner attested independent WSX authorship and explicitly approved GPL-2.0-or-later for these imported original helpers.",
@@ -13427,21 +13396,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/build.py",
+          "source_path": "guest-compat/build.py",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
-          "expected_sha256": "0b73cd6b0564af42b3c7415339f37f22b010a00a544d966499a5d9c0b73afa33",
+          "expected_sha256": "9528a9f8a172bd547899a369cafa266dae0a9fe18c37fcf99bb83b71fa03b83e",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "99ca34916a204fa189822da17d0c23dd6a646a50",
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13455,20 +13417,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/import-diagnostics.patch",
+          "source_path": "guest-compat/import-diagnostics.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "fa101b2ea361bf2a052b8aa28581368201ea25e57b320ff6e0f45a9b21266e9f",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13482,20 +13438,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/linear-depth-segregation.patch",
+          "source_path": "guest-compat/linear-depth-segregation.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "5c1de8c2548461972d6315aa7bf7754a09a51f69e8e1d8f300058e688610d7c4",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 4,
@@ -13515,20 +13465,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/linear-feedback-compat.patch",
+          "source_path": "guest-compat/linear-feedback-compat.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "7a1383ba2a1201f7c1f748f8fb85dac0bafa5b033101e885b59b37e3400c2fd1",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13542,20 +13486,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/linear-modifier-feedback.patch",
+          "source_path": "guest-compat/linear-modifier-feedback.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "8e5b4bd514bee2a2a7324b5f827ecdaac91e7ab3de63584b31172118078dc2f0",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13569,20 +13507,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/linear-shared-compat.patch",
+          "source_path": "guest-compat/linear-shared-compat.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "bdb3d3ce8e8b69e8b2c9bd1313d3a0a30e659abf1118e8248d7fbb0bc741b435",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13596,20 +13528,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/modifier-features2.patch",
+          "source_path": "guest-compat/modifier-features2.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "3859d82993ae381342f9d1b6294779047f58ff59b22d49fc34f5f62414359c76",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13623,20 +13549,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/negotiated-export.patch",
+          "source_path": "guest-compat/negotiated-export.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "78e2a299549a3209fdfcd2c6147c1fb6ed9eac8ffaa6e833211f0b2fda253477",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13650,20 +13570,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/opaque-consumer.patch",
+          "source_path": "guest-compat/opaque-consumer.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "62120bf284673a6381ac054ce62a0fb824c8c2db8b052a58c70be11945f11eb7",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 200,
@@ -13683,20 +13597,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/opaque-gbm-export.patch",
+          "source_path": "guest-compat/opaque-gbm-export.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "755cd00fbef9ae5818e329621f095b3101db3f831db49db7b5293fa683a67278",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 8,
@@ -13716,20 +13624,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/venus-direct-wsi.patch",
+          "source_path": "guest-compat/venus-direct-wsi.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "1bd67ee9276b8d2fb8e78a16ce7180af07c24f04c371a12a318b457bb08ebd86",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13743,20 +13645,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/venus-nv-linear-color.patch",
+          "source_path": "guest-compat/venus-nv-linear-color.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "a2723c0b15316fbbeca57f02cfa8231fbe25ad795307b889a1c4236d96e9a8f5",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13770,20 +13666,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/venus-opaque-bind-order.patch",
+          "source_path": "guest-compat/venus-opaque-bind-order.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "28770800c1634a5797576bb0b3fe0e237cfd84dc8cef7e018cd1199f18f61819",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13797,16 +13687,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/wsi-application-compat/venus-opaque-drm-identity.patch",
+          "source_path": "wsi-application-compat/venus-opaque-drm-identity.patch",
           "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
           "expected_sha256": "922e48fd9aabb21961fa763918983aa87e14eaa568b02e05ff577cfeaf9d6250",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "99ca34916a204fa189822da17d0c23dd6a646a50",
-      "local_change_commits": [
-        "99ca34916a204fa189822da17d0c23dd6a646a50"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13820,20 +13708,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/venus-opaque-export-order.patch",
+          "source_path": "guest-compat/venus-opaque-export-order.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "edefffc1e1dd6ddcb2956c6013072d446f7e06393551e2e411ec77c595ec31e5",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13847,20 +13729,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/venus-opaque-import.patch",
+          "source_path": "guest-compat/venus-opaque-import.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "73182a48e3a676071ea0af83b96d609eebb0ded37f7e72758636a3f1bff7120f",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13874,20 +13750,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/venus-opaque-query.patch",
+          "source_path": "guest-compat/venus-opaque-query.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "72be94923a88c5e59af48a5da96f1b3156b033f67aeb09c9cf484e4e20629463",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13901,16 +13771,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/wsi-application-compat/venus-opaque-surface-formats.patch",
+          "source_path": "wsi-application-compat/venus-opaque-surface-formats.patch",
           "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
           "expected_sha256": "a3ef6f597fc844109d55fe4b1c0ce8c50955ab9fe7e8d6d884585d03d31e5255",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "99ca34916a204fa189822da17d0c23dd6a646a50",
-      "local_change_commits": [
-        "99ca34916a204fa189822da17d0c23dd6a646a50"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13924,16 +13792,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/wsi-application-compat/venus-opaque-swapchain-images.patch",
+          "source_path": "wsi-application-compat/venus-opaque-swapchain-images.patch",
           "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
           "expected_sha256": "e1b21618b3da9436e66590340412802832353d8b17e532a85980aede154f8bca",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "99ca34916a204fa189822da17d0c23dd6a646a50",
-      "local_change_commits": [
-        "99ca34916a204fa189822da17d0c23dd6a646a50"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -13947,20 +13813,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/venus-opaque-wsi.patch",
+          "source_path": "guest-compat/venus-opaque-wsi.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "10dd9744e234f17087a78284b7e4dadbc92c0a5c7f1ba2a5aa6b4fe6b6c017a2",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 112,
@@ -13985,16 +13845,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/wsi-application-compat/venus-xwayland-copy-sync.patch",
+          "source_path": "wsi-application-compat/venus-xwayland-copy-sync.patch",
           "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
           "expected_sha256": "012f781476d3fc51171802b6b7ea5f67330bbdbd4f5c8c49ba6c64693b7a2902",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "99ca34916a204fa189822da17d0c23dd6a646a50",
-      "local_change_commits": [
-        "99ca34916a204fa189822da17d0c23dd6a646a50"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14008,16 +13866,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/wsi-application-compat/venus-xwayland-dri3-image-copy-experiment.patch",
+          "source_path": "wsi-application-compat/venus-xwayland-dri3-image-copy-experiment.patch",
           "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
           "expected_sha256": "d2ada95b53407d8d536d820677d9aa1319e6981065967401fa6baeb3c41f1bf8",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "99ca34916a204fa189822da17d0c23dd6a646a50",
-      "local_change_commits": [
-        "99ca34916a204fa189822da17d0c23dd6a646a50"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14031,16 +13887,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/wsi-application-compat/venus-xwayland-dri3-linear-experiment.patch",
+          "source_path": "wsi-application-compat/venus-xwayland-dri3-linear-experiment.patch",
           "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
           "expected_sha256": "1620ac88a34a83b1b421f773e1131bbf4db30f7831b3c1b8d0151834f745b3e4",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "99ca34916a204fa189822da17d0c23dd6a646a50",
-      "local_change_commits": [
-        "99ca34916a204fa189822da17d0c23dd6a646a50"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 39,
@@ -14060,20 +13914,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-compat/venus-zink-drm-identity.patch",
+          "source_path": "guest-compat/venus-zink-drm-identity.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "1945e914e08b652086ddf2ea0aa89d1e8bb24e13a3e8286848139fc6ec618a33",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14087,16 +13935,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/wsi-application-compat/zink-stage-device-local-buffer-writes.patch",
+          "source_path": "wsi-application-compat/zink-stage-device-local-buffer-writes.patch",
           "reference_commit": "3c400d0816176c3a76f9b53a471d4ef38cde38e4",
           "expected_sha256": "3cb9134d1c48796d3bd8e4d5778bba7d880a1491d4599bf7129726137481cfe7",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "99ca34916a204fa189822da17d0c23dd6a646a50",
-      "local_change_commits": [
-        "99ca34916a204fa189822da17d0c23dd6a646a50"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14110,20 +13956,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/aquamarine-opaque-consumer.patch",
+          "source_path": "guest-opaque/aquamarine-opaque-consumer.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "dfb78da51698da0b1c9549f1ff18dedb65cfc21e6b48ad8e4e749d13b3c712f4",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14137,20 +13977,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/build-compositor.py",
+          "source_path": "guest-opaque/build-compositor.py",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "9f8026c065e9643d1319b784e01bf6e8d8c78d21421ce53bf70a57f4466e0c6e",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14164,27 +13998,21 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/gbm-descriptor.c",
+          "source_path": "guest-opaque/gbm-descriptor.c",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "88eacf59680d17b47a7f3c6d1e7fe4b970a7ef381fd2f3a5c944af444bca82e3",
           "hash_matches": true
         },
         {
           "index": "components/cachyos-provenance.json",
-          "source_path": "archived-sources/guest-opaque/gbm-descriptor.c",
+          "source_path": "guest-opaque/gbm-descriptor.c",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "88eacf59680d17b47a7f3c6d1e7fe4b970a7ef381fd2f3a5c944af444bca82e3",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 1,
@@ -14204,27 +14032,21 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/gbm-descriptor.h",
+          "source_path": "guest-opaque/gbm-descriptor.h",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "f07e7fae5abf1d419290612f23105f2789fd027375469f001177744fdb83727a",
           "hash_matches": true
         },
         {
           "index": "components/cachyos-provenance.json",
-          "source_path": "archived-sources/guest-opaque/gbm-descriptor.h",
+          "source_path": "guest-opaque/gbm-descriptor.h",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "f07e7fae5abf1d419290612f23105f2789fd027375469f001177744fdb83727a",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 1,
@@ -14244,20 +14066,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/hyprland-opaque-consumer.patch",
+          "source_path": "guest-opaque/hyprland-opaque-consumer.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "9ff333763ac3fa8aefa0666a4cd4e37c7c46a336d68089562381e132c3809659",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14271,27 +14087,21 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/kwin-framebuffer.c",
+          "source_path": "guest-opaque/kwin-framebuffer.c",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "9b1d540036cc7709b0e3bd70767522772414b8880d4ef256a6400830b6c70ce1",
           "hash_matches": true
         },
         {
           "index": "components/cachyos-provenance.json",
-          "source_path": "archived-sources/guest-opaque/kwin-framebuffer.c",
+          "source_path": "guest-opaque/kwin-framebuffer.c",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "9b1d540036cc7709b0e3bd70767522772414b8880d4ef256a6400830b6c70ce1",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 1,
@@ -14311,27 +14121,21 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/kwin-framebuffer.h",
+          "source_path": "guest-opaque/kwin-framebuffer.h",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "0b0fd3d598e9bd2a2546b0a62bdafea20db1497ff6094f4407bef3e0049afb46",
           "hash_matches": true
         },
         {
           "index": "components/cachyos-provenance.json",
-          "source_path": "archived-sources/guest-opaque/kwin-framebuffer.h",
+          "source_path": "guest-opaque/kwin-framebuffer.h",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "0b0fd3d598e9bd2a2546b0a62bdafea20db1497ff6094f4407bef3e0049afb46",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 1,
@@ -14351,27 +14155,21 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/kwin-native-buffer.h",
+          "source_path": "guest-opaque/kwin-native-buffer.h",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "6325bd6ecd0a6ee5d25bf0a88fc0c0bcae90ea595ba9efc88f98e9e3ddc6c3bb",
           "hash_matches": true
         },
         {
           "index": "components/cachyos-provenance.json",
-          "source_path": "archived-sources/guest-opaque/kwin-native-buffer.h",
+          "source_path": "guest-opaque/kwin-native-buffer.h",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "6325bd6ecd0a6ee5d25bf0a88fc0c0bcae90ea595ba9efc88f98e9e3ddc6c3bb",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 1,
@@ -14391,27 +14189,21 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/kwin-opaque-consumer.patch",
+          "source_path": "guest-opaque/kwin-opaque-consumer.patch",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "85c132f9ff079ed4922e512428f5c80137516915d7f8a51c56c7e0a0d68e5f72",
           "hash_matches": true
         },
         {
           "index": "components/cachyos-provenance.json",
-          "source_path": "archived-sources/guest-opaque/kwin-opaque-consumer.patch",
+          "source_path": "guest-opaque/kwin-opaque-consumer.patch",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "85c132f9ff079ed4922e512428f5c80137516915d7f8a51c56c7e0a0d68e5f72",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 22,
@@ -14441,27 +14233,21 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/kwin-wayland.inc",
+          "source_path": "guest-opaque/kwin-wayland.inc",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "bdc65ff61f61d24236e3efbbb754da788819aca8df69fd8e6b8ab01248b73d58",
           "hash_matches": true
         },
         {
           "index": "components/cachyos-provenance.json",
-          "source_path": "archived-sources/guest-opaque/kwin-wayland.inc",
+          "source_path": "guest-opaque/kwin-wayland.inc",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "bdc65ff61f61d24236e3efbbb754da788819aca8df69fd8e6b8ab01248b73d58",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 1,
@@ -14481,27 +14267,21 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/prepare-kwin.py",
+          "source_path": "guest-opaque/prepare-kwin.py",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "8d6de4393d10bab48c2c44ca31638daf8edbc2e8a3364b573e11b0ffcaa31741",
           "hash_matches": true
         },
         {
           "index": "components/cachyos-provenance.json",
-          "source_path": "archived-sources/guest-opaque/prepare-kwin.py",
+          "source_path": "guest-opaque/prepare-kwin.py",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "8d6de4393d10bab48c2c44ca31638daf8edbc2e8a3364b573e11b0ffcaa31741",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14515,27 +14295,21 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/wayland/wsx-opaque-buffer-v1.xml",
+          "source_path": "guest-opaque/wayland/wsx-opaque-buffer-v1.xml",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "76bd33d58bc275846e78092f1d6e7eaab37b1423d9d3e8535508520ff13ce4c8",
           "hash_matches": true
         },
         {
           "index": "components/cachyos-provenance.json",
-          "source_path": "archived-sources/guest-opaque/wayland/wsx-opaque-buffer-v1.xml",
+          "source_path": "guest-opaque/wayland/wsx-opaque-buffer-v1.xml",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "76bd33d58bc275846e78092f1d6e7eaab37b1423d9d3e8535508520ff13ce4c8",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 3,
@@ -14555,27 +14329,21 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/guest-opaque/wsx-opaque-uapi.h",
+          "source_path": "guest-opaque/wsx-opaque-uapi.h",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "43745e497258880e938a303bf21b7b47431a62ab186449504088d926ccf29e6d",
           "hash_matches": true
         },
         {
           "index": "components/cachyos-provenance.json",
-          "source_path": "archived-sources/guest-opaque/wsx-opaque-uapi.h",
+          "source_path": "guest-opaque/wsx-opaque-uapi.h",
           "reference_commit": "3199b15dd898d6033e255e6894411b4bb4cab816",
           "expected_sha256": "43745e497258880e938a303bf21b7b47431a62ab186449504088d926ccf29e6d",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 1,
@@ -14595,20 +14363,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/input/guest.c",
+          "source_path": "input/guest.c",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "1f26dd4b3593624bd5653ad55f04602350206cf5ae83e2cb1961d665e346bfeb",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": [
         {
           "line": 1,
@@ -14628,25 +14390,19 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/network/Panel.qml.patch",
+          "source_path": "network/Panel.qml.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "bfca7b26bec371ccb5b18c15ad0067a4538abe544307510c52305d4a0cf5867c",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
       "path": "vendor/wsx-guest-sources/network/README.md",
-      "sha256": "6de90c90ac35bbc7f9b05ea793707e6e4be534c92af2d8fcb1befc7bb218cbc3",
+      "sha256": "6b13906710b2753e9eb877fbd7f8c9570d3cd02dd07df86b80093b22d839b68c",
       "group": "conditional-future-license",
       "rule": "approved-imported-helpers",
       "basis": "Owner attested independent WSX authorship and explicitly approved GPL-2.0-or-later for these imported original helpers.",
@@ -14655,20 +14411,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/network/README.md",
+          "source_path": "network/README.md",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
-          "expected_sha256": "6de90c90ac35bbc7f9b05ea793707e6e4be534c92af2d8fcb1befc7bb218cbc3",
+          "expected_sha256": "6b13906710b2753e9eb877fbd7f8c9570d3cd02dd07df86b80093b22d839b68c",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14682,21 +14432,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/network/install.py",
+          "source_path": "network/install.py",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "67c68172a5f82235b0c1f418d7b800e9573250588614d5cb597e6c8819b60bba",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14710,20 +14453,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/network/manifest.json",
+          "source_path": "network/manifest.json",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "426ae06bc09f96853ceef2b84b005d465864a442b20d4deca3b6b89247d837e4",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14737,20 +14474,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/network/omarchy-4.0.6/Panel.qml.patch",
+          "source_path": "network/omarchy-4.0.6/Panel.qml.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "0cb79d53615f52103900af4b70d71ee84b9c41dbc56e8c3b0394c6d28fbf7a87",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14764,20 +14495,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/network/omarchy-4.0.6/manifest.json",
+          "source_path": "network/omarchy-4.0.6/manifest.json",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "1d14fa0b6a6a542d0aebbad6875099c26b0aa1e7aad51bd074658671d4414305",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14791,20 +14516,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/network/omarchy-4.0.6/wifi.sh.patch",
+          "source_path": "network/omarchy-4.0.6/wifi.sh.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "8e76cd1ddcc036256e065244bddd6b7a261dc6ca9780af1e8d3c84215f5d7e81",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14816,13 +14535,8 @@
       "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
       "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
       "source_index": [],
-      "first_local_commit": "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e239b006d5c97ed726a1f9f6f0fd85949aafac49"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14834,13 +14548,8 @@
       "limitation": "No blanket noncommercial grant over upstream context or covered combinations; exact upstream terms need original source.",
       "next_step": "Reviewer: collect exact upstream license texts and distinguish additions from context.",
       "source_index": [],
-      "first_local_commit": "e239b006d5c97ed726a1f9f6f0fd85949aafac49",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e239b006d5c97ed726a1f9f6f0fd85949aafac49"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14854,20 +14563,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/network/wifi.sh.patch",
+          "source_path": "network/wifi.sh.patch",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "8e76cd1ddcc036256e065244bddd6b7a261dc6ca9780af1e8d3c84215f5d7e81",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14881,20 +14584,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/session/README.md",
+          "source_path": "session/README.md",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "c7f3c975f3d48d5309e72253eb053fb882649a3b99b41664ceeb1beb6deddd9a",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14908,22 +14605,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/session/enter.py",
+          "source_path": "session/enter.py",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "2ac6cd242863a2a31aca914f40ad985d5c7d964b03e81aa8e48778fb5fdfa465",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "62dc475154e06e01a4c354587dd3349ba19a14f5",
-        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14937,20 +14626,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/session/install.py",
+          "source_path": "session/install.py",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "08dbf647abe00a67dee1b9c2149e37ef1f85be1a2d6fdd17e84af05d7bb0ecb0",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     },
     {
@@ -14964,22 +14647,14 @@
       "source_index": [
         {
           "index": "docs/provenance.json",
-          "source_path": "archived-sources/session/wsx-launch-app",
+          "source_path": "session/wsx-launch-app",
           "reference_commit": "b39c1ca3345688ccd71b422aeb31162ab4322bb6",
           "expected_sha256": "16a0bdc8408dfc6789151fb34b24dadc2af5064f83bbc59f8c0b9ac1f2089fc8",
           "hash_matches": true
         }
       ],
-      "first_local_commit": "0daf80783bc442947789f5fb7a8051f962bdd444",
-      "local_change_commits": [
-        "a8f43f19148f556fa6c7fa01d31b7fd678d5d8c5",
-        "f70c4d43f6ed91493d05d39457227d0d5cdc7132",
-        "ff904a64c0ef22850129c799418ab90bdb43ead9",
-        "62dc475154e06e01a4c354587dd3349ba19a14f5",
-        "d80ec4939faa8a2f5b78b5c1eda5336436ec1586",
-        "e70d49028cc657376d6075861437556d62ec5254",
-        "0daf80783bc442947789f5fb7a8051f962bdd444"
-      ],
+      "first_local_commit": null,
+      "local_change_commits": [],
       "observations": []
     }
   ]

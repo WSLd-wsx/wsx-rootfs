@@ -16,7 +16,7 @@ adapter before execution. It accepts no arbitrary executable or argument list.
 This is a routing primitive, not evidence that desktop or GPU startup succeeded.
 
 The former Python adapter export tool and legacy session implementation are retained
-as historical evidence in wsx-guest-sources. Current external adapters are built by wsx-host.
+as historical evidence in the archived reference. Current external adapters are supplied as compiled components.
 
 Image construction now stages this bootstrap and the adapter store. Offline image
 validation checks its capability response; it does not execute a session. The

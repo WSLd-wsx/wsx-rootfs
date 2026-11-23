@@ -3,6 +3,7 @@
 import argparse
 import importlib.util
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -14,6 +15,7 @@ import zipfile
 from component_materials import sha, verify
 from license_inputs import paths as license_paths
 import component_registry as registry
+from operations_provenance import repositories
 
 ROOT = Path(__file__).resolve().parents[1]
 LEGACY_COLLECTOR_SHA256 = '39659240e00ab3e45c1ba29c57e98712b7256326e2f7a767510207349b793edc'
@@ -68,14 +70,14 @@ def validate_origin(pin, profile, repo, run, artifact):
     run_repo = pin.get('run_repository', repo)
     if run_repo == repo:
         expected_head = pin['source_commit']
-    elif run_repo in ('operations', 'operations') and pin.get('transport') == 'ghcr':
+    elif run_repo in repositories() and pin.get('transport') == 'ghcr':
         expected_head = pin.get('workflow_commit', '')
         if not re.fullmatch('[0-9a-f]{40}', expected_head):
             raise ValueError('Missing immutable operations workflow commit')
         if run.get('head_branch') != 'main':
             raise ValueError('Operations component build must use the main branch')
         registry.check_reference(pin.get('image', ''))
-        if not pin['image'].startswith(registry.OPS_IMAGE + '@sha256:'):
+        if not pin['image'].startswith(registry.operations_image() + '@sha256:'):
             raise ValueError('Operations build must use the operations component package')
     else:
         raise ValueError('Unapproved component workflow repository')
@@ -83,9 +85,13 @@ def validate_origin(pin, profile, repo, run, artifact):
         if value.get('full_name') == run_repo:
             return True
         # GitHub returns the current name for historical runs after a rename.
-        return (run_repo == 'operations'
-                and value.get('full_name') == 'operations'
-                and value.get('id') == 0)
+        current = os.environ.get('WSX_OPERATIONS_REPOSITORY')
+        legacy = os.environ.get('WSX_LEGACY_OPERATIONS_REPOSITORY')
+        repository_id = os.environ.get('WSX_OPERATIONS_REPOSITORY_ID', '')
+        return (run_repo == legacy and current in repositories()
+                and value.get('full_name') == current
+                and repository_id.isdecimal() and int(repository_id) > 0
+                and type(value.get('id')) is int and value['id'] == int(repository_id))
     if (run.get('conclusion') != 'success' or run.get('status') != 'completed'
             or run.get('event') != 'workflow_dispatch'
             or run.get('path') != '.github/workflows/components.yml'
