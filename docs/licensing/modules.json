@@ -79,6 +79,8 @@
     "scripts/source-support.py": "gpl-build-materials",
     "distros/cachyos-plasma/build-components.sh": "gpl-build-materials",
     "distros/cachyos-plasma/build-dependencies.txt": "gpl-build-materials",
+    "distros/cachyos-plasma/kwin-source.json": "gpl-build-materials",
+    "distros/cachyos-plasma/arch-snapshot": "gpl-build-materials",
     "distros/cachyos-plasma/bootstrap-rootfs.sh": "gpl-build-materials",
     "distros/omarchy/build-components.sh": "gpl-build-materials",
     "distros/omarchy/build-dependencies.txt": "gpl-build-materials",

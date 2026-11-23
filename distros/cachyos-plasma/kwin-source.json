@@ -1,0 +1,10 @@
+{
+  "version": "6.8.3",
+  "url": "https://download.kde.org/stable/plasma/6.8.3/kwin-6.8.3.tar.xz",
+  "sha256": "fd5cb783f220ea4526a9afee2f72b582c3e87ef7f91b19bc5c7a6662ffe7fbdc",
+  "packages": {
+    "kwin": "6.8.3-1",
+    "plasma-workspace": "6.8.3-1",
+    "qt6-base": "6.12.0-5"
+  }
+}

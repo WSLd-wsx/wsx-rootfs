@@ -156,7 +156,9 @@
         "scripts/package-source-components.py",
         "scripts/consume-source-components.py",
         "distros/cachyos-plasma/build-components.sh",
-        "distros/cachyos-plasma/build-dependencies.txt"
+        "distros/cachyos-plasma/build-dependencies.txt",
+        "distros/cachyos-plasma/kwin-source.json",
+        "distros/cachyos-plasma/arch-snapshot"
       ],
       "group": "conditional-future-license",
       "basis": "User explicitly attests original work or own WSX adaptations with no new third-party code; existing vendor excluded.",

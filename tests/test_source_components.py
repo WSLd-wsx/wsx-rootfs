@@ -11,7 +11,10 @@ import tempfile
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
+from image_materials import profile_build_closure
 from license_fixture import seed
+from product_licenses import check_boundaries
+from source_support import ARCH_SNAPSHOT, KWIN_SOURCE_LOCK, PROFILE_COMPONENTS, component_pins
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -82,6 +85,7 @@ class SourceComponentsTests(unittest.TestCase):
 
     def test_cachyos_assembly_uses_only_paired_kwin(self):
         self.fixture()
+        self.pins = assembler.component_pins(ROOT, 'cachyos-plasma')
         prefix=self.build/'kwin/prefix'
         for name in ('bin/kwin_wayland','lib/libkwin.so.6'):
             path=prefix/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text('kwin fixture')
@@ -89,6 +93,8 @@ class SourceComponentsTests(unittest.TestCase):
             version=self.pins['kwin']['version'],source_sha256=self.pins['kwin']['sha256'])))
         path=self.build/'source-build.json';receipt=json.loads(path.read_text())
         receipt['profile']='cachyos-plasma'
+        receipt['archives'] = {name: dict(url=pin['url'], sha256=pin['sha256']) for name, pin in self.pins.items()}
+        receipt['recipe_files'][assembler.KWIN_SOURCE_LOCK] = assembler.sha(ROOT/assembler.KWIN_SOURCE_LOCK)
         receipt['output_files']['kwin']={str(p.relative_to(prefix)):assembler.sha(p) for p in prefix.rglob('*') if p.is_file()}
         path.write_text(json.dumps(receipt))
         assembler.assemble(self.build,self.work)
@@ -139,9 +145,12 @@ class SourceComponentsTests(unittest.TestCase):
     def test_compiler_failure_retains_incomplete_receipt(self):
         repository=self.work/'repository';(repository/'components').mkdir(parents=True)
         archives=self.work/'archives';archives.mkdir()
-        (archives/'fixture.archive').write_bytes(b'source')
-        (repository/'components/sources.json').write_text(json.dumps(dict(schema_version=1,
-            fixture=dict(url='https://example.invalid/source',sha256=assembler.sha(archives/'fixture.archive')))))
+        pins = {}
+        for name in PROFILE_COMPONENTS['omarchy']:
+            archive = archives/(name+'.archive')
+            archive.write_bytes(b'source')
+            pins[name] = dict(url='https://example.invalid/'+name, sha256=assembler.sha(archive))
+        (repository/'components/sources.json').write_text(json.dumps(dict(schema_version=1, **pins)))
         seed(repository)
         out=self.work/'failed-build'
         with patch.object(builder,'ROOT',repository), patch.object(builder,'build',side_effect=RuntimeError('compiler fixture failure')), patch.object(sys,'argv',['build','--archives',str(archives),'--output',str(out)]):
@@ -183,6 +192,20 @@ class SourceComponentsTests(unittest.TestCase):
             (self.work/'components/sources.json').write_text('{}')
             with self.assertRaisesRegex(ValueError, 'Missing pinned KWin'):
                 support.require_source_recipe('WSX-cachyos-plasma')
+
+    def test_cachyos_pins_are_outside_omarchy_build_inputs(self):
+        repository = self.work/'repository'
+        (repository/'components').mkdir(parents=True)
+        (repository/'components/sources.json').write_bytes((ROOT/'components/sources.json').read_bytes())
+        self.assertEqual(set(component_pins(repository, 'omarchy')), PROFILE_COMPONENTS['omarchy'])
+        self.assertNotIn('kwin', component_pins(repository, 'omarchy'))
+        self.assertEqual(set(component_pins(ROOT, 'cachyos-plasma')), PROFILE_COMPONENTS['cachyos-plasma'])
+        closure = check_boundaries(ROOT)['paired-component-build']
+        cachyos = profile_build_closure(closure, 'cachyos-plasma')['files']
+        omarchy = profile_build_closure(closure, 'omarchy')['files']
+        for path in (KWIN_SOURCE_LOCK, ARCH_SNAPSHOT, 'scripts/build-kwin.py'):
+            self.assertIn(path, cachyos)
+            self.assertNotIn(path, omarchy)
 
     def test_cachyos_bootstrap_guard_runs_under_errexit(self):
         text=(ROOT/'distros/cachyos-plasma/bootstrap-rootfs.sh').read_text()

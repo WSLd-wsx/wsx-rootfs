@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 from archive import check_hygiene
 from image_paths import resolve
+from source_support import kwin_lock
 from desktop_contract import declaration
 from check_guest_bootstrap import check as check_guest_bootstrap
 
@@ -33,8 +34,9 @@ for name in ('cachyos-keyring', 'cachyos-mirrorlist', 'cachyos-settings', 'cachy
              'plasma-desktop', 'plasma-workspace', 'shelly', 'dolphin', 'konsole', 'polkit', 'sudo'):
     if name not in packages:
         raise ValueError('Missing required CachyOS package: '+name)
-for name, version in (('kwin', '6.8.1-'), ('plasma-workspace', '6.8.1-'), ('qt6-base', '6.12.0-')):
-    if not packages.get(name, '').startswith(version):
+pin = kwin_lock(Path(__file__).resolve().parents[1])
+for name, version in pin['packages'].items():
+    if packages.get(name) != version:
         raise ValueError('Private KWin dependency version mismatch: '+name+' '+packages.get(name, '<missing>'))
 required = ['etc/wsl.conf', 'etc/sudoers.d/10-wsx-wheel',
             'usr/bin/startplasma-wayland', 'usr/bin/Xwayland', 'usr/bin/runuser',
@@ -49,8 +51,9 @@ for path in required:
 lock = json.loads((root/'usr/lib/wsx/plasma-compat.json').read_text())
 if lock.get('cpu_architecture_level') != 'x86-64-v3' or lock.get('packages') != {name: packages[name] for name in ('kwin', 'plasma-workspace', 'qt6-base')}:
     raise ValueError('Plasma runtime compatibility lock differs from installed packages')
-helper_link = root/'opt/wsx/kwin-opaque-6.8.1/lib/libexec/plasma-setup-xwayland'
-helper = resolve(root, 'opt/wsx/kwin-opaque-6.8.1/lib/libexec/plasma-setup-xwayland')
+helper_path = f"opt/wsx/kwin-opaque-{pin['version']}/lib/libexec/plasma-setup-xwayland"
+helper_link = root/helper_path
+helper = resolve(root, helper_path)
 if (not helper_link.is_symlink() or str(helper_link.readlink()) != '/usr/lib/plasma-setup-xwayland'
         or helper != root/'usr/lib/plasma-setup-xwayland' or not helper.is_file()
         or not helper.stat().st_mode & 0o111):

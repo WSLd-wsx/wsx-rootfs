@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import shutil
 import subprocess
+from source_support import component_pins, KWIN_SOURCE_LOCK
 
 ROOT = Path(__file__).resolve().parents[1]
 COMPONENTS = ('mesa', 'venus', 'aquamarine', 'hyprland')
@@ -59,20 +60,22 @@ def assemble(build, work):
     receipt = json.loads((build/'source-build.json').read_text())
     if receipt.get('origin') != 'source-build' or receipt.get('compiled') is not True:
         raise ValueError('Fresh completed source build receipt required')
-    pins = json.loads((ROOT/'components/sources.json').read_text())
-    if receipt['archives'] != {n:dict(url=p['url'], sha256=p['sha256']) for n,p in pins.items() if n != 'schema_version'}:
+    profile = receipt.get('profile', 'omarchy')
+    if profile not in ('omarchy', 'cachyos-plasma'):
+        raise ValueError('Unknown component profile')
+    pins = component_pins(ROOT, profile)
+    if receipt['archives'] != {n:dict(url=p['url'], sha256=p['sha256']) for n,p in pins.items()}:
         raise ValueError('Source receipt differs from current source pins')
     required_inputs = {'components/sources.json', 'components/builder.json',
                        'scripts/build-components.py', 'scripts/assemble-source-components.py'}
+    if profile == 'cachyos-plasma':
+        required_inputs.add(KWIN_SOURCE_LOCK)
     if not required_inputs.issubset(receipt.get('recipe_files', {})):
         raise ValueError('Incomplete source recipe receipt')
     for name, expected in receipt['recipe_files'].items():
         path = ROOT/name
         if not path.resolve().is_relative_to(ROOT) or sha(path) != expected:
             raise ValueError('Recipe input changed after compilation: ' + name)
-    profile = receipt.get('profile', 'omarchy')
-    if profile not in ('omarchy', 'cachyos-plasma'):
-        raise ValueError('Unknown component profile')
     components = ('mesa', 'venus', 'kwin') if profile == 'cachyos-plasma' else COMPONENTS
     reports = {}
     for name in components:

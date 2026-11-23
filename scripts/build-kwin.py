@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tarfile
 from build_resources import resources
+from source_support import kwin_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -20,7 +21,7 @@ def build(archive, output, prepare_only=False, jobs=None):
     jobs = resources()['jobs'] if jobs is None else jobs
     if jobs < 1:
         raise ValueError('Positive compiler concurrency required')
-    pin = json.loads((ROOT/'components/sources.json').read_text())['kwin']
+    pin = kwin_lock(ROOT)
     provenance = json.loads((ROOT/'components/cachyos-provenance.json').read_text())
     for item in provenance['files']:
         if sha(ROOT/item['vendored_path']) != item['sha256']:
@@ -47,17 +48,17 @@ def build(archive, output, prepare_only=False, jobs=None):
             report['commands'].append(dict(name=name, argv=list(map(str, command)), exit=result.returncode))
             if result.returncode:
                 raise RuntimeError('KWin '+name+' failed; inspect '+str(output/(name+'.log')))
-        run('prepare', [sys.executable, ROOT/'vendor/wsx-guest-sources/guest-opaque/prepare-kwin.py', candidate, output/'prepared'])
+        run('prepare', [sys.executable, ROOT/'vendor/wsx-guest-sources/guest-opaque/prepare-kwin.py', candidate, output/'prepared', '--upstream-version', pin['version']])
         report['prepared'] = True
         if prepare_only:
             return
         packages = subprocess.check_output(['pacman','-Q'], text=True)
         (output/'packages.txt').write_text(packages)
         versions = dict(line.split(' ',1) for line in packages.splitlines())
-        for name, version in {'kwin':'6.8.1-', 'plasma-workspace':'6.8.1-', 'qt6-base':'6.12.0-'}.items():
-            if not versions.get(name,'').startswith(version):
+        for name, version in pin['packages'].items():
+            if versions.get(name) != version:
                 raise ValueError('Compiler/runtime ABI mismatch: '+name)
-        prefix = '/opt/wsx/kwin-opaque-6.8.1'
+        prefix = '/opt/wsx/kwin-opaque-' + pin['version']
         run('configure', ['cmake','-S',output/'prepared/source','-B',output/'build','-G','Ninja',
             '-DCMAKE_INSTALL_PREFIX='+prefix,'-DCMAKE_BUILD_TYPE=Release','-DCMAKE_SKIP_RPATH=ON',
             '-DBUILD_TESTING=OFF','-DKWIN_BUILD_KCMS=OFF','-DKWIN_BUILD_SCREENLOCKER=OFF'])

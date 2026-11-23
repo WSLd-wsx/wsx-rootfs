@@ -8,6 +8,7 @@ import time
 
 from component_materials import sha, relative, notice_candidate
 from product_licenses import write_component_map
+from source_support import component_pins
 from shared_sources import (ARCHIVES, INDEX, PROJECTION_VERSION, canonical, selection,
     upstream_mode, deterministic_tar, add_stream, add_bytes, validate_index, verify_bundle)
 
@@ -20,8 +21,8 @@ def prepare(work):
     if receipt.get('origin') != 'source-build' or receipt.get('compiled') is not True:
         raise ValueError('Completed source receipt required for compact collection')
     profile = receipt['profile']
-    pins = json.loads((ROOT/'components/sources.json').read_text())
-    if set(receipt['archives']) != set(pins)-{'schema_version'}:
+    pins = component_pins(ROOT, profile)
+    if set(receipt['archives']) != set(pins):
         raise ValueError('Unreviewed upstream archive set')
     for component, pin in receipt['archives'].items():
         upstream_mode(component,profile)

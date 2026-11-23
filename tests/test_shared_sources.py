@@ -27,7 +27,11 @@ class SharedSources(unittest.TestCase):
         (self.material/'notices/LICENSE').write_text('Retained original notice')
         self.pins={c:dict(version='1',commit='abc',url='https://example.test/'+c,
                          sha256=hashlib.sha256(c.encode()).hexdigest()) for c in shared.REFERENCE_ONLY|shared.RETAIN_ARCHIVE}
-        (self.repo/'components/sources.json').write_text(json.dumps(dict(schema_version=1,**self.pins)))
+        kwin_lock = self.repo/'distros/cachyos-plasma/kwin-source.json'
+        kwin_lock.parent.mkdir(parents=True)
+        kwin_lock.write_text(json.dumps(self.pins['kwin']))
+        (self.repo/'components/sources.json').write_text(json.dumps(dict(schema_version=1,
+            **{name: pin for name, pin in self.pins.items() if name != 'kwin'})))
         self.patch=patch.object(shared,'ROOT',self.repo);self.patch.start();self.addCleanup(self.patch.stop)
         self.fixture('omarchy')
 

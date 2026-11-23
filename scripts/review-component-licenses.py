@@ -9,6 +9,7 @@ import component_registry as registry
 from component_materials import sha, verify
 from shared_sources import ROOT, REPOSITORY, INDEX, PROFILES, RETAIN_ARCHIVE, verify_bundle
 import importlib.util
+from source_support import component_pins
 
 
 def load(name):
@@ -36,7 +37,7 @@ def inspect(work, profile):
     for name in ('build-packages.txt','build-repositories.conf'):
         if 'environment/'+name not in entries:
             raise ValueError('Missing build environment: '+name)
-    pins=json.loads((ROOT/'components/sources.json').read_text())
+    pins=component_pins(ROOT, profile)
     components=[]
     for component in sorted(PROFILES[profile]):
         origin=index['upstream'][component]

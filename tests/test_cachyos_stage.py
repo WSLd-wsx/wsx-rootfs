@@ -43,7 +43,7 @@ class PlasmaStageTests(unittest.TestCase):
             for name in ('mesa', 'venus', 'kwin-opaque'):
                 (components/name).mkdir(parents=True)
                 (components/name/'manifest.json').write_text(json.dumps({'version':'fixture','files':{'fixture':'a'*64}}))
-            (work/'rootfs-packages.txt').write_text('kwin 6.8.1-2\nplasma-workspace 6.8.1-1\nqt6-base 6.12.0-3\n')
+            (work/'rootfs-packages.txt').write_text('kwin 6.8.3-1\nplasma-workspace 6.8.3-1\nqt6-base 6.12.0-5\n')
             with patch.object(sys, 'argv', ['stage', str(root), str(components)]), patch.object(stage.subprocess, 'run'):
                 stage.main()
             for name in ('bootstrap-v2.py', 'adapter-store.py'):
@@ -57,5 +57,5 @@ class PlasmaStageTests(unittest.TestCase):
             self.assertEqual(set(profile['component_manifests']), {'mesa','venus','kwin-opaque'})
             lock = json.loads((root/'usr/lib/wsx/plasma-compat.json').read_text())
             self.assertEqual(lock['cpu_architecture_level'], 'x86-64-v3')
-            self.assertEqual(lock['packages']['kwin'], '6.8.1-2')
-            self.assertEqual(str((root/'opt/wsx/kwin-opaque-6.8.1/lib/libexec/plasma-setup-xwayland').readlink()), '/usr/lib/plasma-setup-xwayland')
+            self.assertEqual(lock['packages']['kwin'], '6.8.3-1')
+            self.assertEqual(str((root/'opt/wsx/kwin-opaque-6.8.3/lib/libexec/plasma-setup-xwayland').readlink()), '/usr/lib/plasma-setup-xwayland')

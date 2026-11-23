@@ -12,6 +12,7 @@ import time
 from build_resources import resources
 from license_inputs import paths as license_paths
 from product_licenses import check_boundaries
+from source_support import component_pins
 
 ROOT = Path(__file__).resolve().parents[1]
 COMMANDS = []
@@ -113,12 +114,10 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--profile', choices=('omarchy', 'cachyos-plasma'), default='omarchy')
     args = parser.parse_args()
-    pins = json.loads((ROOT/'components/sources.json').read_text())
+    pins = component_pins(ROOT, args.profile)
     # Validate every archive even when invoked without the download helper.
     archives = {}
     for name, pin in pins.items():
-        if name == 'schema_version':
-            continue
         archive = args.archives/(name+'.archive')
         if sha(archive) != pin['sha256']:
             raise ValueError('Source archive hash mismatch: ' + name)

@@ -5,7 +5,8 @@
   "scope": "Explicit commands/data plus discovered local Python imports; external package closure pending",
   "dependencies": {
     "scripts/build-kwin.py": [
-      "components/sources.json",
+      "distros/cachyos-plasma/kwin-source.json",
+      "distros/cachyos-plasma/arch-snapshot",
       "components/cachyos-provenance.json",
       "vendor/wsx-guest-sources/guest-opaque/prepare-kwin.py"
     ],
@@ -23,7 +24,6 @@
     "scripts/build-components.py": [
       "components/sources.json",
       "scripts/graphics_log_policy.py",
-      "scripts/build-kwin.py",
       "vendor/wsx-guest-sources/guest-compat/build.py",
       "vendor/wsx-guest-sources/guest-compat/build-venus.py",
       "vendor/wsx-guest-sources/guest-opaque/build-compositor.py"
@@ -40,6 +40,7 @@
       "scripts/stage-protocol.py"
     ],
     "scripts/stage-cachyos.py": [
+      "distros/cachyos-plasma/kwin-source.json",
       "scripts/graphics_debug.py",
       "vendor/wsx-guest-sources/device-host/production/start-cachyos-plasma.py",
       "guest/input.c",
@@ -71,6 +72,8 @@
       "distros/omarchy/rootfs-packages.txt"
     ],
     "distros/cachyos-plasma/build-components.sh": [
+      "distros/cachyos-plasma/arch-snapshot",
+      "scripts/build-kwin.py",
       "scripts/check-provenance.py",
       "scripts/fetch-components.py",
       "scripts/build-components.py",
@@ -79,6 +82,7 @@
       "distros/cachyos-plasma/build-dependencies.txt"
     ],
     "distros/cachyos-plasma/bootstrap-rootfs.sh": [
+      "distros/cachyos-plasma/arch-snapshot",
       "distros/cachyos-plasma/packages.txt",
       "scripts/source-support.py",
       "distros/cachyos-plasma/upstream/source.json",
@@ -444,7 +448,7 @@
         "cachyos-plasma"
       ],
       "installed_paths": [
-        "opt/wsx/kwin-opaque-6.8.1/lib/libexec/plasma-setup-xwayland"
+        "opt/wsx/kwin-opaque-*/lib/libexec/plasma-setup-xwayland"
       ],
       "source_paths": [
         "scripts/stage-cachyos.py"

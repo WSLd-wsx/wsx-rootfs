@@ -47,10 +47,11 @@ Rolling repository contents and the historical private component toolchain are
 not frozen; exact installed package versions are recorded for traceability.
 
 The actual private KWin executable advertises x86-64-v3; images containing it
-must advertise that requirement and reject unsupported Guest CPUs. The tested
-KWin was paired with Plasma 6.8.1 and Qt 6.12.0. The initial candidate builds
-against the signed Arch 2026-10-28 repository snapshot, while retaining the
-CachyOS repository; normal rolling Arch mirrors are restored in the image.
+must advertise that requirement and reject unsupported Guest CPUs. The
+component and rootfs builds use the signed Arch 2026-11-22 repository snapshot
+from `arch-snapshot`. It supplies KWin 6.8.3-1, Plasma Workspace 6.8.3-1, and
+Qt 6.12.0-5. The patched KWin source is pinned in `kwin-source.json`. The
+image retains the CachyOS repository and restores normal rolling Arch mirrors.
 During the pinned-snapshot build, Arch repositories take precedence over the
 rolling CachyOS repository so that overrides of core packages cannot replace
 the snapshot's compatible dependency set. CachyOS-only packages remain available

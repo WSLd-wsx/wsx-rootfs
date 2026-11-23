@@ -7,6 +7,7 @@ from pathlib import Path
 import shutil
 import runpy
 import subprocess
+from source_support import kwin_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -26,18 +27,19 @@ def main():
     runtime = root/'usr/lib/wsx/runtime'
     runtime.mkdir(parents=True)
     packages = dict(line.split(' ', 1) for line in (args.components.parent/'rootfs-packages.txt').read_text().splitlines())
-    expected_prefixes = {'kwin': '6.8.1-', 'plasma-workspace': '6.8.1-', 'qt6-base': '6.12.0-'}
-    for name, prefix in expected_prefixes.items():
-        if not packages.get(name, '').startswith(prefix):
+    pin = kwin_lock(ROOT)
+    expected = pin['packages']
+    for name, version in expected.items():
+        if packages.get(name) != version:
             raise ValueError('Private KWin dependency version mismatch: '+name+' '+packages.get(name, '<missing>'))
-    lock = {'cpu_architecture_level': 'x86-64-v3', 'packages': {name: packages[name] for name in expected_prefixes}}
+    lock = {'cpu_architecture_level': 'x86-64-v3', 'packages': expected}
     (root/'usr/lib/wsx/plasma-compat.json').write_text(json.dumps(lock, indent=2)+'\n')
     for name in ('mesa', 'venus', 'kwin-opaque'):
         shutil.copytree(args.components/name, runtime/name, symlinks=True)
     helper = root/'usr/lib/plasma-setup-xwayland'
     if not helper.is_file() or not helper.stat().st_mode & 0o111:
         raise ValueError('Missing executable version-locked Plasma Xwayland helper')
-    helper_link = root/'opt/wsx/kwin-opaque-6.8.1/lib/libexec/plasma-setup-xwayland'
+    helper_link = root/f"opt/wsx/kwin-opaque-{pin['version']}/lib/libexec/plasma-setup-xwayland"
     helper_link.parent.mkdir(parents=True, exist_ok=True)
     helper_link.symlink_to('/usr/lib/plasma-setup-xwayland')
     shutil.copytree(ROOT/'vendor/wsx-guest-sources/session', runtime/'session')

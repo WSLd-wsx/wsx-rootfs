@@ -10,6 +10,26 @@ from license_inputs import paths as license_paths
 IMAGE_POLICY_FILES = {'LICENSE-MAP.md','docs/licensing/modules.json','components/license-boundaries.json'}
 
 
+def profile_build_closure(closure, profile):
+    """Select the dependencies reachable from this profile's compiler recipe."""
+    entry = f'distros/{profile}/build-components.sh'
+    if entry not in closure['files']:
+        return closure
+    dependencies = {}
+    for edge in closure['edges']:
+        dependencies.setdefault(edge['source'], []).append(edge['dependency'])
+    pending = [entry]
+    reachable = set()
+    while pending:
+        name = pending.pop()
+        if name not in reachable:
+            reachable.add(name)
+            pending.extend(dependencies.get(name, []))
+    return dict(files=sorted(reachable), edges=sorted(
+        (edge for edge in closure['edges'] if edge['source'] in reachable),
+        key=lambda edge: (edge['source'], edge['dependency'])))
+
+
 def check_component_inputs(root, work, collection_only_change):
     receipt = json.loads((work/'component-source.json').read_text())
     original = work/'component-materials/notices'
@@ -27,8 +47,9 @@ def check_component_inputs(root, work, collection_only_change):
             raise ValueError('Original component policy receipt mismatch: '+name)
         if name not in IMAGE_POLICY_FILES and receipt['recipe_files'].get(name) != sha(root/name):
             raise ValueError('Compiled component license policy changed: '+name)
-    current = check_boundaries(root)['paired-component-build']
-    recorded = mapping['reconstruction_closures']['paired-component-build']
+    profile = receipt['profile']
+    current = profile_build_closure(check_boundaries(root)['paired-component-build'], profile)
+    recorded = profile_build_closure(mapping['reconstruction_closures']['paired-component-build'], profile)
     if current != recorded:
         raise ValueError('Component reconstruction dependency graph changed')
     ids = {entry['output'] for entry in mapping['component_runtime_files']}

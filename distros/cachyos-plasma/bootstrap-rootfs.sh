@@ -2,10 +2,11 @@
 # Bootstrap a signed generic x86-64 CachyOS Plasma candidate inside CI.
 set -euo pipefail
 cd /workspace
-# Match the validated private KWin/Plasma 6.8.1 ABI using a signed Arch
+# Match the validated private KWin/Plasma 6.8.3 ABI using a signed Arch
 # repository snapshot. Restore normal rolling mirrors inside the final image.
 cp /etc/pacman.d/mirrorlist /tmp/wsx-rolling-mirrorlist
-printf 'Server = https://archive.archlinux.org/repos/2026/10/28/$repo/os/$arch\n' > /etc/pacman.d/mirrorlist
+read -r arch_snapshot < distros/cachyos-plasma/arch-snapshot
+printf 'Server = %s$repo/os/$arch\n' "$arch_snapshot" > /etc/pacman.d/mirrorlist
 pacman -Syu --noconfirm --needed archlinux-keyring arch-install-scripts python curl gcc
 python3 /workspace/scripts/source-support.py WSX-cachyos-plasma
 python - <<'PYTHON'

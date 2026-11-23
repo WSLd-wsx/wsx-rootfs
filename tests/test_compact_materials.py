@@ -41,9 +41,14 @@ class DirectCollection(unittest.TestCase):
                 shared.add_bytes(tar,name+'/LICENSE',b'Fixture retained upstream notice')
                 shared.add_bytes(tar,name+'/source.c',b'Fixture original source')
             pins[name]=dict(sha256=materials.sha(archive),version='1',commit='abc',url='https://example.test/'+name)
-        (self.root/'components/sources.json').write_text(json.dumps(dict(schema_version=1,**pins)))
+        kwin_lock = self.root/'distros/cachyos-plasma/kwin-source.json'
+        kwin_lock.parent.mkdir(parents=True)
+        kwin_lock.write_text(json.dumps(pins['kwin']))
+        (self.root/'components/sources.json').write_text(json.dumps(dict(schema_version=1,
+            **{name: pin for name, pin in pins.items() if name != 'kwin'})))
+        self.pins = pins
         self.receipt=dict(origin='source-build',profile='omarchy',compiled=True,runtime_assembled=True,
-            archives={c:dict(sha256=p['sha256']) for c,p in pins.items()},
+            archives={c:dict(sha256=pins[c]['sha256']) for c in shared.PROFILES['omarchy']},
             recipe_files={n:materials.sha(self.root/n) for n in license_paths(self.root)+['recipe.py','vendor/example.c']})
         for name in ('mesa/mesa-1/source.c','venus/mesa-1/source.c','hyprland/Hyprland-abc/source.c',
                      'kwin/prepared/source/consumer.cpp','mesa/build/generated.h'):
@@ -74,7 +79,10 @@ class DirectCollection(unittest.TestCase):
         self.assertEqual(before,{str(p.relative_to(self.work/'private')):materials.sha(p) for p in (self.work/'private').rglob('*') if p.is_file()})
 
     def test_kwin_delivery_retains_original_and_prepared_sources(self):
-        self.receipt['profile']='cachyos-plasma';self.write_receipt()
+        self.receipt['profile']='cachyos-plasma'
+        self.receipt['archives'] = {name: dict(sha256=self.pins[name]['sha256'])
+                                    for name in shared.PROFILES['cachyos-plasma']}
+        self.write_receipt()
         materials.prepare(self.work)
         index=shared.verify_bundle(self.work/'component-materials/shared')
         names={r['path'] for r in index['files'][2]['entries']}

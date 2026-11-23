@@ -4,7 +4,7 @@
   "files": [
     {
       "source_path": "guest-opaque/prepare-kwin.py",
-      "sha256": "8d6de4393d10bab48c2c44ca31638daf8edbc2e8a3364b573e11b0ffcaa31741",
+      "sha256": "a9bba6082b2fe089a4ee83f96232280956f7c5bc378719a6895b135f2bd6e1f9",
       "vendored_path": "vendor/wsx-guest-sources/guest-opaque/prepare-kwin.py"
     },
     {

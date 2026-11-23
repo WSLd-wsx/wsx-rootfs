@@ -15,15 +15,13 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 from component_materials import relative, sha, verify
+from source_support import component_pins, PROFILE_COMPONENTS
 
 REPOSITORY = 'WSLd-wsx/wsx-rootfs'
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = 'graphics-sources.json'
 ARCHIVES = ('graphics-notices.tar.gz', 'graphics-changes.tar.gz', 'graphics-retained-sources.tar.gz')
-PROFILES = {
-    'omarchy': {'mesa', 'venus', 'aquamarine', 'hyprland', 'udis86', 'glaze'},
-    'cachyos-plasma': {'mesa', 'venus', 'kwin'},
-}
+PROFILES = PROFILE_COMPONENTS
 REFERENCE_ONLY = {'aquamarine', 'hyprland', 'udis86', 'glaze'}
 # Mesa has mixed per-file terms. Keep its pinned archives until a narrower
 # compiled-source license review justifies reference-only delivery.
@@ -122,12 +120,13 @@ def make_bundle(work, output):
         return verify_bundle(output)
     receipt = json.loads((work/'component-source.json').read_text())
     profile = receipt['profile']
-    pins = json.loads((ROOT/'components/sources.json').read_text())
-    if set(receipt['archives']) != set(pins)-{'schema_version'}:
+    pins = component_pins(ROOT, profile)
+    if not set(pins).issubset(receipt['archives']) or not set(receipt['archives']).issubset(REFERENCE_ONLY | RETAIN_ARCHIVE):
         raise ValueError('Unreviewed upstream archive set')
-    for component, original in receipt['archives'].items():
-        if original['sha256'] != pins[component]['sha256']:
+    for component, pin in pins.items():
+        if receipt['archives'][component]['sha256'] != pin['sha256']:
             raise ValueError('Pinned upstream inputs changed; review the projection first')
+    pins.update({name: pin for name, pin in receipt['archives'].items() if name not in pins})
     expected = {r['path']:r for r in material['source_entries']}
     if len(expected) != len(material['source_entries']):
         raise ValueError('Duplicate original material index')

@@ -16,6 +16,7 @@ from contract import validate
 from review_index import create as create_review_index
 from package_source_inventory import create as create_package_source_inventory, collect_known_sources
 import jsonschema
+from source_support import ARCH_SNAPSHOT, component_pins
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -57,7 +58,7 @@ if compression['compressed_size'] >= 2**31:
     raise ValueError('Archive exceeds GitHub asset limit')
 sources = dict(build_inputs=build, installer=json.loads((ROOT/'distros/cachyos-plasma/upstream/source.json').read_text()),
     snapshot_kind='explicit WSX build date, not an official CachyOS release',
-    arch_repository_snapshot='https://archive.archlinux.org/repos/2026/10/28/',
+    arch_repository_snapshot=(ROOT/ARCH_SNAPSHOT).read_text().strip(),
     rolling_mirrors_restored_after_build=True, component_package=package,
     plasma_compatibility=json.loads((work/'rootfs/usr/lib/wsx/plasma-compat.json').read_text()),
     component_manifests={n:json.loads((work/'private'/n/'manifest.json').read_text()) for n in ('mesa', 'venus', 'kwin-opaque')},
@@ -78,8 +79,8 @@ collect_known_sources(work/'rootfs', sources['package_source_inventory'], work)
 sources['component_source_delivery'] = attach(work, payload)
 (payload/'sources.json').write_text(json.dumps(sources, indent=2)+'\n')
 inputs = build['inputs']
-graphics = [dict(name=n, version=v, inputs_sha256=component_identity) for n,v in
-            [('mesa','26.1.8'), ('venus','26.2.4'), ('kwin','6.8.1')]]
+graphics = [dict(name=name, version=pin['version'], inputs_sha256=component_identity)
+            for name, pin in component_pins(ROOT, 'cachyos-plasma').items()]
 m = dict(schema_version=1, source_delivery_schema=sources['component_source_delivery']['schema_version'], distribution_id='WSX-cachyos-plasma', image_version=inputs['snapshot']+'-r'+str(inputs['wsx_revision']),
     upstream_release=inputs['snapshot'], upstream_commit=inputs['installer_commit'], wsx_revision=inputs['wsx_revision'],
     architecture='x86_64', archive_format='tar.zst', asset_name=name, sha256=sha(payload/name),
