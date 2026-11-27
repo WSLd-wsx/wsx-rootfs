@@ -43,6 +43,21 @@ class RegistryTests(unittest.TestCase):
                 pass
         self.assertEqual(run.call_args.kwargs['input'], 'registry-token')
 
+    def test_latest_digest_filters_profiles_across_pages(self):
+        def version(number, profile, tag=True):
+            tags = [f'{profile}-{"a" * 40}-{number}-1'] if tag else []
+            return dict(id=number, name='sha256:' + str(number) * 64,
+                        created_at=f'2026-11-27T01:00:0{number}Z',
+                        metadata={'container': {'tags': tags}})
+
+        pages = [[version(4, 'cachyos-plasma'), version(3, 'omarchy', tag=False),
+                  version(1, 'omarchy')], [version(2, 'omarchy')]]
+        with patch.object(registry, 'require_private') as require_private, \
+                patch.object(registry.subprocess, 'check_output', return_value=json.dumps(pages)) as api:
+            self.assertEqual(registry.latest_digest('omarchy'), pages[1][0]['name'])
+        require_private.assert_called_once_with()
+        self.assertIn('--paginate', api.call_args.args[0])
+
     def test_reference_rejects_mutable_tags_and_other_packages(self):
         registry.check_reference(registry.IMAGE + '@sha256:' + 'a' * 64)
         registry.check_reference(registry.operations_image() + '@sha256:' + 'b' * 64)

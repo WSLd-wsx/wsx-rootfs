@@ -9,7 +9,7 @@ on:
         type: string
         default: ''
       graphics_digest:
-        description: Optional SHA-256 digest copied from the graphics-components package
+        description: Optional package SHA-256 digest. Empty tries a successful component run, then Packages.
         type: string
         default: ''
       pre_release:
@@ -72,13 +72,21 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y zstd
           fi
-          if [[ -n "$WSX_GRAPHICS_DIGEST" ]]; then
+          digest="$WSX_GRAPHICS_DIGEST"
+          if [[ -z "$digest" ]]; then
+            PYTHONPATH=scripts python3 -c 'from component_registry import require_private; require_private()'
+            python3 scripts/select-component-origin.py --profile omarchy --repository WSLd-wsx/wsx-rootfs \
+              --allow-missing --output out/component-pin.json
+            if [[ ! -f out/component-pin.json ]]; then
+              digest=$(PYTHONPATH=scripts python3 -c 'from component_registry import latest_digest; print(latest_digest("omarchy"))')
+              echo "Using latest Omarchy graphics package: $digest"
+            fi
+          fi
+          if [[ -n "$digest" ]]; then
             python3 scripts/prepare-shared-sources.py --profile omarchy --work out/graphics-sources \
-              --component-digest="$WSX_GRAPHICS_DIGEST" --require-current-compatibility
+              --component-digest="$digest" --require-current-compatibility
             cp out/graphics-sources/component-pin.json out/component-pin.json
           else
-            PYTHONPATH=scripts python3 -c 'from component_registry import require_private; require_private()'
-            python3 scripts/select-component-origin.py --profile omarchy --repository WSLd-wsx/wsx-rootfs --output out/component-pin.json
             python3 scripts/prepare-shared-sources.py --profile omarchy --work out/graphics-sources \
               --component-pin out/component-pin.json --require-current-compatibility "$publication"
           fi

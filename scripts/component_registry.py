@@ -73,6 +73,28 @@ def docker_session():
         yield env
 
 
+def latest_digest(profile):
+    require_private()
+    env = dict(os.environ)
+    if env.get('WSX_COMPONENT_REGISTRY_TOKEN'):
+        env['GH_TOKEN'] = env['WSX_COMPONENT_REGISTRY_TOKEN']
+    package = quote(IMAGE.removeprefix('ghcr.io/wsld-wsx/'), safe='')
+    pages = json.loads(subprocess.check_output([
+        'gh', 'api', '--paginate', '--slurp',
+        f'orgs/WSLd-wsx/packages/container/{package}/versions?per_page=100',
+    ], env=env))
+    tag_pattern = re.compile(re.escape(profile) + r'-[0-9a-f]{40}-[1-9][0-9]*-[1-9][0-9]*')
+    candidates = [
+        version for page in pages for version in page
+        if re.fullmatch(r'sha256:[0-9a-f]{64}', version['name'])
+        and any(tag_pattern.fullmatch(tag) for tag in version['metadata']['container']['tags'])
+    ]
+    if not candidates:
+        raise ValueError('No published graphics package found for ' + profile)
+    latest = max(candidates, key=lambda version: (version['created_at'], version['id']))
+    return latest['name']
+
+
 def validate_labels(labels, pin, profile):
     expected = {'org.opencontainers.image.source': 'https://github.com/' + REPOSITORY,
                 'org.opencontainers.image.revision': pin['source_commit'],

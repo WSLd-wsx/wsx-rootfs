@@ -56,6 +56,8 @@ def pin_from_log(log, profile, run_id, *, require_profile=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile', required=True, choices=('omarchy','cachyos-plasma'))
+    parser.add_argument('--allow-missing', action='store_true',
+                        help='Leave the output absent if no matching run exists')
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--repository', choices=(RECIPE, *repositories()), default=os.environ.get('WSX_OPERATIONS_REPOSITORY') or RECIPE)
     args = parser.parse_args()
@@ -98,7 +100,8 @@ def main():
         args.output.write_text(json.dumps(pin,indent=2)+'\n')
         print(json.dumps({'profile':args.profile,'run_id':run_id,'image':pin['image']}))
         return
-    raise ValueError('No successful retained component build found for '+args.profile)
+    if not args.allow_missing:
+        raise ValueError('No successful retained component build found for '+args.profile)
 
 
 if __name__ == '__main__':
