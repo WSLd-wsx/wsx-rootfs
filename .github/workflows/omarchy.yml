@@ -8,6 +8,10 @@ on:
         description: Stable Omarchy version; empty selects latest
         type: string
         default: ''
+      graphics_digest:
+        description: Optional SHA-256 digest copied from the graphics-components package
+        type: string
+        default: ''
       pre_release:
         description: Publish a pre-release (leave unchecked to keep a draft)
         type: boolean
@@ -46,11 +50,12 @@ jobs:
           token: ${{ secrets.WSLD_TOKEN }}
           fetch-depth: 1
           persist-credentials: false
-      - name: Resolve latest verified Omarchy graphics and publish matching sources
+      - name: Resolve and verify Omarchy graphics and matching sources
         id: graphics
         env:
           GH_TOKEN: ${{ secrets.WSLD_TOKEN }}
           WSX_COMPONENT_REGISTRY_TOKEN: ${{ github.token }}
+          WSX_GRAPHICS_DIGEST: ${{ inputs.graphics_digest }}
         run: |
           set -euo pipefail
           private=$(gh api repos/WSLd-wsx/wsx-rootfs --jq '.private')
@@ -67,24 +72,36 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y zstd
           fi
-          PYTHONPATH=scripts python3 -c 'from component_registry import require_private; require_private()'
-          python3 scripts/select-component-origin.py --profile omarchy --repository WSLd-wsx/wsx-rootfs --output out/component-pin.json
-          python3 scripts/prepare-shared-sources.py --profile omarchy --work out/graphics-sources \
-            --component-pin out/component-pin.json --require-current-compatibility "$publication"
+          if [[ -n "$WSX_GRAPHICS_DIGEST" ]]; then
+            python3 scripts/prepare-shared-sources.py --profile omarchy --work out/graphics-sources \
+              --component-digest="$WSX_GRAPHICS_DIGEST" --require-current-compatibility
+            cp out/graphics-sources/component-pin.json out/component-pin.json
+          else
+            PYTHONPATH=scripts python3 -c 'from component_registry import require_private; require_private()'
+            python3 scripts/select-component-origin.py --profile omarchy --repository WSLd-wsx/wsx-rootfs --output out/component-pin.json
+            python3 scripts/prepare-shared-sources.py --profile omarchy --work out/graphics-sources \
+              --component-pin out/component-pin.json --require-current-compatibility "$publication"
+          fi
           python3 - <<'PYTHON'
-          import base64, json, os
+          import json
           from pathlib import Path
           pin = json.loads(Path('out/component-pin.json').read_text())
           source = json.loads(Path('out/graphics-sources/summary.json').read_text())['public_source']
-          selection = json.dumps({'component': pin, 'shared_source': source}, separators=(',', ':'))
-          Path('out/graphics-selection.json').write_text(selection)
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-              output.write('selection=' + base64.b64encode(selection.encode()).decode() + '\n')
+          selection = {'component': pin, 'shared_source': source}
+          Path('out/graphics-selection.json').write_text(json.dumps(selection))
           PYTHON
           python3 scripts/workflow_component_inputs.py --profile omarchy --selection out/graphics-selection.json
           python3 scripts/audit-licenses.py
           python3 scripts/reuse-components.py --check-pin --profile omarchy --repo WSLd-wsx/wsx-rootfs --work out
           python3 scripts/check-shared-sources.py --profile omarchy
+          python3 - <<'PYTHON'
+          import base64, json, os
+          from pathlib import Path
+          selection = json.loads(Path('out/graphics-selection.json').read_text())
+          encoded = base64.b64encode(json.dumps(selection, separators=(',', ':')).encode()).decode()
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('selection=' + encoded + '\n')
+          PYTHON
       - name: Resolve stable Omarchy version and next revision
         id: select
         env:

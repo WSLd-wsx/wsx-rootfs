@@ -85,12 +85,20 @@ def fetch(reference, destination, pin, profile, env):
     check_reference(reference)
     subprocess.run(['docker', 'pull', reference], env=env, check=True)
     info = json.loads(subprocess.check_output(['docker', 'image', 'inspect', reference], env=env))[0]
-    validate_labels(info['Config'].get('Labels') or {}, pin, profile)
+    labels = info['Config'].get('Labels') or {}
+    if pin is None:
+        commit = labels.get('org.opencontainers.image.revision', '')
+        run = labels.get('io.wsx.run-id', '')
+        if not re.fullmatch(r'[0-9a-f]{40}', commit) or not re.fullmatch(r'[1-9][0-9]*', run):
+            raise ValueError('Invalid registry image build origin')
+        pin = dict(transport='ghcr', image=reference, run_id=int(run), source_commit=commit)
+    validate_labels(labels, pin, profile)
     container = subprocess.check_output(['docker', 'create', reference], env=env, text=True).strip()
     try:
         subprocess.run(['docker', 'cp', container + ':/payload/.', str(destination)], env=env, check=True)
     finally:
         subprocess.run(['docker', 'rm', container], env=env, check=True, stdout=subprocess.DEVNULL)
+    return pin
 
 
 def publication_origin(environ):

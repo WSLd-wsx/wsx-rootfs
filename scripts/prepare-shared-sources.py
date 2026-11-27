@@ -56,23 +56,29 @@ def find_release(tag, attempts=10):
     raise ValueError('Shared source Draft not visible yet; retry with the same inputs')
 
 
-def acquire(profile, directory, pin=None):
-    if pin is None:
+def acquire(profile, directory, pin=None, *, reference=None):
+    if pin is None and reference is None:
         config = json.loads((ROOT/'components/source-delivery.json').read_text())
         pin = config['component_origins'][profile]
-    if not isinstance(pin, dict):
-        raise ValueError('A verified component origin is required')
-    reuse = load_script('reuse-components.py')
-    run_repo = pin.get('run_repository', REPOSITORY)
-    if run_repo not in (REPOSITORY, *repositories()):
-        raise ValueError('Unapproved component workflow repository')
-    run = api(f'repos/{run_repo}/actions/runs/{pin["run_id"]}')
-    reuse.validate_origin(pin,profile,REPOSITORY,run,{})
+    if reference is None:
+        if not isinstance(pin, dict):
+            raise ValueError('A verified component origin is required')
+        run_repo = pin.get('run_repository', REPOSITORY)
+        if run_repo not in (REPOSITORY, *repositories()):
+            raise ValueError('Unapproved component workflow repository')
+        run = api(f'repos/{run_repo}/actions/runs/{pin["run_id"]}')
+        load_script('reuse-components.py').validate_origin(pin,profile,REPOSITORY,run,{})
+        reference = pin['image']
+    else:
+        registry.require_private()
     package = directory/'package'; package.mkdir()
     with registry.docker_session() as env:
-        registry.fetch(pin['image'],package,pin,profile,env)
-    if sha(package/'manifest.json') != pin['manifest_sha256']:
+        origin = registry.fetch(reference,package,pin,profile,env)
+    manifest_sha = sha(package/'manifest.json')
+    if pin is not None and manifest_sha != pin['manifest_sha256']:
         raise ValueError('Original component manifest differs from approved pin')
+    if pin is None:
+        (directory/'component-pin.json').write_text(json.dumps(dict(origin, manifest_sha256=manifest_sha)))
     manifest = json.loads((package/'manifest.json').read_text())
     admitted = directory/'admitted'
     load_script('consume-source-components.py').consume(package,admitted,profile,manifest['sha256'])
@@ -177,7 +183,9 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile',choices=('omarchy','cachyos-plasma'),required=True)
     parser.add_argument('--work',type=Path,required=True)
-    parser.add_argument('--component-pin',type=Path,
+    component=parser.add_mutually_exclusive_group()
+    component.add_argument('--component-digest', help='Published graphics package SHA-256 digest')
+    component.add_argument('--component-pin',type=Path,
                         help='Explicit component origin JSON; all origin and package checks still apply')
     parser.add_argument('--require-current-compatibility',action='store_true',
                         help='Reject components whose compiled inputs differ from the current recipe')
@@ -188,9 +196,16 @@ if __name__=='__main__':
     publication.add_argument('--publish-private',action='store_true',
                              help='Publish the verified source-only bundle as a private prerelease')
     args=parser.parse_args()
+    reference = None
+    if args.component_digest is not None:
+        if args.publish_draft or args.publish_public or args.publish_private:
+            parser.error('--component-digest requires an existing published source release')
+        reference = args.component_digest.strip().removeprefix(registry.IMAGE + '@')
+        reference = registry.IMAGE + '@' + reference
+        registry.check_reference(reference)
     args.work.mkdir(parents=True,exist_ok=False)
     pin=json.loads(args.component_pin.read_text()) if args.component_pin else None
-    admitted=acquire(args.profile,args.work,pin)
+    admitted=acquire(args.profile,args.work,pin,reference=reference)
     if args.require_current_compatibility:
         load_script('reuse-components.py').check_compatibility(ROOT,admitted)
     bundle=args.work/'shared-sources'
@@ -201,7 +216,11 @@ if __name__=='__main__':
                 index_size=(bundle/INDEX).stat().st_size,
                 compiled=False,private_component_changed=False)
     (args.work/'summary.json').write_text(json.dumps(result,indent=2)+'\n')
-    if args.publish_draft:
+    if reference:
+        source = {key: result[key] for key in ('tag', 'manifest_sha256')}
+        download_index(source, args.profile)
+        result['public_source'] = source
+    elif args.publish_draft:
         result['release']=publish_draft(bundle)
     elif args.publish_public:
         result['public_source']=publish_public(bundle)
